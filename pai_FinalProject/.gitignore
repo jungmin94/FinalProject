@@ -1,5 +1,5 @@
 /target/
 .settings
 /Users/
-/src/test/
-*.xml
+/src/main/webapp/WEB-INF/spring/
+/src/main/resources/
