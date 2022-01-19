@@ -1,0 +1,5 @@
+/target/
+.settings
+/Users/
+/src/test/
+*.xml
