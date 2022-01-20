@@ -14,7 +14,7 @@
 <title>PAI</title>
 <style>
 header {
-	position: absolute;
+    position: relative; 
 	top: 0;
 	width: 100%;
 }
@@ -160,6 +160,7 @@ a .sub-menu-detail {
 }
 </style>
 </head>
+<body>
 <header>
 	<nav>
 		<div class="header-nav">

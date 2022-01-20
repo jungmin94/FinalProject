@@ -33,4 +33,5 @@ footer {
 		<div>Copyright ⓒ 2022 PAI. All rights reserved.</div>
 	</div>
 </footer>
+</body>
 </html>

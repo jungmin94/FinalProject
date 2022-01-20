@@ -5,12 +5,12 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/> 
 
- 
+ <body> 
 	<div class="container">
 	
 	 	<div class="row">
 		    <div class="col">
-		      <h1>주간 추천수 인기글</h1>
+		     dddddddddddddddddd
 		    </div>
 		    <div class="col">
 		      <h1>주간 조회수 인기글</h1>
@@ -34,6 +34,6 @@
 	    </div>
 	     
 	</div>
- 
+</body> 
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
