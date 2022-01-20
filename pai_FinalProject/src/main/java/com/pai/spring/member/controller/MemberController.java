@@ -50,6 +50,12 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/";
 	}
+	
+	@RequestMapping("/member/enrollMember.do")
+	public String enrollMember() {
+		return "/member/enrollMember";
+	}
+	
 	@RequestMapping(value="enrollMemberEnd.do",
 			method=RequestMethod.POST)
 	public String enrollMemberEnd(Member m,Model model) {

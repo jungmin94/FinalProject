@@ -3,9 +3,10 @@ package com.pai.spring.member.model.dao;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.pai.spring.member.model.vo.Member;
-
+@Repository
 public class MemberDaoImpl implements MemberDao {
 
 	@Override
