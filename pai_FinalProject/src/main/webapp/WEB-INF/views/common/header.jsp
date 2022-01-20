@@ -13,8 +13,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <title>PAI</title>
 <style>
+body {  
+	min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; 
+} 
+
 header {
-	position: absolute;
+    position: relative; 
 	top: 0;
 	width: 100%;
 }
@@ -160,6 +164,7 @@ a .sub-menu-detail {
 }
 </style>
 </head>
+<body>
 <header>
 	<nav>
 		<div class="header-nav">
@@ -168,7 +173,7 @@ a .sub-menu-detail {
 			</div>
 
 			<div id="nav-menu">
-				<a href=""><div class="menu-bar">게시판</div></a> 
+				<a href="${path}/board/boardList.do"><div class="menu-bar">게시판</div></a> 
 				<a href=""><div class="menu-bar">MBTI 마켓</div></a>
 				<a href=""><div class="menu-bar">채팅</div></a>
 				<a href=""><div class="menu-bar">친구찾기</div></a>
