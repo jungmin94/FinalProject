@@ -160,6 +160,7 @@ a .sub-menu-detail {
 }
 </style>
 </head>
+<body>
 <header>
 	<nav>
 		<div class="header-nav">
