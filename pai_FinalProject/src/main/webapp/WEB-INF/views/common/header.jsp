@@ -2,7 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>	 
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>	
+<c:set var="path" value="${pageContext.request.contextPath }"/> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -166,20 +167,23 @@ a .sub-menu-detail {
 				<a href=""><div class="menu-bar">채팅</div></a>
 				<a href=""><div class="menu-bar">친구찾기</div></a>
 			</div>
-			<!-- 만약 로그인하지 않은 상태라면 하단의 div #login-box출력
-        <div id="login-box">
-            <span class="login-area"><button id="login-button">로그인</button></span><span class="login-area"><button
-                    id="enroll-button">회원가입</button></span>
-        </div> -->
-
-			<div class="nav-lists" id="mypage-icon">
-				<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-arrived는 보이지 않게 설정 필요 -->
-				<!-- 만약 받은 쪽지가 없을 경우 하단의 span .login-area의 이미지 주소는 https://i.ibb.co/vxM4TDk/2022-01-18-17-51-35.png 사용 필요 -->
-				<span id="message-arrived">쪽지가 도착했습니다!</span>
-				<span class="login-area" onmouseover="dropDownMenu();">
-					<img src="https://i.ibb.co/4Z7wXR5/2022-01-20-10-00-48.png" width="50px">
-				</span>
-			</div>
+			<c:if test="${loginMember==null }">
+			<!-- 만약 로그인하지 않은 상태라면 하단의 div #login-box출력 -->
+		        <div id="login-box">
+		            <span class="login-area"><button id="login-button" onclick="location.assign('${path}/views/member/loginMember')">로그인</button></span><span class="login-area"><button
+		                    id="enroll-button">회원가입</button></span>
+		        </div>
+			</c:if>
+			<c:if test="${!loginMember==null }">
+				<div class="nav-lists" id="mypage-icon">
+					<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-arrived는 보이지 않게 설정 필요 -->
+					<!-- 만약 받은 쪽지가 없을 경우 하단의 span .login-area의 이미지 주소는 https://i.ibb.co/vxM4TDk/2022-01-18-17-51-35.png 사용 필요 -->
+					<span id="message-arrived">쪽지가 도착했습니다!</span>
+					<span class="login-area" onmouseover="dropDownMenu();">
+						<img src="https://i.ibb.co/4Z7wXR5/2022-01-20-10-00-48.png" width="50px">
+					</span>
+				</div>
+			</c:if>
 		</div>
 		<div id="sub-menu-bar" onmouseleave="hideMenu();">
 			<a href="">
@@ -194,7 +198,7 @@ a .sub-menu-detail {
 			<a href="">
 				<div class="sub-menu-detail" id="menu-myboard">내 게시글</div>
 			</a>
-			<a href="">
+			<a href="${path}/member/logout.do }">
 				<div class="sub-menu-detail" id="menu-logout">로그아웃</div>
 			</a>
 		</div>
