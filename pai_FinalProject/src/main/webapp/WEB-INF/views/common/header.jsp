@@ -1,9 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>	
+<c:set var="path" value="${pageContext.request.contextPath }"/> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <title>PAI</title>
 <style>
 header {
@@ -25,11 +32,14 @@ header {
 	margin-left: 0.4rem;
 	margin-right: 16rem;
 	flex-grow: 0;
+	position: absolute;
+	left : 10px;
 }
 
 #nav-menu {
 	display: flex;
-	margin-right: 8rem;
+	justify-content: center;
+	margin: 0 auto;
 }
 
 #nav-menu a {
@@ -62,6 +72,9 @@ a .menu-bar {
 	padding: 0;
 	display: flex;
 	align-items: center;
+	position: absolute;
+	right: 10px;
+	top : 20px;
 }
 
 #mypage-icon {
@@ -160,20 +173,23 @@ a .sub-menu-detail {
 				<a href=""><div class="menu-bar">채팅</div></a>
 				<a href=""><div class="menu-bar">친구찾기</div></a>
 			</div>
-			<!-- 만약 로그인하지 않은 상태라면 하단의 div #login-box출력
-        <div id="login-box">
-            <span class="login-area"><button id="login-button">로그인</button></span><span class="login-area"><button
-                    id="enroll-button">회원가입</button></span>
-        </div> -->
-
-			<div class="nav-lists" id="mypage-icon">
-				<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-arrived는 보이지 않게 설정 필요 -->
-				<!-- 만약 받은 쪽지가 없을 경우 하단의 span .login-area의 이미지 주소는 https://i.ibb.co/vxM4TDk/2022-01-18-17-51-35.png 사용 필요 -->
-				<span id="message-arrived">쪽지가 도착했습니다!</span>
-				<span class="login-area" onmouseover="dropDownMenu();">
-					<img src="https://i.ibb.co/4Z7wXR5/2022-01-20-10-00-48.png" width="50px">
-				</span>
-			</div>
+			<c:if test="${loginMember==null }">
+			<!-- 만약 로그인하지 않은 상태라면 하단의 div #login-box출력 -->
+		        <div id="login-box">
+		            <span class="login-area"><button id="login-button" onclick="location.assign('${path}/views/member/loginMember')">로그인</button></span><span class="login-area"><button
+		                    id="enroll-button">회원가입</button></span>
+		        </div>
+			</c:if>
+			<c:if test="${!loginMember==null }">
+				<div class="nav-lists" id="mypage-icon">
+					<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-arrived는 보이지 않게 설정 필요 -->
+					<!-- 만약 받은 쪽지가 없을 경우 하단의 span .login-area의 이미지 주소는 https://i.ibb.co/vxM4TDk/2022-01-18-17-51-35.png 사용 필요 -->
+					<span id="message-arrived">쪽지가 도착했습니다!</span>
+					<span class="login-area" onmouseover="dropDownMenu();">
+						<img src="https://i.ibb.co/4Z7wXR5/2022-01-20-10-00-48.png" width="50px">
+					</span>
+				</div>
+			</c:if>
 		</div>
 		<div id="sub-menu-bar" onmouseleave="hideMenu();">
 			<a href="">
@@ -188,7 +204,7 @@ a .sub-menu-detail {
 			<a href="">
 				<div class="sub-menu-detail" id="menu-myboard">내 게시글</div>
 			</a>
-			<a href="">
+			<a href="${path}/member/logout.do }">
 				<div class="sub-menu-detail" id="menu-logout">로그아웃</div>
 			</a>
 		</div>
@@ -201,7 +217,19 @@ a .sub-menu-detail {
         hideMenu = () => {
             document.getElementById('sub-menu-bar').style.visibility = 'hidden';
         }
-
+		
+        
+        /* 부트스트랩 모달 추가 */
+        var myModal = document.getElementById('myModal');
+        var myInput = document.getElementById('myInput');
+          
+		
+        if(myModal!=null && myInput!=null){
+          myModal.addEventListener('shown.bs.modal', function () {
+          myInput.focus();
+          })
+        } 
+        
     </script>
 	</nav>
 </header>
