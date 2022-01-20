@@ -13,6 +13,11 @@ public class BoardController {
 		return "board/boardMain";
 	}
 	
+	@RequestMapping("/insertBoard.do")
+	public String insertBoard() {
+		
+		return "board/insertBoard";
+	}
 	
 	
 }
