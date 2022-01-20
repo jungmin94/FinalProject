@@ -95,8 +95,8 @@
 	           console.log(fullRoadAddr);
 	           
 	           
-	           $("[name=addr1]").val(data.zonecode);
-	           $("[name=addr2]").val(fullRoadAddr);
+	           $("[name=member_addr1]").val(data.zonecode);
+	           $("[name=member_addr2]").val(fullRoadAddr);
 	           
 	           /* document.getElementById('signUpUserPostNo').value = data.zonecode; //5자리 새우편번호 사용
 	           document.getElementById('signUpUserCompanyAddress').value = fullRoadAddr;
