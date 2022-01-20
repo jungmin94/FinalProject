@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Model {
+public class Member {
 	private String member_id;
 	private String member_pw;
 	private String member_name;
