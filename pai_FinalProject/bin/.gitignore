@@ -1,0 +1,5 @@
+/target/
+.settings
+/Users/
+/src/main/webapp/WEB-INF/spring/
+/src/main/resources/
