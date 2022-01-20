@@ -32,11 +32,14 @@ header {
 	margin-left: 0.4rem;
 	margin-right: 16rem;
 	flex-grow: 0;
+	position: absolute;
+	left : 10px;
 }
 
 #nav-menu {
 	display: flex;
-	margin-right: 8rem;
+	justify-content: center;
+	margin: 0 auto;
 }
 
 #nav-menu a {
@@ -69,6 +72,9 @@ a .menu-bar {
 	padding: 0;
 	display: flex;
 	align-items: center;
+	position: absolute;
+	right: 10px;
+	top : 20px;
 }
 
 #mypage-icon {
