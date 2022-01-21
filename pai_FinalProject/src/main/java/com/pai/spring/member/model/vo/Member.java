@@ -22,6 +22,7 @@ public class Member {
 	private String member_addr;
 	private String member_phone;
 	private String member_profile;
+	private String member_content;
 	private String member_mbti;
 	private int member_check;
 	private int member_police;
