@@ -41,7 +41,7 @@ article{
 		<!-- <article class="result">
 			결과로 친구리스트 가져와야함
 		</article> -->
-	<form action="${path}/taste/enrollTaste.do" method="post">
+	<form id="taste_form" action="${path}/taste/insertTaste.do" method="post">
 		<input type="hidden" name="exam01" id="exam01" value="0">
 		<input type="hidden" name="exam02" id="exam02" value="0">
 		<input type="hidden" name="exam03" id="exam03" value="0">
@@ -93,6 +93,7 @@ article{
                 console.log($("#exam03").val());
                 console.log($("#exam04").val());
                 console.log($("#exam05").val());
+                $("#taste_form").submit();
         	} else{
         		$(".progress-bar").attr('style','width: calc(100/5*'+num+'%)');
         		$("#title").html(exam[num]["title"]);
