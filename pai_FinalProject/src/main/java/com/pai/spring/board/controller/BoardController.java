@@ -1,6 +1,8 @@
 package com.pai.spring.board.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,7 +28,6 @@ public class BoardController {
 	public ModelAndView BoardList(ModelAndView mv,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="10") int numPerPage) {
 		List<Board> list=service.boardList(cPage,numPerPage); 
 		int totalDate=service.selectBoardCount();
-		
 		mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "boardList.do"));
 		mv.addObject("list", list); 
 		return mv;
@@ -36,6 +37,24 @@ public class BoardController {
 	public String insertBoard() {
 		
 		return "board/insertBoard";
+	}
+	
+	@RequestMapping("/searchBoard.do")
+	public ModelAndView searchBoard(ModelAndView mv,@RequestParam(value="category") String category
+										,@RequestParam(value="searchType") String searchType,@RequestParam(value="keyword") String keyword) {
+		System.out.println(category);
+		System.out.println(searchType);
+		System.out.println(keyword);
+		
+		Map<String,Object> param=new HashMap();
+		param.put("category", category);
+		param.put("keyword", keyword);
+		param.put("searchType", searchType);
+		List<Board> list=service.searchBoard(param);
+		
+		mv.addObject("list", list);
+		mv.setViewName("board/boardList");
+		return mv;
 	}
 	
 	

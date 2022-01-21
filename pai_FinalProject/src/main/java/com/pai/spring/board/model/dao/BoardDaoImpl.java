@@ -1,6 +1,7 @@
 package com.pai.spring.board.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -20,6 +21,11 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int selectBoardCount(SqlSessionTemplate session) { 
 		return session.selectOne("board.selectBoardCount");
+	}
+
+	@Override
+	public List<Board> searchBoard(SqlSessionTemplate session, Map<String, Object> param) { 
+		return session.selectList("board.searchBoard",param);
 	}
 
 }

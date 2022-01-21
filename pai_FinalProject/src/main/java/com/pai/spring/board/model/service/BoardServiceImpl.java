@@ -1,6 +1,7 @@
 package com.pai.spring.board.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int selectBoardCount() { 
 		return dao.selectBoardCount(session);
+	}
+
+	@Override
+	public List<Board> searchBoard(Map<String, Object> param) { 
+		return dao.searchBoard(session,param);
 	}
 
 }
