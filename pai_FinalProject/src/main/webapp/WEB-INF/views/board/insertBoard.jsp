@@ -31,6 +31,12 @@ section{
 	      </div>
 	      <div class="col-12" >
 		      <label class="form-label" style="width:100px;">카테고리</label>
+	      <!-- 관리자일땐 카테고리 정보 or 공지만 보임 -->
+	      <c:if test="${loginMember!=null&&loginMember.userId eq 'admin'}">
+		  	  <label><input type="radio" id="category" name="category"  value="notice">공지</label>
+		  	  <label><input type="radio" id="category" name="category"  value="info">정보</label>
+		  </c:if>	
+	      <c:if test="${loginMember.userId ne 'admin'}"> 
 			  <label><input type="radio" id="category" name="category" value="INTJ">INTJ</label>		     
 			  <label><input type="radio" id="category" name="category"  value="INTP">INTP</label>		     
 			  <label><input type="radio" id="category" name="category"  value="ENTJ">ENTJ</label>		     
@@ -47,7 +53,8 @@ section{
 			  <label><input type="radio" id="category" name="category"  value="ISFP">ISFP</label>		     
 			  <label><input type="radio" id="category" name="category"  value="ESTP">ESTP</label>		     
 			  <label><input type="radio" id="category" name="category"  value="ESFP">ESFP</label>		     
-			  <label><input type="radio" id="category" name="category"  value="info">정보</label>		     
+			  <label><input type="radio" id="category" name="category"  value="info">정보</label>
+		  </c:if>  		     
 	      </div> 
 	       <div class="col-12"  >
 		      <label class="form-label" style="width:100px;">닉네임</label>

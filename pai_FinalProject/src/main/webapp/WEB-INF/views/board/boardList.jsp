@@ -114,11 +114,20 @@ section{
 				<td style="width:50px;color:#004080;font-size:16px;text-align:center;background:url(http://www.todayhumor.co.kr/board/images/bar_back.gif);">조회</td>
 				<td style="width:50px;color:#004080;font-size:16px;text-align:center; background:url(http://www.todayhumor.co.kr/board/images/bar_right_back.gif) no-repeat -17px 0px;">추천</td> 
 			</tr>
+			<c:forEach var="b" items="${list}">
+				<tr>
+					<td><c:out value="${b.boardNo}"/></td>
+					<td><c:out value="${b.boardCategory}"/></td>
+					<td>파일</td>
+					<td><c:out value="${b.boardTitle}"/></td>
+					<td><c:out value="${b.boardWriter.member_nick}"/></td>
+					<td><c:out value="${b.boardEnrollDate}"/></td>
+					<td><c:out value="${b.boardReadCount}"/></td>
+					<td><c:out value="${b.recommendCount}"/></td>  
+				</tr>
+			</c:forEach> 
 			<tr>
-				<td colspan="8">리스트시작!!</td>
-			</tr>
-			<tr>
-				<td colspan="8" style="height:40px; text-align:center">페이징처리</td>
+				<td colspan="8" style="height:40px; text-align:center">${pageBar}</td>
 			</tr>
 		</table>	
 	</div>
