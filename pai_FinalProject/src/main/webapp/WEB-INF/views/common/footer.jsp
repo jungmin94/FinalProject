@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <style>
-footer {
+/* footer {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
-}
+} */
 
 #footer-div {
 	text-align: center;
@@ -26,11 +26,12 @@ footer {
 }
 </style>
 <footer>
-	<div id="footer-div">
+	<div id="footer-div"  >
 		<div id="footer-information">
 			<a href="">이용약관</a> | <a href="">개인정보처리방침</a> | <a href="">청소년보호정책</a>
 		</div>
 		<div>Copyright ⓒ 2022 PAI. All rights reserved.</div>
 	</div>
 </footer>
+</body>
 </html>
