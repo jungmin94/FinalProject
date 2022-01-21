@@ -7,7 +7,6 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value=""/>
 </jsp:include>
-<body>
 
 <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 <P> 여기가 바로 메인 페이지입니닷  </P>
