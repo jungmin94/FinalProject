@@ -11,6 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>PAI</title>
 <style>
 body {  
@@ -176,7 +177,7 @@ a .sub-menu-detail {
 				<a href="${path}/board/boardList.do"><div class="menu-bar">게시판</div></a> 
 				<a href=""><div class="menu-bar">MBTI 마켓</div></a>
 				<a href=""><div class="menu-bar">채팅</div></a>
-				<a href=""><div class="menu-bar">친구찾기</div></a>
+				<a href="${path }/taste/taste.do"><div class="menu-bar">친구찾기</div></a>
 			</div>
 			<c:if test="${loginMember==null }">
 			<!-- 만약 로그인하지 않은 상태라면 하단의 div #login-box출력 -->
