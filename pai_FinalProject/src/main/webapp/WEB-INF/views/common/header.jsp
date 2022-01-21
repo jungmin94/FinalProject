@@ -11,10 +11,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <title>PAI</title>
 <style>
+body {  
+	min-height: 100vh; display: grid; grid-template-rows: auto 1fr auto; 
+} 
+
 header {
-	position: absolute;
+    position: relative; 
 	top: 0;
 	width: 100%;
 }
@@ -32,8 +37,7 @@ header {
 	margin-left: 0.4rem;
 	margin-right: 16rem;
 	flex-grow: 0;
-	position: absolute;
-	left : 10px;
+	
 }
 
 #nav-menu {
@@ -82,10 +86,15 @@ a .menu-bar {
 	padding: 0;
 	display: flex;
 	align-items: center;
+	position: absolute;
+	right: 10px;
+	top : 20px;
 }
 
 #nav-img {
 	padding-left: 50px;
+	position: absolute;
+	left : 10px;
 }
 
 .login-area {
@@ -160,31 +169,33 @@ a .sub-menu-detail {
 }
 </style>
 </head>
+<body>
 <header>
 	<nav>
 		<div class="header-nav">
 			<div class="nav-lists" id="nav-img">
-				<a href=""><img src="https://i.ibb.co/7kh6Yz5/Kakao-Talk-Photo-2022-01-15-17-58-47.jpg" width="60px" height="60px"></a>
+				<a href="${path}/"><img src="https://i.ibb.co/7kh6Yz5/Kakao-Talk-Photo-2022-01-15-17-58-47.jpg" width="60px" height="60px"></a>
 			</div>
 
 			<div id="nav-menu">
-				<a href=""><div class="menu-bar">게시판</div></a> 
+				<a href="${path}/board/boardList.do"><div class="menu-bar">게시판</div></a> 
 				<a href=""><div class="menu-bar">MBTI 마켓</div></a>
 				<a href=""><div class="menu-bar">채팅</div></a>
-				<a href=""><div class="menu-bar">친구찾기</div></a>
+				<a href="${path }/taste/taste.do"><div class="menu-bar">친구찾기</div></a>
 			</div>
 			<c:if test="${loginMember==null }">
 			<!-- 만약 로그인하지 않은 상태라면 하단의 div #login-box출력 -->
 		        <div id="login-box">
-		            <span class="login-area"><button id="login-button" onclick="location.assign('${path}/views/member/loginMember')">로그인</button></span><span class="login-area"><button
-		                    id="enroll-button">회원가입</button></span>
+		            <span class="login-area"><button id="login-button" onclick="location.assign('${path}/member/loginMember.do')">로그인</button></span>
+		            <span class="login-area"><button id="enroll-button" onclick="location.assign('${path}/member/enrollMember.do')">회원가입</button></span>
 		        </div>
 			</c:if>
-			<c:if test="${!loginMember==null }">
+			<c:if test="${loginMember!=null }">
 				<div class="nav-lists" id="mypage-icon">
 					<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-arrived는 보이지 않게 설정 필요 -->
 					<!-- 만약 받은 쪽지가 없을 경우 하단의 span .login-area의 이미지 주소는 https://i.ibb.co/vxM4TDk/2022-01-18-17-51-35.png 사용 필요 -->
-					<span id="message-arrived">쪽지가 도착했습니다!</span>
+					<span id="message-arrived">쪽지가 도착했습니다!</span><br>
+					<span id="loginMember"><c:out value="${loginMember.member_nick }님 접속을 환영합니다"/></span>
 					<span class="login-area" onmouseover="dropDownMenu();">
 						<img src="https://i.ibb.co/4Z7wXR5/2022-01-20-10-00-48.png" width="50px">
 					</span>
