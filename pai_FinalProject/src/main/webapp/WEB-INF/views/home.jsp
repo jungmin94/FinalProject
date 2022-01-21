@@ -4,12 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
-<jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="title" value=""/>
-</jsp:include>
-<body>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<section>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<P> 여기가 바로 메인 페이지입니닷  </P>
-<button type="button" class="btn btn-warning">Warning</button>
+
+
+
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
