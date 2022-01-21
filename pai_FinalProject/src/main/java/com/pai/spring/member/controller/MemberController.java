@@ -21,7 +21,7 @@ import com.pai.spring.member.model.vo.Member;
 
 @Controller
 @SessionAttributes({"loginMember"})
-@RequestMapping("/member/")
+@RequestMapping("/member")
 public class MemberController {
 	
 	@Autowired
@@ -32,17 +32,22 @@ public class MemberController {
 	
 	private Logger logger=LoggerFactory.getLogger(MemberController.class);
 	
-	@RequestMapping("memberLogin.do")
+	@RequestMapping("/loginMember.do")
+	public String loginMember(){
+		return "/member/loginMember";
+	}
+	
+	@RequestMapping("/loginMemberEnd.do")
 	public String login(@RequestParam Map param,Model model) {
 		Member m=service.login(param);
 		
 		logger.debug("{}",m);
-		if(m!=null && encoder.matches((String)param.get("member_pw"),m.getMember_pw()))
+//		if(m!=null && encoder.matches((String)param.get("member_pw"),m.getMember_pw()))
 			model.addAttribute("loginMember",m);
 		return "redirect:/";
 	}
 	
-	@RequestMapping("logout.do")
+	@RequestMapping("/logout.do")
 	public String logout(HttpSession session,SessionStatus status) {
 		if(!status.isComplete()) {
 			status.setComplete();
@@ -51,12 +56,12 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("/member/enrollMember.do")
+	@RequestMapping("/enrollMember.do")
 	public String enrollMember() {
 		return "/member/enrollMember";
 	}
 	
-	@RequestMapping(value="enrollMemberEnd.do",
+	@RequestMapping(value="/enrollMemberEnd.do",
 			method=RequestMethod.POST)
 	public String enrollMemberEnd(Member m,Model model) {
 		logger.debug("변경 전 패스워드 : {}",m.getMember_pw());
