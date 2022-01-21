@@ -36,8 +36,7 @@ header {
 	margin-left: 0.4rem;
 	margin-right: 16rem;
 	flex-grow: 0;
-	position: absolute;
-	left : 10px;
+	
 }
 
 #nav-menu {
@@ -86,10 +85,15 @@ a .menu-bar {
 	padding: 0;
 	display: flex;
 	align-items: center;
+	position: absolute;
+	right: 10px;
+	top : 20px;
 }
 
 #nav-img {
 	padding-left: 50px;
+	position: absolute;
+	left : 10px;
 }
 
 .login-area {
@@ -181,15 +185,16 @@ a .sub-menu-detail {
 			<c:if test="${loginMember==null }">
 			<!-- 만약 로그인하지 않은 상태라면 하단의 div #login-box출력 -->
 		        <div id="login-box">
-		            <span class="login-area"><button id="login-button" onclick="location.assign('${path}/views/member/loginMember')">로그인</button></span><span class="login-area"><button
-		                    id="enroll-button">회원가입</button></span>
+		            <span class="login-area"><button id="login-button" onclick="location.assign('${path}/member/loginMember.do')">로그인</button></span>
+		            <span class="login-area"><button id="enroll-button" onclick="location.assign('${path}/member/enrollMember.do')">회원가입</button></span>
 		        </div>
 			</c:if>
-			<c:if test="${!loginMember==null }">
+			<c:if test="${loginMember!=null }">
 				<div class="nav-lists" id="mypage-icon">
 					<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-arrived는 보이지 않게 설정 필요 -->
 					<!-- 만약 받은 쪽지가 없을 경우 하단의 span .login-area의 이미지 주소는 https://i.ibb.co/vxM4TDk/2022-01-18-17-51-35.png 사용 필요 -->
-					<span id="message-arrived">쪽지가 도착했습니다!</span>
+					<span id="message-arrived">쪽지가 도착했습니다!</span><br>
+					<span id="loginMember"><c:out value="${loginMember.member_nick }님 접속을 환영합니다"/></span>
 					<span class="login-area" onmouseover="dropDownMenu();">
 						<img src="https://i.ibb.co/4Z7wXR5/2022-01-20-10-00-48.png" width="50px">
 					</span>

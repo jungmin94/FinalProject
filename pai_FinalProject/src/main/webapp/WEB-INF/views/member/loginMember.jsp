@@ -75,22 +75,21 @@
 	}
 	</style>
 <body>
-	<form class="wrap" action="<%=request.getContextPath()%>/member/memberLogin.do" method="post">
+	<form class="wrap" action="${path }/member/loginMemberEnd.do" method="post">
         <div class="login">
-            <h2>HELP-WORK</h2>
             <h2>LOGIN</h2><br>
+            
             <div style="width: 80%;">
 	            <div class="form-floating mb-3" style="width: 100%">
-		            <!-- <label for="exampleInputEmail1" class="form-label">아이디</label> -->
-				  	<%-- <input type="text" class="form-control" id="floatingInput" name="memberId" placeholder="name@example.com" value="<%=saveId!=null?saveId:""%>"> --%>
-				  	<label for="floatingInput">email로 입력하세요</label>
-				</div>
+				  	<input type="text" class="form-control" id="floatingInput" name="member_id" placeholder="아이디">
+				  	<label for="floatingInput">아이디를 입력하세요</label>
+				</div> 
 			</div>	
 			
           
             <div style="width: 80%;">
 					<div class="form-floating" style="width: 100%">
-					  <input type="password" class="form-control" id="floatingPassword" name="memberPwd" placeholder="Password">
+					  <input type="password" class="form-control" id="floatingPassword" name="member_pw" placeholder="Password">
 					  <label for="floatingPassword">패스워드를 입력하세요</label>
 					</div>
 			</div>
