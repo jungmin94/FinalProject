@@ -114,21 +114,35 @@ section{
 				<td style="width:50px;color:#004080;font-size:16px;text-align:center;background:url(http://www.todayhumor.co.kr/board/images/bar_back.gif);">조회</td>
 				<td style="width:50px;color:#004080;font-size:16px;text-align:center; background:url(http://www.todayhumor.co.kr/board/images/bar_right_back.gif) no-repeat -17px 0px;">추천</td> 
 			</tr>
+			<c:forEach var="b" items="${list}">
+				<tr style="border-bottom:1px gray solid; height:40px;">
+					<td><c:out value="${b.boardNo}"/></td>
+					<td><c:out value="${b.boardCategory}"/></td>
+					<td>파일</td>
+					<td><c:out value="${b.boardTitle}"/></td>
+					<td><c:out value="${b.boardWriter.member_nick}"/></td>
+					<td><c:out value="${b.boardEnrollDate}"/></td>
+					<td><c:out value="${b.boardReadCount}"/></td>
+					<td><c:out value="${b.recommendCount}"/></td>  
+				</tr>
+			</c:forEach> 
+			<c:if test="${empty list}">
+					<tr>
+						<td colspan="8" style="text-align:center;"><p>조회된 게시물이 없습니다.</p></td>
+					</tr>
+				</c:if>
 			<tr>
-				<td colspan="8">리스트시작!!</td>
-			</tr>
-			<tr>
-				<td colspan="8" style="height:40px; text-align:center">페이징처리</td>
+				<td colspan="8" style="height:40px; text-align:center">${pageBar}</td>
 			</tr>
 		</table>	
 	</div>
 	 
-	
-	<div class="last-box" style="display: inline-flex;">
-		<div>
-			<form action="">
+	<div class="row">
+	    <div class="col-11" style="display: inline-block; text-align: center;">
+			<form action="${path}/board/searchBoard.do">
 				<span>
-					<select name="mbti" style="height: 30px;">
+					<select name="category" style="height: 30px;">						
+						<option value="">MBTI</option>
 						<option value="INTJ">INTJ</option>
 						<option value="INTP">INTP</option>
 						<option value="ENTJ">ENTJ</option>
@@ -145,12 +159,13 @@ section{
 						<option value="ISFP">ISFP</option>
 						<option value="ESTP">ESTP</option>
 						<option value="ESFP">ESFP</option>
+						<option value="info">정보</option>
 					</select>
 				</span>
 				<span>
 					<select name="searchType" style="height: 30px;">
-						<option value="title">제목</option>
-						<option value="userName">닉네임</option>
+						<option value="board_title">제목</option>
+						<option value="member_nick">닉네임</option>
 					</select>
 				</span>
 				<span>
@@ -160,11 +175,16 @@ section{
 					<button type="submit" class="btn btn-outline-primary">검색</button>
 				</span>
 			</form>
-		</div>	
-		<div class="right-box2" > 
-			<button type="button" class="btn btn-primary" onclick="location.assign('${path}/board/insertBoard.do')">글쓰기</button>
 		</div>
+	    <div class="col-1">
+	    	<button type="button" class="btn btn-primary" onclick="location.assign('${path}/board/insertBoard.do')">글쓰기</button>
+	    </div>
 	</div>
+	
+	
+	
+	 
+</div>
 	
 </section> 
 

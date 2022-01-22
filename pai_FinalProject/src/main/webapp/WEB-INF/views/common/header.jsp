@@ -174,7 +174,7 @@ a .sub-menu-detail {
 	<nav>
 		<div class="header-nav">
 			<div class="nav-lists" id="nav-img">
-				<a href=""><img src="https://i.ibb.co/7kh6Yz5/Kakao-Talk-Photo-2022-01-15-17-58-47.jpg" width="60px" height="60px"></a>
+				<a href="${path}/"><img src="https://i.ibb.co/7kh6Yz5/Kakao-Talk-Photo-2022-01-15-17-58-47.jpg" width="60px" height="60px"></a>
 			</div>
 
 			<div id="nav-menu">
