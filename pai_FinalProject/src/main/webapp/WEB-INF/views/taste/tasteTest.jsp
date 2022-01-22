@@ -25,7 +25,7 @@ article{
 		<article class="start">
 			<h2 class="mt-5 text-center">취향 테스트</h2>
 	        <button type="button" class="btn btn-primary mt-5" onclick='start();'>테스트 시작하여 친구찾기</button>
-	        <button type="button" class="btn btn-primary mt-5" onclick="">기존테스트로 친구찾기</button>
+	        <button type="button" class="btn btn-primary mt-5" onclick="end();">기존테스트로 친구찾기</button>
 		</article>
 		
 		<article class="exam">
@@ -34,8 +34,10 @@ article{
 			</div>
 			<h2 id="title" class="text-center mt-5">문제</h2>
 			<input id="type" type="hidden" value="exam01">
-			<button id="A" type="button" class="btn btn-primary mt-5">A</button>
-			<button id="B" type="button" class="btn btn-primary mt-5">B</button>
+			<div id="selectContainer" style="height:90vh;text-align:center;padding:0px;">
+				<div id="A" style="width:50%;height:100%;max-width:50%;max-height:100%; background-repeat:no-repeat; background-size:contain; background-position:right center; position:relative;" ></div>
+				<div id="B" style="width:50%;height:100%;max-width:50%;max-height:100%; background-repeat:no-repeat; background-size:contain; background-position:left center; position:relative;left:50%;top:-100%;"></div>
+			</div>
 		</article>
 		
 		<!-- <article class="result">
@@ -52,16 +54,19 @@ article{
 	</div>
 	
 	<script>
+
+	
 		var num=1;
 		var exam = {
-				1:{"title":"문제 1번", "type":"exam01", "A":"짜장면" ,"B":"짬뽕"},
-				2:{"title":"문제 2번", "type":"exam02", "A":"부먹" ,"B":"찍먹"},
-				3:{"title":"문제 3번", "type":"exam03", "A":"물냉면" ,"B":"비빔냉면"},
-				4:{"title":"문제 4번", "type":"exam04", "A":"민초파" ,"B":"반민초파"},
-				5:{"title":"문제 5번", "type":"exam05", "A":"물복" ,"B":"딱복"}
+				1:{"title":"짜장면 vs 짬뽕", "type":"exam01", "A":"${path}/resources/images/taste/tasteA1.jpg" ,"B":"${path}/resources/images/taste/tasteB1.jpg"},
+				2:{"title":"부먹 vs 찍먹", "type":"exam02", "A":"${path}/resources/images/taste/tasteA2.jpg" ,"B":"${path}/resources/images/taste/tasteB2.jpg"},
+				3:{"title":"물냉 vs 비냉", "type":"exam03", "A":"${path}/resources/images/taste/tasteA3.jpg" ,"B":"${path}/resources/images/taste/tasteB3.jpg"},
+				4:{"title":"민초파 vs 반민초", "type":"exam04", "A":"${path}/resources/images/taste/tasteA4.jpg" ,"B":"${path}/resources/images/taste/tasteB4.jpg"},
+				5:{"title":"물복 vs 딱복", "type":"exam05", "A":"${path}/resources/images/taste/tasteA5.jpg" ,"B":"${path}/resources/images/taste/tasteB5.jpg"}
 		}
 		
 		
+		//테스트 시작시
 		function start() {
 			$(".start").hide();
 			$(".exam").show();
@@ -74,13 +79,14 @@ article{
             $("#"+type).val(parseInt(preValue)+1);
             next();
         });
+        
         $("#B").click(e=>{
        	 	next();
         });
         
         function next() {
         	if(num == 6) {
-        		 $(".question").hide();
+        		 $(".exam").hide();
                  $(".result").show();
                  var taste = "";  
                  ($("#exam01").val()==1) ? $("#exam01").val("짜장면") : $("#exam01").val("짬뽕");
@@ -98,8 +104,8 @@ article{
         		$(".progress-bar").attr('style','width: calc(100/5*'+num+'%)');
         		$("#title").html(exam[num]["title"]);
         		$("#type").val(exam[num]["type"]);
-        		$("#A").html(exam[num]["A"]);
-                $("#B").html(exam[num]["B"]);
+        		$("#A").css('background-image', 'url("' + exam[num]['A'] + '")');
+        		$("#B").css('background-image', 'url("' + exam[num]['B'] + '")');
                 num++;
       
         	}
