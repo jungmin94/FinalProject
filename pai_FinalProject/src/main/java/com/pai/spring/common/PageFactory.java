@@ -2,7 +2,7 @@ package com.pai.spring.common;
 
 public class PageFactory {
 	
-	public static String getPageBar(int totalData,int cPage,int numPerPage, int pageBarSize,String url) {
+	public static String getPageBar(int totalData,int cPage,int numPerPage, int pageBarSize,String url,String urlParam) {
 		String pageBar="";
 		int totalPage=(int)Math.ceil((double)totalData/numPerPage);
 		int pageNo=((cPage-1)/pageBarSize)*pageBarSize+1;
@@ -46,7 +46,7 @@ public class PageFactory {
 		pageBar+="</ul>";
 		pageBar+="<script>";
 		pageBar+="function fn_paging(cPage){";
-		pageBar+="location.assign('"+url+"?cPage='+cPage)";
+		pageBar+="location.assign('"+url+"?cPage='+cPage+'"+urlParam+"')";
 		pageBar+="}";
 		pageBar+="</script>";
 		

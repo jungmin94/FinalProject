@@ -31,14 +31,19 @@
 	border-end-start-radius: 30px;
 	border-end-end-radius: 30px;
 }
-section{
-	font-family: 굴림체;
+section>*{
+	font-family: sans-serif;
+ 
 }
 .form-check{
 	margin: 0px;
 }
 .right-box2 {
   float: right;
+}
+#main-table>*{
+	text-decoration: none;
+	text-align:center;
 }
  
 </style>
@@ -83,9 +88,9 @@ section{
 	</div>
 
 	<div class="middle-box" style="margin-top: 30px;">
-		<table> 
+		<table id="main-table"> 
 			<tr>
-				<td colspan="5">
+				<td colspan="5" style="text-align:left;">
 					<img src="http://www.todayhumor.co.kr/board/images/topmenu_total.gif" style="height: 20px;">
 				</td>
 				<td colspan="3">
@@ -107,7 +112,7 @@ section{
 			<tr>
 				<td style="width:48px;color:#004080;font-size:16px;text-align:center; background:url(http://www.todayhumor.co.kr/board/images/bar_left_back.gif)">번호</td>
 				<td style="width:100px;color:#004080;font-size:16px;text-align:center;background:url(http://www.todayhumor.co.kr/board/images/bar_back.gif);">카테고리</td>
-				<td style="color:#004080;font-size:16px;text-align:center;background:url(http://www.todayhumor.co.kr/board/images/bar_back.gif);">첨부파일</td>
+				<td style="color:#004080;font-size:16px;text-align:center;background:url(http://www.todayhumor.co.kr/board/images/bar_back.gif);"></td>
 				<td style="width:700px;color:#004080;font-size:16px;text-align:center;background:url(http://www.todayhumor.co.kr/board/images/bar_back.gif);">제목</td>
 				<td style="width:120px;color:#004080;font-size:16px;text-align:center;background:url(http://www.todayhumor.co.kr/board/images/bar_back.gif);">이름</td>
 				<td style="width:150px;color:#004080;font-size:16px;text-align:center;background:url(http://www.todayhumor.co.kr/board/images/bar_back.gif);">날짜</td>
@@ -118,8 +123,12 @@ section{
 				<tr style="border-bottom:1px gray solid; height:40px;">
 					<td><c:out value="${b.boardNo}"/></td>
 					<td><c:out value="${b.boardCategory}"/></td>
-					<td>파일</td>
-					<td><c:out value="${b.boardTitle}"/></td>
+					<td>
+						<c:if test="${b.attachFile.size()>0}">
+							<img src="${path}/resources/images/board/file.png" style="width:30px; height:30px;">
+						</c:if>
+					</td>
+					<td style="text-align:left;text-decoration:none;"><a href="${path}/board/boardView.do?boardNo=${b.boardNo}"><c:out value="${b.boardTitle}"/></a></td>
 					<td><c:out value="${b.boardWriter.member_nick}"/></td>
 					<td><c:out value="${b.boardEnrollDate}"/></td>
 					<td><c:out value="${b.boardReadCount}"/></td>
@@ -138,7 +147,7 @@ section{
 	</div>
 	 
 	<div class="row">
-	    <div class="col-11" style="display: inline-block; text-align: center;">
+	    <div class="col-10" style="display: inline-block; text-align: center;">
 			<form action="${path}/board/searchBoard.do">
 				<span>
 					<select name="category" style="height: 30px;">						
@@ -176,7 +185,7 @@ section{
 				</span>
 			</form>
 		</div>
-	    <div class="col-1">
+	    <div class="col-2">
 	    	<button type="button" class="btn btn-primary" onclick="location.assign('${path}/board/insertBoard.do')">글쓰기</button>
 	    </div>
 	</div>

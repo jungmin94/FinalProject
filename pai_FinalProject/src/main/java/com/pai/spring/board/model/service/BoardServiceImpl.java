@@ -30,8 +30,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Board> searchBoard(Map<String, Object> param) { 
-		return dao.searchBoard(session,param);
+	public List<Board> searchBoard(Map<String, Object> param,int cPage,int numPerPage) { 
+		return dao.searchBoard(session,param,cPage,numPerPage);
+	}
+
+	@Override
+	public int searchBoardCount(Map<String,Object> param) { 
+		return dao.searchBoardCount(session,param);
+	}
+
+	@Override
+	public Board selectBoard(int boardNo) { 
+		return dao.selectBoard(session,boardNo);
 	}
 
 }
