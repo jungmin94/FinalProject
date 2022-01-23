@@ -10,6 +10,10 @@ public interface BoardService {
 	
 	int selectBoardCount();
 	
-	List<Board> searchBoard(Map<String,Object> param);
+	List<Board> searchBoard(Map<String,Object> param,int cPage,int numPerPage);
+	
+	int searchBoardCount(Map<String,Object> param);
+	
+	Board selectBoard(int boardNo);
 	
 }

@@ -13,5 +13,9 @@ public interface BoardDao {
 	
 	int selectBoardCount(SqlSessionTemplate session);
 	
-	List<Board> searchBoard(SqlSessionTemplate session,Map<String,Object> param);
+	List<Board> searchBoard(SqlSessionTemplate session,Map<String,Object> param,int cPage, int numPerPage);
+	
+	int searchBoardCount(SqlSessionTemplate session,Map<String,Object>param);
+	
+	Board selectBoard(SqlSessionTemplate session,int boardNo);
 }
