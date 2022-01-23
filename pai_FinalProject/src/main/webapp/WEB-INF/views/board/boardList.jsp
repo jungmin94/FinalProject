@@ -32,7 +32,7 @@
 	border-end-end-radius: 30px;
 }
 section>*{
-	font-family: 굴림체;
+	font-family: sans-serif;
  
 }
 .form-check{
@@ -90,7 +90,7 @@ section>*{
 	<div class="middle-box" style="margin-top: 30px;">
 		<table id="main-table"> 
 			<tr>
-				<td colspan="5">
+				<td colspan="5" style="text-align:left;">
 					<img src="http://www.todayhumor.co.kr/board/images/topmenu_total.gif" style="height: 20px;">
 				</td>
 				<td colspan="3">
@@ -125,7 +125,7 @@ section>*{
 					<td><c:out value="${b.boardCategory}"/></td>
 					<td>
 						<c:if test="${b.attachFile.size()>0}">
-							<img src="${path}/resources/image/file.png" style="width:30px; height:30px;">
+							<img src="${path}/resources/images/board/file.png" style="width:30px; height:30px;">
 						</c:if>
 					</td>
 					<td style="text-align:left;text-decoration:none;"><a href="${path}/board/boardView.do?boardNo=${b.boardNo}"><c:out value="${b.boardTitle}"/></a></td>

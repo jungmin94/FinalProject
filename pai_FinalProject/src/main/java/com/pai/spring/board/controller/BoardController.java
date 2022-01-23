@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pai.spring.board.model.service.BoardService;
@@ -69,6 +70,15 @@ public class BoardController {
 		System.out.println(b);
 		mv.addObject("board", b);
 		return mv;
+	}
+	
+	@RequestMapping("/ajax/boardView.do")
+	@ResponseBody
+	public Boolean selectBoardView(@RequestParam(value="boardNo") int boardNo) {
+		System.out.println(boardNo);
+		Board b=service.selectBoard(boardNo);
+		System.out.println(b);
+		return b==null;
 	}
 	
 	
