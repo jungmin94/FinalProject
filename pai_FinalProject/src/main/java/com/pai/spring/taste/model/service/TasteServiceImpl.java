@@ -1,5 +1,7 @@
 package com.pai.spring.taste.model.service;
 
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +23,16 @@ public class TasteServiceImpl implements TasteService{
 
 	@Override
 	public int insertTaste(Taste t) {
-		int result = dao.insertTaste(session,t);
-		return result;
+		return dao.insertTaste(session,t);
+		
 	}
+
+	@Override
+	public Taste selectTasteOne(String member_id) {
+		return dao.selectTasteOne(session,member_id);
+	
+	}
+	
+	
 
 }

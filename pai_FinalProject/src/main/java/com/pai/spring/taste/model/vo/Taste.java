@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class Taste {
+	private int tasteNo;
 	private String exam01;
 	private String exam02;
 	private String exam03;

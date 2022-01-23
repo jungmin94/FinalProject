@@ -49,6 +49,12 @@ article{
 		<input type="hidden" name="exam03" id="exam03" value="0">
 		<input type="hidden" name="exam04" id="exam04" value="0">
 		<input type="hidden" name="exam05" id="exam05" value="0">
+		<input type="hidden" name="member_id" value="${loginMember.member_id}">
+	</form>
+	
+	<!-- 기존테스트로 친구찾기 클릭시 폼 전송 -->
+	<form id="tasteForm" action="${path }/taste/selectTaste.do" method="post">
+		<input type="hidden" name="member_id" value="${loginMember.member_id}">
 	</form>
 		
 	</div>
@@ -107,8 +113,11 @@ article{
         		$("#A").css('background-image', 'url("' + exam[num]['A'] + '")');
         		$("#B").css('background-image', 'url("' + exam[num]['B'] + '")');
                 num++;
-      
         	}
+        }
+        
+        function end(){
+        	$("#tasteForm").submit();
         }
 		
 	</script>
