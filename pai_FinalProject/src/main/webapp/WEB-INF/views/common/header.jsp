@@ -180,7 +180,7 @@ a .sub-menu-detail {
 			<div id="nav-menu">
 				<a href="${path}/board/boardList.do"><div class="menu-bar">게시판</div></a> 
 				<a href=""><div class="menu-bar">MBTI 마켓</div></a>
-				<a href=""><div class="menu-bar">채팅</div></a>
+				<a href="${path }/chatting/toEnterChattingRoom.do"><div class="menu-bar">채팅</div></a>
 				<a href="${path }/taste/taste.do"><div class="menu-bar">친구찾기</div></a>
 			</div>
 			<c:if test="${loginMember==null }">
