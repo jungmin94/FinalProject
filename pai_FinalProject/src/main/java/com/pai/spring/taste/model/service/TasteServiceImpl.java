@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pai.spring.member.model.vo.Member;
 import com.pai.spring.taste.model.dao.TasteDao;
 import com.pai.spring.taste.model.vo.Taste;
 
@@ -35,7 +36,7 @@ public class TasteServiceImpl implements TasteService{
 	}
 
 	@Override
-	public List<Taste> selectTasteList(Map param) {
+	public List<Member> selectTasteList(Map param) {
 		return dao.selectTasteList(session, param);
 	}
 

@@ -1,5 +1,6 @@
 package com.pai.spring.taste.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pai.spring.member.model.vo.Member;
 import com.pai.spring.taste.model.service.TasteService;
 import com.pai.spring.taste.model.vo.Taste;
 
@@ -28,6 +30,17 @@ public class TasteController {
 	@RequestMapping(value="/selectTaste.do", method=RequestMethod.POST)
 	public ModelAndView selectTaste(String member_id, ModelAndView mv) {
 		Taste t = service.selectTasteOne(member_id);
+		System.out.println(t);
+		Map param = new HashMap();
+		param.put("exam01", t.getExam01());
+		param.put("exam02", t.getExam02());
+		param.put("exam03", t.getExam03());
+		param.put("exam04", t.getExam04());
+		param.put("exam05", t.getExam05());
+		List<Member> list = service.selectTasteList(param);
+		System.out.println(list);
+		mv.addObject("list", list);	
+		mv.setViewName("taste/tasteList");
 		return mv;
 	}
 
@@ -48,9 +61,10 @@ public class TasteController {
 		}
 
 		//1~5번 동일한 유저 리스트 가져오기
-		List<Taste> list = service.selectTasteList(param);
+		List<Member> list = service.selectTasteList(param);
 		
-		
+		mv.addObject("list", list);	
+		mv.setViewName("taste/tasteList");
 		return mv;
 	}
 	

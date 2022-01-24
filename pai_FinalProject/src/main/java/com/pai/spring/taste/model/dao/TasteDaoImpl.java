@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.pai.spring.member.model.vo.Member;
 import com.pai.spring.taste.model.vo.Taste;
 
 @Repository
@@ -24,7 +25,7 @@ public class TasteDaoImpl implements TasteDao {
 	}
 
 	@Override
-	public List<Taste> selectTasteList(SqlSessionTemplate session, Map param) {
+	public List<Member> selectTasteList(SqlSessionTemplate session, Map param) {
 		return session.selectList("taste.selectTasteList", param);
 	}
 
