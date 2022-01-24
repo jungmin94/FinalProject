@@ -1,6 +1,8 @@
 package com.pai.spring.member.controller;
 
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,15 +15,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.pai.spring.member.model.service.MemberService;
 import com.pai.spring.member.model.vo.Member;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @SessionAttributes({"loginMember"})
 @RequestMapping("/member")
+@Slf4j
 public class MemberController {
 	
 	@Autowired
@@ -83,4 +89,51 @@ public class MemberController {
 		model.addAttribute("loc",loc);
 		return "common/msg";
 	}
+	
+	
+	 //아이디 중복체크
+	 @RequestMapping(value="/checkId.do",method=RequestMethod.POST)
+	 @ResponseBody 
+	 public int checkId(@RequestParam("member_id") String member_id){ 
+		 logger.info("userIdCheck 진입");
+		 logger.info("전달받은 id:"+member_id);
+		 int result = service.checkId(member_id);
+		 logger.info("확인 결과:"+result);
+		 return result; 
+	}
+	 
+	 //닉네임 중복체크
+	 @RequestMapping(value="/checkNick.do",method=RequestMethod.POST)
+	 @ResponseBody 
+	 public int checkNick(@RequestParam("member_nick") String member_nick){ 
+		 logger.info("checkNick 진입"); 
+		 logger.info("전달받은 nick:"+member_nick);
+		 int result = service.checkNick(member_nick); 
+		 logger.info("확인 결과:"+result); 
+		 return result; 
+	 }
+	 
+	 //비밀번호 유효성평가
+	 @RequestMapping(value = "/checkPw.do", method = RequestMethod.POST)
+		@ResponseBody
+		public boolean checkPw(String member_pw) {		
+			logger.info("checkPw");		
+			
+			boolean check = false;	
+
+			String pw_chk = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*[0-9])(?=.*[$@$!%*?&`~'\"+=])[A-Za-z[0-9]$@$!%*?&`~'\"+=]{8,15}$";
+			Pattern pattern_symbol = Pattern.compile(pw_chk);		
+			Matcher matcher_symbol = pattern_symbol.matcher(member_pw);		
+			
+			if(matcher_symbol.find()) {	
+				check = true;
+			}		
+			return check;
+		}
+	
+	
+	
+	
+	
+	
 }

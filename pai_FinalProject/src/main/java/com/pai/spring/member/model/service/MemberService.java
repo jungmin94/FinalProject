@@ -8,5 +8,6 @@ public interface MemberService {
 	
 	Member login(Map param);
 	int insertMember(Member m);
-	
+	int checkId(String member_id);
+	int checkNick(String member_nick);
 }

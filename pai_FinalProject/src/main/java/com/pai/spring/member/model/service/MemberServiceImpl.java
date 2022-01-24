@@ -29,4 +29,17 @@ public class MemberServiceImpl implements MemberService {
 		return dao.insertMember(session,m);
 	}
 
+	@Override
+	public int checkId(String member_id) {
+		// TODO Auto-generated method stub
+		return dao.checkId(session,member_id);
+	}
+
+	@Override
+	public int checkNick(String member_nick) {
+		// TODO Auto-generated method stub
+		return dao.checkNick(session,member_nick);
+	}
+	
+
 }

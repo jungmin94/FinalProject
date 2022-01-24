@@ -21,4 +21,16 @@ public class MemberDaoImpl implements MemberDao {
 		return session.insert("member.insertMember",m);
 	}
 
+	@Override
+	public int checkId(SqlSessionTemplate session, String member_id) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.checkId",member_id);
+	}
+
+	@Override
+	public int checkNick(SqlSessionTemplate session, String member_nick) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.checkNick",member_nick);
+	}
+
 }
