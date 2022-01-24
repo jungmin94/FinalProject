@@ -1,6 +1,7 @@
 package com.pai.spring.board.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import com.pai.spring.member.model.vo.Member;
 
@@ -23,4 +24,5 @@ public class Board {
 	private Date boardEnrollDate;
 	private int boardReadCount;
 	private int recommendCount;
+	private List<AttachFile> attachFile;
 }

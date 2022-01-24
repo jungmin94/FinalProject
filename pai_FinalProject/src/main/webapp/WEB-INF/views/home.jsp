@@ -7,8 +7,9 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value=""/>
 </jsp:include>
+<section>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-<P> 여기가 바로 메인 페이지입니닷  </P>
-<button type="button" class="btn btn-warning">Warning</button>
+
+
+</section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
