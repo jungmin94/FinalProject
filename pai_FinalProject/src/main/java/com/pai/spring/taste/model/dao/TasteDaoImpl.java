@@ -1,5 +1,6 @@
 package com.pai.spring.taste.model.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -18,8 +19,20 @@ public class TasteDaoImpl implements TasteDao {
 	}
 
 	@Override
-	public int insertTaste(SqlSessionTemplate session, Taste t) {
-		return session.insert("taste.insertTaste",t);
+	public int insertTaste(SqlSessionTemplate session, Map param) {
+		return session.insert("taste.insertTaste",param);
 	}
+
+	@Override
+	public List<Taste> selectTasteList(SqlSessionTemplate session, Map param) {
+		return session.selectList("taste.selectTasteList", param);
+	}
+
+	@Override
+	public int updateTaste(SqlSessionTemplate session, Map param) {
+		return session.update("taste.updateTaste",param);
+	}
+	
+	
 
 }
