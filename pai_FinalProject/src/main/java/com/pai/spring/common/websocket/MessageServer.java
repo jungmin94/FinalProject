@@ -20,6 +20,7 @@ public class MessageServer extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		log.debug("{}",session.getId());
 		clients.add(session);
+		System.out.println("after" + session);
 	}
 
 	//클라이언트가 웹소켓 서버로 메시지를 전송했을때 실행 onMessage
@@ -36,12 +37,15 @@ public class MessageServer extends TextWebSocketHandler{
 				client.sendMessage(message);
 			}
 		}
+		System.out.println("handle" + session + " : " + message);
+
 	}
 
 	//클라이언트가 연결을 끊었을때 실행 onClose
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("close" + session + " : " + status);
 		super.afterConnectionClosed(session, status);
 	}
 	

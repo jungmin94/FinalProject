@@ -22,14 +22,14 @@
 			<c:forEach var="t" items="${list }">
 			  <div class="col">
 				<div class="card" style="width: 18rem;">
-					<img src="${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;">
+					<%-- <img src="${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;"> --%>
 					<div class="card-body">
-					  <h5 class="card-title"><c:out value="${t.member_id.member_id }"/></h5>
+					  <p class="card-title"><c:out value="${t.member_id.member_id }"/></p>
 					  <p class="card-text"><c:out value="${t.member_id.member_nick }"/></p>
 					  <p class="card-text"><c:out value="${t.member_id.member_date }"/></p>
 					  <p class="card-text"><c:out value="${t.member_id.member_gender }"/></p>
 					  <p class="card-text"><c:out value="${t.member_id.member_mbti }"/></p>
-					  <a href="javascript:fn_sendNote(this);" class="btn btn-primary">쪽지 보내기</a>
+					  <a href="javascript:fn_sendMessage(this);" class="btn btn-primary">쪽지 보내기</a>
 					</div>
 				  </div>
 			  </div>
@@ -49,9 +49,19 @@
 
 <script>
 
-const fn_sendNote=(e)=>{
+const fn_sendMessage=(e)=>{
 	open("${path}/message/sendMessage","_blank","width=300,height=500");
-}
+/* 	 var memberId = e.parentElement.children[0].value;
+	 var memberNick = e.parentElement.children[1].value;
+	 var memberDate = e.parentElement.children[2].value;
+	 var memberGender = e.parentElement.children[3].value;
+	 var memberMbti = e.parentElement.children[4].value;
+	 $("#memberId").val(memberId);
+	 $("#memberNick").val(memberNick);
+	 $("#memberDate").val(memberDate);
+	 $("#memberGender").val(memberGender);
+	 $("#memberMbti").val(memberMbti); */
+};
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
