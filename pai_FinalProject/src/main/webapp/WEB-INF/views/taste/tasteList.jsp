@@ -22,7 +22,7 @@
 			<c:forEach var="t" items="${list }">
 			  <div class="col">
 				<div class="card" style="width: 18rem;">
-					<%-- <img src="${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;"> --%>
+					<img src="${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;">
 					<div class="card-body">
 					  <p class="card-title"><c:out value="${t.member_id.member_id }"/></p>
 					  <p class="card-text"><c:out value="${t.member_id.member_nick }"/></p>
@@ -50,7 +50,7 @@
 <script>
 
 const fn_sendMessage=(e)=>{
-	open("${path}/message/sendMessage","_blank","width=300,height=500");
+	open("${path}/message/sendMessage","_blank","width=600,height=600");
 /* 	 var memberId = e.parentElement.children[0].value;
 	 var memberNick = e.parentElement.children[1].value;
 	 var memberDate = e.parentElement.children[2].value;
