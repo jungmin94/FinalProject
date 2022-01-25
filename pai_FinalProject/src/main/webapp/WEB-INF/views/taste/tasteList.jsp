@@ -50,7 +50,7 @@
 <script>
 
 const fn_sendNote=(e)=>{
-	open("${path}/note/sendNote","_blank","width=300,height=500");
+	open("${path}/message/sendMessage","_blank","width=300,height=500");
 }
 </script>
 

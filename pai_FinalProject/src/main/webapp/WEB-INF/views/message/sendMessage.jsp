@@ -24,7 +24,7 @@
 	
 	
 <script>
-	const socket = new SockJS("http://localhost:9090${pageContext.request.contextPath}/note");	
+	const socket = new SockJS("http://localhost:9090${pageContext.request.contextPath}/message");	
 	socket.onopen=e=>{
 	 	console.log(e);
 		$("#container").append($("<h3>").html("쪽지 보내기"));

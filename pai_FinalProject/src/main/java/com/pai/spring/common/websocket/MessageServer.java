@@ -11,7 +11,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class NoteServer extends TextWebSocketHandler{
+public class MessageServer extends TextWebSocketHandler{
 
 	private List<WebSocketSession> clients = new ArrayList();
 

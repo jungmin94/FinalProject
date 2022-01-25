@@ -1,4 +1,4 @@
-package com.pai.spring.note.controller;
+package com.pai.spring.message.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class WebsocketController {
 
-	@RequestMapping("/note/sendNote")
+	@RequestMapping("/message/sendMessage")
 	public String sendNote() {
-		return "note/sendNote";
+		return "message/sendMessage";
 	}
 	
 }
