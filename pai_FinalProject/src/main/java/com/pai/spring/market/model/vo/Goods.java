@@ -21,5 +21,8 @@ public class Goods {
 	private String middleCategoty;
 	private String image;
 	private String sizeImage;
+	private int totalCell;
+	private int avgGrade;
+	
 	
 }
