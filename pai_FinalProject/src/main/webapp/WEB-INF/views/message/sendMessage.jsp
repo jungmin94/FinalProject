@@ -31,24 +31,22 @@
   <div class="mb-3 row">
     <label for="recv_nick" class="col-sm-2 col-form-label badge bg-secondary">받는사람</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="recv_nick" value="받는사람 닉네임">
+      <input type="hidden" id="member_id" name="member_id" value="${param.member_id }"/>
+      <input type="text" readonly class="form-control-plaintext" id="member_nick" value="${param.member_nick }">
     </div>
   </div>
     
   <div class="mb-3 row">
     <label for="msg_content" class="col-sm-12 col-form-label badge bg-secondary">내용</label>
     <div class="col-sm-12">
-      <textarea class="form-control" id="msg_content" rows="5" cols="30"></textarea>
+      <textarea class="form-control" id="msg_content" rows="5" cols="30">디자인은 나중에 수정예정</textarea>
     </div>
   </div>
 
 	<button class="btn btn-primary" onclick="sendMsg();">보내기</button>
 	<div id="container">
 
-<!-- 	<div class="well">
-		<input type="text" id="msg" value="1212" class="form-control"/>
-		<button id="btnSend" class="btn btn-primary">send message</button>
-	</div> -->
+
 	
 	
 	</div>
@@ -149,7 +147,7 @@ $(document).ready(	function() {
 	 	console.log(e);
 	}
 	const sendMsg=()=>{
-		socket.send(JSON.stringify({"발신인":'${loginMember.member_id}',"제목":$("#msg_title").val(), "내용":$("#msg_content").val()}));
+		socket.send(JSON.stringify({"보낸사람":'${loginMember.member_id}',"받는사람":$("#member_id").val(),"제목":$("#msg_title").val(), "내용":$("#msg_content").val()}));
 	}
 	socket.onmessage=message=>{
 		console.log(message.data);

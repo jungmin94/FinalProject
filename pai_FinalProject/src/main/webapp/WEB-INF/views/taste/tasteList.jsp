@@ -22,14 +22,14 @@
 			<c:forEach var="t" items="${list }">
 			  <div class="col">
 				<div class="card" style="width: 18rem;">
-					<img src="${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;">
+					<%-- <img src="${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;"> --%>
 					<div class="card-body">
-					  <p class="card-title"><c:out value="${t.member_id.member_id }"/></p>
+					  <p class="card-text"><c:out value="${t.member_id.member_id }"/></p>
 					  <p class="card-text"><c:out value="${t.member_id.member_nick }"/></p>
 					  <p class="card-text"><c:out value="${t.member_id.member_date }"/></p>
 					  <p class="card-text"><c:out value="${t.member_id.member_gender }"/></p>
 					  <p class="card-text"><c:out value="${t.member_id.member_mbti }"/></p>
-					  <a href="javascript:fn_sendMessage(this);" class="btn btn-primary">쪽지 보내기</a>
+					  <button onclick="sendMessage(this);" class="btn btn-primary">쪽지 보내기</button>
 					</div>
 				  </div>
 			  </div>
@@ -44,23 +44,32 @@
 		
 		<br>
 		<br>
+		<form id="sendData" action="${path}/message/sendMessage" method="post">
+			<input type="hidden" name="member_id" id="member_id" >
+			<input type="hidden" name="member_nick" id="member_nick">
+			<input type="hidden" name="member_date" id="member_date">
+			<input type="hidden" name="member_gender" id="member_gender">
+			<input type="hidden" name="member_mbti" id="member_mbti">
+		</form>
 
 </section> 
 
 <script>
 
-const fn_sendMessage=(e)=>{
-	open("${path}/message/sendMessage","_blank","width=600,height=600");
-/* 	 var memberId = e.parentElement.children[0].value;
-	 var memberNick = e.parentElement.children[1].value;
-	 var memberDate = e.parentElement.children[2].value;
-	 var memberGender = e.parentElement.children[3].value;
-	 var memberMbti = e.parentElement.children[4].value;
-	 $("#memberId").val(memberId);
-	 $("#memberNick").val(memberNick);
-	 $("#memberDate").val(memberDate);
-	 $("#memberGender").val(memberGender);
-	 $("#memberMbti").val(memberMbti); */
+const sendMessage=(e)=>{
+ 	 var memberId = e.parentElement.children[0].innerText;
+	 var memberNick = e.parentElement.children[1].innerText;
+	 var memberDate = e.parentElement.children[2].innerText;
+	 var memberGender = e.parentElement.children[3].innerText;
+	 var memberMbti = e.parentElement.children[4].innerText;
+	 $("#member_id").val(memberId);
+	 $("#member_nick").val(memberNick);
+	 $("#member_date").val(memberDate);
+	 $("#member_gender").val(memberGender);
+	 $("#member_mbti").val(memberMbti);
+	 $('#sendData').attr("target", "formInfo");
+	 open("", "formInfo", "height=600, width=600, menubar=no, scrollbars=yes, resizable=no, toolbar=no, status=no, left=50, top=50");
+	 $("#sendData").submit();
 };
 </script>
 
