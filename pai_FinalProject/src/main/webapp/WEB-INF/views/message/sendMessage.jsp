@@ -13,133 +13,44 @@
 </head>
 
 <body>
+<form id="sendMessage" action="">
   <div class="mb-3 row">
   	<h2>쪽지 보내기</h2>
     <label for="msg_title" class="col-sm-2 col-form-label badge bg-secondary">제목</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="msg_title">
+      <input type="text" name="msg_title" class="form-control" id="msg_title">
     </div>
   </div>
   
   <div class="mb-3 row">
   <label for="send_nick" class="col-sm-2 col-form-label badge bg-secondary">보낸사람</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="send_nick" value="${loginMember.member_nick}">
+      <input type="text" class="form-control-plaintext" id="send_nick" value="${loginMember.member_nick}" readonly>
+      <input type="hidden" name="send_id" id="send_id" value="${loginMember.member_id}">
     </div>
   </div>
   
   <div class="mb-3 row">
     <label for="recv_nick" class="col-sm-2 col-form-label badge bg-secondary">받는사람</label>
     <div class="col-sm-10">
-      <input type="hidden" id="member_id" name="member_id" value="${param.member_id }"/>
       <input type="text" readonly class="form-control-plaintext" id="member_nick" value="${param.member_nick }">
+      <input type="hidden" name="recv_id" id="recv_id" value="${param.member_id }"/>
     </div>
   </div>
     
   <div class="mb-3 row">
     <label for="msg_content" class="col-sm-12 col-form-label badge bg-secondary">내용</label>
     <div class="col-sm-12">
-      <textarea class="form-control" id="msg_content" rows="5" cols="30">디자인은 나중에 수정예정</textarea>
+      <textarea class="form-control" name="msg_content" id="msg_content" rows="5" cols="30">디자인은 나중에 수정예정</textarea>
     </div>
   </div>
 
 	<button class="btn btn-primary" onclick="sendMsg();">보내기</button>
 	<div id="container">
-
-
-	
-	
 	</div>
-	
-<!-- 	<div class="container">
-<h3 class=" text-center">Messaging</h3>
-<div class="messaging">
-      <div class="inbox_msg">
 
-        <div class="mesgs">
-          <div class="msg_history">
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test which is a new approach to have all
-                    solutions</p>
-                  <span class="time_date"> 11:01 AM    |    June 9</span></div>
-              </div>
-            </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Test which is a new approach to have all
-                  solutions</p>
-                <span class="time_date"> 11:01 AM    |    June 9</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test, which is a new approach to have</p>
-                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-              </div>
-            </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Apollo University, Delhi, India Test</p>
-                <span class="time_date"> 11:01 AM    |    Today</span> </div>
-            </div>
-            <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>We work directly with our designers and suppliers,
-                    and sell direct to you, which means quality, exclusive
-                    products, at a price anyone can afford.</p>
-                  <span class="time_date"> 11:01 AM    |    Today</span></div>
-              </div>
-            </div>
-          </div>
-          <div class="type_msg">
-            <div class="input_msg_write">
-              <input type="text" class="write_msg" placeholder="Type a message" />
-              <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div></div> -->
+</form>
 
-
-
-<!-- 
-<script>
-$(document).ready(	function() {
-	// var $boxFooter = $("section.content div.box-footer");
-	$('#btn-remove-read').on('click', function() {
-		if (confirm("Are u sure??")) {
-			self.location.href = "/board/remove${criteria.makeQuery()}&bno=${board.bno}";
-		}
-	});
-	
-	listPage(1, '${board.bno}'); // QQQ
-	gBno = '${board.bno}';
-	gBoardWriter = '${board.writer}';
-	//$('#myModal').modal('show');
-	
-    showAttaches(${board.bno});	
-    
-    gIsDirect = true;
-    
-    $('#btnSend').on('click', function(evt) {
-    	evt.preventDefault();
-    	if (socket.readyState !== 1) return;
-    	
-   	    let msg = $('input#msg').val();
-   	    socket.send(msg);
-   	});
-    connect();
-    
-});
-</script> -->
-	
 	
 <script>
  	const socket = new SockJS("http://localhost:9090${pageContext.request.contextPath}/message");	

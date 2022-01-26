@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class WebsocketController {
+public class MessageController {
 
 	@RequestMapping(value="/message/sendMessage", method=RequestMethod.POST)
 	public ModelAndView sendMessage(@RequestParam Map param, ModelAndView mv) {
