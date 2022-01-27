@@ -1,9 +1,13 @@
 package com.pai.spring.board.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -90,10 +94,22 @@ public class BoardController {
 	@ResponseBody
 	public Boolean insertBoardEnd(@RequestParam(value="upFile",required=false) MultipartFile[] upFile,
 									@RequestParam(value="boardTitle") String boardTitle, @RequestParam(value="boardCategory") String boardCategory,
-									@RequestParam(value="boardContent") String boardContent,@RequestParam(value="memberId") String memberId ,ModelAndView mv) {
+									@RequestParam(value="boardContent") String boardContent,@RequestParam(value="memberId") String memberId ,ModelAndView mv,HttpServletRequest req) {
 		 
+		String path=req.getServletContext().getRealPath("/resources/upload/board/");
+		File file=new File(path);
+		if(!file.exists()) file.mkdirs();
+		for(MultipartFile mf : upFile) {
+			if(!mf.isEmpty()) {
+				try {
+					mf.transferTo(new File(path+mf.getOriginalFilename()));
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		Member m=Member.builder().member_id(memberId).build();
-		System.out.println("게시물 내용 : " +boardContent);
 		List<AttachFile> filenames=new ArrayList();
 		AttachFile f=null;
 		for(int i=0;i<upFile.length;i++) {

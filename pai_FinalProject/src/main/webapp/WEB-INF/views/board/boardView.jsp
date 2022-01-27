@@ -5,6 +5,10 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/> 
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<%@ page import="com.pai.spring.board.model.vo.Board" %> 
+<%
+	Board b=(Board)request.getAttribute("board");
+%>
 <style>
 section>*{
 	 font-family: sans-serif;
@@ -46,20 +50,20 @@ section>*{
 	    <c:if test="${board.attachFile.size()>0}">
 	    	<div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel" style="height:350px;">
 			  <div class="carousel-indicators">
-			    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-			    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
-			    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+			   <%for(int i=0;i<b.getAttachFile().size();i++){%>
+			    <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="<%=i%>" class="active" aria-current="true" aria-label="Slide <%=i+1%>"></button>
+			   <%} %>  
 			  </div>
-			  <div class="carousel-inner">
+			  <div class="carousel-inner"> 
 			    <div class="carousel-item active" data-bs-interval="10000">
-			      <img style="height:350px;" src="${path}/resources/images/board/file.png" class="d-block w-100" alt="...">
+			      <img style="height:350px;" src="${path}/resources/upload/board/${board.getAttachFile().get(0).getAttachFileName()}" class="d-block w-100" alt="...">
 			    </div>
-			    <div class="carousel-item" data-bs-interval="2000">
-			      <img style="height:350px;" src="${path}/resources/images/board/file.png" class="d-block w-100" alt="...">
-			    </div>
-			    <div class="carousel-item">
-			      <img style="height:350px;" src="${path}/resources/images/board/file.png" class="d-block w-100" alt="...">
-			    </div>
+			    <%for(int i=1;i<b.getAttachFile().size();i++){%>
+				    <div class="carousel-item" data-bs-interval="2000">
+				      <img style="height:350px;" src="${path}/resources/upload/board/<%=b.getAttachFile().get(i).getAttachFileName()%>" class="d-block w-100" alt="...">
+				    </div> 
+			    <%} %> 
+			    
 			</div>
 			  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
 			    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
