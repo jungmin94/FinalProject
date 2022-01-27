@@ -5,6 +5,34 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<style>
+.star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; 
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+}
+ 
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-ratings-base {
+  z-index: 0;
+  padding: 0;
+}
+</style>
 <section>
 
 <div class="container">
@@ -79,7 +107,23 @@
 					<div class="card-body">
 					  <h5 class="card-title">${s.goodsName}</h5>
 					  <p class="card-text"><fmt:formatNumber  value="${s.minPrice}"  type="currency"/>원</p>
-					  <p>평점 구현 예정</p>
+					  <div class="star-ratings" >
+						<div class="star-ratings-fill space-x-2 text-lg" >
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+							<c:choose>
+								<c:when test="${s.avgGrade==1}"><span>★</span></c:when>
+								<c:when test="${s.avgGrade==2}"><span>★</span><span>★</span></c:when>
+								<c:when test="${s.avgGrade==3}"><span>★</span><span>★</span><span>★</span></c:when>
+								<c:when test="${s.avgGrade==4}"><span>★</span><span>★</span><span>★</span><span>★</span></c:when>
+								<c:when test="${s.avgGrade==5}"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></c:when>
+							</c:choose>
+						</div>
+						<div class="star-ratings-base space-x-2 text-lg">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+							<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+						</div>
+					</div>
+					<br>
 					  <a href="#" class="btn btn-primary">상품 보러가기</a>
 					</div>
 				  </div>
@@ -113,7 +157,23 @@
 					<div class="card-body">
 					  <h5 class="card-title">${g.goodsName}</h5>
 					  <p class="card-text"><fmt:formatNumber  value="${g.minPrice}"  type="currency"/>원</p>
-					  <p>평점 구현 예정</p>
+					  <div class="star-ratings" >
+						<div class="star-ratings-fill space-x-2 text-lg" >
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+							<c:choose>
+								<c:when test="${g.avgGrade==1}"><span>★</span></c:when>
+								<c:when test="${g.avgGrade==2}"><span>★</span><span>★</span></c:when>
+								<c:when test="${g.avgGrade==3}"><span>★</span><span>★</span><span>★</span></c:when>
+								<c:when test="${g.avgGrade==4}"><span>★</span><span>★</span><span>★</span><span>★</span></c:when>
+								<c:when test="${g.avgGrade==5}"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></c:when>
+							</c:choose>
+						</div>
+						<div class="star-ratings-base space-x-2 text-lg">
+							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+							<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+						</div>
+					</div>
+					<br>
 					  <a href="#" class="btn btn-primary">상품 보러가기</a>
 					</div>
 				  </div>

@@ -27,27 +27,18 @@
 
 			  <div class="form-check form-check-inline">
 				<input class="form-check-input" type="checkbox" id="gridCheck3">
-				<label class="form-check-label" for="gridCheck3">의류</label>
+				<label class="form-check-label" for="gridCheck3">상의</label>
 			  </div>
 
 			  
 			<div class="form-check form-check-inline">
 				<input class="form-check-input" type="checkbox" id="gridCheck4">
-				<label class="form-check-label" for="gridCheck4">기타(etc)</label>
+				<label class="form-check-label" for="gridCheck4">하의</label>
 			  </div>
 
 		  </div>
 		</fieldset>
-		<div class="row mb-3">
-		  <div class="col-sm-10 offset-sm-2">
-			<select class="form-select form-select-sm" aria-label=".form-select-sm example">
-				<option selected>의류 카테고리</option>
-				<option value="">One</option>
-				<option value="">Two</option>
-				<option value="">Three</option>
-			  </select>
-		  </div>
-		</div>
+		
 		<button type="submit" class="btn btn-primary">검색하기</button>
 	  </form>
 
