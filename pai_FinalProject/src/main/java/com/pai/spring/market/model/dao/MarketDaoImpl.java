@@ -3,9 +3,11 @@ package com.pai.spring.market.model.dao;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.stereotype.Repository;
 
 import com.pai.spring.market.model.vo.Goods;
 
+@Repository
 public class MarketDaoImpl implements MarketDao {
 
 	@Override

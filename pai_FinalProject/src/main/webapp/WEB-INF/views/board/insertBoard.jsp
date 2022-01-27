@@ -75,7 +75,7 @@
 		        </div>
 		        <div class="col-12">
 				  <label class="form-label" style="width:100px;">내용</label>
-				  <textarea class="form-control" name="boardContent" rows="3" placeholder="내용을 입력해주세요"></textarea>
+				  <textarea class="form-control" id="boardContent" rows="3" placeholder="내용을 입력해주세요"></textarea>
 				</div>
 				<div>
 					<input type="hidden" id="memberId" value="${loginMember.member_id}">

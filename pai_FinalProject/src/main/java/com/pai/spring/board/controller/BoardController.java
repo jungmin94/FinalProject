@@ -93,7 +93,7 @@ public class BoardController {
 									@RequestParam(value="boardContent") String boardContent,@RequestParam(value="memberId") String memberId ,ModelAndView mv) {
 		 
 		Member m=Member.builder().member_id(memberId).build();
-		System.out.println(m);
+		System.out.println("게시물 내용 : " +boardContent);
 		List<AttachFile> filenames=new ArrayList();
 		AttachFile f=null;
 		for(int i=0;i<upFile.length;i++) {
