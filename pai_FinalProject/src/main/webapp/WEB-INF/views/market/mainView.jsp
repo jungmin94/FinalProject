@@ -67,36 +67,24 @@
 			<div class="col">
 					
 			</div>
+			<c:forEach items="${topSellList}" var="s">
 			  <div class="col">
 				<div class="card" style="width: 18rem;">
-					<img src="https://item.kakaocdn.net/do/5440669192e9c89cb7e42a6ba33df547960f4ab09fe6e38bae8c63030c9b37f9" class="card-img-top" alt="..." style="height: 170px;">
+					<c:if test="${s.image eq null}">
+						<img src="${path}/resources/images/market/이미지준비중.jpg" class="card-img-top" alt="..." style="height: 170px;">
+					</c:if>
+					<c:if test="${s.image ne null}">
+						<img src="${path}/resources/images/market/${s.image}" class="card-img-top" alt="..." style="height: 170px;">
+					</c:if>
 					<div class="card-body">
-					  <h5 class="card-title">Card title</h5>
-					  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					  <a href="#" class="btn btn-primary">Go somewhere</a>
+					  <h5 class="card-title">${s.goodsName}</h5>
+					  <p class="card-text"><fmt:formatNumber  value="${s.minPrice}"  type="currency"/>원</p>
+					  <p>평점 구현 예정</p>
+					  <a href="#" class="btn btn-primary">상품 보러가기</a>
 					</div>
 				  </div>
 			  </div>
-			  <div class="col">
-				<div class="card" style="width: 18rem;">
-					<img src="https://item.kakaocdn.net/do/5440669192e9c89cb7e42a6ba33df547960f4ab09fe6e38bae8c63030c9b37f9" class="card-img-top" alt="..." style="height: 170px;">
-					<div class="card-body">
-					  <h5 class="card-title">Card title</h5>
-					  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					  <a href="#" class="btn btn-primary">Go somewhere</a>
-					</div>
-				  </div>
-			  </div>
-			  <div class="col">
-				<div class="card" style="width: 18rem;">
-					<img src="https://item.kakaocdn.net/do/5440669192e9c89cb7e42a6ba33df547960f4ab09fe6e38bae8c63030c9b37f9" class="card-img-top" alt="..." style="height: 170px;">
-					<div class="card-body">
-					  <h5 class="card-title">Card title</h5>
-					  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					  <a href="#" class="btn btn-primary">Go somewhere</a>
-					</div>
-				  </div>
-			  </div>
+			  </c:forEach>
 			<div class="col">
 					
 			</div>
@@ -104,52 +92,40 @@
 		
 		<br>
 		<br>
-		<!-------------------------------------------리뷰수 TOP3---------------------------------------------------------->
+		<!-------------------------------------------평점 TOP3---------------------------------------------------------->
 		<div style="text-align: center;">
-		  <span class="badge bg-warning">리뷰수 TOP 3</span>
+		  <span class="badge bg-warning">평점 TOP 3</span>
 		</div>
-		  <br>
-		  <br>
-		  <div class="row" style="text-align: center;">
+		<br>
+		<div class="row" style="text-align: center;">
 			<div class="col">
-				
+					
+			</div>
+			<c:forEach items="${topGradeList}" var="g">
+			  <div class="col">
+				<div class="card" style="width: 18rem;">
+					<c:if test="${g.image eq null}">
+						<img src="${path}/resources/images/market/이미지준비중.jpg" class="card-img-top" alt="..." style="height: 170px;">
+					</c:if>
+					<c:if test="${g.image ne null}">
+						<img src="${path}/resources/images/market/${g.image}" class="card-img-top" alt="..." style="height: 170px;">
+					</c:if>
+					<div class="card-body">
+					  <h5 class="card-title">${g.goodsName}</h5>
+					  <p class="card-text"><fmt:formatNumber  value="${g.minPrice}"  type="currency"/>원</p>
+					  <p>평점 구현 예정</p>
+					  <a href="#" class="btn btn-primary">상품 보러가기</a>
+					</div>
+				  </div>
 			  </div>
+			  </c:forEach>
 			<div class="col">
-			  <div class="card" style="width: 18rem;">
-				  <img src="https://item.kakaocdn.net/do/5440669192e9c89cb7e42a6ba33df547960f4ab09fe6e38bae8c63030c9b37f9" class="card-img-top" alt="..." style="height: 170px;">
-				  <div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					<a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div>
-				</div>
+					
 			</div>
-			<div class="col">
-			  <div class="card" style="width: 18rem;">
-				  <img src="https://item.kakaocdn.net/do/5440669192e9c89cb7e42a6ba33df547960f4ab09fe6e38bae8c63030c9b37f9" class="card-img-top" alt="..." style="height: 170px;">
-				  <div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					<a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div>
-				</div>
-			</div>
-			<div class="col">
-			  <div class="card" style="width: 18rem;">
-				  <img src="https://item.kakaocdn.net/do/5440669192e9c89cb7e42a6ba33df547960f4ab09fe6e38bae8c63030c9b37f9" class="card-img-top" alt="..." style="height: 170px;">
-				  <div class="card-body">
-					<h5 class="card-title">Card title</h5>
-					<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-					<a href="#" class="btn btn-primary">Go somewhere</a>
-				  </div>
-				</div>
-			</div>
-			<div class="col">	
-			  
-			  </div>
-		  </div>
-			<br>
-			<br>
+		</div>	 
+		
+		<br>
+		<br>
 		<!-------------------------------------------전체상품 보러가기---------------------------------------------------------->
 		<div class="d-grid gap-2">
 			<button class="btn btn-secondary" type="button">전체상품 보러가기</button>

@@ -10,8 +10,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pai.spring.market.model.service.MarketService;
 import com.pai.spring.market.model.vo.Goods;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/market")
+@Slf4j
 public class MarketController {
 	
 	@Autowired
@@ -22,6 +25,10 @@ public class MarketController {
 		
 		List<Goods> topSellList = service.bestSell();
 		List<Goods> topGradeList = service.bestReview();
+		
+		System.out.println(topSellList);
+		log.debug("{}"+topSellList);
+		log.debug("{}"+topGradeList);
 		
 		mv.addObject("topSellList",topSellList);
 		mv.addObject("topGradeList",topGradeList);
