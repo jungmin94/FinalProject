@@ -6,8 +6,10 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pai.spring.board.model.dao.BoardDao;
+import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
 
 @Service
@@ -42,6 +44,21 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Board selectBoard(int boardNo) { 
 		return dao.selectBoard(session,boardNo);
+	}
+
+	@Override
+	@Transactional
+	public int insertBoard(Board b) { 
+		int result=dao.insertBoard(session,b);
+		if(result>0&&!b.getAttachFile().isEmpty()) {
+			for(AttachFile f : b.getAttachFile()) {
+				f.setBoardNo(b.getBoardNo());
+				result=dao.insertAttachment(session,f);
+			}
+				
+		}
+		return result;
+		
 	}
 
 }
