@@ -124,7 +124,7 @@
 						</div>
 					</div>
 					<br>
-					  <a href="#" class="btn btn-primary">상품 보러가기</a>
+					  <a href="${path}/market/searchList.do?goodsName=${s.goodsName}" class="btn btn-primary">상품 보러가기</a>
 					</div>
 				  </div>
 			  </div>
@@ -174,7 +174,7 @@
 						</div>
 					</div>
 					<br>
-					  <a href="#" class="btn btn-primary">상품 보러가기</a>
+					  <a href="${path}/market/searchList.do?goodsName=${g.goodsName}" class="btn btn-primary">상품 보러가기</a>
 					</div>
 				  </div>
 			  </div>
@@ -188,7 +188,8 @@
 		<br>
 		<!-------------------------------------------전체상품 보러가기---------------------------------------------------------->
 		<div class="d-grid gap-2">
-			<button class="btn btn-secondary" type="button">전체상품 보러가기</button>
+			<button class="btn btn-secondary" type="button" 
+			onclick="location.assign('${path}/market/goodsList.do')">전체상품 보러가기</button>
 		</div>
 			<br>
 		</div>

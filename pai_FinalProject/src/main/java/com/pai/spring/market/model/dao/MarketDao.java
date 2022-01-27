@@ -11,5 +11,10 @@ public interface MarketDao {
 	List<Goods> bestSell(SqlSessionTemplate session);
 	
 	List<Goods> bestReview(SqlSessionTemplate session);
+
+	List<Goods> selectGoodsList(SqlSessionTemplate session,int cPage,int numPerPage);
+	
+	int selectGoodsCount(SqlSessionTemplate session);
+	
 	
 }

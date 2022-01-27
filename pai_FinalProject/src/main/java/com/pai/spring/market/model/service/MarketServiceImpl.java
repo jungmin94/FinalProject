@@ -12,6 +12,7 @@ import com.pai.spring.market.model.vo.Goods;
 @Service
 public class MarketServiceImpl implements MarketService {
 
+
 	@Autowired
 	private SqlSessionTemplate session;
 	
@@ -30,6 +31,17 @@ public class MarketServiceImpl implements MarketService {
 		return dao.bestReview(session);
 	}
 
+	@Override
+	public List<Goods> selectGoodsList(int cPage, int numPerPage) {
+	
+		return dao.selectGoodsList(session,cPage,numPerPage);
+	}
+
+	@Override
+	public int selectGoodsCount() {
+		
+		return dao.selectGoodsCount(session);
+	}
 	
 	
 }
