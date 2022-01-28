@@ -1,6 +1,7 @@
 package com.pai.spring.market.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,10 +29,6 @@ public class MarketController {
 		List<Goods> topSellList = service.bestSell();
 		List<Goods> topGradeList = service.bestReview();
 		
-		System.out.println(topSellList);
-		log.debug("{}"+topSellList);
-		log.debug("{}"+topGradeList);
-		
 		mv.addObject("topSellList",topSellList);
 		mv.addObject("topGradeList",topGradeList);
 		mv.setViewName("market/mainView");
@@ -58,11 +55,33 @@ public class MarketController {
 	
 	
 	@RequestMapping("/searchList.do")
-	public ModelAndView goodsList(String goodsName,ModelAndView mv) {
+	public ModelAndView searchList(@RequestParam Map<String,Object> param,@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage,ModelAndView mv) {
+		
+		System.out.println(param);
+		List<Goods> list = service.searchList(param,cPage,numPerPage);
+		
+		int totalData = service.selectGoodsCount(param);
+		
+		mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage,5, "searchList.do", null));
+		mv.addObject("goodsList",list);	
+		
+		System.out.println("디비 후 : "+list);
+		
+		mv.setViewName("market/marketList");
+		
+		return mv;
+	}
+	
+	
+	@RequestMapping("/goodsDetailView.do")
+	public ModelAndView goodsDetailView(String goodsName,ModelAndView mv) {
+		
 		
 		System.out.println(goodsName);
 		
 		return mv;
+		
 	}
 	
 	
