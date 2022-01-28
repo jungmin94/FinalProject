@@ -1,6 +1,7 @@
 package com.pai.spring.market.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,19 @@ public class MarketServiceImpl implements MarketService {
 		
 		return dao.selectGoodsCount(session);
 	}
+	
+	@Override
+	public int selectGoodsCount(Map<String, Object> param) {
+	
+		return dao.selectGoodsCount(session,param);
+	}
+	
+	@Override
+	public List<Goods> searchList(Map<String, Object> param, int cPage, int numPerPage) {
+		
+		return dao.searchList(session,param,cPage,numPerPage);
+	}
+	
 	
 	
 }

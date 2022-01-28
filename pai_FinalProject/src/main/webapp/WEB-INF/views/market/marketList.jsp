@@ -75,7 +75,7 @@
 						</div>
 					</div>
 					<br>
-					  <a href="${path}/market/searchList.do?goodsName=${g.goodsName}" class="btn btn-primary">상품 보러가기</a>
+					  <a href="${path}/market/goodsDetailView.do?goodsName=${g.goodsName}" class="btn btn-primary">상품 보러가기</a>
 					</div>
 				  </div>
 			  </div>

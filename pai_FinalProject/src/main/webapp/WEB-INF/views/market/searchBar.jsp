@@ -3,11 +3,11 @@
 	  <div class="collapse" id="navbarToggleExternalContent">
 		<div class="bg-white p-4">
 
-	  <form>
+	  <form action="${pageContext.request.contextPath}/market/searchList.do" method="post">
 		<div class="row mb-3">
 		  <label for="inputEmail3" class="col-sm-2 col-form-label">상품명</label>
 		  <div class="col-sm-10">
-			<input type="search" class="form-control" id="inputGoodsName">
+			<input type="search" class="form-control" id="inputGoodsName" name="goodsName">
 		  </div>
 		</div>
 
@@ -16,23 +16,23 @@
 		  <div class="col-sm-10">
 
 			<div class="form-check form-check-inline">
-			  <input class="form-check-input" type="checkbox" id="gridCheck1">
+			  <input class="form-check-input" type="checkbox" id="gridCheck1" name="male" value="M">
 			  <label class="form-check-label" for="gridCheck1">남성용</label>
 			</div>
 
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" id="gridCheck2">
+				<input class="form-check-input" type="checkbox" id="gridCheck2" name="female" value="F">
 				<label class="form-check-label" for="gridCheck2">여성용</label>
 			  </div>
 
 			  <div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" id="gridCheck3">
+				<input class="form-check-input" type="checkbox" id="gridCheck3" name="top" value="상의">
 				<label class="form-check-label" for="gridCheck3">상의</label>
 			  </div>
 
 			  
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" id="gridCheck4">
+				<input class="form-check-input" type="checkbox" id="gridCheck4" name="pants" value="하의">
 				<label class="form-check-label" for="gridCheck4">하의</label>
 			  </div>
 
