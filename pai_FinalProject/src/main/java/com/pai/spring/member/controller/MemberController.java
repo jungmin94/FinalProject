@@ -1,5 +1,8 @@
 package com.pai.spring.member.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.pai.spring.member.model.service.MemberService;
 import com.pai.spring.member.model.vo.Member;
@@ -131,6 +135,27 @@ public class MemberController {
 			return check;
 		}
 	
+	//프로필이미지업로드
+	@RequestMapping(value="/profileUpload.do", method=RequestMethod.POST)
+	public void profileUpload(MultipartFile[] member_profile) {
+	
+		String uploadFolder = "C:\\upload";
+		
+		//폴더경로
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		String str = sdf.format(date);
+		String datePath = str.replace("-", File.separator);
+		
+		//폴더 생성
+		File uploadPath = new File(uploadFolder, datePath);
+		
+		if(uploadPath.exists() == false) {
+			uploadPath.mkdirs();
+		}
+		
+					
+	}
 	
 	
 	

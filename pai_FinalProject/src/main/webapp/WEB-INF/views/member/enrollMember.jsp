@@ -46,9 +46,11 @@
 	}
 </style>
 <div id="enroll-container">
-			<form id="joinFrm" name="memberEnrollFrm" action="${path }/member/enrollMemberEnd.do" method="post">
-				<label for="exampleDataList" class="form-label">아이디</label>
+			<form id="joinFrm" name="memberEnrollFrm" action="${path }/member/enrollMemberEnd.do" method="post" enctype="multipart/form-data">
+				<h2>회원가입</h2>
+				
 				<div id="memberId-container">
+					<label for="exampleDataList" class="form-label">아이디</label>
 					<input type="text" class="form-control" placeholder="아이디 (4글자이상)" name="member_id" id="member_id" required oninput="checkId()"/>
 					<span class="id_ok">사용 가능한 아이디입니다.</span>
 					<span class="id_error">누군가가 이 아이디를 사용하고있어요.</span>
@@ -119,13 +121,13 @@
 				<div id="memberGender-container">
 					<label for="exampleDataList" class="form-label">성별</label>
 					<div class="form-check">
-					  <input class="form-check-input" type="radio" name="flexRadioDefault" id="member_gender" value="남">
+					  <input class="form-check-input" type="radio" name="member_gender" value="남">
 					  <label class="form-check-label" for="flexRadioDefault1">
 					    남자
 					  </label>
 					</div>
 					<div class="form-check">
-					  <input class="form-check-input" type="radio" name="flexRadioDefault" id="member_gender" value="녀">
+					  <input class="form-check-input" type="radio" name="member_gender" value="여">
 					  <label class="form-check-label" for="flexRadioDefault2">
 					    여자
 					  </label>
@@ -133,13 +135,17 @@
 					<span class="final_addr_ck">성별을 체크해주세요.</span>
 				</div>				
 				<div id="memberProfile-container">
-					
+					<label for="exampleDataList" class="form-label">프로필사진</label>
+					<div class="mb-3">
+					  <input class="form-control" type="file" id="member_profile" name="member_profile">
+					</div>
 				</div>
-				
-				
-				
-				
-				
+				<div id="image-container">
+				</div>
+				<div id="memberContent-container">
+					<label for="exampleDataList" class="form-label">자기소개</label>
+					<textarea class="form-control" name="boardContent" placeholder="자기소개를 입력해주세요..."></textarea>
+				</div>
 				
 				<input type="submit" class="btn btn-outline-success" id="join" value="가입" >&nbsp;
 				<input type="reset" class="btn btn-outline-success" value="취소">
@@ -427,8 +433,78 @@
 		})
 	})
 	
-	//이메일값
+	//이미지 업로드
+	/* $("input[type='file']").on("change", function(e){
+		
+		
+		
+		let formData = new FormData();
+		let fileInput = $('input[name="member_profile"]');
+		let fileList = fileInput[0].files;
+		let fileObj = fileList[0];
+		
+		console.log("fileList : " + fileList);
+		console.log("fileName : " + fileObj.name);
+		console.log("fileSize : " + fileObj.size);
+		console.log("fileType(MimeType) : " + fileObj.type);
+		
+		if(!fileCheck(fileObj.name, fileObj.size)){
+			return false;
+		}
+		
+		formData.append("member_profile", fileObj);		
+		
+		$.ajax({
+	    	type : "POST",
+			url: "${path}/member/profileUpload.do",
+	    	processData : false,
+	    	contentType : false,
+	    	data : formData,
+	    	dataType : 'json'
+		});
+	});
+	//var, method related with attachFile
+	let regex = new RegExp("(.*?)\.(jpg|png)$");
+	let maxSize = 1048576; //1MB	
 	
+	function fileCheck(fileName, fileSize){
+
+		if(fileSize >= maxSize){
+			alert("파일 사이즈 초과");
+			return false;
+		}
+			  
+		if(!regex.test(fileName)){
+			alert("해당 종류의 파일은 업로드할 수 없습니다.");
+			return false;
+		}
+		
+		return true;		
+		
+	} */
+	
+	
+	
+	
+	//이미지 미리보기
+	$("#target").click(e=>{
+   		$("input[name=member_profile]").click();
+   	});
+   	$("input[name=member_profile]").change(e=>{
+   		if(e.target.files[0].type.includes("image")){
+   			let reader=new FileReader();
+   			reader.onload=(e)=>{
+   				const img=$("<img>").attr({
+   					src:e.target.result,
+   					width:"100px",
+   					height:"100px"
+   				});
+   				$("#image-container").append(img);
+   				$("#target").attr("src",e.target.result);
+   			}
+   			reader.readAsDataURL(e.target.files[0]);
+   		}
+   	})
 	
 	
 </script>		
