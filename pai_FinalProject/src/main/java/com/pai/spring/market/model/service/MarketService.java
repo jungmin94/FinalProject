@@ -9,5 +9,9 @@ public interface MarketService {
 	List<Goods> bestSell();
 	
 	List<Goods> bestReview();
+
+	List<Goods> selectGoodsList(int cPage,int numPerPage);
+	
+	int selectGoodsCount();
 	
 }

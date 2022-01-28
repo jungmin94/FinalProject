@@ -46,7 +46,8 @@ public class PageFactory {
 		pageBar+="</ul>";
 		pageBar+="<script>";
 		pageBar+="function fn_paging(cPage){";
-		pageBar+="location.assign('"+url+"?cPage='+cPage+'"+urlParam+"')";
+		if(urlParam==null)pageBar+="location.assign('"+url+"?cPage='+cPage);";
+		else pageBar+="location.assign('"+url+"?cPage='+cPage+'"+urlParam+"')";
 		pageBar+="}";
 		pageBar+="</script>";
 		

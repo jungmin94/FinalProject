@@ -5,13 +5,18 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pai.spring.common.PageFactory;
 import com.pai.spring.market.model.service.MarketService;
 import com.pai.spring.market.model.vo.Goods;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/market")
+@Slf4j
 public class MarketController {
 	
 	@Autowired
@@ -23,12 +28,41 @@ public class MarketController {
 		List<Goods> topSellList = service.bestSell();
 		List<Goods> topGradeList = service.bestReview();
 		
+		System.out.println(topSellList);
+		log.debug("{}"+topSellList);
+		log.debug("{}"+topGradeList);
+		
 		mv.addObject("topSellList",topSellList);
 		mv.addObject("topGradeList",topGradeList);
 		mv.setViewName("market/mainView");
 		
 		return mv;
 		
+	}
+	
+	@RequestMapping("/goodsList.do")
+	public ModelAndView goodsList(@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage,ModelAndView mv) {
+		
+	List<Goods> list = service.selectGoodsList(cPage,numPerPage);	
+	
+	int totalData = service.selectGoodsCount();
+		
+	mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage,5, "goodsList.do", null));	
+	mv.addObject("goodsList",list);	
+	
+	mv.setViewName("market/marketList");
+	
+	return mv;
+	}
+	
+	
+	@RequestMapping("/searchList.do")
+	public ModelAndView goodsList(String goodsName,ModelAndView mv) {
+		
+		System.out.println(goodsName);
+		
+		return mv;
 	}
 	
 	
