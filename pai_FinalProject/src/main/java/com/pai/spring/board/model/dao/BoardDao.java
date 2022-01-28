@@ -39,4 +39,6 @@ public interface BoardDao {
 	
 	int commentDelete(SqlSessionTemplate session,int commentNo);
 	
+	int updateBoardReadCount(SqlSessionTemplate session,int boardNo);
+	
 }

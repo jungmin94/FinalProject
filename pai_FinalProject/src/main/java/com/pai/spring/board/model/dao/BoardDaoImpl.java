@@ -86,6 +86,11 @@ public class BoardDaoImpl implements BoardDao {
 		return session.delete("board.commentDelete", commentNo);
 	}
 
+	@Override
+	public int updateBoardReadCount(SqlSessionTemplate session, int boardNo) { 
+		return session.update("board.updateBoardReadCount",boardNo);
+	}
+
 
 	
 }

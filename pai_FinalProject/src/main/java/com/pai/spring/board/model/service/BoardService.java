@@ -15,6 +15,8 @@ public interface BoardService {
 	
 	int searchBoardCount(Map<String,Object> param);
 	
+	Board selectBoard(int boardNo, boolean isRead);
+	
 	Board selectBoard(int boardNo);
 	
 	int insertBoard(Board b);

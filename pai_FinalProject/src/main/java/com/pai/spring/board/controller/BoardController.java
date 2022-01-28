@@ -7,7 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,9 +75,34 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/boardView.do")
-	public ModelAndView boardView(ModelAndView mv,@RequestParam(value="boardNo") int boardNo) {
-		//System.out.println(boardNo);
-		Board b=service.selectBoard(boardNo);  
+	public ModelAndView boardView(ModelAndView mv,@RequestParam(value="boardNo") int boardNo,HttpServletRequest req,HttpServletResponse res) {
+
+		Cookie[] cookies=req.getCookies();
+		String boardRead=""; 
+		boolean isRead=false; // 읽었으면 true, 안읽었으면 false 
+		
+		if(cookies!=null) {
+			for(Cookie c : cookies) {
+				String name=c.getName();
+				String value=c.getValue();
+				if(name.equals("boardRead")) {
+					boardRead=value;
+					if(value.contains("|"+boardNo+"|")) {
+						isRead=true;
+						break;
+					}
+				}
+			}
+		}
+		
+		if(!isRead) {
+			Cookie c = new Cookie("boardRead",boardRead+"|"+boardNo+"|");
+			c.setMaxAge(24*60*60);
+			res.addCookie(c);
+		}
+		
+		
+		Board b=service.selectBoard(boardNo,isRead);  
 		List<BoardComment> list=service.boardCommentList(boardNo);
 		//System.out.println("댓글 : " + list);
 		mv.addObject("board", b); 
@@ -86,9 +113,32 @@ public class BoardController {
 	
 	@RequestMapping("/ajax/boardView.do")
 	@ResponseBody
-	public Boolean selectBoardView(@RequestParam(value="boardNo") int boardNo) {
-		//System.out.println(boardNo);
-		Board b=service.selectBoard(boardNo);
+	public Boolean selectBoardView(@RequestParam(value="boardNo") int boardNo,HttpServletRequest req,HttpServletResponse res) {
+		Cookie[] cookies=req.getCookies();
+		String boardRead=""; 
+		boolean isRead=false; // 읽었으면 true, 안읽었으면 false 
+		
+		if(cookies!=null) {
+			for(Cookie c : cookies) {
+				String name=c.getName();
+				String value=c.getValue();
+				if(name.equals("boardRead")) {
+					boardRead=value;
+					if(value.contains("|"+boardNo+"|")) {
+						isRead=true;
+						break;
+					}
+				}
+			}
+		}
+		
+		if(!isRead) {
+			Cookie c = new Cookie("boardRead",boardRead+"|"+boardNo+"|");
+			c.setMaxAge(24*60*60);
+			res.addCookie(c);
+		}
+		
+		Board b=service.selectBoard(boardNo,isRead);
 		//System.out.println(b);
 		return b==null;
 	}
@@ -127,8 +177,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/boardUpdate.do")
-	public ModelAndView boardUpdate(ModelAndView mv,int boardNo) {
-		System.out.println(boardNo);
+	public ModelAndView boardUpdate(ModelAndView mv,int boardNo) { 
 		Board b=service.selectBoard(boardNo); 
 		mv.addObject("board", b);
 		return mv;

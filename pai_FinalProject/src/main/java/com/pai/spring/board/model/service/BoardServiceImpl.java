@@ -43,10 +43,24 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional
+	public Board selectBoard(int boardNo,boolean isRead) { 
+		Board b=dao.selectBoard(session,boardNo);
+		if(b!=null&&!isRead) {
+			int result=dao.updateBoardReadCount(session,boardNo);
+			if(result>0) {
+				b=dao.selectBoard(session, boardNo);
+			}
+		}
+		
+		return b;
+	}
+
+	@Override
 	public Board selectBoard(int boardNo) { 
 		return dao.selectBoard(session,boardNo);
 	}
-
+	
 	@Override
 	@Transactional
 	public int insertBoard(Board b) { 
@@ -106,6 +120,8 @@ public class BoardServiceImpl implements BoardService {
 	public int commentDelete(int commentNo) { 
 		return dao.commentDelete(session,commentNo);
 	}
+
+	 
 
 
 }
