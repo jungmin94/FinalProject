@@ -25,4 +25,5 @@ public class Board {
 	private int boardReadCount;
 	private int recommendCount;
 	private List<AttachFile> attachFile;
+	private List<BoardComment> comment;
 }

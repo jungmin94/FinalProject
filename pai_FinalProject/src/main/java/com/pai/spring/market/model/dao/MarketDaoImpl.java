@@ -1,7 +1,9 @@
 package com.pai.spring.market.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +11,7 @@ import com.pai.spring.market.model.vo.Goods;
 
 @Repository
 public class MarketDaoImpl implements MarketDao {
+
 
 	@Override
 	public List<Goods> bestSell(SqlSessionTemplate session) {
@@ -22,6 +25,28 @@ public class MarketDaoImpl implements MarketDao {
 		return session.selectList("market.bestReview");
 	}
 
+	@Override
+	public List<Goods> selectGoodsList(SqlSessionTemplate session, int cPage, int numPerPage) {
 	
+		return session.selectList("market.goodsList",null,new RowBounds((cPage-1)*numPerPage,numPerPage));
+	}
+
+	@Override
+	public int selectGoodsCount(SqlSessionTemplate session) {
+	
+		return session.selectOne("market.selectGoodsCount");
+	}
+	
+	@Override
+	public int selectGoodsCount(SqlSessionTemplate session,Map<String, Object> param) {
+	
+		return session.selectOne("market.selectSearchGoodsCount",param);
+	}
+	
+	@Override
+	public List<Goods> searchList(SqlSessionTemplate session, Map<String, Object> param, int cPage, int numPerPage) {
+		
+		return session.selectList("market.searchList",param,new RowBounds((cPage-1)*numPerPage,numPerPage));
+	}
 	
 }

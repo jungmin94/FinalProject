@@ -6,9 +6,12 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pai.spring.board.model.dao.BoardDao;
+import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
+import com.pai.spring.board.model.vo.BoardComment;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -40,8 +43,85 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional
+	public Board selectBoard(int boardNo,boolean isRead) { 
+		Board b=dao.selectBoard(session,boardNo);
+		if(b!=null&&!isRead) {
+			int result=dao.updateBoardReadCount(session,boardNo);
+			if(result>0) {
+				b=dao.selectBoard(session, boardNo);
+			}
+		}
+		
+		return b;
+	}
+
+	@Override
 	public Board selectBoard(int boardNo) { 
 		return dao.selectBoard(session,boardNo);
 	}
+	
+	@Override
+	@Transactional
+	public int insertBoard(Board b) { 
+		int result=dao.insertBoard(session,b);
+		if(result>0&&!b.getAttachFile().isEmpty()) {
+			for(AttachFile f : b.getAttachFile()) {
+				f.setBoardNo(b.getBoardNo());
+				result=dao.insertAttachment(session,f);
+			}
+				
+		}
+		return result;
+		
+	}
+
+	@Override
+	@Transactional
+	public int updateBoard(Board b) { 
+		int result=dao.updateBoard(session,b);
+		if(result>0&&!b.getAttachFile().isEmpty()) {
+			result=dao.deleteFile(session,b.getBoardNo());
+			if(result>0) {
+				for(AttachFile f : b.getAttachFile()) {
+					f.setBoardNo(b.getBoardNo());
+					result=dao.insertAttachment(session,f);
+				}
+			}
+		} 
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public int insertComment(BoardComment bc) { 
+		return dao.insertComment(session,bc);
+	}
+
+	@Override
+	@Transactional
+	public int insertComment2(BoardComment bc) { 
+		return dao.insertComment2(session,bc);
+	}
+	
+	@Override
+	public List<BoardComment> boardCommentList(int boardNo) { 
+		return dao.boardCommentList(session,boardNo);
+	}
+
+	@Override
+	@Transactional
+	public int deleteBoard(int boardNo) { 
+		return dao.deleteBoard(session,boardNo);
+	}
+
+	@Override
+	@Transactional
+	public int commentDelete(int commentNo) { 
+		return dao.commentDelete(session,commentNo);
+	}
+
+	 
+
 
 }

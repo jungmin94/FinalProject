@@ -53,10 +53,10 @@ section>*{
 		
 		 	<div class="row">
 			    <div class="col left-top" >
-			     <h2 style="font-weight: bolder;">주간 조회수 인기글</h2>
+			     <h2 style="font-weight: bolder;">조회수 인기글</h2>
 			    </div>
 			    <div class="col right-top">
-			      <h2 style="font-weight: bolder;">주간 추천수 인기글</h2>
+			      <h2 style="font-weight: bolder;">추천수 인기글</h2>
 			    </div>
 		    </div>
 		   	<div class="row">
@@ -128,7 +128,12 @@ section>*{
 							<img src="${path}/resources/images/board/file.png" style="width:30px; height:30px;">
 						</c:if>
 					</td>
-					<td style="text-align:left;text-decoration:none;"><a href="${path}/board/boardView.do?boardNo=${b.boardNo}"><c:out value="${b.boardTitle}"/></a></td>
+					<td style="text-align:left; text-decoration:none;">
+							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}">
+								<c:out value="${b.boardTitle}"/>
+								<span style="font-weight:bolder;">[<c:out value="${b.comment.size()}"/>]</span> 
+							</a>
+					</td>
 					<td><c:out value="${b.boardWriter.member_nick}"/></td>
 					<td><c:out value="${b.boardEnrollDate}"/></td>
 					<td><c:out value="${b.boardReadCount}"/></td>
