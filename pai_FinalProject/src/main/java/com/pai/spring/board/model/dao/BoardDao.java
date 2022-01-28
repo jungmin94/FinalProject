@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
+import com.pai.spring.board.model.vo.BoardComment;
 
 public interface BoardDao {
 
@@ -23,4 +24,15 @@ public interface BoardDao {
 	int insertBoard(SqlSessionTemplate session,Board b);
 	
 	int insertAttachment(SqlSessionTemplate session,AttachFile f);
+	
+	int updateBoard(SqlSessionTemplate session,Board b);
+	
+	int deleteFile(SqlSessionTemplate session,int boardNo);
+	
+	int insertComment(SqlSessionTemplate session,BoardComment bc);
+	
+	int insertComment2(SqlSessionTemplate session,BoardComment bc);
+	
+	List<BoardComment> boardCommentList(SqlSessionTemplate session,int boardNo);
+	
 }

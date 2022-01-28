@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
+import com.pai.spring.board.model.vo.BoardComment;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -49,6 +50,32 @@ public class BoardDaoImpl implements BoardDao {
 	public int insertAttachment(SqlSessionTemplate session, AttachFile f) { 
 		return session.insert("board.insertAttachFile",f);
 	}
+
+	@Override
+	public int updateBoard(SqlSessionTemplate session, Board b) { 
+		return session.update("board.updateBoard",b);
+	}
+
+	@Override
+	public int deleteFile(SqlSessionTemplate session, int boardNo) { 
+		return session.delete("board.deleteBoard", boardNo);
+	}
+
+	@Override
+	public int insertComment(SqlSessionTemplate session, BoardComment bc) { 
+		return session.insert("board.insertComment",bc);
+	}
+
+	@Override
+	public int insertComment2(SqlSessionTemplate session, BoardComment bc) { 
+		return session.insert("board.insertComment2",bc);
+	}
+	
+	@Override
+	public List<BoardComment> boardCommentList(SqlSessionTemplate session, int boardNo) { 
+		return session.selectList("board.boardCommentList", boardNo);
+	}
+
 
 	
 }

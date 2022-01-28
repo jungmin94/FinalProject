@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pai.spring.board.model.dao.BoardDao;
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
+import com.pai.spring.board.model.vo.BoardComment;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -60,5 +61,38 @@ public class BoardServiceImpl implements BoardService {
 		return result;
 		
 	}
+
+	@Override
+	@Transactional
+	public int updateBoard(Board b) { 
+		int result=dao.updateBoard(session,b);
+		if(result>0&&!b.getAttachFile().isEmpty()) {
+			result=dao.deleteFile(session,b.getBoardNo());
+			if(result>0) {
+				for(AttachFile f : b.getAttachFile()) {
+					f.setBoardNo(b.getBoardNo());
+					result=dao.insertAttachment(session,f);
+				}
+			}
+		} 
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public int insertComment(BoardComment bc) { 
+		return dao.insertComment(session,bc);
+	}
+
+	@Override
+	public int insertComment2(BoardComment bc) { 
+		return dao.insertComment2(session,bc);
+	}
+	
+	@Override
+	public List<BoardComment> boardCommentList(int boardNo) { 
+		return dao.boardCommentList(session,boardNo);
+	}
+
 
 }

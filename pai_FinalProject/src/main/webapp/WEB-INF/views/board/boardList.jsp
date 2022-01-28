@@ -128,7 +128,12 @@ section>*{
 							<img src="${path}/resources/images/board/file.png" style="width:30px; height:30px;">
 						</c:if>
 					</td>
-					<td style="text-align:left;text-decoration:none;"><a href="${path}/board/boardView.do?boardNo=${b.boardNo}"><c:out value="${b.boardTitle}"/></a></td>
+					<td style="text-align:left;text-decoration:none;">
+							<a href="${path}/board/boardView.do?boardNo=${b.boardNo}">
+								<c:out value="${b.boardTitle}"/>
+								<!-- [<c:out value="${b.comment.size()}"/>] -->
+							</a>
+					</td>
 					<td><c:out value="${b.boardWriter.member_nick}"/></td>
 					<td><c:out value="${b.boardEnrollDate}"/></td>
 					<td><c:out value="${b.boardReadCount}"/></td>
