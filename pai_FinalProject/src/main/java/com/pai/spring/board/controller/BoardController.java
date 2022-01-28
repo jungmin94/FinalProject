@@ -229,6 +229,42 @@ public class BoardController {
 		return mv;
 	}
 	
+	@RequestMapping("/boardDelete.do")
+	public ModelAndView deleteBoard(ModelAndView mv,int boardNo) {
+		 int result=service.deleteBoard(boardNo);
+		
+		 String msg="";
+		 String loc="";
+		 if(result>0) {
+			 msg="게시물이 성공적으로 삭제되었습니다!";
+			 loc="/board/boardList.do";		 
+		 }else {
+			 msg="게시물 삭제에 실패했습니다";
+			 loc="/board/boardList.do";	
+		 }
+		 mv.addObject("msg", msg);
+		 mv.addObject("loc", loc);
+		 mv.setViewName("common/msg"); 
+		return mv;
+	}
 	
+	@RequestMapping("/commentDelete.do")
+	public ModelAndView commentDelete(ModelAndView mv,int commentNo,int boardNo) {
+		 int result=service.commentDelete(commentNo);
+		
+		 String msg="";
+		 String loc="";
+		 if(result>0) {
+			 msg="댓글이 성공적으로 삭제되었습니다!";
+			 loc="/board/boardView.do?boardNo="+boardNo;	 
+		 }else {
+			 msg="댓글삭제에 실패했습니다";
+			 loc="/board/boardView.do?boardNo="+boardNo;
+		 }
+		 mv.addObject("msg", msg);
+		 mv.addObject("loc", loc);
+		 mv.setViewName("common/msg"); 
+		return mv;
+	}
 	
 }

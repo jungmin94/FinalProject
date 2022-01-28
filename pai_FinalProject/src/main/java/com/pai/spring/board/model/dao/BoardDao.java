@@ -35,4 +35,8 @@ public interface BoardDao {
 	
 	List<BoardComment> boardCommentList(SqlSessionTemplate session,int boardNo);
 	
+	int deleteBoard(SqlSessionTemplate session,int boardNo);
+	
+	int commentDelete(SqlSessionTemplate session,int commentNo);
+	
 }

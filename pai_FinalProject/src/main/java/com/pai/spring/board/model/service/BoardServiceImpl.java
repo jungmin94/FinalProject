@@ -85,6 +85,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	@Transactional
 	public int insertComment2(BoardComment bc) { 
 		return dao.insertComment2(session,bc);
 	}
@@ -92,6 +93,18 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardComment> boardCommentList(int boardNo) { 
 		return dao.boardCommentList(session,boardNo);
+	}
+
+	@Override
+	@Transactional
+	public int deleteBoard(int boardNo) { 
+		return dao.deleteBoard(session,boardNo);
+	}
+
+	@Override
+	@Transactional
+	public int commentDelete(int commentNo) { 
+		return dao.commentDelete(session,commentNo);
 	}
 
 

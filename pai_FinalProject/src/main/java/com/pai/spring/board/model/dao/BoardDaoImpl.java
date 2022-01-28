@@ -58,7 +58,7 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public int deleteFile(SqlSessionTemplate session, int boardNo) { 
-		return session.delete("board.deleteBoard", boardNo);
+		return session.delete("board.deleteFile", boardNo);
 	}
 
 	@Override
@@ -74,6 +74,16 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public List<BoardComment> boardCommentList(SqlSessionTemplate session, int boardNo) { 
 		return session.selectList("board.boardCommentList", boardNo);
+	}
+
+	@Override
+	public int deleteBoard(SqlSessionTemplate session, int boardNo) { 
+		return session.delete("board.deleteBoard", boardNo);
+	}
+
+	@Override
+	public int commentDelete(SqlSessionTemplate session, int commentNo) { 
+		return session.delete("board.commentDelete", commentNo);
 	}
 
 

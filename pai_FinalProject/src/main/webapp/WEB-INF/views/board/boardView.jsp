@@ -124,9 +124,27 @@ section>*{
 							<c:if test="${loginMember!=null}">  
 								<button class="btn-reply" value=<c:out value="${bc.commentNo}"/>>답글</button>
 								<c:if test="${loginMember.member_id eq 'admin' || loginMember.member_nick eq bc.commentWriter}">  
-									<button class="btn-delete">삭제</button>
+									<button type="button" data-bs-toggle="modal" data-bs-target="#commentDelete" class="btn-delete">삭제</button>
 								</c:if>
-							</c:if>					
+							</c:if>		
+							<!-- Modal -->
+							<div class="modal fade" id="commentDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="staticBackdropLabel">댓글 삭제</h5>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							        댓글을 정말 삭제하시겠습니까?
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+							        <button type="button" class="btn btn-primary" onclick="location.replace('${path}/board/commentDelete.do?commentNo=${bc.commentNo}&boardNo=${board.boardNo}')">네</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>			
 						</td>
 			    	</tr>
 	    	  </c:if>
@@ -183,13 +201,32 @@ section>*{
 			    <div class="col-1" style="margin-top:10px; padding:0px; width:60px;" >
 			       <button class="btn btn-primary" type="button" onclick="location.assign('${path}/board/boardUpdate.do?boardNo=${board.boardNo}')">수정</button>
 			    </div>
-			    <div class="col-1" style="margin-top:10px; padding:0px; width:60px;" >
-			       <button class="btn btn-primary" type="button" onclick="location.assign('${path}/board/boardDelete.do')">삭제</button>
-			    </div>
+			     <div class="col-1" style="margin-top:10px; padding:0px; width:60px;" >
+			       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">삭제</button>
+			    </div> 
 		    </c:if>
 		    <div class="col-1" style="margin-top:10px; padding:0px;" >
 		       <button class="btn btn-primary" type="button" onclick="location.assign('${path}/board/boardList.do')">전체목록</button>
 		    </div>
+		    
+		    <!-- 삭제 Modal -->
+			<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="staticBackdropLabel">게시물 삭제</h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        정말 게시물을 삭제하시겠습니까? 
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+			        <button type="button" class="btn btn-primary" onclick="location.replace('${path}/board/boardDelete.do?boardNo=${board.boardNo}')">네</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
 		    
 		  </div> 	   
 	</div>
