@@ -23,6 +23,7 @@ import com.pai.spring.board.model.service.BoardService;
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardLike;
 import com.pai.spring.common.PageFactory;
 import com.pai.spring.member.model.vo.Member;
 
@@ -39,8 +40,12 @@ public class BoardController {
 	@RequestMapping("/boardList.do")
 	public ModelAndView BoardList(ModelAndView mv,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="10") int numPerPage) {
 		List<Board> list=service.boardList(cPage,numPerPage); 
+		List<Board> readList=service.readList(); 
+		List<Board> likeList=service.likeList();
 		int totalDate=service.selectBoardCount();
-		//System.out.println(list);
+		 
+		mv.addObject("readList", readList);
+		mv.addObject("likeList", likeList);
 		mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "boardList.do",""));
 		mv.addObject("list", list); 
 	
@@ -68,6 +73,14 @@ public class BoardController {
 		param.put("numPerPage", numPerPage);
 		List<Board> list=service.searchBoard(param,cPage,numPerPage);
 		int totalDate=service.searchBoardCount(param);
+		
+		List<Board> readList=service.readList(); 
+		List<Board> likeList=service.likeList(); 
+		mv.addObject("category", category); 
+		mv.addObject("searchType", searchType); 
+		mv.addObject("keyword", keyword); 
+		mv.addObject("readList", readList);
+		mv.addObject("likeList", likeList);
 		mv.addObject("pageBar", PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "searchBoard.do","&category="+category+"&searchType="+searchType+"&keyword="+keyword));
 		mv.addObject("list", list);
 		mv.setViewName("board/boardList");
@@ -75,7 +88,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/boardView.do")
-	public ModelAndView boardView(ModelAndView mv,@RequestParam(value="boardNo") int boardNo,HttpServletRequest req,HttpServletResponse res) {
+	public ModelAndView boardView(ModelAndView mv,String memberId,@RequestParam(value="boardNo") int boardNo,HttpServletRequest req,HttpServletResponse res) {
 
 		Cookie[] cookies=req.getCookies();
 		String boardRead=""; 
@@ -104,7 +117,9 @@ public class BoardController {
 		
 		Board b=service.selectBoard(boardNo,isRead);  
 		List<BoardComment> list=service.boardCommentList(boardNo);
-		//System.out.println("댓글 : " + list);
+		Map param=Map.of("memberId",memberId,"boardNo",boardNo);
+		BoardLike like = service.selectBoardLike(param);
+		mv.addObject("like",like);
 		mv.addObject("board", b); 
 		mv.addObject("comments", list);
 		mv.addObject("commentCount", b.getComment().size());
@@ -313,6 +328,66 @@ public class BoardController {
 		 mv.addObject("msg", msg);
 		 mv.addObject("loc", loc);
 		 mv.setViewName("common/msg"); 
+		return mv;
+	}
+	
+	@RequestMapping("/boardLike.do") 
+	public ModelAndView boardLike(String memberId,int boardNo,ModelAndView mv) {
+		System.out.println(memberId+" : "+boardNo);
+		//Member m=service.selectMember(memberId);
+		//Board b=service.selectBoard(boardNo);
+		//BoardLike like=BoardLike.builder().boardNo(b).memberId(m).build(); 
+		//1. board_like테이블에 데이터값 유무 확인
+		Map param=Map.of("memberId",memberId,"boardNo",boardNo);
+		BoardLike like = service.selectBoardLike(param);
+		//2. 있으면 삭제 , 없으면 추가하는 로직  
+		int result;
+		if(like==null) {
+			result=service.insertBoardLike(param);
+		}else {
+			result=service.deleteBoardLike(param);
+		}
+		//3. 결과 응답
+		System.out.println(like);
+		Board b=service.selectBoard(boardNo);  
+		List<BoardComment> list=service.boardCommentList(boardNo); 
+		mv.addObject("board", b); 
+		mv.addObject("comments", list);
+		mv.addObject("commentCount", b.getComment().size());
+		BoardLike like2 = service.selectBoardLike(param);
+		mv.addObject("like",like2);
+		mv.setViewName("board/boardView");
+		return mv;
+	}
+	
+	@RequestMapping("/clickRead.do")
+	public ModelAndView clickRead(String select,ModelAndView mv,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="10") int numPerPage) {
+		 
+		List<Board> list=service.boardReadList(cPage,numPerPage); 
+		List<Board> readList=service.readList(); 
+		List<Board> likeList=service.likeList();
+		int totalDate=service.selectBoardCount();
+		mv.addObject("select", select); 
+		mv.addObject("readList", readList);
+		mv.addObject("likeList", likeList);
+		mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "boardList.do",""));
+		mv.addObject("list", list); 
+		mv.setViewName("board/boardList");
+		return mv;
+	}
+	
+	@RequestMapping("/clickLike.do")
+	public ModelAndView clickLike(String select,ModelAndView mv,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="10") int numPerPage) {
+		List<Board> list=service.boardLikeList(cPage,numPerPage); 
+		List<Board> readList=service.readList(); 
+		List<Board> likeList=service.likeList();
+		int totalDate=service.selectBoardCount();
+		mv.addObject("select", select); 
+		mv.addObject("readList", readList);
+		mv.addObject("likeList", likeList);
+		mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "boardList.do",""));
+		mv.addObject("list", list); 
+		mv.setViewName("board/boardList");
 		return mv;
 	}
 	

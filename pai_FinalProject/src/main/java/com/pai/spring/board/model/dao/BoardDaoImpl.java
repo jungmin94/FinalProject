@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardLike;
+import com.pai.spring.member.model.vo.Member;
 
 @Repository
 public class BoardDaoImpl implements BoardDao {
@@ -89,6 +91,58 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int updateBoardReadCount(SqlSessionTemplate session, int boardNo) { 
 		return session.update("board.updateBoardReadCount",boardNo);
+	}
+
+	@Override
+	public List<Board> readList(SqlSessionTemplate session) { 
+		return session.selectList("board.readList");
+	}
+
+	@Override
+	public Member selectMember(SqlSessionTemplate session, String memberId) { 
+		return session.selectOne("board.selectMember",memberId);
+	}
+
+	@Override
+	public BoardLike selectBoardLike(SqlSessionTemplate session, Map param) { 
+		return session.selectOne("board.selectBoardLike",param);
+	}
+
+	@Override
+	public int insertBoardLike(SqlSessionTemplate session, Map param) { 
+		return session.insert("board.insertBoardKike", param);
+	}
+
+	@Override
+	public int updateRecommendCount(SqlSessionTemplate session,Map param) { 
+		return session.update("board.updateRecommendCount",param);
+	}
+
+	@Override
+	public int deleteBoardLike(SqlSessionTemplate session, Map param) { 
+		return session.delete("board.deleteBoardLike",param);
+	}
+
+	@Override
+	public int deleteRecommendCount(SqlSessionTemplate session, Map param) { 
+		return session.update("board.deleteRecommendCount", param);
+	}
+
+	@Override
+	public List<Board> likeList(SqlSessionTemplate session) { 
+		return session.selectList("board.likeList");
+	}
+
+	@Override
+	public List<Board> boardReadList(SqlSessionTemplate session, int cPage, int numPerPage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.boardReadList",null,rb);
+	}
+	
+	@Override
+	public List<Board> boardLikeList(SqlSessionTemplate session, int cPage, int numPerPage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.boardLikeList",null,rb);
 	}
 
 

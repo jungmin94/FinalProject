@@ -31,19 +31,19 @@ section>*{
 	  </div>
 	  
 	    <div class="row" style="border-bottom:2px gray solid;">
-		    <div class="col-1">
+		    <div class="col-2" style="width:auto;">
 		      ${board.boardWriter.member_nick}
 		    </div>
-		    <div class="col-8">
+		    <div class="col-7">
 		      ${board.boardEnrollDate }
 		    </div>
-		    <div class="col-1">
+		    <div class="col-1" style="text-align:right;">
 		      조회수 ${board.boardReadCount }
 		    </div>
-		    <div class="col-1">
-		      추천수 ${board.recommendCount }
+		    <div class="col-1  " style="text-align:right;"  >
+		      추천수 <span>${board.recommendCount }</span>
 		    </div>
-		    <div class="col-1">
+		    <div class="col-1" style="text-align:right;">
 		      댓글 ${commentCount}
 		    </div>
 	    </div>
@@ -80,7 +80,7 @@ section>*{
 	    
 	   <!-- 게시글 내용 -->
 		<div class="form-floating" style="margin-top:30px;">
-		  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 150px" readonly></textarea>
+		  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 150px; resize: none;" readonly></textarea>
 		  <label for="floatingTextarea2">${board.boardContent}</label>
 		</div>
 		
@@ -94,10 +94,17 @@ section>*{
 	        	<button type="button" class="btn btn-info">
 					<img style="height:15px; width:15px;"src="${path}/resources/images/board/share.png">&nbsp;공유
    		  		</button>
-			    <button type="button" class="btn btn-info">
-			    	<img style="height:20px; width:20px;"src="${path}/resources/images/board/recommended.png">&nbsp;추천
-			    </button>
-			    <button type="button" class="btn btn-info">0명</button>
+   		  		<c:if test="${like==null}">
+			    	<button type="button" class="btn btn-info" id="recommend" onclick="location.replace('${path}/board/boardLike.do?boardNo=${board.boardNo}&memberId=${loginMember.member_id}')">
+				    	<img style="height:20px; width:20px;"src="${path}/resources/images/board/recommended.png">&nbsp;추천
+				    </button>
+			    </c:if>	
+			    <c:if test="${like!=null}">
+			    	<button type="button" class="btn btn-secondary" id="recommend" onclick="location.replace('${path}/board/boardLike.do?boardNo=${board.boardNo}&memberId=${loginMember.member_id}')">
+				    	<img style="height:20px; width:20px;"src="${path}/resources/images/board/recommended.png">&nbsp;추천취소
+				    </button>
+			    </c:if>			 
+			    <button type="button" class="btn btn-info" id="likeCount">${board.recommendCount}</button>
 		    </div>
 	  </div>  
 	    
@@ -176,7 +183,12 @@ section>*{
 			<div class="comment-editor" style="margin-top:10px;">
 				<form action="${path}/board/insertBoardComment.do" method="post">
 					<label style="text-align:center;"><c:out value="${loginMember.member_nick}"></c:out></label>
-					<textarea name="commentContent" cols="140" rows="2"></textarea>
+					<c:if test="${loginMember!=null}"> 
+						<textarea name="commentContent" cols="140" rows="2" style="resize: none;"></textarea>
+					</c:if>
+					<c:if test="${loginMember==null}"> 
+						<textarea name="commentContent" cols="140" rows="2" style="background-color:gray;resize: none;" readonly>댓글작성은 회원만 가능합니다.</textarea>
+					</c:if>
 					<input type="hidden" name="commentLevel" value="1">
 					<input type="hidden" name="commentWriter" value="${loginMember.member_nick}"  > 
 					<input type="hidden" name="boardRef" value="${board.boardNo}"  >
@@ -282,11 +294,29 @@ section>*{
 			$(e.target).parents("tr").after(tr);
 		
 		})
-		
-		
+		 
 	
+	})
+
+	
+/*	$("#recommend1").click(e=>{
+		console.log($("#likeCount").text(this));
+		$.ajax({ 
+			url:"${path}/board/ajax/boardLike.do",
+			type:"get",
+			data:{memberId:"${loginMember.member_id}",boardNo:${board.boardNo}},
+			success:data=>{
+				console.log(data);
+				if(data){ 
+					$("#likeName").text("추천취소");
+					$("#likeCount").text(this)+1;
+				}else{ 
+					$("#likeName").text("추천");
+					$("#likeCount").text()-1;
+				}
+			}
 		})
-	
+	}) */
 	
 	
 	
