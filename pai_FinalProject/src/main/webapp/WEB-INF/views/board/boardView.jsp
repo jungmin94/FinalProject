@@ -16,6 +16,10 @@ section>*{
 .main>div{
 	 font-weight: bold;
 }
+.declare-list{
+	margin-top:5px;
+	margin-bottom:10px;
+}
  
 </style>
 <section>
@@ -88,9 +92,9 @@ section>*{
 	    
 	  <div class="row justify-content-md-center" style="margin-top:30px; margin-left:400px; margin-right:400px;">
 	        <div class="btn-group" role="group" aria-label="Third group">
-	        	<button type="button" class="btn btn-danger">
+	        	<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#declare">
 	      			<img style="height:15px; width:15px;"src="${path}/resources/images/board/siren.png">&nbsp;신고
-	      		</button>
+	      		</button> 
 	        	<button type="button" class="btn btn-info">
 					<img style="height:15px; width:15px;"src="${path}/resources/images/board/share.png">&nbsp;공유
    		  		</button>
@@ -108,6 +112,66 @@ section>*{
 		    </div>
 	  </div>  
 	    
+	    <!-- 신고 모달 -->
+	    <!-- Vertically centered scrollable modal -->
+		<div class="modal fade" id="declare" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="staticBackdropLabel">게시글신고</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      <form action="${path}/board/insertDeclare.do"> 
+			      <div class="modal-body">
+	  				<div class="container-fluid">
+			      		<div style="text-align:center;"><h2>신고하기</h2></div>
+			      		<div>신고사유선택</div>
+	  					<div class="declare-list">
+	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="욕설,비방,차별,폭언"  >
+							<label class="form-check-label" for="inlineRadio2">욕설,비방,차별,폭언</label>
+			      		</div>
+			      		<div class="declare-list">
+	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="홍보,영리목적">
+							<label class="form-check-label" for="inlineRadio2">홍보,영리목적</label>
+			      		</div>
+			      		<div class="declare-list">
+	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="불법정보">
+							<label class="form-check-label" for="inlineRadio2">불법정보</label>
+			      		</div>
+			      		<div class="declare-list">
+	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="음란,청소년유해">
+							<label class="form-check-label" for="inlineRadio2">음란,청소년유해</label>
+			      		</div>
+			      		<div class="declare-list">
+	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="개인정보 노출,유포,거래">
+							<label class="form-check-label" for="inlineRadio2">개인정보 노출,유포,거래</label>
+			      		</div>
+			      		<div class="declare-list">
+	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="도배,스팸">
+							<label class="form-check-label" for="inlineRadio2">도배,스팸</label>
+			      		</div>
+			      		<div class="declare-list">
+	  						<input class="form-check-input" type="radio"  id="otherRadio" value="기타" onclick="other();">
+							<label class="form-check-label" for="inlineRadio2">기타(직접입력)</label>
+							<div id="target" style="display:none;"></div>
+			      		</div>
+			      		<div>
+			      			<input type="hidden" name="memberId" value="${loginMember.member_id}">
+			      			<input type="hidden" name="boardNo" value="${board.boardNo}">
+			      		</div>
+			      		<div>
+			      			<span style="font-size:13px;font-weight:bolder;">※ 허위신고일 경우, 신고자의 서비스활동이 제한 될 수 있으니 유의하시어 <br> 신중하게 신고해주세요.</span>
+			      		</div>
+			      	</div>
+				  </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+			        <button type="submit" class="btn btn-primary">확인</button>
+			      </div>
+		      </form>
+		    </div>
+		  </div>
+		</div>
 	   <!-- 댓글보기  --> 
 	   	<p style="font-size: 15px;font-weight: bolder;">전체댓글 : ${commentCount}개</p>
  	    <table class="container" id="tbl-comment" style="border-top:2px black solid;">
@@ -299,24 +363,12 @@ section>*{
 	})
 
 	
-/*	$("#recommend1").click(e=>{
-		console.log($("#likeCount").text(this));
-		$.ajax({ 
-			url:"${path}/board/ajax/boardLike.do",
-			type:"get",
-			data:{memberId:"${loginMember.member_id}",boardNo:${board.boardNo}},
-			success:data=>{
-				console.log(data);
-				if(data){ 
-					$("#likeName").text("추천취소");
-					$("#likeCount").text(this)+1;
-				}else{ 
-					$("#likeName").text("추천");
-					$("#likeCount").text()-1;
-				}
-			}
-		})
-	}) */
+ 	const other=()=>{ 
+ 		var text = document.createElement("textarea"); 
+ 		text.setAttribute("name","declare");
+ 		document.getElementById("target").append(text);
+ 		document.getElementById("target").style.display = "block"; 
+ 	}
 	
 	
 	

@@ -391,4 +391,9 @@ public class BoardController {
 		return mv;
 	}
 	
+	@RequestMapping("/insertDeclare.do")
+	public ModelAndView insertDeclare(ModelAndView mv,String declare,String memberId,int boardNo) {
+		System.out.println(declare + " : " +memberId+" : "+boardNo);
+		return mv;
+	}
 }
