@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardLike;
+import com.pai.spring.member.model.vo.Member;
 
 public interface BoardService {
 	List<Board> boardList(int cPage,int numPerPage);
@@ -33,4 +35,16 @@ public interface BoardService {
 	
 	int commentDelete(int commentNo);
 	
+	List<Board> readList();
+	
+	Member selectMember(String memberId);
+	
+	BoardLike selectBoardLike(Map param);
+	
+	int insertBoardLike(Map param);
+	
+	int deleteBoardLike(Map param);
+	
+	List<Board> likeList();
+
 }

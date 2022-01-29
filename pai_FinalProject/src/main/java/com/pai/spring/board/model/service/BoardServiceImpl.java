@@ -12,6 +12,8 @@ import com.pai.spring.board.model.dao.BoardDao;
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardLike;
+import com.pai.spring.member.model.vo.Member;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -119,6 +121,46 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public int commentDelete(int commentNo) { 
 		return dao.commentDelete(session,commentNo);
+	}
+
+	@Override
+	public List<Board> readList() { 
+		return dao.readList(session);
+	}
+
+	@Override
+	public Member selectMember(String memberId) { 
+		return dao.selectMember(session,memberId);
+	}
+
+	@Override
+	public BoardLike selectBoardLike(Map param) { 
+		return dao.selectBoardLike(session,param);
+	}
+
+	@Override
+	@Transactional
+	public int insertBoardLike(Map param) { 
+		int result=dao.insertBoardLike(session,param);
+			if(result>0) {
+				result=dao.updateRecommendCount(session,param);
+			}
+		return result;
+	}
+
+	@Override
+	@Transactional
+	public int deleteBoardLike(Map param) { 
+		int result=dao.deleteBoardLike(session,param);
+		if(result>0) {
+			result=dao.deleteRecommendCount(session,param);
+		}
+		return result;
+	}
+
+	@Override
+	public List<Board> likeList() { 
+		return dao.likeList(session);
 	}
 
 	 

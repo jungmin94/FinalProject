@@ -61,28 +61,36 @@ section>*{
 		    </div>
 		   	<div class="row">
 			    <div class="col left-box" >
-					리스트으 <br>
-					리스트으 <br>
-					리스트으 <br>
-					리스트으 <br>
-					리스트으 <br>
-			        리스트으 <br>
-				    리스트으 <br>
-			        리스트으 <br>
-				    리스트으 <br>
-			        리스트으 <br>
+					<table style="width:600px;"> 
+					<c:forEach var="r" items="${readList}">
+						<tr>
+							<td style="font-size:20px; font-weight:bolder;color:blue;"> <c:out value="${r.boardCategory}"/></td>
+							<td style="font-size:20px;">
+								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${r.boardNo}&memberId=${loginMember.member_id}">
+									<c:out value="${r.boardTitle}"/>
+									<span style="font-weight:bolder;">[<c:out value="${r.comment.size()}"/>]</span>
+								</a>
+							</td>
+							<td style="width:50px;color:#004080;font-size:20px;text-align:right;"><c:out value="${r.boardReadCount}"/></td> 
+						</tr>
+					</c:forEach>
+					</table> 
 			    </div>
 			    <div class="col right-box">
-			    	리스트으 <br>
-					리스트으 <br>
-					리스트으 <br>
-					리스트으 <br>
-					리스트으 <br>
-			        리스트으 <br>
-				    리스트으 <br>
-			        리스트으 <br>
-				    리스트으 <br>
-			        리스트으 <br>
+			    	<table style="width:600px;"> 
+					<c:forEach var="like" items="${likeList}">
+						<tr>
+							<td style="font-size:20px; font-weight:bolder;color:blue;"> <c:out value="${like.boardCategory}"/></td>
+							<td style="font-size:20px;">
+								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${like.boardNo}&memberId=${loginMember.member_id}">
+									<c:out value="${like.boardTitle}"/>
+									<span style="font-weight:bolder;">[<c:out value="${like.comment.size()}"/>]</span>
+								</a>
+							</td>
+							<td style="width:50px;color:#004080;font-size:20px;text-align:right;"><c:out value="${like.recommendCount}"/></td> 
+						</tr>
+					</c:forEach>
+					</table> 
 		    </div>
 	    </div>
 	</div>
@@ -100,7 +108,7 @@ section>*{
 				    </div>
 			    	<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-						<label class="form-check-label" for="inlineRadio2">댓글순</label>
+						<label class="form-check-label" for="inlineRadio2">조회순</label>
 					</div>
 					<div class="form-check form-check-inline">
 						<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
@@ -129,7 +137,7 @@ section>*{
 						</c:if>
 					</td>
 					<td style="text-align:left; text-decoration:none;">
-							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}">
+							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=${loginMember.member_id}">
 								<c:out value="${b.boardTitle}"/>
 								<span style="font-weight:bolder;">[<c:out value="${b.comment.size()}"/>]</span> 
 							</a>
