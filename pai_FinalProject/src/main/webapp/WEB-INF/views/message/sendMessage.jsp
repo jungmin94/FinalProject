@@ -58,7 +58,7 @@
 	 	console.log(e);
 	}
 	const sendMsg=()=>{
-		socket.send(JSON.stringify({"sendId":'${loginMember.member_id}',"recvId":$("#recvId").val(),
+		socket.send(JSON.stringify({"send_id":'${loginMember.member_id}',"recvId":$("#recvId").val(),
 				"msgTitle":$("#msgTitle").val(), "msgContent":$("#msgContent").val()}));
 	}
 	socket.onmessage=message=>{
