@@ -94,11 +94,16 @@ section>*{
 	        	<button type="button" class="btn btn-info">
 					<img style="height:15px; width:15px;"src="${path}/resources/images/board/share.png">&nbsp;공유
    		  		</button>
-			    <button type="button" class="btn btn-info" id="recommend" onclick="location.replace('${path}/board/boardLike.do?boardNo=${board.boardNo}&memberId=${loginMember.member_id}')">
-			    	<img style="height:20px; width:20px;"src="${path}/resources/images/board/recommended.png">
-			    	<c:if test="${like==null}">&nbsp;추천</c:if>	
-			    	<c:if test="${like!=null}">&nbsp;추천취소</c:if>		 
-			    </button>
+   		  		<c:if test="${like==null}">
+			    	<button type="button" class="btn btn-info" id="recommend" onclick="location.replace('${path}/board/boardLike.do?boardNo=${board.boardNo}&memberId=${loginMember.member_id}')">
+				    	<img style="height:20px; width:20px;"src="${path}/resources/images/board/recommended.png">&nbsp;추천
+				    </button>
+			    </c:if>	
+			    <c:if test="${like!=null}">
+			    	<button type="button" class="btn btn-secondary" id="recommend" onclick="location.replace('${path}/board/boardLike.do?boardNo=${board.boardNo}&memberId=${loginMember.member_id}')">
+				    	<img style="height:20px; width:20px;"src="${path}/resources/images/board/recommended.png">&nbsp;추천취소
+				    </button>
+			    </c:if>			 
 			    <button type="button" class="btn btn-info" id="likeCount">${board.recommendCount}</button>
 		    </div>
 	  </div>  

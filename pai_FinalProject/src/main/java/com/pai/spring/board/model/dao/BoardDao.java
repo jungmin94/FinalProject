@@ -15,6 +15,10 @@ public interface BoardDao {
 
 	List<Board> boardList(SqlSessionTemplate session,int cPage,int numPerPage);
 	
+	List<Board> boardReadList(SqlSessionTemplate session,int cPage,int numPerPage);
+	
+	List<Board> boardLikeList(SqlSessionTemplate session,int cPage,int numPerPage);
+	
 	int selectBoardCount(SqlSessionTemplate session);
 	
 	List<Board> searchBoard(SqlSessionTemplate session,Map<String,Object> param,int cPage, int numPerPage);

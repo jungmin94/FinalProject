@@ -73,6 +73,14 @@ public class BoardController {
 		param.put("numPerPage", numPerPage);
 		List<Board> list=service.searchBoard(param,cPage,numPerPage);
 		int totalDate=service.searchBoardCount(param);
+		
+		List<Board> readList=service.readList(); 
+		List<Board> likeList=service.likeList(); 
+		mv.addObject("category", category); 
+		mv.addObject("searchType", searchType); 
+		mv.addObject("keyword", keyword); 
+		mv.addObject("readList", readList);
+		mv.addObject("likeList", likeList);
 		mv.addObject("pageBar", PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "searchBoard.do","&category="+category+"&searchType="+searchType+"&keyword="+keyword));
 		mv.addObject("list", list);
 		mv.setViewName("board/boardList");
@@ -349,6 +357,37 @@ public class BoardController {
 		BoardLike like2 = service.selectBoardLike(param);
 		mv.addObject("like",like2);
 		mv.setViewName("board/boardView");
+		return mv;
+	}
+	
+	@RequestMapping("/clickRead.do")
+	public ModelAndView clickRead(String select,ModelAndView mv,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="10") int numPerPage) {
+		 
+		List<Board> list=service.boardReadList(cPage,numPerPage); 
+		List<Board> readList=service.readList(); 
+		List<Board> likeList=service.likeList();
+		int totalDate=service.selectBoardCount();
+		mv.addObject("select", select); 
+		mv.addObject("readList", readList);
+		mv.addObject("likeList", likeList);
+		mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "boardList.do",""));
+		mv.addObject("list", list); 
+		mv.setViewName("board/boardList");
+		return mv;
+	}
+	
+	@RequestMapping("/clickLike.do")
+	public ModelAndView clickLike(String select,ModelAndView mv,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="10") int numPerPage) {
+		List<Board> list=service.boardLikeList(cPage,numPerPage); 
+		List<Board> readList=service.readList(); 
+		List<Board> likeList=service.likeList();
+		int totalDate=service.selectBoardCount();
+		mv.addObject("select", select); 
+		mv.addObject("readList", readList);
+		mv.addObject("likeList", likeList);
+		mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "boardList.do",""));
+		mv.addObject("list", list); 
+		mv.setViewName("board/boardList");
 		return mv;
 	}
 	

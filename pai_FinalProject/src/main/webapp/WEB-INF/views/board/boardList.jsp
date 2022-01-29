@@ -103,15 +103,15 @@ section>*{
 				</td>
 				<td colspan="3">
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
+						<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" onclick="location.assign('${path}/board/boardList.do')" ${select==null?'checked':''}>
 						<label class="form-check-label" for="inlineRadio1">최신순</label>
 				    </div>
 			    	<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+						<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2" onclick="location.assign('${path}/board/clickRead.do?select=read')" ${select eq "read"?"checked":""}>
 						<label class="form-check-label" for="inlineRadio2">조회순</label>
 					</div>
 					<div class="form-check form-check-inline">
-						<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+						<input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3" onclick="location.assign('${path}/board/clickLike.do?select=like')" ${select eq "like"?"checked":""}>
 						<label class="form-check-label" for="inlineRadio3">추천순</label>
 				    </div>
 				</td>
@@ -165,33 +165,33 @@ section>*{
 				<span>
 					<select name="category" style="height: 30px;">						
 						<option value="">MBTI</option>
-						<option value="INTJ">INTJ</option>
-						<option value="INTP">INTP</option>
-						<option value="ENTJ">ENTJ</option>
-						<option value="ENTP">ENTP</option>
-						<option value="INFJ">INFJ</option>
-						<option value="INFP">INFP</option>
-						<option value="ENFJ">ENFJ</option>
-						<option value="ENFP">ENFP</option>
-						<option value="ISTJ">ISTJ</option>
-						<option value="ISFJ">ISFJ</option>
-						<option value="ESTJ">ESTJ</option>
-						<option value="ESFJ">ESFJ</option>
-						<option value="ISTP">ISTP</option>
-						<option value="ISFP">ISFP</option>
-						<option value="ESTP">ESTP</option>
-						<option value="ESFP">ESFP</option>
-						<option value="info">정보</option>
+						<option value="INTJ" ${category eq "INTJ"?"selected":""}>INTJ</option>
+						<option value="INTP" ${category eq "INTP"?"selected":""}>INTP</option>
+						<option value="ENTJ" ${category eq "ENTJ"?"selected":""}>ENTJ</option>
+						<option value="ENTP" ${category eq "ENTP"?"selected":""}>ENTP</option>
+						<option value="INFJ" ${category eq "INFJ"?"selected":""}>INFJ</option>
+						<option value="INFP" ${category eq "INFP"?"selected":""}>INFP</option>
+						<option value="ENFJ" ${category eq "ENFJ"?"selected":""}>ENFJ</option>
+						<option value="ENFP" ${category eq "ENFP"?"selected":""}>ENFP</option>
+						<option value="ISTJ" ${category eq "ISTJ"?"selected":""}>ISTJ</option>
+						<option value="ISFJ" ${category eq "ISFJ"?"selected":""}>ISFJ</option>
+						<option value="ESTJ" ${category eq "ESTJ"?"selected":""}>ESTJ</option>
+						<option value="ESFJ" ${category eq "ESFJ"?"selected":""}>ESFJ</option>
+						<option value="ISTP" ${category eq "ISTP"?"selected":""}>ISTP</option>
+						<option value="ISFP" ${category eq "ISFP"?"selected":""}>ISFP</option>
+						<option value="ESTP" ${category eq "ESTP"?"selected":""}>ESTP</option>
+						<option value="ESFP" ${category eq "ESFP"?"selected":""}>ESFP</option>
+						<option value="info" ${category eq "info"?"selected":""}>정보</option>
 					</select>
 				</span>
 				<span>
 					<select name="searchType" style="height: 30px;">
-						<option value="board_title">제목</option>
-						<option value="member_nick">닉네임</option>
+						<option value="board_title" >제목</option>
+						<option value="member_nick" ${searchType eq "member_nick"?"selected":""}>닉네임</option>
 					</select>
 				</span>
 				<span>
-					<input type="text" name="keyword" >
+					<input type="text" name="keyword" value="${keyword!=null?keyword:''}" >
 				</span>
 				<span>
 					<button type="submit" class="btn btn-outline-primary">검색</button>

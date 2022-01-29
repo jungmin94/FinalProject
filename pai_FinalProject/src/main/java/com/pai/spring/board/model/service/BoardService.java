@@ -11,6 +11,10 @@ import com.pai.spring.member.model.vo.Member;
 public interface BoardService {
 	List<Board> boardList(int cPage,int numPerPage);
 	
+	List<Board> boardReadList(int cPage,int numPerPage);
+	
+	List<Board> boardLikeList(int cPage,int numPerPage);
+	
 	int selectBoardCount();
 	
 	List<Board> searchBoard(Map<String,Object> param,int cPage,int numPerPage);
@@ -46,5 +50,7 @@ public interface BoardService {
 	int deleteBoardLike(Map param);
 	
 	List<Board> likeList();
+	
+	
 
 }

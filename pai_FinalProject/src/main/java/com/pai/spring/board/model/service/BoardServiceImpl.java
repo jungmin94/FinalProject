@@ -163,6 +163,16 @@ public class BoardServiceImpl implements BoardService {
 		return dao.likeList(session);
 	}
 
+	@Override
+	public List<Board> boardReadList(int cPage, int numPerPage) {
+		 return dao.boardReadList(session,cPage,numPerPage);
+	}
+
+	@Override
+	public List<Board> boardLikeList(int cPage, int numPerPage) { 
+		return dao.boardLikeList(session,cPage,numPerPage);
+	}
+
 	 
 
 

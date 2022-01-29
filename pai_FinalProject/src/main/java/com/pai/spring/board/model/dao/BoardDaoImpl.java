@@ -133,6 +133,18 @@ public class BoardDaoImpl implements BoardDao {
 		return session.selectList("board.likeList");
 	}
 
+	@Override
+	public List<Board> boardReadList(SqlSessionTemplate session, int cPage, int numPerPage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.boardReadList",null,rb);
+	}
+	
+	@Override
+	public List<Board> boardLikeList(SqlSessionTemplate session, int cPage, int numPerPage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.boardLikeList",null,rb);
+	}
+
 
 	
 }
