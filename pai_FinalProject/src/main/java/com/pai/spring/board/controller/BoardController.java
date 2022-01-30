@@ -23,6 +23,7 @@ import com.pai.spring.board.model.service.BoardService;
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
 import com.pai.spring.common.PageFactory;
 import com.pai.spring.member.model.vo.Member;
@@ -62,9 +63,7 @@ public class BoardController {
 										,@RequestParam(value="searchType") String searchType,@RequestParam(value="keyword") String keyword
 										,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="10") int numPerPage) {
 		
-		//System.out.println(category);
-		//System.out.println(searchType);
-		//System.out.println(keyword);
+		 
 		Map<String,Object> param=new HashMap();
 		param.put("category", category);
 		param.put("keyword", keyword);
@@ -115,13 +114,13 @@ public class BoardController {
 		}
 		
 		
-		Board b=service.selectBoard(boardNo,isRead);  
+		Board b=service.selectBoard(boardNo,isRead);   
 		List<BoardComment> list=service.boardCommentList(boardNo);
 		Map param=Map.of("memberId",memberId,"boardNo",boardNo);
 		BoardLike like = service.selectBoardLike(param);
 		mv.addObject("like",like);
 		mv.addObject("board", b); 
-		mv.addObject("comments", list);
+		mv.addObject("comments", list); 
 		mv.addObject("commentCount", b.getComment().size());
 		return mv;
 	}
@@ -153,8 +152,7 @@ public class BoardController {
 			res.addCookie(c);
 		}
 		
-		Board b=service.selectBoard(boardNo,isRead);
-		//System.out.println(b);
+		Board b=service.selectBoard(boardNo,isRead); 
 		return b==null;
 	}
 	
@@ -256,17 +254,17 @@ public class BoardController {
 	
 	@RequestMapping("/insertBoardComment.do")
 	public ModelAndView insertComment(ModelAndView mv,BoardComment bc) {
-		  System.out.println(bc);
+		  //System.out.println(bc);
 		 //BoardComment bc = BoardComment.builder().commentLevel(level).commentWriter(m).commentContent(content).boardRef(boardRef).commentRef(commentRef).build();
 		 int result=service.insertComment(bc);
 		 String msg="";
 		 String loc="";
 		 if(result>0) {
 			 msg="댓글 등록 성공";
-			 loc="/board/boardView.do?boardNo="+bc.getBoardRef();		 
+			 loc="/board/boardView.do?boardNo="+bc.getBoardRef()+"&memberId="+bc.getCommentWriter();		 
 		 }else {
 			 msg="댓글 등록 실패";
-			 loc="/board/boardView.do?boardNo="+bc.getBoardRef();
+			 loc="/board/boardView.do?boardNo="+bc.getBoardRef()+"&memberId="+bc.getCommentWriter();		
 		 }
 		 mv.addObject("msg", msg);
 		 mv.addObject("loc", loc);
@@ -282,10 +280,10 @@ public class BoardController {
 		 String loc="";
 		 if(result>0) {
 			 msg="댓글 등록 성공";
-			 loc="/board/boardView.do?boardNo="+bc.getBoardRef();		 
+			 loc="/board/boardView.do?boardNo="+bc.getBoardRef()+"&memberId="+bc.getCommentWriter();			 
 		 }else {
 			 msg="댓글 등록 실패";
-			 loc="/board/boardView.do?boardNo="+bc.getBoardRef();
+			 loc="/board/boardView.do?boardNo="+bc.getBoardRef()+"&memberId="+bc.getCommentWriter();	
 		 }
 		 mv.addObject("msg", msg);
 		 mv.addObject("loc", loc);
@@ -313,14 +311,14 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/commentDelete.do")
-	public ModelAndView commentDelete(ModelAndView mv,int commentNo,int boardNo) {
+	public ModelAndView commentDelete(ModelAndView mv,int commentNo,int boardNo,String memberId) {
 		 int result=service.commentDelete(commentNo);
-		
+		// System.out.println(commentNo);
 		 String msg="";
 		 String loc="";
 		 if(result>0) {
 			 msg="댓글이 성공적으로 삭제되었습니다!";
-			 loc="/board/boardView.do?boardNo="+boardNo;	 
+			 loc="/board/boardView.do?boardNo="+boardNo+"&memberId="+memberId;	 
 		 }else {
 			 msg="댓글삭제에 실패했습니다";
 			 loc="/board/boardView.do?boardNo="+boardNo;
@@ -347,8 +345,7 @@ public class BoardController {
 		}else {
 			result=service.deleteBoardLike(param);
 		}
-		//3. 결과 응답
-		System.out.println(like);
+		//3. 결과 응답 
 		Board b=service.selectBoard(boardNo);  
 		List<BoardComment> list=service.boardCommentList(boardNo); 
 		mv.addObject("board", b); 
@@ -392,8 +389,22 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/insertDeclare.do")
-	public ModelAndView insertDeclare(ModelAndView mv,String declare,String memberId,int boardNo) {
-		System.out.println(declare + " : " +memberId+" : "+boardNo);
+	public ModelAndView insertDeclare(ModelAndView mv,BoardDeclare bd) { 
+		int result = service.insertDeclare(bd);
+		
+		String msg="";
+		String loc="";
+		
+		if(result>0) {
+			msg="게시글신고가 정상적으로 접수되었습니다! 신고처리까지 최대 7일까지 소요되며 결과는 마이페이지에서 확인해주세요";
+			loc="/board/boardView.do?boardNo="+bd.getBoardNo()+"&memberId="+bd.getDeclareWriter();
+		}else {
+			msg="게시글신고에 실패하였습니다. 다시시도해주세요";
+			loc="/board/boardView.do?boardNo="+bd.getBoardNo()+"&memberId="+bd.getDeclareWriter();
+		}
+		mv.addObject("msg", msg);
+		mv.addObject("loc", loc);
+		mv.setViewName("common/msg");
 		return mv;
 	}
 }

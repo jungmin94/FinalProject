@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
 import com.pai.spring.member.model.vo.Member;
 
@@ -62,4 +63,6 @@ public interface BoardDao {
 	int deleteRecommendCount(SqlSessionTemplate session, Map param);
 	
 	List<Board> likeList(SqlSessionTemplate session);
+	
+	int insertDeclare(SqlSessionTemplate session,BoardDeclare bd);
 }

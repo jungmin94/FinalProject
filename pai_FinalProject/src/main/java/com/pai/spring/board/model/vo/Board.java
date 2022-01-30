@@ -26,4 +26,5 @@ public class Board {
 	private int recommendCount;
 	private List<AttachFile> attachFile;
 	private List<BoardComment> comment;
+	private List<BoardLike> like;
 }

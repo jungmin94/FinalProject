@@ -127,27 +127,27 @@ section>*{
 			      		<div style="text-align:center;"><h2>신고하기</h2></div>
 			      		<div>신고사유선택</div>
 	  					<div class="declare-list">
-	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="욕설,비방,차별,폭언"  >
+	  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="욕설,비방,차별,폭언"  >
 							<label class="form-check-label" for="inlineRadio2">욕설,비방,차별,폭언</label>
 			      		</div>
 			      		<div class="declare-list">
-	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="홍보,영리목적">
+	  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="홍보,영리목적">
 							<label class="form-check-label" for="inlineRadio2">홍보,영리목적</label>
 			      		</div>
 			      		<div class="declare-list">
-	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="불법정보">
+	  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="불법정보">
 							<label class="form-check-label" for="inlineRadio2">불법정보</label>
 			      		</div>
 			      		<div class="declare-list">
-	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="음란,청소년유해">
+	  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="음란,청소년유해">
 							<label class="form-check-label" for="inlineRadio2">음란,청소년유해</label>
 			      		</div>
 			      		<div class="declare-list">
-	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="개인정보 노출,유포,거래">
+	  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="개인정보 노출,유포,거래">
 							<label class="form-check-label" for="inlineRadio2">개인정보 노출,유포,거래</label>
 			      		</div>
 			      		<div class="declare-list">
-	  						<input class="form-check-input" type="radio" name="declare" id="inlineRadio2" value="도배,스팸">
+	  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="도배,스팸">
 							<label class="form-check-label" for="inlineRadio2">도배,스팸</label>
 			      		</div>
 			      		<div class="declare-list">
@@ -156,7 +156,7 @@ section>*{
 							<div id="target" style="display:none;"></div>
 			      		</div>
 			      		<div>
-			      			<input type="hidden" name="memberId" value="${loginMember.member_id}">
+			      			<input type="hidden" name="declareWriter" value="${loginMember.member_id}">
 			      			<input type="hidden" name="boardNo" value="${board.boardNo}">
 			      		</div>
 			      		<div>
@@ -198,7 +198,7 @@ section>*{
 									<button type="button" data-bs-toggle="modal" data-bs-target="#commentDelete" class="btn-delete">삭제</button>
 								</c:if>
 							</c:if>		
-							<!-- Modal -->
+							<!--댓글삭제 Modal -->
 							<div class="modal fade" id="commentDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 							  <div class="modal-dialog">
 							    <div class="modal-content">
@@ -211,7 +211,7 @@ section>*{
 							      </div>
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
-							        <button type="button" class="btn btn-primary" onclick="location.replace('${path}/board/commentDelete.do?commentNo=${bc.commentNo}&boardNo=${board.boardNo}')">네</button>
+							        <button type="button" class="btn btn-primary" onclick="location.replace('${path}/board/commentDelete.do?commentNo=${bc.commentNo}&boardNo=${board.boardNo}&memberId=${board.boardWriter.member_id}')">네</button>
 							      </div>
 							    </div>
 							  </div>
@@ -232,11 +232,33 @@ section>*{
 							    <div class="col-2"> 
 							   	  <span class="comment-date " style="color:gray; font-size: 16px;"><c:out value="${bc.commentDate}"/></span>
 							    </div>
+							     
 						    </div>
 						</td>
 						<td>
+							<c:if test="${loginMember.member_id eq 'admin' || loginMember.member_nick eq bc.commentWriter}">  
+									<button type="button" data-bs-toggle="modal" data-bs-target="#commentDelete2" class="btn-delete">삭제</button>
+							</c:if>
 						</td>
 					</tr>
+				      <!-- 답글 삭제 Modal -->
+							<div class="modal fade" id="commentDelete2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="staticBackdropLabel">답글 삭제</h5>
+							        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							      </div>
+							      <div class="modal-body">
+							        댓글을 정말 삭제하시겠습니까?
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+							        <button type="button" class="btn btn-primary" onclick="location.replace('${path}/board/commentDelete.do?commentNo=${bc.commentNo}&boardNo=${board.boardNo}&memberId=${board.boardWriter.member_id}')">네</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>	
 	    	  </c:if>
 		    </c:forEach>		
 	    </table>
@@ -318,7 +340,7 @@ section>*{
 				if(data){
 					alert('이전글이 없습니다');
 				}else{
-					location.assign('${path}/board/boardView.do?boardNo='+${board.boardNo-1}); 
+					location.assign('${path}/board/boardView.do?boardNo='+${board.boardNo-1}+'&memberId=${board.boardWriter.member_id}'); 
 				} 
 			}		
 		})
@@ -333,7 +355,7 @@ section>*{
 				if(data){
 					alert('현재 게시글이 마지막 글입니다!');
 				}else{
-					location.assign('${path}/board/boardView.do?boardNo='+${board.boardNo+1}); 
+					location.assign('${path}/board/boardView.do?boardNo='+${board.boardNo+1}+'&memberId=${board.boardWriter.member_id}'); 
 				} 
 			}		
 		})
@@ -365,7 +387,7 @@ section>*{
 	
  	const other=()=>{ 
  		var text = document.createElement("textarea"); 
- 		text.setAttribute("name","declare");
+ 		text.setAttribute("name","declareContent");
  		document.getElementById("target").append(text);
  		document.getElementById("target").style.display = "block"; 
  	}

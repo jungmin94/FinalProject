@@ -137,7 +137,7 @@ section>*{
 						</c:if>
 					</td>
 					<td style="text-align:left; text-decoration:none;">
-							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=${loginMember.member_id}">
+							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=${b.boardWriter.member_id}">
 								<c:out value="${b.boardTitle}"/>
 								<span style="font-weight:bolder;">[<c:out value="${b.comment.size()}"/>]</span> 
 							</a>
