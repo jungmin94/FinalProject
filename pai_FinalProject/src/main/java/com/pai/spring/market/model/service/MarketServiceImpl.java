@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.pai.spring.market.model.dao.MarketDao;
 import com.pai.spring.market.model.vo.Goods;
+import com.pai.spring.market.model.vo.GoodsDetails;
 
 @Service
 public class MarketServiceImpl implements MarketService {
@@ -56,6 +57,12 @@ public class MarketServiceImpl implements MarketService {
 		return dao.searchList(session,param,cPage,numPerPage);
 	}
 	
+	
+	@Override
+	public List<GoodsDetails> selectColorList(String goodsName) {
+	
+		return dao.selectColorList(session, goodsName);
+	}
 	
 	
 }

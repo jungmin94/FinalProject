@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pai.spring.common.PageFactory;
 import com.pai.spring.market.model.service.MarketService;
 import com.pai.spring.market.model.vo.Goods;
+import com.pai.spring.market.model.vo.GoodsDetails;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -77,6 +78,7 @@ public class MarketController {
 	@RequestMapping("/goodsDetailView.do")
 	public ModelAndView goodsDetailView(String goodsName,ModelAndView mv) {
 		
+		List<GoodsDetails> colorList = service.selectColorList(goodsName); 
 		
 		System.out.println(goodsName);
 		

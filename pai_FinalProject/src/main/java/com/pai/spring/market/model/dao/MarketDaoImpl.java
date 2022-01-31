@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pai.spring.market.model.vo.Goods;
+import com.pai.spring.market.model.vo.GoodsDetails;
 
 @Repository
 public class MarketDaoImpl implements MarketDao {
@@ -47,6 +48,12 @@ public class MarketDaoImpl implements MarketDao {
 	public List<Goods> searchList(SqlSessionTemplate session, Map<String, Object> param, int cPage, int numPerPage) {
 		
 		return session.selectList("market.searchList",param,new RowBounds((cPage-1)*numPerPage,numPerPage));
+	}
+	
+	@Override
+	public List<GoodsDetails> selectColorList(SqlSessionTemplate session, String goodsName) {
+		
+		return session.selectList("market.selectColorList",goodsName);
 	}
 	
 }

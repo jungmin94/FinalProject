@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.pai.spring.market.model.vo.Goods;
+import com.pai.spring.market.model.vo.GoodsDetails;
 
 public interface MarketDao {
 
@@ -20,5 +21,7 @@ public interface MarketDao {
 	int selectGoodsCount(SqlSessionTemplate session,Map<String, Object> param);
 	
 	List<Goods> searchList(SqlSessionTemplate session,Map<String, Object> param, int cPage, int numPerPage);
+	
+	List<GoodsDetails> selectColorList(SqlSessionTemplate session,String goodsName);
 	
 }
