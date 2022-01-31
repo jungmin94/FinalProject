@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.pai.spring.common.PageFactory;
 import com.pai.spring.market.model.service.MarketService;
 import com.pai.spring.market.model.vo.Goods;
+import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 
 import lombok.extern.slf4j.Slf4j;
@@ -78,6 +79,10 @@ public class MarketController {
 	@RequestMapping("/goodsDetailView.do")
 	public ModelAndView goodsDetailView(String goodsName,ModelAndView mv) {
 		
+		// 해당 제품 제품 상세 사진 가져오기
+		List<GoodsDetailImage> imageList = service.selectImageList(goodsName);
+		
+		// 해당 제품 컬러 모두 가져오기
 		List<GoodsDetails> colorList = service.selectColorList(goodsName); 
 		
 		System.out.println(goodsName);

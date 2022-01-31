@@ -8,12 +8,13 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pai.spring.market.model.vo.Goods;
+import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 
 @Repository
 public class MarketDaoImpl implements MarketDao {
 
-
+	
 	@Override
 	public List<Goods> bestSell(SqlSessionTemplate session) {
 		
@@ -55,5 +56,12 @@ public class MarketDaoImpl implements MarketDao {
 		
 		return session.selectList("market.selectColorList",goodsName);
 	}
+	
+	@Override
+	public List<GoodsDetailImage> selectImageList(SqlSessionTemplate session, String goodsName) {
+	
+		return session.selectList("market.selectImageList",goodsName);
+	}
+
 	
 }

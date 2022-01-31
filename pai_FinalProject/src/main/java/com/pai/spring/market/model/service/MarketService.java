@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pai.spring.market.model.vo.Goods;
+import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 
 public interface MarketService {
@@ -21,5 +22,7 @@ public interface MarketService {
 	List<Goods> searchList(Map<String,Object> param,int cPage,int numPerPage);
 	
 	List<GoodsDetails> selectColorList(String goodsName);
+	
+	List<GoodsDetailImage> selectImageList(String goodsName);
 	
 }
