@@ -110,17 +110,17 @@
 </div>
 
   <div class="container" style="text-align: center;">
-	<img src="image\MBTI1.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
-	<img src="image\MBTI2.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/MBTI1.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/MBTI2.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
 	<!-- 반복문 통해 제품 사진 올리는 부분 -->
     <img src="https://hanamsport.or.kr/www/images/contents/thum_detail.jpg" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
     <img src="https://hanamsport.or.kr/www/images/contents/thum_detail.jpg" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
     <img src="https://hanamsport.or.kr/www/images/contents/thum_detail.jpg" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
 	<!-- 제품 사진 끝부분 (최대 3장 올릴 것) -->
-	<img src="image\상품정보1.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
-	<img src="image\사이즈1.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
-	<img src="image\사이즈2.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
-	<img src="image\gggg.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/상품정보1.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/사이즈1.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/사이즈2.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/세탁방법.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
   </div>
 
   	<div class="container" style="text-align: center;">
