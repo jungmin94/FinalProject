@@ -407,4 +407,14 @@ public class BoardController {
 		mv.setViewName("common/msg");
 		return mv;
 	}
+	
+	
+	@RequestMapping("/myboardView.do")
+	public ModelAndView myboardView(ModelAndView mv){
+			
+		return mv;
+	}
+	
+	
+	
 }
