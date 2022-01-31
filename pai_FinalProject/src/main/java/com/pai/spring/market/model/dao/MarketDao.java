@@ -27,4 +27,6 @@ public interface MarketDao {
 	
 	List<GoodsDetailImage> selectImageList(SqlSessionTemplate session,String goodsName);
 	
+	Goods selectGood(SqlSessionTemplate session,String goodsName);
+	
 }

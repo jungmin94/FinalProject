@@ -72,4 +72,10 @@ public class MarketServiceImpl implements MarketService {
 		return dao.selectImageList(session,goodsName);
 	}
 	
+	@Override
+	public Goods selectGood(String goodsName) {
+		
+		return dao.selectGood(session,goodsName);
+	}
+	
 }

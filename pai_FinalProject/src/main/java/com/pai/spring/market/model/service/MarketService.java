@@ -25,4 +25,6 @@ public interface MarketService {
 	
 	List<GoodsDetailImage> selectImageList(String goodsName);
 	
+	Goods selectGood(String goodsName);
+	
 }

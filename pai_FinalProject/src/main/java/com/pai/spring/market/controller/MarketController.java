@@ -79,13 +79,19 @@ public class MarketController {
 	@RequestMapping("/goodsDetailView.do")
 	public ModelAndView goodsDetailView(String goodsName,ModelAndView mv) {
 		
+		// 해당 제품 정보 가져오기
+		Goods good = service.selectGood(goodsName);
+		
 		// 해당 제품 제품 상세 사진 가져오기
 		List<GoodsDetailImage> imageList = service.selectImageList(goodsName);
 		
 		// 해당 제품 컬러 모두 가져오기
 		List<GoodsDetails> colorList = service.selectColorList(goodsName); 
 		
-		System.out.println(goodsName);
+		mv.addObject("imageList",imageList);
+		mv.addObject("colorList",colorList);
+		
+		mv.setViewName("market/goodsDetailView");
 		
 		return mv;
 		

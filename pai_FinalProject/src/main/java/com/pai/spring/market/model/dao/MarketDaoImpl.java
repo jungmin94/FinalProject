@@ -63,5 +63,10 @@ public class MarketDaoImpl implements MarketDao {
 		return session.selectList("market.selectImageList",goodsName);
 	}
 
+	@Override
+	public Goods selectGood(SqlSessionTemplate session,String goodsName) {
+		
+		return session.selectOne(goodsName);
+	}
 	
 }
