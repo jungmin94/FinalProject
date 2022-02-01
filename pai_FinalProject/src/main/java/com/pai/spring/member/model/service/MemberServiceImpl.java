@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pai.spring.member.model.dao.MemberDao;
 import com.pai.spring.member.model.vo.Member;
+import com.pai.spring.member.model.vo.Profile;
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -24,9 +25,20 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int insertMember(Member m) {
+	public int insertMember(Member m) throws RuntimeException{
 		// TODO Auto-generated method stub
-		return dao.insertMember(session,m);
+		int result=dao.insertMember(session,m);
+		if(result>0&&!m.getProfile().isEmpty()) {
+			try {
+				for(Profile p : m.getProfile()) {
+					p.setMember_id(m.getMember_id());
+					result=dao.insertProfile(session,p);
+				}
+			}catch(RuntimeException e) {
+				throw new RuntimeException("등록실패!");
+			}
+		}
+		return result;
 	}
 
 	@Override

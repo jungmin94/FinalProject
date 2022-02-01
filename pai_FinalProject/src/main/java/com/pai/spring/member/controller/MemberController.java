@@ -1,12 +1,14 @@
 package com.pai.spring.member.controller;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -22,9 +24,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.pai.spring.member.model.service.MemberService;
 import com.pai.spring.member.model.vo.Member;
+import com.pai.spring.member.model.vo.Profile;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -73,27 +77,55 @@ public class MemberController {
 	
 	@RequestMapping(value="/enrollMemberEnd.do",
 			method=RequestMethod.POST)
-	public String enrollMemberEnd(Member m,Model model) {
-		logger.debug("변경 전 패스워드 : {}",m.getMember_pw());
-		logger.debug("변경 후 패스워드 : {}",encoder.encode(m.getMember_pw()));
+	public ModelAndView enrollMemberEnd(Member m,ModelAndView mv,
+			@RequestParam(value="member_profile", required=false) MultipartFile[] member_profile, HttpServletRequest req) {
+//		logger.debug("변경 전 패스워드 : {}",m.getMember_pw());
+//		logger.debug("변경 후 패스워드 : {}",encoder.encode(m.getMember_pw()));
 		
-		m.setMember_pw(encoder.encode(m.getMember_pw()));
+//		m.setMember_pw(encoder.encode(m.getMember_pw()));
 		
-		int result=service.insertMember(m);
+		
+        String path = req.getServletContext().getRealPath("/resources/upload/member/");
+        File f = new File(path);
+        if(!f.exists()) f.mkdirs();
+        
+        m.setProfile(new ArrayList<Profile>());
+        for(MultipartFile mf:member_profile) {
+        	
+        	if(!mf.isEmpty()) {
+        		String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+        		String ext = originFileName.substring(originFileName.lastIndexOf("."));
+        		String renamedFileName = UUID.randomUUID().toString().replaceAll("-", "") + ext;
+        		
+        		try {
+        			mf.transferTo(new File(path+renamedFileName));
+        			Profile p=new Profile();
+        			p.setOriginalFileName(originFileName);
+        			p.setRenamedFileName(renamedFileName);
+        			m.getProfile().add(p);
+        		} catch (IOException e) {
+        			e.printStackTrace();
+        		}
+        }
+        	
+        }
+        
+		log.debug("memberData : {}",m);
 		String msg="";
 		String loc="";
-		if(result>0) {
+		try {
+			int result=service.insertMember(m);
 			msg="회원가입성공";
-			loc="/";
-		}else {
-			msg="회원가입실패";
+			loc="/member/loginMember.do";
+		}catch(RuntimeException e) {
+			msg="회원가입실패"+e.getMessage();
 			loc="/member/enrollMember.do";
 		}
-		model.addAttribute("msg",msg);
-		model.addAttribute("loc",loc);
-		return "common/msg";
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		return mv;
 	}
-	
 	
 	 //아이디 중복체크
 	 @RequestMapping(value="/checkId.do",method=RequestMethod.POST)
@@ -134,28 +166,6 @@ public class MemberController {
 			}		
 			return check;
 		}
-	
-	//프로필이미지업로드
-	@RequestMapping(value="/profileUpload.do", method=RequestMethod.POST)
-	public void profileUpload(MultipartFile[] member_profile) {
-	
-		String uploadFolder = "C:\\upload";
-		
-		//폴더경로
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		String str = sdf.format(date);
-		String datePath = str.replace("-", File.separator);
-		
-		//폴더 생성
-		File uploadPath = new File(uploadFolder, datePath);
-		
-		if(uploadPath.exists() == false) {
-			uploadPath.mkdirs();
-		}
-		
-					
-	}
 	
 	
 	

@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pai.spring.member.model.vo.Member;
+import com.pai.spring.member.model.vo.Profile;
 @Repository
 public class MemberDaoImpl implements MemberDao {
 
@@ -32,5 +33,13 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("member.checkNick",member_nick);
 	}
+
+	@Override
+	public int insertProfile(SqlSessionTemplate session, Profile p) {
+		// TODO Auto-generated method stub
+		return session.insert("member.insertProfile", p);
+	}
+	
+	
 
 }
