@@ -180,6 +180,46 @@ public class BoardServiceImpl implements BoardService {
 		return dao.insertDeclare(session,bd);
 	}
 
+	@Override
+	public List<Board> previewBoardList(String memberId) { 
+		return dao.previewBoardList(session,memberId);
+	}
+
+	@Override
+	public List<BoardComment> previewCommentList(String memberNick) { 
+		return dao.previewCommentList(session,memberNick);
+	}
+
+	@Override
+	public List<Board> myboardList(int cPage, int numPerPage, String memberId) { 
+		return dao.myboardList(session,cPage,numPerPage,memberId);
+	}
+
+	@Override
+	public int selectMyBoardCount(String memberId) { 
+		return dao.selectMyBoardCount(session,memberId);
+	}
+
+	@Override
+	public List<BoardComment> myboardCommentList(int cPage, int numPerPage, String memberId) { 
+		return dao.myboardCommentList(session,cPage,numPerPage,memberId);
+	}
+
+	@Override
+	public int selectCommentAll(String memberNick) { 
+		return dao.selectCommentAll(session,memberNick);
+	}
+
+	@Override
+	public List<BoardDeclare> declareList(int cPage, int numPerPage, String memberId) { 
+		return dao.declareList(session,cPage,numPerPage,memberId);
+	}
+
+	@Override
+	public int selectDeclareCount(String memberId) { 
+		return dao.selectDeclareCount(session,memberId);
+	}
+
 	 
 
 

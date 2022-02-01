@@ -36,7 +36,9 @@ section>*{
 	  
 	    <div class="row" style="border-bottom:2px gray solid;">
 		    <div class="col-2" style="width:auto;">
-		      ${board.boardWriter.member_nick}
+		   		 <a style="text-decoration:none; color:black;" href="${path}/board/myboardView.do?memberId=${board.boardWriter.member_id}"> 
+		     	 ${board.boardWriter.member_nick}
+				</a>
 		    </div>
 		    <div class="col-7">
 		      ${board.boardEnrollDate }
