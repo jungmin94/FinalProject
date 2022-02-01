@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
 import com.pai.spring.member.model.vo.Member;
 
@@ -51,6 +52,7 @@ public interface BoardService {
 	
 	List<Board> likeList();
 	
+	int insertDeclare(BoardDeclare bd);
 	
 
 }

@@ -212,7 +212,7 @@ a .sub-menu-detail {
 				<span id="message-icon"><img src="https://i.ibb.co/ZT0XhL5/2022-01-20-10-00-48.png" width="13px"></span><span id="message-count">1</span>
 				</div>
 			</a>
-			<a href="">
+			<a href="${path}/board/myboardView.do">
 				<div class="sub-menu-detail" id="menu-myboard">내 게시글</div>
 			</a>
 			<a href="${path}/member/logout.do }">

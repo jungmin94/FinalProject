@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
 import com.pai.spring.member.model.vo.Member;
 
@@ -143,6 +144,11 @@ public class BoardDaoImpl implements BoardDao {
 	public List<Board> boardLikeList(SqlSessionTemplate session, int cPage, int numPerPage) {
 		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
 		return session.selectList("board.boardLikeList",null,rb);
+	}
+
+	@Override
+	public int insertDeclare(SqlSessionTemplate session, BoardDeclare bd) { 
+		return session.insert("board.insertDeclare", bd);
 	}
 
 

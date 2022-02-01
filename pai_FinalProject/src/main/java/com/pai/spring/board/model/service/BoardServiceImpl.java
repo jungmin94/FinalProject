@@ -12,6 +12,7 @@ import com.pai.spring.board.model.dao.BoardDao;
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
 import com.pai.spring.member.model.vo.Member;
 
@@ -171,6 +172,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Board> boardLikeList(int cPage, int numPerPage) { 
 		return dao.boardLikeList(session,cPage,numPerPage);
+	}
+
+	@Override
+	@Transactional
+	public int insertDeclare(BoardDeclare bd) { 
+		return dao.insertDeclare(session,bd);
 	}
 
 	 
