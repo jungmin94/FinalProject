@@ -14,7 +14,7 @@ import com.pai.spring.market.model.vo.GoodsDetails;
 @Repository
 public class MarketDaoImpl implements MarketDao {
 
-	
+
 	@Override
 	public List<Goods> bestSell(SqlSessionTemplate session) {
 		
@@ -37,6 +37,12 @@ public class MarketDaoImpl implements MarketDao {
 	public int selectGoodsCount(SqlSessionTemplate session) {
 	
 		return session.selectOne("market.selectGoodsCount");
+	}
+	
+	@Override
+	public int selectGoodsDetailsCount(SqlSessionTemplate session) {
+	
+		return session.selectOne("market.selectGoodsDetailsCount");
 	}
 	
 	@Override
@@ -66,7 +72,13 @@ public class MarketDaoImpl implements MarketDao {
 	@Override
 	public Goods selectGood(SqlSessionTemplate session,String goodsName) {
 		
-		return session.selectOne(goodsName);
+		return session.selectOne("market.selectGood",goodsName);
+	}
+	
+	@Override
+	public List<GoodsDetails> selectEnrolledList(SqlSessionTemplate session, int cPage, int numPerPage) {
+		
+		return session.selectList("market.selectEnrolledList",null,new RowBounds((cPage-1)*numPerPage,numPerPage));
 	}
 	
 }

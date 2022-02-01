@@ -44,6 +44,14 @@
 </style>
 <section>
 <div class="container">
+<!-------------------------------------------MBTI샵 메뉴바 ---------------------------------------------------------->
+<jsp:include page="/WEB-INF/views/market/MenuBar.jsp"/>
+	 <br>
+<!-------------------------------------------검색창 ---------------------------------------------------------->
+<jsp:include page="/WEB-INF/views/market/searchBar.jsp"/>
+	<br>
+</div>
+<div class="container">
     <div class="row">
       <div class="col">
         <img src="https://s-i.huffpost.com/gen/3948866/thumbs/o-PEPE-THE-FROG-570.jpg?3" class="img-thumbnail" alt="..." style="width: 500px; height: 500px;">
@@ -52,33 +60,47 @@
        <form action="" method="post">
         카테고리 1 (색상)
         <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
+            <option selected>색상을 선택하세요</option>
+            <c:forEach items="${colorList}" var="c">
+            	   <option value="${c.color}">${c.color}</option>
+            </c:forEach>
+          </select>
+          <br>
+          카테고리 2 (사이즈)
+          <select class="form-select" aria-label="Default select example">
+            <option selected>사이즈를 선택해주세요</option>
             <option value="1">One</option>
             <option value="2">Two</option>
             <option value="3">Three</option>
           </select>
           <br>
-          카테고리 2 (MBTI 로고)
+          카테고리 3 (MBTI로고) <span style="color:red;">@주문제작@</span>
           <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
-          </select>
-          <br>
-          카테고리 3 (사이즈)
-          <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option selected>MBTI로고를 선택해주세요</option>
+            <option value="ISTJ">ISTJ</option>
+            <option value="ISFJ">ISFJ</option>
+            <option value="INFJ">INFJ</option>
+            <option value="INTJ">INTJ</option>
+            <option value="ISTP">ISTP</option>
+            <option value="ISFP">ISFP</option>
+            <option value="INFP">INFP</option>
+            <option value="INTP">INTP</option>
+            <option value="ESTP">ESTP</option>
+            <option value="ESFP">ESFP</option>
+            <option value="ENFP">ENFP</option>
+            <option value="ENTP">ENTP</option>
+            <option value="ESTJ">ESTJ</option>
+            <option value="ESFJ">ESFJ</option>
+            <option value="ENFJ">ENFJ</option>
+            <option value="ENTJ">ENTJ</option>
           </select>
           <br>
           수량
-          <input type="number" class="form-control" start=1 id="inputGoodsName" name="buycount">
+          <input type="number" class="form-control" start=1 id="inputGoodsName" name="buyCount">
           <br>
           가격
-          <input type="number" class="form-control" start=1 id="inputGoodsName" name="totalprice" readonly>
+          <input type="hidden" class="form-control" start=1 id="inputTotlaPrice" name="totalPrice">
+			<p><fmt:formatNumber  value="10000"  type="currency"/>원</p>
           <br>
           <button type="submit" class="btn btn-outline-primary">구매하기</button>
           <button type="button" class="btn btn-outline-info">장바구니</button>

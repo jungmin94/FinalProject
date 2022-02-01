@@ -88,10 +88,28 @@ public class MarketController {
 		// 해당 제품 컬러 모두 가져오기
 		List<GoodsDetails> colorList = service.selectColorList(goodsName); 
 		
+		mv.addObject("good",good);
 		mv.addObject("imageList",imageList);
 		mv.addObject("colorList",colorList);
+		System.out.println(colorList);
 		
 		mv.setViewName("market/goodsDetailView");
+		
+		return mv;
+		
+	}
+	
+	@RequestMapping("/enrollManageList.do")
+	public ModelAndView enrollManageList(@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,ModelAndView mv) {
+		
+		List<GoodsDetails> list = service.selectEnrolledList(cPage,numPerPage);	
+		
+		int totalData = service.selectGoodsDetailsCount();
+		
+		mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage,5, "enrollManageList.do", null));	
+		mv.addObject("enrolledList",list);
+		mv.setViewName("market/enrollManageList");
 		
 		return mv;
 		

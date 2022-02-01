@@ -16,6 +16,8 @@ public interface MarketService {
 	List<Goods> selectGoodsList(int cPage,int numPerPage);
 	
 	int selectGoodsCount();
+
+	int selectGoodsDetailsCount();
 	
 	int selectGoodsCount(Map<String,Object> param);
 	
@@ -26,5 +28,7 @@ public interface MarketService {
 	List<GoodsDetailImage> selectImageList(String goodsName);
 	
 	Goods selectGood(String goodsName);
+	
+	List<GoodsDetails> selectEnrolledList(int cPage,int numPerPage);
 	
 }

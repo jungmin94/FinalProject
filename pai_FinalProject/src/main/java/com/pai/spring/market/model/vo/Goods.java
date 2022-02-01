@@ -26,6 +26,7 @@ public class Goods {
 	private int avgGrade;
 	private int minPrice;  // DB에는 없지만 해당 제품의 최솟값을 담기 위한 변수
 	private List<GoodsDetails> goodsDetails;
+	private List<GoodsDetailImage> goodsDetailImage;
 	
 }
 

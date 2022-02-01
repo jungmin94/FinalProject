@@ -47,6 +47,12 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
+	public int selectGoodsDetailsCount() {
+		
+		return dao.selectGoodsDetailsCount(session);
+	}
+	
+	@Override
 	public int selectGoodsCount(Map<String, Object> param) {
 	
 		return dao.selectGoodsCount(session,param);
@@ -76,6 +82,12 @@ public class MarketServiceImpl implements MarketService {
 	public Goods selectGood(String goodsName) {
 		
 		return dao.selectGood(session,goodsName);
+	}
+	
+	@Override
+	public List<GoodsDetails> selectEnrolledList(int cPage, int numPerPage) {
+		
+		return dao.selectEnrolledList(session,cPage,numPerPage);
 	}
 	
 }

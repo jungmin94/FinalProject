@@ -6,9 +6,13 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <section>
+<div class="container">
+<!-------------------------------------------MBTI샵 메뉴바 ---------------------------------------------------------->
+<jsp:include page="/WEB-INF/views/market/MenuBar.jsp"/>
+ <br>
 
 	<button type="button" class="btn btn-info" onclick="">등록하기</button>
-	<table class="table" style="text-align: center;">
+	<table class="table align-middle" style="text-align: center;">
 		<thead>
 		  <tr>
 			<th scope="col">상품번호</th>
@@ -21,24 +25,27 @@
 		  </tr>
 		</thead>
 		<tbody>
-		<!-- 반복문을 통해 출력 -->
+		<c:forEach items="${enrolledList}" var="e">
 		  <tr>
-			<th scope="row">@상품번호</th>
-			<td>@상품명</td>
-			<td>@색상</td>
-			<td>@사이즈</td>
-			<td>@가격</td>
-			<td>@재고수량</td>
+			<th scope="row">${e.goodsNo}</th>
+			<td>${e.goodsName}</td>
+			<td>${e.color}</td>
+			<td>${e.size}</td>
+			<td>${e.price}</td>
+			<td>${e.invenCount}</td>
 			<td>
 				<button type="button" class="btn btn-outline-success" onclick="">수정</button>
 				<button type="button" class="btn btn-outline-danger" onclick="">삭제</button>
 			</td>
 		  </tr>
+		</c:forEach>
 
 		</tbody>
 	  </table>
-
-	<!-- 페이지바 작성 공간 -->
-
+	<div style="text-align:center;">
+		${pageBar}
+	</div>
+	<br>
+</div>
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

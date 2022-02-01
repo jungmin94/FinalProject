@@ -18,6 +18,8 @@ public interface MarketDao {
 	List<Goods> selectGoodsList(SqlSessionTemplate session,int cPage,int numPerPage);
 	
 	int selectGoodsCount(SqlSessionTemplate session);
+
+	int selectGoodsDetailsCount(SqlSessionTemplate session);
 	
 	int selectGoodsCount(SqlSessionTemplate session,Map<String, Object> param);
 	
@@ -28,5 +30,7 @@ public interface MarketDao {
 	List<GoodsDetailImage> selectImageList(SqlSessionTemplate session,String goodsName);
 	
 	Goods selectGood(SqlSessionTemplate session,String goodsName);
+	
+	List<GoodsDetails> selectEnrolledList(SqlSessionTemplate session,int cPage,int numPerPage);
 	
 }
