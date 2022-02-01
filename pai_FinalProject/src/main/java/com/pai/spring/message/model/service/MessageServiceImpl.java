@@ -1,5 +1,7 @@
 package com.pai.spring.message.model.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,13 @@ public class MessageServiceImpl implements MessageService {
 	public int insertMessage(Message msg) {
 		return dao.insertMessage(session,msg);
 	}
+
+	@Override
+	public List<Message> selectRecvMessage(String member_id) {
+		return dao.selectRecvMessage(session,member_id);
+	}
+	
+	
 	
 	
 }

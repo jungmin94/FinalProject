@@ -61,4 +61,65 @@
 	</div>
 
 </body>
+
+<script>
+$(document).ready(()=>{
+	selectRecvMessage();
+});
+
+const selectRecvMessage(){
+	$.ajax({
+		url:"${path}/message/messageBox.do",
+		type:'post',
+		dataType:'json',
+		success:data=>{
+			const table=$('<table>');
+			let thead=$("<thead>");
+			let tbody=$('<tbody>');
+			let tr=$("<tr>");
+			let th1=$("<th>").html("체크박스");
+			let th2=$("<th>").html("번호");
+			let th3=$("<th>").html("제목");
+			let th4=$("<th>").html("보낸사람");
+			let th5=$("<th>").html("날짜");
+			thead.append(tr).append(th1).append(th2).append(th3).append(th4).append(th5);
+			table.append(thead);
+			
+			if(data.length==0){
+				let tr2 = $("<tr>");
+				let ntd=$("<td>").html("조회결과가 없습니다.");
+				ntd.attr("colspan","5");
+				tr.css("text-align","center");
+				tr2.append(ntd);
+				tbody.append(tr2);
+				table.append(tbody);
+			}  else{
+				
+				for(let i=0; i<data.length; i++){
+					let tr2 = $("<tr>");
+					let check = $("<td>").html('check');
+					let inputPositionCode = $('<input>').attr({type:"hidden",name:"positionCode",id:"positionCode",value:data[i]["positionCode"]});
+					positionCode.append(inputPositionCode);
+					let positionName = $("<td>").html(data[i]["positionName"]);
+					let inputPositionName = $('<input>').attr({type:"hidden",name:"positionName",id:"positionName",value:data[i]["positionName"]});
+					positionName.append(inputPositionName);
+					let updatPosition = $("<td>").html("<button>수정");
+					updatPosition.children('button').attr({id:"updatPosition"+i, class:"btn btn-outline-secondary"});
+					updatPosition.children('button').attr("onclick","updatPosition(this);");
+					let deletePosition = $("<td>").html("<button>삭제");
+					deletePosition.children('button').attr({id:"deletePosition"+i, class:"btn btn-outline-secondary"});
+					deletePosition.children('button').attr("onclick","deletePosition(this);");
+					table.append(tbody);
+					tbody.append(tr2);
+					tr2.append(positionCode).append(positionName).append(updatPosition).append(deletePosition);
+				}
+				
+			}
+			$("#ajaxTable").html(table);
+		}
+			
+	})
+}
+
+</script>
 </html>
