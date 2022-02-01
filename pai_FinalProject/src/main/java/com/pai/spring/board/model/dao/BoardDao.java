@@ -65,4 +65,20 @@ public interface BoardDao {
 	List<Board> likeList(SqlSessionTemplate session);
 	
 	int insertDeclare(SqlSessionTemplate session,BoardDeclare bd);
+	
+	List<Board> previewBoardList(SqlSessionTemplate session,String memberId);
+	
+	List<BoardComment> previewCommentList(SqlSessionTemplate session,String memberNick);
+	
+	List<Board> myboardList(SqlSessionTemplate session,int cPage,int numPerPage,String memberId);
+	
+	int selectMyBoardCount(SqlSessionTemplate session,String memberId);
+	
+	List<BoardComment> myboardCommentList(SqlSessionTemplate session,int cPage,int numPerPage,String memberId);
+	
+	int selectCommentAll(SqlSessionTemplate session,String memberNick);
+	
+	List<BoardDeclare> declareList(SqlSessionTemplate session,int cPage,int numPerPage,String memberId );
+	
+	int selectDeclareCount(SqlSessionTemplate session,String memberId);
 }

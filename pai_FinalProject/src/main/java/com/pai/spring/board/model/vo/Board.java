@@ -27,4 +27,5 @@ public class Board {
 	private List<AttachFile> attachFile;
 	private List<BoardComment> comment;
 	private List<BoardLike> like;
+	private List<BoardDeclare> declare;
 }

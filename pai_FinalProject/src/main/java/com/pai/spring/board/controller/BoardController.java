@@ -410,8 +410,27 @@ public class BoardController {
 	
 	
 	@RequestMapping("/myboardView.do")
-	public ModelAndView myboardView(ModelAndView mv){
-			
+	public ModelAndView myboardView(ModelAndView mv,String memberId,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="15") int numPerPage){
+			Member m=service.selectMember(memberId); 
+			List<Board> list=service.previewBoardList(memberId); 
+			List<BoardComment> bc=service.previewCommentList(m.getMember_nick());
+			int totalDate=service.selectMyBoardCount(memberId);
+			List<Board> listAll=service.myboardList(cPage,numPerPage,memberId);
+			List<BoardComment> commentListAll=service.myboardCommentList(cPage,numPerPage,m.getMember_nick());
+			int totalDate2=service.selectCommentAll(m.getMember_nick());
+			List<BoardDeclare> declareList=service.declareList(cPage,numPerPage,memberId);
+			int totalDate3=service.selectDeclareCount(memberId);
+			System.out.println(declareList); 
+		
+			mv.addObject("pageBar3",PageFactory.getPageBar(totalDate3, cPage, numPerPage, 5, "boardList.do",""));
+			mv.addObject("declareList", declareList);
+			mv.addObject("pageBar2",PageFactory.getPageBar(totalDate2, cPage, numPerPage, 5, "boardList.do",""));
+			mv.addObject("commentAll", commentListAll);
+			mv.addObject("listAll", listAll);
+			mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "boardList.do",""));
+			mv.addObject("member", m);
+			mv.addObject("list", list);
+			mv.addObject("comments", bc); 
 		return mv;
 	}
 	

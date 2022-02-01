@@ -142,7 +142,11 @@ section>*{
 								<span style="font-weight:bolder;">[<c:out value="${b.comment.size()}"/>]</span> 
 							</a>
 					</td>
-					<td><c:out value="${b.boardWriter.member_nick}"/></td>
+					<td>
+						<a style="text-decoration:none; color:black;" href="${path}/board/myboardView.do?memberId=${b.boardWriter.member_id}">
+						<c:out value="${b.boardWriter.member_nick}"/>
+						</a>
+					</td>
 					<td><c:out value="${b.boardEnrollDate}"/></td>
 					<td><c:out value="${b.boardReadCount}"/></td>
 					<td><c:out value="${b.recommendCount}"/></td>  
