@@ -54,5 +54,19 @@ public interface BoardService {
 	
 	int insertDeclare(BoardDeclare bd);
 	
+	List<Board> previewBoardList(String memberId);
 
+	List<BoardComment> previewCommentList(String memberNick);
+	
+	List<Board> myboardList(int cPage,int numPerPage,String memberId);
+	
+	int selectMyBoardCount(String memberId);
+	
+	List<BoardComment> myboardCommentList(int cPage,int numPerPage,String memberId);
+	
+	int selectCommentAll(String memberNick);
+	
+	List<BoardDeclare> declareList(int cPage,int numPerPage,String memberId);
+	
+	int selectDeclareCount(String memberId);
 }

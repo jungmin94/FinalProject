@@ -151,6 +151,50 @@ public class BoardDaoImpl implements BoardDao {
 		return session.insert("board.insertDeclare", bd);
 	}
 
+	@Override
+	public List<Board> previewBoardList(SqlSessionTemplate session, String memberId) { 
+		return session.selectList("board.previewBoardList", memberId);
+	}
+
+	@Override
+	public List<BoardComment> previewCommentList(SqlSessionTemplate session, String memberNick) { 
+		return session.selectList("board.previewCommentList",memberNick);
+	}
+
+	@Override
+	public List<Board> myboardList(SqlSessionTemplate session, int cPage, int numPerPage, String memberId) { 
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.myboardList", memberId, rb);
+	}
+
+	@Override
+	public int selectMyBoardCount(SqlSessionTemplate session, String memberId) { 
+		return session.selectOne("board.selectMyBoardCount", memberId);
+	}
+
+	@Override
+	public List<BoardComment> myboardCommentList(SqlSessionTemplate session, int cPage, int numPerPage,
+			String memberId) { 
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.myboardCommentList", memberId, rb);
+	}
+
+	@Override
+	public int selectCommentAll(SqlSessionTemplate session, String memberNick) { 
+		return session.selectOne("board.selectCommentAll",memberNick);
+	}
+
+	@Override
+	public List<BoardDeclare> declareList(SqlSessionTemplate session, int cPage, int numPerPage, String memberId) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.declareList",memberId,rb);
+	}
+
+	@Override
+	public int selectDeclareCount(SqlSessionTemplate session, String memberId) { 
+		return session.selectOne("board.selectDeclareCount", memberId);
+	}
+
 
 	
 }

@@ -18,4 +18,5 @@ public class BoardDeclare {
 	private Date declareDate;
 	private String declareResult;
 	private Date declareResultDate;
+	private String boardTitle;
 }
