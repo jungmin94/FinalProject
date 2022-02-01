@@ -24,8 +24,8 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<Message> selectRecvMessage(String member_id) {
-		return dao.selectRecvMessage(session,member_id);
+	public List<Message> selectRecvMessage(String memberId) {
+		return dao.selectRecvMessage(session,memberId);
 	}
 	
 	

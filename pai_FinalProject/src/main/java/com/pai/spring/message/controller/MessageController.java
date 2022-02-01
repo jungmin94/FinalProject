@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.pai.spring.message.model.service.MessageService;
 import com.pai.spring.message.model.vo.Message;
 
@@ -28,9 +27,10 @@ public class MessageController {
 	}
 	
 	@RequestMapping(value="/message/messageBox.do", produces="text/plain;charset=UTF-8")
-	public ModelAndView messageBox(ModelAndView mv, String member_id) {
-		List<Message> list = service.selectRecvMessage(member_id);
-		new Gson().toJson(list);
+	public ModelAndView messageBox(ModelAndView mv, String memberId) {
+		List<Message> list = service.selectRecvMessage(memberId);
+		//new Gson().toJson(list);
+		mv.addObject("list",list);
 		mv.setViewName("message/messageBox");
 		return mv;
 	}

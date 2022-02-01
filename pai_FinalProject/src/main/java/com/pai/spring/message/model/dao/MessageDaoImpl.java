@@ -16,8 +16,8 @@ public class MessageDaoImpl implements MessageDao {
 	}
 
 	@Override
-	public List<Message> selectRecvMessage(SqlSessionTemplate session, String member_id) {
-		return session.selectList("message.selectRecvMessage",member_id);
+	public List<Message> selectRecvMessage(SqlSessionTemplate session, String memberId) {
+		return session.selectList("message.selectRecvMessage", memberId);
 	}
 
 	

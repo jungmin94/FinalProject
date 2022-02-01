@@ -6,6 +6,6 @@ import com.pai.spring.message.model.vo.Message;
 
 public interface MessageService {
 	int insertMessage(Message msg);
-	List<Message> selectRecvMessage(String member_id);
+	List<Message> selectRecvMessage(String memberId);
 
 }
