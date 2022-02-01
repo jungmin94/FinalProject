@@ -1,7 +1,9 @@
 package com.pai.spring.common.websocket;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,10 +13,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.pai.spring.message.model.service.MessageService;
-import com.pai.spring.message.model.vo.Message;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +25,7 @@ public class MessageServer extends TextWebSocketHandler{
 	
 //	private final ObjectMapper objectMapper = new ObjectMapper();
 
-//	Map<String, WebSocketSession> userSessions = new HashMap<>();
+	private Map<String, WebSocketSession> clientSession = new HashMap<>();
 	private List<WebSocketSession> clients = new ArrayList<WebSocketSession>();
     private static Logger logger = LoggerFactory.getLogger(MessageServer.class);
 

@@ -18,4 +18,10 @@ public class MessageController {
 		return mv;
 	}
 	
+	@RequestMapping(value="/message/messageBox.do")
+	public ModelAndView messageBox(ModelAndView mv) {
+		mv.setViewName("message/messageBox");
+		return mv;
+	}
+	
 }
