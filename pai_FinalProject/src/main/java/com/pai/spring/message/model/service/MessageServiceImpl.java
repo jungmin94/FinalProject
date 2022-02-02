@@ -1,6 +1,7 @@
 package com.pai.spring.message.model.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,18 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<Message> selectRecvMessage(String memberId) {
-		return dao.selectRecvMessage(session,memberId);
+	public List<Message> selectRecvMessage(String memberId, int cPage, int numPerpage) {
+		return dao.selectRecvMessage(session,memberId, cPage, numPerpage);
+	}
+
+	@Override
+	public int selectRecvMessageCount(String memberId) {
+		return dao.selectRecvMessageCount(session, memberId);
+	}
+
+	@Override
+	public Message selectRecvMsgDetail(int msgNo) {
+		return dao.selectRecvMsgDetail(session, msgNo);
 	}
 	
 	

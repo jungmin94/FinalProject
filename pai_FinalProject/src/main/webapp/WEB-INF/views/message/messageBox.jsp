@@ -19,7 +19,7 @@
 	</div>
 	<div id="searchMessage">
 	</div>
-	<div>
+	<div id="recvMsg">
 		<table>
 			<thead>
 				<tr>
@@ -31,44 +31,42 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td>체크박스</td>
-					<td>번호</td>
-					<td>제목</td>
-					<td>보낸사람</td>
-					<td>날짜</td>
-				</tr>
-				<tr>
-					<td>체크박스</td>
-					<td>번호</td>
-					<td>제목</td>
-					<td>보낸사람</td>
-					<td>날짜</td>
-				</tr>		
-				<tr>
-					<td>체크박스</td>
-					<td>번호</td>
-					<td>제목</td>
-					<td>보낸사람</td>
-					<td>날짜</td>
-				</tr>	
+			
 				<c:forEach var="m" items="${list }">	
-					<tr>
-						<td>체크박스</td>
-						<td></td>
+					<tr onclick='recvMsgView(this);' style='text-align:center'>
+						<td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
+						<td><c:out value="${m.msgNo }"/></td>
 						<td><c:out value="${m.msgTitle }"/></td>
-						<td><c:out value="${m.sendId}"/></td>
-						<td><c:out value="${m.recvId}"/></td>
+						<td><c:out value="${m.sendId.member_nick}"/></td>
+						<td><fmt:formatDate type="both" pattern="yyyy년 MM월 dd일 (E) hh:mm" value="${m.msgSendTime}"/></td>
 					</tr>
 				</c:forEach>
 
 			</tbody>
 		</table>
+		 <div id="pageBar">
+	        	${pageBar }
+	     </div>
 	</div>
 
 </body>
 
 <script>
+
+function recvMsgView(e){
+	let val = $(e).children();//이벤트발생한곳의 자식들
+	let msgNo = val.eq(0).text();//project No 가져와
+	$.ajax({
+		url:"${path}/message/recvMsgDetail.do",
+		type: "post",
+		dataType: "json",
+		success: data => {
+			console.log("과연"+data);
+		}
+	});
+}
+
+
 /* $(document).ready(()=>{
 	selectRecvMessage();
 });
@@ -104,20 +102,17 @@ const selectRecvMessage(){
 				for(let i=0; i<data.length; i++){
 					let tr2 = $("<tr>");
 					let check = $("<td>").html('check');
-					let inputPositionCode = $('<input>').attr({type:"hidden",name:"positionCode",id:"positionCode",value:data[i]["positionCode"]});
+					let sendId = $('<input>').attr({type:"hidden",name:"sendId",id:"sendId",value:data[i]["send_id"]});
 					positionCode.append(inputPositionCode);
-					let positionName = $("<td>").html(data[i]["positionName"]);
+					let sendNick = $("<td>").html(data[i]["send_id"]["member_nick"]);
 					let inputPositionName = $('<input>').attr({type:"hidden",name:"positionName",id:"positionName",value:data[i]["positionName"]});
 					positionName.append(inputPositionName);
-					let updatPosition = $("<td>").html("<button>수정");
-					updatPosition.children('button').attr({id:"updatPosition"+i, class:"btn btn-outline-secondary"});
-					updatPosition.children('button').attr("onclick","updatPosition(this);");
-					let deletePosition = $("<td>").html("<button>삭제");
-					deletePosition.children('button').attr({id:"deletePosition"+i, class:"btn btn-outline-secondary"});
-					deletePosition.children('button').attr("onclick","deletePosition(this);");
+					let deleteMessage = $("<td>").html("<button>삭제");
+					deleteMessage.children('button').attr({id:"deleteMessage"+i, class:"btn btn-outline-secondary"});
+					deleteMessage.children('button').attr("onclick","deleteMessage(this);");
 					table.append(tbody);
 					tbody.append(tr2);
-					tr2.append(positionCode).append(positionName).append(updatPosition).append(deletePosition);
+					tr2.append(positionCode).append(positionName).append(deleteMessage);
 				}
 				
 			}

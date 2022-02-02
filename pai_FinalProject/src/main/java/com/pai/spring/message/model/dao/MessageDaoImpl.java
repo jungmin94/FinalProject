@@ -2,6 +2,7 @@ package com.pai.spring.message.model.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,9 +17,23 @@ public class MessageDaoImpl implements MessageDao {
 	}
 
 	@Override
-	public List<Message> selectRecvMessage(SqlSessionTemplate session, String memberId) {
-		return session.selectList("message.selectRecvMessage", memberId);
+	public List<Message> selectRecvMessage(SqlSessionTemplate session, String memberId, int cPage, int numPerpage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerpage,numPerpage);
+		return session.selectList("message.selectRecvMessage", memberId, rb);
 	}
 
+	@Override
+	public int selectRecvMessageCount(SqlSessionTemplate session, String memberId) {
+		return session.selectOne("message.selectRecvMessageCount",memberId);
+	}
+
+	@Override
+	public Message selectRecvMsgDetail(SqlSessionTemplate session, int msgNo) {
+		return session.selectOne("message.selectRecvMsgDetail",msgNo);
+	}
+
+	
+	
+	
 	
 }
