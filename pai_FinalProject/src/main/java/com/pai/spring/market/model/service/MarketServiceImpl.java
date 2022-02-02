@@ -96,4 +96,16 @@ public class MarketServiceImpl implements MarketService {
 		return dao.updateGood(session,param);
 	}
 	
+	@Override
+	public int selectGoodsDetailsCount(Map<String, Object> param) {
+		
+		return dao.selectGoodsDetailsCount(session,param);
+	}
+
+	@Override
+	public List<GoodsDetails> searchEnrolledList(Map<String, Object> param, int cPage, int numPerPage) {
+	
+		return dao.searchEnrolledList(session,param,cPage,numPerPage);
+	}
+	
 }

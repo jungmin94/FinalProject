@@ -11,7 +11,34 @@
 <jsp:include page="/WEB-INF/views/market/MenuBar.jsp"/>
  <br>
 
-	<button type="button" class="btn btn-info" onclick="">신규등록하기</button>
+<div class="row">
+    <div class="col-2">
+      <button type="button" class="btn btn-info" onclick="">신규등록하기</button>
+    </div>
+   
+    <div class="col">
+	<form class="row g-3" action="${path}/market/enrolledGoodSearch.do">
+	  <div class="col-auto">
+	 <div class="form-check form-check-inline">
+	  <input class="form-check-input" type="radio" name="searchOp" id="inlineRadio1" value="code">
+	  <label class="form-check-label" for="inlineRadio1">상품코드</label>
+	</div>
+	<div class="form-check form-check-inline" style="padding-top:5px;">
+	  <input class="form-check-input" type="radio" name="searchOp" id="inlineRadio2" value="name">
+	  <label class="form-check-label" for="inlineRadio2">상품명</label>
+	</div>
+	  </div>
+	  <div class="col-auto">
+	    <input type="search" class="form-control" id="inputPassword2"  name="searchText" placeholder="검색어를 입력하세요">
+	  </div>
+	  <div class="col-auto">
+	    <button type="submit" class="btn btn-primary mb-3">검색</button>
+	  </div>
+	</form>
+      </div>
+    </div>
+
+  
 	<table class="table align-middle" style="text-align: center;">
 		<thead>
 		  <tr>
