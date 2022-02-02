@@ -25,6 +25,7 @@ public class MarketController {
 	@Autowired
 	private MarketService service;
 
+	/* 메인페이지 불러오기 */
 	@RequestMapping("/mainView.do")
 	public ModelAndView mainView(ModelAndView mv) {
 		
@@ -39,6 +40,7 @@ public class MarketController {
 		
 	}
 	
+	/* 전체상품 페이지 리스트 불러오기 */
 	@RequestMapping("/goodsList.do")
 	public ModelAndView goodsList(@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage,ModelAndView mv) {
@@ -55,7 +57,7 @@ public class MarketController {
 	return mv;
 	}
 	
-	
+	/* 전체상품 페이지 검색한 결과 불러오기 */
 	@RequestMapping("/searchList.do")
 	public ModelAndView searchList(@RequestParam Map<String,Object> param,@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage,ModelAndView mv) {
@@ -75,7 +77,7 @@ public class MarketController {
 		return mv;
 	}
 	
-	
+	/* 상품 상세페이지 불러오기 */
 	@RequestMapping("/goodsDetailView.do")
 	public ModelAndView goodsDetailView(String goodsName,ModelAndView mv) {
 		
@@ -99,6 +101,7 @@ public class MarketController {
 		
 	}
 	
+	/* 등록된 상품상세 리스트 불러오기 */
 	@RequestMapping("/enrollManageList.do")
 	public ModelAndView enrollManageList(@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,ModelAndView mv) {
@@ -115,6 +118,7 @@ public class MarketController {
 		
 	}
 	
+	/* 상품 수정 */
 	@RequestMapping("/updateGood.do")
 	public ModelAndView updateGood(@RequestParam Map<String,Object> param,ModelAndView mv) {
 		
@@ -136,6 +140,7 @@ public class MarketController {
 		return mv;
 	}
 	
+	/* 등록된 상품 검색하여 불러오기 */
 	@RequestMapping("/enrolledGoodSearch.do")
 	public ModelAndView enrolledGoodSearch(@RequestParam Map<String,Object> param,@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,ModelAndView mv) {
@@ -154,6 +159,7 @@ public class MarketController {
 		return mv;
 	}
 	
+	/* 상품 삭제 */
 	@RequestMapping("/deleteGood.do")
 	public ModelAndView deleteGood(@RequestParam Map<String,Object> param,ModelAndView mv) {
 		
@@ -178,6 +184,7 @@ public class MarketController {
 		
 	}
 	
+	/* 등록된 상품 불러오기 */
 	@RequestMapping("/enrollGood.do")
 	public ModelAndView enrollGood(@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,ModelAndView mv) {
@@ -194,6 +201,7 @@ public class MarketController {
 		return mv;
 	}
 	
+	/* 등록된 상품 검색하여 불러오기 */
 	@RequestMapping("/goodSearch.do")
 	public ModelAndView goodSearch(@RequestParam Map<String,Object> param,@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,ModelAndView mv) {
