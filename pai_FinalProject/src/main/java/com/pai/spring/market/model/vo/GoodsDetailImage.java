@@ -1,7 +1,5 @@
 package com.pai.spring.market.model.vo;
 
-import java.sql.Date;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,13 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GoodsDetails {
+public class GoodsDetailImage {
 
-	private String color;
-	private String size;
+	private int imgNo;
 	private int goodsNo;
 	private String goodsName;
-	private int invenCount;
-	private int price;
+	private String filePath;
 	
 }

@@ -18,14 +18,15 @@ public class Goods {
 	private String goodsName;
 	private String goodsOutput;
 	private Date goodsEnrollDate;
-	private String largeCategoty;
-	private String middleCategoty;
+	private String largeCategory;
+	private String middleCategory;
 	private String image;
 	private String sizeImage;
 	private int totalCell;
 	private int avgGrade;
 	private int minPrice;  // DB에는 없지만 해당 제품의 최솟값을 담기 위한 변수
 	private List<GoodsDetails> goodsDetails;
+	private List<GoodsDetailImage> goodsDetailImage;
 	
 }
 
