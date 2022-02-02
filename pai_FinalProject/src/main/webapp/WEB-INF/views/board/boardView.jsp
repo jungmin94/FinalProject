@@ -5,6 +5,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/> 
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <%@ page import="com.pai.spring.board.model.vo.Board" %> 
 <%
 	Board b=(Board)request.getAttribute("board");
@@ -98,7 +99,9 @@ section>*{
 	      			<img style="height:15px; width:15px;"src="${path}/resources/images/board/siren.png">&nbsp;신고
 	      		</button> 
 	        	<button type="button" class="btn btn-info">
-					<img style="height:15px; width:15px;"src="${path}/resources/images/board/share.png">&nbsp;공유
+	        		 <a id="kakao-link-btn" href="javascript:kakaoShare()" style=" text-decoration: none; color:black;"> 
+						<img style="height:30px; width:30px;"src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png">&nbsp;공유
+   		  			 </a>
    		  		</button>
    		  		<c:if test="${like==null}">
 			    	<button type="button" class="btn btn-info" id="recommend" onclick="location.replace('${path}/board/boardLike.do?boardNo=${board.boardNo}&memberId=${loginMember.member_id}')">
@@ -328,11 +331,51 @@ section>*{
 			  </div>
 			</div>
 		    
-		  </div> 	   
+		  </div>
+		  
+		   
+		  	   
 	</div>
 </section>
 
 <script>
+ 
+// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+Kakao.init('46dd2eddcbc0ca659e9e66543e1a03d8');
+
+// SDK 초기화 여부를 판단합니다.
+console.log(Kakao.isInitialized());
+
+function kakaoShare() {
+  Kakao.Link.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: '${board.boardTitle}',
+      description: 'MBTI커뮤니티 사이트 PAI',
+      imageUrl: 'https://i.ibb.co/7kh6Yz5/Kakao-Talk-Photo-2022-01-15-17-58-47.jpg',
+      link: {
+        mobileWebUrl: "http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null",
+        webUrl: 'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+      },
+    },
+    buttons: [
+      {
+        title: '보러가기',
+        link: {
+          mobileWebUrl: 'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+          webUrl: 'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+        },
+      },
+    ],
+    // 카카오톡 미설치 시 카카오톡 설치 경로이동
+    installTalk: true,
+  })
+}
+
+
+
+
+
 	const before=()=>{ 
 		$.ajax({
 			url:"${path}/board/ajax/boardView.do",

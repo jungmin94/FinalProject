@@ -54,7 +54,7 @@
 		  </div>
 		  <div class="tab-content" id="v-pills-tabContent">
 		    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-		    	<div class="title">게시글 일부공개(10)</div>
+		    	<div class="title" style="border-bottom:black 2px solid;">게시글 일부공개(10)</div>
 		    	<c:if test="${list.size()<=0}">
 		    		등록된 게시글이 없습니다.
 		    	</c:if>
@@ -68,7 +68,7 @@
 				    	</div>
 			    	</div> 
 		    	</c:forEach>
-		     	<div class="title" style="margin-top:20px;">댓글 일부공개(10)</div> 
+		     	<div class="title" style="margin-top:20px; border-bottom:black 2px solid;">댓글 일부공개(10)</div> 
 		     	<c:if test="${comments.size()<=0}">
 		    		<p style="margin-top:20px;font-size:13px;">등록된 댓글이 없습니다.</p>
 		    	</c:if>
@@ -89,7 +89,7 @@
 		    
 		    
 		    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-		   		<div class="title" style="margin-bottom:20px;">전체게시글</div>
+		   		<div class="title" style=" border-bottom:black 2px solid;">전체게시글</div>
 		    	<div>
 		    		<c:if test="${listAll.size()<=0}">
 		    		등록된 게시글이 없습니다.
@@ -109,7 +109,7 @@
 		    </div>
 		    
 		    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-		    	<div class="title"  style="margin-bottom:20px;">전체댓글</div> 
+		    	<div class="title"  style=" border-bottom:black 2px solid;" >전체댓글</div> 
 		    	<div>
 		    		<c:if test="${commentAll.size()<=0}">
 		    		등록된 댓글 없습니다.
@@ -132,6 +132,11 @@
 	 
 			    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 			   		 <div class="title" style="border-bottom:black 2px solid;" >신고접수내역</div> 
+			   		  <c:if test="${declareList.size()<=0}">
+			   		  <div style="text-align:center; width:950px;"></div>
+			   		 	신고접수내역이 없습니다.
+			   		 </c:if>
+			   		 <c:if test="${declareList.size()>0}"> 
 			   		  <c:forEach var="d" items="${declareList}">
 			   		  <div style="border-bottom:gray 2px solid;width:950px; height:70px; margin-bottom:10px;  ">
 				   		 <div class="row" style="text-align:justify; margin-top:10px;" >
@@ -155,9 +160,10 @@
 						 		${d.boardTitle}
 						 	</a>	
 						 </div> 
-					  </div>	 
+					  </div>	
 			   		  </c:forEach> 
-			   		 <div>${pageBar3}</div>
+			   		  <div>${pageBar3}</div>
+					  </c:if> 
 			    </div>
 		     
 		    
