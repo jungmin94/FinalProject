@@ -90,4 +90,10 @@ public class MarketServiceImpl implements MarketService {
 		return dao.selectEnrolledList(session,cPage,numPerPage);
 	}
 	
+	@Override
+	public int updateGood(Map<String, Object> param) {
+	
+		return dao.updateGood(session,param);
+	}
+	
 }

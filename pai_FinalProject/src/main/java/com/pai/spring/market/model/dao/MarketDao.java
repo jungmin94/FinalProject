@@ -33,4 +33,6 @@ public interface MarketDao {
 	
 	List<GoodsDetails> selectEnrolledList(SqlSessionTemplate session,int cPage,int numPerPage);
 	
+	int updateGood(SqlSessionTemplate session,Map<String,Object> param);
+	
 }

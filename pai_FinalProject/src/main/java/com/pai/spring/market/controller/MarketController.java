@@ -115,5 +115,26 @@ public class MarketController {
 		
 	}
 	
+	@RequestMapping("/updateGood.do")
+	public ModelAndView updateGood(@RequestParam Map<String,Object> param,ModelAndView mv) {
+		
+		int result = service.updateGood(param);
+		
+		 String msg="";
+		 String loc="";
+		 if(result>0) {
+			 msg="상품 수정 성공";
+			 loc="/";			 
+		 }else {
+			 msg="상품 수정 실패";
+			 loc="/";	
+		 }
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+	
+		return mv;
+	}
+	
 	
 }
