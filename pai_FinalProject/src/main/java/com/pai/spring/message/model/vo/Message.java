@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Message {
 	private int msgNo;
-	private Member sendId;
-	private Member recvId;
+	private List<Member> sendId;
+	private List<Member> recvId;
 	private String msgTitle;
 	private String msgContent;
 	private Timestamp msgSendTime;

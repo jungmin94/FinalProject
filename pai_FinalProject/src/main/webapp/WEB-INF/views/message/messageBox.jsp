@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>	
+<c:set var="path" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,14 +32,15 @@
 				</tr>
 			</thead>
 			<tbody>
-			
-				<c:forEach var="m" items="${list }">	
+			${list }
+		 		<c:forEach var="m" items="${list }">	
 					<tr onclick='recvMsgView(this);' style='text-align:center'>
 						<td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
-						<td><c:out value="${m.msgNo }"/></td>
-						<td><c:out value="${m.msgTitle }"/></td>
-						<td><c:out value="${m.sendId.member_nick}"/></td>
-						<td><fmt:formatDate type="both" pattern="yyyy년 MM월 dd일 (E) hh:mm" value="${m.msgSendTime}"/></td>
+						<td><c:out value="${m.MSGNO }"/></td>
+						<td><c:out value="${m.MSGTITLE }"/></td>
+						<td><c:out value="${m.SENDNICK}"/></td>
+						<td><c:out value="${m.MSGSENDTIME}"/></td>
+						<%-- <td><fmt:formatDate type="both" pattern="yyyy년 MM월 dd일 (E) hh:mm" value="${m.MSGSENDTIME}"/></td> --%>
 					</tr>
 				</c:forEach>
 
@@ -54,11 +56,14 @@
 <script>
 
 function recvMsgView(e){
+	$("#recvMsg").hide();
 	let val = $(e).children();//이벤트발생한곳의 자식들
-	let msgNo = val.eq(0).text();//project No 가져와
+	let msgNo = val.eq(1).text();//project No 가져와
+	console.log(msgNo);
 	$.ajax({
 		url:"${path}/message/recvMsgDetail.do",
 		type: "post",
+		data: {"msgNo":msgNo},
 		dataType: "json",
 		success: data => {
 			console.log("과연"+data);
@@ -67,7 +72,7 @@ function recvMsgView(e){
 }
 
 
-/* $(document).ready(()=>{
+<%-- /* $(document).ready(()=>{
 	selectRecvMessage();
 });
 
@@ -120,7 +125,7 @@ const selectRecvMessage(){
 		}
 			
 	})
-} */
+} */ --%>
 
 </script>
 </html>
