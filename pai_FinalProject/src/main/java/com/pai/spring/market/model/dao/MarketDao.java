@@ -16,6 +16,8 @@ public interface MarketDao {
 	List<Goods> bestReview(SqlSessionTemplate session);
 
 	List<Goods> selectGoodsList(SqlSessionTemplate session,int cPage,int numPerPage);
+
+	List<Goods> selectOnlyGoodsList(SqlSessionTemplate session,int cPage,int numPerPage);
 	
 	int selectGoodsCount(SqlSessionTemplate session);
 
@@ -25,7 +27,11 @@ public interface MarketDao {
 	
 	int selectGoodsDetailsCount(SqlSessionTemplate session,Map<String,Object> param);
 	
+	int searchGoodCount(SqlSessionTemplate session,Map<String,Object> param);
+	
 	List<Goods> searchList(SqlSessionTemplate session,Map<String, Object> param, int cPage, int numPerPage);
+	
+	List<Goods> selectSearchGood(SqlSessionTemplate session,Map<String,Object> param,int cPage,int numPerPage);
 	
 	List<GoodsDetails> selectColorList(SqlSessionTemplate session,String goodsName);
 	

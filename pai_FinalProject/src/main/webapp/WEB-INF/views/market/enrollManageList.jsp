@@ -13,7 +13,7 @@
 
 <div class="row">
     <div class="col-2">
-      <button type="button" class="btn btn-info" onclick="">신규등록하기</button>
+      <button type="button" class="btn btn-info" onclick="location.assign('${path}/market/enrollGood.do')">상품 등록하기</button>
     </div>
    
     <div class="col">
@@ -71,9 +71,6 @@
 				</c:if>
 			</td>
 			<td>
-				<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#enrollGoodModal">
-  				등록
-				</button>
 				<button type="button"  id="updateGoodBtn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#updateGoodModal"
 				data-gno="${e.goodsNo}" data-gname="${e.goodsName}"  data-gcolor="${e.color}" data-gsize="${e.size}"  data-gprice="${e.price}" data-ginven="${e.invenCount}" >
   				수정

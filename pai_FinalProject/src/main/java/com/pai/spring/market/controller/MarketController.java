@@ -178,5 +178,40 @@ public class MarketController {
 		
 	}
 	
+	@RequestMapping("/enrollGood.do")
+	public ModelAndView enrollGood(@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,ModelAndView mv) {
+		
+		List<Goods> list = service.selectOnlyGoodsList(cPage,numPerPage);	
+		System.out.println(list);
+		int totalData = service.selectGoodsCount();
+			
+		mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage,5, "enrollGood.do", null));	
+		mv.addObject("goodsList",list);	
+		
+		mv.setViewName("market/enrollView");
+		
+		return mv;
+	}
+	
+	@RequestMapping("/goodSearch.do")
+	public ModelAndView goodSearch(@RequestParam Map<String,Object> param,@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,ModelAndView mv) {
+		
+		String searchOp = (String)param.get("searchOp");
+		String searchText = (String)param.get("searchText");
+		
+		List<Goods> list = service.selectSearchGood(param,cPage,numPerPage);
+	
+		int totalData = service.searchGoodCount(param);
+		
+		mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage,5, "goodSearch.do", "&searchOp="+searchOp+"&searchText="+searchText));
+		mv.addObject("goodsList",list);
+		mv.setViewName("market/enrollView");
+		
+		return mv;
+		
+	}
+	
 	
 }
