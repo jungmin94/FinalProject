@@ -78,7 +78,8 @@
 				data-gno="${e.goodsNo}" data-gname="${e.goodsName}"  data-gcolor="${e.color}" data-gsize="${e.size}"  data-gprice="${e.price}" data-ginven="${e.invenCount}" >
   				수정
 				</button>
-				<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteGoodModal">
+				<button type="button"  id="deleteGoodBtn" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteGoodModal"
+				data-gno="${e.goodsNo}" data-gname="${e.goodsName}"  data-gcolor="${e.color}" data-gsize="${e.size}" >
   				삭제
 				</button>
 			</td>
@@ -149,11 +150,20 @@
         <h5 class="modal-title" id="staticBackdropLabel">상품 삭제</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        ...3
-      </div>
+      <div class="modal-body" style="text-align:center;">
+      삭제하시겠습니까?
+         <form id="del_goodFrm" action="${path}/market/deleteGood.do" method="post">
+	      <input type="hidden" id="del_gname" name="delgoodname" class="form-control"   value="" ><br>
+	      <input type="hidden" id="del_gcolor" name="delgoodcolor" class="form-control"   value="" ><br>
+	      <input type="hidden" id="del_gsize" name="delgoodsize" class="form-control"   value="" ><br>
+        </form>
+        <form id="del_goodAllFrm" action="${path}/market/deleteGood.do" method="post">
+	      <input type="hidden" id="del_gno" name="delgoodno" class="form-control"   value="" ><br>
+        </form>
+       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">확인</button>
+       <button type="button" class="btn btn-danger" onclick="$('#del_goodAllFrm').submit();">해당상품 전체삭제</button>
+        <button type="button" class="btn btn-primary" onclick="$('#del_goodFrm').submit();">해당상품 삭제</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
@@ -180,7 +190,20 @@ $(document).on("click", "#updateGoodBtn", function () {
 	$('#upd_gprice').val(goodPrice);
 	$('#upd_ginven').val(goodInven);
 
+});
+
+$(document).on("click", "#deleteGoodBtn", function () { 
 	
+	let goodNo = $(this).data('gno');
+	let goodName = $(this).data('gname');
+	let goodColor = $(this).data('gcolor');
+	let goodSize = $(this).data('gsize');
+	
+	$('#del_gname').val(goodName);
+	$('#del_gcolor').val(goodColor);
+	$('#del_gsize').val(goodSize);
+	$('#del_gno').val(goodNo);
+
 });
 
 </script>

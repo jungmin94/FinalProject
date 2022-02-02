@@ -97,6 +97,12 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
+	public int deleteGood(Map<String, Object> param) {
+	
+		return dao.deleteGood(session,param);
+	}
+	
+	@Override
 	public int selectGoodsDetailsCount(Map<String, Object> param) {
 		
 		return dao.selectGoodsDetailsCount(session,param);

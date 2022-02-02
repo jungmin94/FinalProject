@@ -154,5 +154,29 @@ public class MarketController {
 		return mv;
 	}
 	
+	@RequestMapping("/deleteGood.do")
+	public ModelAndView deleteGood(@RequestParam Map<String,Object> param,ModelAndView mv) {
+		
+		System.out.println(param);
+		System.out.println((String)param.get("delgoodno"));
+		int result = service.deleteGood(param);
+		
+		String msg="";
+		String loc="";
+		 if(result>0) {
+			 msg="상품 삭제 성공";
+			 loc="/";			 
+		 }else {
+			 msg="상품 삭제 실패";
+			 loc="/";	
+		 }
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+		
+	}
+	
 	
 }

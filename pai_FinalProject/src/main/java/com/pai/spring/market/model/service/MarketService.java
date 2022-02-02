@@ -34,6 +34,8 @@ public interface MarketService {
 	List<GoodsDetails> selectEnrolledList(int cPage,int numPerPage);
 	
 	int updateGood(Map<String,Object> param);
+
+	int deleteGood(Map<String,Object> param);
 	
 	List<GoodsDetails> searchEnrolledList(Map<String,Object> param,int cPage,int numPerPage);
 	
