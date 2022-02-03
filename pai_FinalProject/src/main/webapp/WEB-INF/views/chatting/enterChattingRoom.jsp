@@ -5,6 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath }" />
 <jsp:include page="/WEB-INF/views/common/header.jsp" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <style>
 #chat-list {
 	background-color: rgb(2, 0, 92);
@@ -55,23 +56,19 @@ button {
 <section>
 	<div>
 		<div id="chat-list">
-			<a href="">
+			<a href="${path }/chatting/toSeeChatroomInfo.do">
 				<div class="chat-list-detail">MY MBTI CHAT</div>
 			</a> <a href="">
 				<div class="chat-list-detail">EVERY MBTI CHAT</div>
 			</a>
 		</div>
 		<div id="chat-info">
-			<div id="chat-detail-info">ISFP의, ISFP에 의한, ISFP를 위한 채팅방입니다.</div>
+			<div id="chat-detail-info">${loginMember.member_mbti}의, ${loginMember.member_mbti}에 의한, ${loginMember.member_mbti}를 위한 채팅방입니다.</div>
 			<div>비속어를 사용 할 경우 경고 1회. 경고 3회 누적 시 강퇴입니다.</div>
 			<div>
-				<button onclick="location.href='/chat/enterChattingRoom.do'">채팅방
-					입장</button>
+				<button onclick="location='${path}/chatting/toEnterChatroom.do'">채팅방 입장</button>
 			</div>
 		</div>
 	</div>
-
-
-
 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp" />
