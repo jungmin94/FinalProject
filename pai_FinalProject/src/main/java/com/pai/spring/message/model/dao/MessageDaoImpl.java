@@ -1,6 +1,7 @@
 package com.pai.spring.message.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -28,7 +29,7 @@ public class MessageDaoImpl implements MessageDao {
 	}
 
 	@Override
-	public Message selectRecvMsgDetail(SqlSessionTemplate session, int msgNo) {
+	public Map selectRecvMsgDetail(SqlSessionTemplate session, int msgNo) {
 		return session.selectOne("message.selectRecvMsgDetail",msgNo);
 	}
 

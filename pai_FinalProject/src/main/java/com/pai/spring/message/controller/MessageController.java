@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -51,9 +52,10 @@ public class MessageController {
 	}
 	
 	
-	@RequestMapping(value="/recvMsgDetail.do")
+	@RequestMapping(value="/recvMsgDetail.do",produces="text/plain;charset=UTF-8")
+	@ResponseBody
 	public String recvMsgDetail(int msgNo) {
-		Message msg = service.selectRecvMsgDetail(msgNo);
+		Map msg = service.selectRecvMsgDetail(msgNo);
 		System.out.println(msgNo);
 		System.out.println(msg);
 		return new Gson().toJson(msg);

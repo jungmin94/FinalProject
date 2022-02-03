@@ -21,18 +21,17 @@
 	<div id="searchMessage">
 	</div>
 	<div id="recvMsg">
-		<table>
+		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>체크박스</th>
-					<th>번호</th>
-					<th>제목</th>
-					<th>보낸사람</th>
-					<th>날짜</th>
+					<th scope="col">체크박스</th>
+					<th scope="col">번호</th>
+					<th scope="col">제목</th>
+					<th scope="col">보낸사람</th>
+					<th scope="col">날짜</th>
 				</tr>
 			</thead>
 			<tbody>
-			${list }
 		 		<c:forEach var="m" items="${list }">	
 					<tr onclick='recvMsgView(this);' style='text-align:center'>
 						<td><input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"></td>
@@ -49,7 +48,9 @@
 		 <div id="pageBar">
 	        	${pageBar }
 	     </div>
-	</div>
+		</div>
+		<div id="recvMsgDetail">
+		</div>
 
 </body>
 
@@ -57,75 +58,61 @@
 
 function recvMsgView(e){
 	$("#recvMsg").hide();
-	let val = $(e).children();//이벤트발생한곳의 자식들
-	let msgNo = val.eq(1).text();//project No 가져와
-	console.log(msgNo);
+	let val = $(e).children();
+	let msgNo = val.eq(1).text();
 	$.ajax({
 		url:"${path}/message/recvMsgDetail.do",
 		type: "post",
 		data: {"msgNo":msgNo},
 		dataType: "json",
 		success: data => {
-			console.log("과연"+data);
-		}
-	});
-}
-
-
-<%-- /* $(document).ready(()=>{
-	selectRecvMessage();
-});
-
-const selectRecvMessage(){
-	$.ajax({
-		url:"${path}/message/messageBox.do",
-		type:'post',
-		dataType:'json',
-		success:data=>{
-			const table=$('<table>');
+			const table=$('<table>').attr("class","table");
 			let thead=$("<thead>");
 			let tbody=$('<tbody>');
 			let tr=$("<tr>");
-			let th1=$("<th>").html("체크박스");
-			let th2=$("<th>").html("번호");
-			let th3=$("<th>").html("제목");
-			let th4=$("<th>").html("보낸사람");
-			let th5=$("<th>").html("날짜");
-			thead.append(tr).append(th1).append(th2).append(th3).append(th4).append(th5);
-			table.append(thead);
+			let th1=$("<th>").html("제목").attr("scope","col");
+			let msgTitle = $("<td>").html(data["MSGTITLE"]);
 			
-			if(data.length==0){
-				let tr2 = $("<tr>");
-				let ntd=$("<td>").html("조회결과가 없습니다.");
-				ntd.attr("colspan","5");
-				tr.css("text-align","center");
-				tr2.append(ntd);
-				tbody.append(tr2);
-				table.append(tbody);
-			}  else{
-				
-				for(let i=0; i<data.length; i++){
-					let tr2 = $("<tr>");
-					let check = $("<td>").html('check');
-					let sendId = $('<input>').attr({type:"hidden",name:"sendId",id:"sendId",value:data[i]["send_id"]});
-					positionCode.append(inputPositionCode);
-					let sendNick = $("<td>").html(data[i]["send_id"]["member_nick"]);
-					let inputPositionName = $('<input>').attr({type:"hidden",name:"positionName",id:"positionName",value:data[i]["positionName"]});
-					positionName.append(inputPositionName);
-					let deleteMessage = $("<td>").html("<button>삭제");
-					deleteMessage.children('button').attr({id:"deleteMessage"+i, class:"btn btn-outline-secondary"});
-					deleteMessage.children('button').attr("onclick","deleteMessage(this);");
-					table.append(tbody);
-					tbody.append(tr2);
-					tr2.append(positionCode).append(positionName).append(deleteMessage);
-				}
-				
+			let tr2=$("<tr>");
+			let th2=$("<th>").html("보낸사람").attr("scope","col");
+			let sendNick = $("<td>").html(data["SENDNICK"]);
+			let sendId = $("<input>").attr({type:"hidden",name:"sendId",id:"sendId",value:data["SENDID"]});
+			let th3=$("<th>").html("보낸시간").attr("scope","col");
+			let msgSendTime = $("<td>").html(data["MSGSENDTIME"]);
+			
+			let tr3=$("<tr>");
+			let th4=$("<th>").html("받는사람").attr("scope","col");
+			let recvNick = $("<td>").html(data["RECVNICK"]);
+			let th5=$("<th>").html("받은날짜").attr("scope","col");
+			let msgReadCheck = $("<td>").html("읽지않음");
+			let msgReadTime = $("<td>").html(data["MSGREADTIME"]);
+			
+			let msgContent = $("<td>").html(data["MSGCONTENT"]);
+		/* 	if(data[MSGREADTIME]==null){
+				msgReadTime = $("<input>").attr({type:"text",name:"msgReadTime",id:"msgReadTime",value:"읽지않음"});
+			} else{
+			} */
+			
+			let tr4=$("<tr>");
+			thead.append(tr);
+			tr.append(th1).append(msgTitle);
+			thead.append(tr2);
+			tr2.append(th2).append(sendNick);
+			tr2.append(th3).append(msgSendTime);
+			thead.append(tr3);
+			tr3.append(th4).append(recvNick);
+			if(data["MSGREADTIME"]==null){
+				tr3.append(th5).append(msgReadCheck);
+			} else{
+				tr3.append(th5).append(msgReadTime);
 			}
-			$("#ajaxTable").html(table);
+			tbody.append(msgContent);
+			table.append(thead);
+			table.append(tbody);
+			$("#recvMsgDetail").html(table);
 		}
-			
-	})
-} */ --%>
+	});
+}
 
 </script>
 </html>

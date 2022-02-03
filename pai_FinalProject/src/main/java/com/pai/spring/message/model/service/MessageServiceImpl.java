@@ -35,7 +35,7 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public Message selectRecvMsgDetail(int msgNo) {
+	public Map selectRecvMsgDetail(int msgNo) {
 		return dao.selectRecvMsgDetail(session, msgNo);
 	}
 	
