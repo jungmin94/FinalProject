@@ -130,4 +130,16 @@ public class MarketDaoImpl implements MarketDao {
 		return session.update("market.enrollGoodImage",good);
 	}
 	
+	@Override
+	public int checkExistGoodDetail(SqlSessionTemplate session, GoodsDetails gd) {
+		
+		return session.selectOne("market.checkExistGoodDetail",gd);
+	}
+	
+	@Override
+	public int enrollGoodsDetails(SqlSessionTemplate session, GoodsDetails gd) {
+		
+		return session.insert("market.enrollGoodsDetails",gd);
+	}
+	
 }

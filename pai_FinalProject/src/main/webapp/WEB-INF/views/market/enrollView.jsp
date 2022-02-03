@@ -65,8 +65,9 @@
 			<td>${g.totalCell}</td>
 			<td>${g.avgGrade}</td>
 			<td>
-				<button type="button" class="btn btn-outline-primary" onclick="">
-  				상품 상세등록
+				<button type="button"  id="enrollGoodDetailBtn" class="btn btn-outline-success" 
+					data-bs-toggle="modal" data-bs-target="#enrollGoodDetail" data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
+	  				상품 상세등록
 				</button>
 				<c:if test="${g.image eq null}">
 					<button type="button"  id="updateGoodImageBtn" class="btn btn-outline-success" 
@@ -75,7 +76,7 @@
 					</button>
 				</c:if>
 				<c:if test="${g.image ne null}">
-					<button type="button"  id="updateGoodImageBtn" class="btn btn-outline-secondary" 
+					<button type="button"  id="updateGoodImageBtn" class="btn btn-outline-warning" 
 					data-bs-toggle="modal" data-bs-target="#updateGoodImage" data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
 	  				대표이미지 수정
 					</button>
@@ -151,7 +152,61 @@
   </div>
 </div>
 
-
+<!-- 상품 상세 등록  -->
+<div class="modal fade" id="enrollGoodDetail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">상품 상세등록</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form id="enrGoodsDetailsFrm" action="${path}/market/enrollGoodsDetails.do">
+      상품번호
+      <input type="text" class="form-control"  name="goodsNo" id="enr_goodsno"  readonly><br>
+      상품이름
+      <input type="text" class="form-control"  name="goodsName" id="enr_goodsname" readonly><br>
+      카테고리1(색상)
+        <select id="cate_color" class="form-control" name="color" required>
+			<option value="" disabled selected>색상</option>
+			<option value="RED">RED</option>
+			<option value="ORANGE">ORANGE</option>
+			<option value="YELLOW">YELLOW</option>
+			<option value="GREEN">GREEN</option>
+			<option value="BLUE">BLUE</option>
+			<option value="PURPLE">PURPLE</option>
+			<option value="BEIGE">BEIGE</option>
+			<option value="GRAY">GRAY</option>
+			<option value="BLACK">BLACK</option>
+			<option value="WHITE">WHITE</option>
+			<option value="PINK">PINK</option>
+			<option value="BROWN">BROWN</option>
+			<option value="IVORY">IVORY</option>
+		</select>
+		<br>
+		<span id="cate_size_text">카테고리2(사이즈)</span>
+        <select id="cate_size" class="form-control" name="size" required>
+			<option value="" disabled selected>사이즈</option>
+			<option value="XS">XS</option>
+			<option value="S">S</option>
+			<option value="M">M</option>
+			<option value="L">L</option>
+			<option value="XL">XL</option>
+		</select>
+		<br>
+	  <span id="enr_invencount_text">재고수량</span>
+      <input type="number" class="form-control"  placeholder="수량" name="invenCount" id="enr_invencount" required><br>
+      <span id="enr_price_text">가격</span>
+      <input type="number" class="form-control"  placeholder="가격" name="price" id="enr_price" required><br>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#enrGoodsDetailsFrm').submit();">등록</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 
@@ -163,6 +218,50 @@ $(document).on("click", "#updateGoodImageBtn", function () {
 	$('#img_gno').val(goodNo);
 	$('#img_gname').val(goodName);
 
+});
+
+$(document).on("click", "#enrollGoodDetailBtn", function () { 
+	
+	let goodNo = $(this).data('gno');
+	let goodName = $(this).data('gname');
+	
+	$('#cate_size').hide();
+	$('#cate_size_text').hide();
+	$('#enr_invencount_text').hide();
+	$('#enr_invencount').hide();
+	$('#enr_price_text').hide();
+	$('#enr_price').hide();
+	$('#enr_goodsno').val(goodNo);
+	$('#enr_goodsname').val(goodName);
+
+});
+
+$(document).ready(function () {
+    $('#cate_color').change(function () {
+    	$('#cate_size').show();
+    	$('#cate_size_text').show();
+    });
+});
+
+$(document).ready(function () {
+    $('#cate_size').change(function () {
+    	$.ajax({
+    		url:"${path}/market/checkExistGoodDetail.do",
+    		data:{goodsNo:$("#enr_goodsno").val(),goodsName:$("#enr_goodsname").val(),
+    			color:$("#cate_color").val(),size:$("#cate_size").val()}, //키:벨류 형식으로 데이터를 전송한다
+    		success:data=>{
+    			if(data==0){
+    				alert('해당 조건으로 상품 등록 가능합니다.');
+    				$('#enr_invencount_text').show();
+    				$('#enr_invencount').show();
+    				$('#enr_price_text').show();
+    				$('#enr_price').show();
+    			}else{
+    				alert('해당 조건의 상품은 등록되어있습니다.');
+    			}			
+    		}	
+    	});	
+    });
 });
 
 // 대표 이미지 등록시 이미지 파일 미리 보여주기 로직

@@ -49,4 +49,8 @@ public interface MarketDao {
 	
 	int enrollGoodImage(SqlSessionTemplate session,Goods good);
 	
+	int checkExistGoodDetail(SqlSessionTemplate session,GoodsDetails gd);
+	
+	int enrollGoodsDetails(SqlSessionTemplate session,GoodsDetails gd);
+	
 }

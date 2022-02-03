@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -274,5 +275,36 @@ public class MarketController {
 
 	}
 	
+	/* 상품 상세 조건으로 등록되어있는지 확인 */
+	@RequestMapping("/checkExistGoodDetail.do")
+	@ResponseBody
+	public int checkExistGoodDetail(GoodsDetails gd) {
+		
+		int result = service.checkExistGoodDetail(gd);
+		
+		return result;
+	}
+	
+	@RequestMapping("/enrollGoodsDetails.do")
+	public ModelAndView enrollGoodsDetails(GoodsDetails gd,ModelAndView mv) {
+		
+		int result = service.enrollGoodsDetails(gd);
+		
+		String msg="";
+		String loc="";
+		 if(result>0) {
+			 msg="상품상세 등록 성공";
+			 loc="/";			 
+		 }else {
+			 msg="상품상세 등록 실패";
+			 loc="/";	
+		 }
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+		
+	}
 	
 }

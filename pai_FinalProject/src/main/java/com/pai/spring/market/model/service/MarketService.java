@@ -47,4 +47,8 @@ public interface MarketService {
 	
 	int enrollGoodImage(Goods good);
 	
+	int checkExistGoodDetail(GoodsDetails gd);
+
+	int enrollGoodsDetails(GoodsDetails gd);
+	
 }
