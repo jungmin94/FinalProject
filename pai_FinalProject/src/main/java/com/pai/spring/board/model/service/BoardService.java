@@ -69,4 +69,10 @@ public interface BoardService {
 	List<BoardDeclare> declareList(int cPage,int numPerPage,String memberId);
 	
 	int selectDeclareCount(String memberId);
+	
+	List<Board> infoList();
+	
+	List<Board> topList();
+	
+	List<Board> mainList();
 }

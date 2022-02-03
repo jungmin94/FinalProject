@@ -195,6 +195,21 @@ public class BoardDaoImpl implements BoardDao {
 		return session.selectOne("board.selectDeclareCount", memberId);
 	}
 
+	@Override
+	public List<Board> infoList(SqlSessionTemplate session) { 
+		return session.selectList("board.infoList");
+	}
+
+	@Override
+	public List<Board> topList(SqlSessionTemplate session) { 
+		return session.selectList("board.topList");
+	}
+
+	@Override
+	public List<Board> mainList(SqlSessionTemplate session) { 
+		return session.selectList("board.mainList");
+	}
+
 
 	
 }

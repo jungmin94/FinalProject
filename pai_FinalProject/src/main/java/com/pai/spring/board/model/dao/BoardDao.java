@@ -81,4 +81,10 @@ public interface BoardDao {
 	List<BoardDeclare> declareList(SqlSessionTemplate session,int cPage,int numPerPage,String memberId );
 	
 	int selectDeclareCount(SqlSessionTemplate session,String memberId);
+	
+	List<Board> infoList(SqlSessionTemplate session);
+	
+	List<Board> topList(SqlSessionTemplate session);
+	
+	List<Board> mainList(SqlSessionTemplate session);
 }

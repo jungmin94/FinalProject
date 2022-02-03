@@ -220,6 +220,21 @@ public class BoardServiceImpl implements BoardService {
 		return dao.selectDeclareCount(session,memberId);
 	}
 
+	@Override
+	public List<Board> infoList() { 
+		return dao.infoList(session);
+	}
+
+	@Override
+	public List<Board> topList() { 
+		return dao.topList(session);
+	}
+
+	@Override
+	public List<Board> mainList() { 
+		return dao.mainList(session);
+	}
+
 	 
 
 
