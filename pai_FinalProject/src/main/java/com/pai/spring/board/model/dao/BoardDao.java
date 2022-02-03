@@ -87,4 +87,6 @@ public interface BoardDao {
 	List<Board> topList(SqlSessionTemplate session);
 	
 	List<Board> mainList(SqlSessionTemplate session);
+	
+	List<Board> searchMainBoard(SqlSessionTemplate session,String category);
 }

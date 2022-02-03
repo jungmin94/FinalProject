@@ -235,6 +235,11 @@ public class BoardServiceImpl implements BoardService {
 		return dao.mainList(session);
 	}
 
+	@Override
+	public List<Board> searchMainBoard(String category) { 
+		return dao.searchMainBoard(session,category);
+	}
+
 	 
 
 

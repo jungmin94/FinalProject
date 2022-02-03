@@ -75,4 +75,6 @@ public interface BoardService {
 	List<Board> topList();
 	
 	List<Board> mainList();
+	
+	List<Board> searchMainBoard(String category);
 }

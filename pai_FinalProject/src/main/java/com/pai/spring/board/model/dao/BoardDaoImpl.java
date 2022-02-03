@@ -210,6 +210,11 @@ public class BoardDaoImpl implements BoardDao {
 		return session.selectList("board.mainList");
 	}
 
+	@Override
+	public List<Board> searchMainBoard(SqlSessionTemplate session, String category) { 
+		return session.selectList("board.searchMainBoard", category);
+	}
+
 
 	
 }
