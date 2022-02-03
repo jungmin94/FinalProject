@@ -13,7 +13,9 @@
 
 <div class="row">
     <div class="col-2">
-      <button type="button" class="btn btn-info" onclick="">신규상품 등록</button>
+      <button type="button"  id="enrollGoodBtn" class="btn btn-outline-primary" data-bs-toggle="modal"  data-bs-target="#enrollGoods" >
+	  	상품 등록
+	</button>
     </div>
    
     <div class="col">
@@ -65,7 +67,7 @@
 			<td>${g.totalCell}</td>
 			<td>${g.avgGrade}</td>
 			<td>
-				<button type="button"  id="enrollGoodDetailBtn" class="btn btn-outline-success" 
+				<button type="button"  id="enrollGoodDetailBtn" class="btn btn-outline-info" 
 					data-bs-toggle="modal" data-bs-target="#enrollGoodDetail" data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
 	  				상품 상세등록
 				</button>
@@ -146,6 +148,40 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary">확인</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 상품 등록  -->
+<div class="modal fade" id="enrollGoods" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">상품 등록</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <form id="enrGoodsFrm" action="${path}/market/enrollGoods.do">
+      상품이름
+      <input type="text" class="form-control"  name="goodsName" id="enr_goodsname_"  onchange="duplicategoodsName();" required><br>
+        <select id="cate_large" class="form-control" name="largeCategory" required>
+			<option value="" disabled selected>성별</option>
+			<option value="M">남성용</option>
+			<option value="F">여성용</option>
+		</select>
+		<br>
+        <select id="cate_middle" class="form-control" name="middleCategory" required>
+			<option value="" disabled selected>용도</option>
+			<option value="반팔">반팔</option>
+			<option value="긴팔">긴팔</option>
+		</select>
+		<br>
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#enrGoodsFrm').submit();">등록</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
@@ -263,6 +299,32 @@ $(document).ready(function () {
     	});	
     });
 });
+
+
+$(document).on("click", "#enrollGoodBtn", function () { 
+	
+	$('#cate_large').hide();
+	$('#cate_middle').hide();
+
+});
+
+
+const duplicategoodsName=()=>{
+	$.ajax({
+		url:"${path}/market/checkExistGoodName.do",
+		data:{goodsName:$("#enr_goodsname_").val()}, //키:벨류 형식으로 데이터를 전송한다
+		success:data=>{
+			if(data==0){
+				alert('해당 상품명 사용가능합니다.');
+				$('#cate_large').show();
+				$('#cate_middle').show();
+			}else{
+				alert('해당 상품명이 존재합니다.');
+				$('#enr_goodsname_').focus();
+			}			
+		}	
+	});	
+}
 
 // 대표 이미지 등록시 이미지 파일 미리 보여주기 로직
 function readURL(input) {

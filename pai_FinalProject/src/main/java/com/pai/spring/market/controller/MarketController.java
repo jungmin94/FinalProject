@@ -53,6 +53,8 @@ public class MarketController {
 	}
 	
 	/* 전체상품 페이지 리스트 불러오기 */
+	// 상세등록이 하나라도 되어 있어야 화면에 리스트로 출력이 된다
+	// 즉, Goods는 등록되어있으나 GoodsDetails가 하나라도 등록되어있지 않다면 리스트 출력 X
 	@RequestMapping("/goodsList.do")
 	public ModelAndView goodsList(@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage,ModelAndView mv) {
@@ -297,6 +299,38 @@ public class MarketController {
 			 loc="/";			 
 		 }else {
 			 msg="상품상세 등록 실패";
+			 loc="/";	
+		 }
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+		
+	}
+	
+	/* 상품 상세 조건으로 등록되어있는지 확인 */
+	@RequestMapping("/checkExistGoodName.do")
+	@ResponseBody
+	public int checkExistGoodName(Goods good) {
+		
+		int result = service.checkExistGoodName(good);
+		
+		return result;
+	}
+	
+	@RequestMapping("/enrollGoods.do")
+	public ModelAndView enrollGoods(Goods good,ModelAndView mv) {
+		System.out.println(good);
+		int result = service.enrollGoods(good);
+		
+		String msg="";
+		String loc="";
+		 if(result>0) {
+			 msg="상품 등록 성공";
+			 loc="/";			 
+		 }else {
+			 msg="상품 등록 실패";
 			 loc="/";	
 		 }
 		mv.addObject("msg",msg);

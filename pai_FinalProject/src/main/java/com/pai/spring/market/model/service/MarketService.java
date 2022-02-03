@@ -50,5 +50,9 @@ public interface MarketService {
 	int checkExistGoodDetail(GoodsDetails gd);
 
 	int enrollGoodsDetails(GoodsDetails gd);
+
+	int checkExistGoodName(Goods good);
+	
+	int enrollGoods(Goods good);
 	
 }

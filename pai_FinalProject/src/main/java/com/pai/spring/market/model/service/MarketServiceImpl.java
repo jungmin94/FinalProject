@@ -150,4 +150,16 @@ public class MarketServiceImpl implements MarketService {
 		return dao.enrollGoodsDetails(session,gd);
 	}
 	
+	@Override
+	public int checkExistGoodName(Goods good) {
+		
+		return dao.checkExistGoodName(session, good);
+	}
+	
+	@Override
+	public int enrollGoods(Goods good) {
+		
+		return dao.enrollGoods(session, good);
+	}
+	
 }
