@@ -14,6 +14,7 @@ import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
 import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
+import com.pai.spring.board.model.vo.CommentDeclare;
 import com.pai.spring.member.model.vo.Member;
 
 @Service
@@ -238,6 +239,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Board> searchMainBoard(String category) { 
 		return dao.searchMainBoard(session,category);
+	}
+
+	@Override
+	public int insertCommentDeclare(CommentDeclare cd) { 
+		return dao.insertCommentDeclare(session,cd);
+	}
+
+	@Override
+	public List<CommentDeclare> commentDeclareList(int cPage, int numPerPage, String memberId) { 
+		return dao.commentDeclareList(session,cPage,numPerPage,memberId);
 	}
 
 	 

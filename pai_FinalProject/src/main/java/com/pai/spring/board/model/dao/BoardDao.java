@@ -10,6 +10,7 @@ import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
 import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
+import com.pai.spring.board.model.vo.CommentDeclare;
 import com.pai.spring.member.model.vo.Member;
 
 public interface BoardDao {
@@ -89,4 +90,8 @@ public interface BoardDao {
 	List<Board> mainList(SqlSessionTemplate session);
 	
 	List<Board> searchMainBoard(SqlSessionTemplate session,String category);
+	
+	int insertCommentDeclare(SqlSessionTemplate session,CommentDeclare cd);
+	
+	List<CommentDeclare> commentDeclareList(SqlSessionTemplate session,int cPage,int numPerPage,String memberId);
 }

@@ -25,6 +25,7 @@ import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
 import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
+import com.pai.spring.board.model.vo.CommentDeclare;
 import com.pai.spring.common.PageFactory;
 import com.pai.spring.member.model.vo.Member;
 
@@ -408,29 +409,54 @@ public class BoardController {
 		return mv;
 	}
 	
+	@RequestMapping("/insertCommentDeclare.do")
+	public ModelAndView insertCommentDeclare(ModelAndView mv,CommentDeclare cd,int boardNo) { 
+		int result = service.insertCommentDeclare(cd);
+		 
+		String msg="";
+		String loc="";
+		
+		if(result>0) {
+		 	msg="댓글신고가 정상적으로 접수되었습니다! 신고처리까지 최대 7일까지 소요되며 결과는 마이페이지에서 확인해주세요";
+			loc="/board/boardView.do?boardNo="+boardNo+"&memberId="+cd.getDeclareWriter();
+		}else {
+			msg="댓글신고에 실패하였습니다. 다시시도해주세요";
+			loc="/board/boardView.do?boardNo="+boardNo+"&memberId="+cd.getDeclareWriter();
+		}
+		mv.addObject("msg", msg);
+		mv.addObject("loc", loc);
+		mv.setViewName("common/msg");  
+		return mv;
+	}
 	
 	@RequestMapping("/myboardView.do")
-	public ModelAndView myboardView(ModelAndView mv,String memberId,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="15") int numPerPage){
+	public ModelAndView myboardView(ModelAndView mv,String memberId,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="100") int numPerPage){
 			Member m=service.selectMember(memberId); 
-			List<Board> list=service.previewBoardList(memberId); 
+			//System.out.println(m);
+			List<Board> list=service.previewBoardList(memberId);  
 			List<BoardComment> bc=service.previewCommentList(m.getMember_nick());
-			int totalDate=service.selectMyBoardCount(memberId);
+			 
+			 
+			// totalDate=service.selectMyBoardCount(memberId);
 			List<Board> listAll=service.myboardList(cPage,numPerPage,memberId);
 			List<BoardComment> commentListAll=service.myboardCommentList(cPage,numPerPage,m.getMember_nick());
-			int totalDate2=service.selectCommentAll(m.getMember_nick());
+			//int totalDate2=service.selectCommentAll(m.getMember_nick());
 			List<BoardDeclare> declareList=service.declareList(cPage,numPerPage,memberId);
-			int totalDate3=service.selectDeclareCount(memberId);
-			System.out.println(declareList); 
-		
-			mv.addObject("pageBar3",PageFactory.getPageBar(totalDate3, cPage, numPerPage, 5, "boardList.do",""));
+			//int totalDate3=service.selectDeclareCount(memberId);
+			List<CommentDeclare> commentDeclareList=service.commentDeclareList(cPage,numPerPage,memberId); 
+			//System.out.println(commentDeclareList);
+			
+			
+			mv.addObject("commentDeclareList", commentDeclareList);
+			//mv.addObject("pageBar3",PageFactory.getPageBar(totalDate3, cPage, numPerPage, 5, "myboardView.do?memberId="+memberId+"&",""));
 			mv.addObject("declareList", declareList);
-			mv.addObject("pageBar2",PageFactory.getPageBar(totalDate2, cPage, numPerPage, 5, "boardList.do",""));
+			//mv.addObject("pageBar2",PageFactory.getPageBar(totalDate2, cPage, numPerPage, 5, "myboardView.do?memberId="+memberId+"&",""));
 			mv.addObject("commentAll", commentListAll);
 			mv.addObject("listAll", listAll);
-			mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "boardList.do",""));
+			//mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "myboardView.do?memberId="+memberId+"&",""));
 			mv.addObject("member", m);
 			mv.addObject("list", list);
-			mv.addObject("comments", bc); 
+			mv.addObject("comments", bc);  
 		return mv;
 	}
 	
