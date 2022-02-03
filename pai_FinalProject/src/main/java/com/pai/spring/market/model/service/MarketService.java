@@ -14,14 +14,22 @@ public interface MarketService {
 	List<Goods> bestReview();
 
 	List<Goods> selectGoodsList(int cPage,int numPerPage);
+
+	List<Goods> selectOnlyGoodsList(int cPage,int numPerPage);
 	
 	int selectGoodsCount();
 
 	int selectGoodsDetailsCount();
 	
 	int selectGoodsCount(Map<String,Object> param);
+
+	int selectGoodsDetailsCount(Map<String,Object> param);
 	
+	int searchGoodCount(Map<String,Object> param);
+
 	List<Goods> searchList(Map<String,Object> param,int cPage,int numPerPage);
+
+	List<Goods> selectSearchGood(Map<String,Object> param,int cPage,int numPerPage);
 	
 	List<GoodsDetails> selectColorList(String goodsName);
 	
@@ -32,5 +40,9 @@ public interface MarketService {
 	List<GoodsDetails> selectEnrolledList(int cPage,int numPerPage);
 	
 	int updateGood(Map<String,Object> param);
+
+	int deleteGood(Map<String,Object> param);
+	
+	List<GoodsDetails> searchEnrolledList(Map<String,Object> param,int cPage,int numPerPage);
 	
 }

@@ -39,6 +39,12 @@ public class MarketServiceImpl implements MarketService {
 	
 		return dao.selectGoodsList(session,cPage,numPerPage);
 	}
+	
+	@Override
+	public List<Goods> selectOnlyGoodsList(int cPage, int numPerPage) {
+	
+		return dao.selectOnlyGoodsList(session,cPage,numPerPage);
+	}
 
 	@Override
 	public int selectGoodsCount() {
@@ -59,9 +65,21 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
+	public int searchGoodCount(Map<String, Object> param) {
+	
+		return dao.searchGoodCount(session,param);
+	}
+	
+	@Override
 	public List<Goods> searchList(Map<String, Object> param, int cPage, int numPerPage) {
 		
 		return dao.searchList(session,param,cPage,numPerPage);
+	}
+	
+	@Override
+	public List<Goods> selectSearchGood(Map<String, Object> param, int cPage, int numPerPage) {
+		
+		return dao.selectSearchGood(session,param,cPage,numPerPage);
 	}
 	
 	
@@ -94,6 +112,24 @@ public class MarketServiceImpl implements MarketService {
 	public int updateGood(Map<String, Object> param) {
 	
 		return dao.updateGood(session,param);
+	}
+	
+	@Override
+	public int deleteGood(Map<String, Object> param) {
+	
+		return dao.deleteGood(session,param);
+	}
+	
+	@Override
+	public int selectGoodsDetailsCount(Map<String, Object> param) {
+		
+		return dao.selectGoodsDetailsCount(session,param);
+	}
+
+	@Override
+	public List<GoodsDetails> searchEnrolledList(Map<String, Object> param, int cPage, int numPerPage) {
+	
+		return dao.searchEnrolledList(session,param,cPage,numPerPage);
 	}
 	
 }

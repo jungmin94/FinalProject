@@ -18,8 +18,8 @@ public class Goods {
 	private String goodsName;
 	private String goodsOutput;
 	private Date goodsEnrollDate;
-	private String largeCategoty;
-	private String middleCategoty;
+	private String largeCategory;
+	private String middleCategory;
 	private String image;
 	private String sizeImage;
 	private int totalCell;

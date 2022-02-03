@@ -11,7 +11,34 @@
 <jsp:include page="/WEB-INF/views/market/MenuBar.jsp"/>
  <br>
 
-	<button type="button" class="btn btn-info" onclick="">신규등록하기</button>
+<div class="row">
+    <div class="col-2">
+      <button type="button" class="btn btn-info" onclick="location.assign('${path}/market/enrollGood.do')">상품 등록하기</button>
+    </div>
+   
+    <div class="col">
+	<form class="row g-3" action="${path}/market/enrolledGoodSearch.do">
+	  <div class="col-auto">
+	 <div class="form-check form-check-inline">
+	  <input class="form-check-input" type="radio" name="searchOp" id="inlineRadio1" value="code">
+	  <label class="form-check-label" for="inlineRadio1">상품코드</label>
+	</div>
+	<div class="form-check form-check-inline" style="padding-top:5px;">
+	  <input class="form-check-input" type="radio" name="searchOp" id="inlineRadio2" value="name">
+	  <label class="form-check-label" for="inlineRadio2">상품명</label>
+	</div>
+	  </div>
+	  <div class="col-auto">
+	    <input type="search" class="form-control" id="inputPassword2"  name="searchText" placeholder="검색어를 입력하세요">
+	  </div>
+	  <div class="col-auto">
+	    <button type="submit" class="btn btn-primary mb-3">검색</button>
+	  </div>
+	</form>
+      </div>
+    </div>
+
+  
 	<table class="table align-middle" style="text-align: center;">
 		<thead>
 		  <tr>
@@ -44,14 +71,12 @@
 				</c:if>
 			</td>
 			<td>
-				<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#enrollGoodModal">
-  				등록
-				</button>
 				<button type="button"  id="updateGoodBtn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#updateGoodModal"
 				data-gno="${e.goodsNo}" data-gname="${e.goodsName}"  data-gcolor="${e.color}" data-gsize="${e.size}"  data-gprice="${e.price}" data-ginven="${e.invenCount}" >
   				수정
 				</button>
-				<button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteGoodModal">
+				<button type="button"  id="deleteGoodBtn" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteGoodModal"
+				data-gno="${e.goodsNo}" data-gname="${e.goodsName}"  data-gcolor="${e.color}" data-gsize="${e.size}" >
   				삭제
 				</button>
 			</td>
@@ -122,11 +147,20 @@
         <h5 class="modal-title" id="staticBackdropLabel">상품 삭제</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
-        ...3
-      </div>
+      <div class="modal-body" style="text-align:center;">
+      삭제하시겠습니까?
+         <form id="del_goodFrm" action="${path}/market/deleteGood.do" method="post">
+	      <input type="hidden" id="del_gname" name="delgoodname" class="form-control"   value="" ><br>
+	      <input type="hidden" id="del_gcolor" name="delgoodcolor" class="form-control"   value="" ><br>
+	      <input type="hidden" id="del_gsize" name="delgoodsize" class="form-control"   value="" ><br>
+        </form>
+        <form id="del_goodAllFrm" action="${path}/market/deleteGood.do" method="post">
+	      <input type="hidden" id="del_gno" name="delgoodno" class="form-control"   value="" ><br>
+        </form>
+       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">확인</button>
+       <button type="button" class="btn btn-danger" onclick="$('#del_goodAllFrm').submit();">해당상품 전체삭제</button>
+        <button type="button" class="btn btn-primary" onclick="$('#del_goodFrm').submit();">해당상품 삭제</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
@@ -153,7 +187,20 @@ $(document).on("click", "#updateGoodBtn", function () {
 	$('#upd_gprice').val(goodPrice);
 	$('#upd_ginven').val(goodInven);
 
+});
+
+$(document).on("click", "#deleteGoodBtn", function () { 
 	
+	let goodNo = $(this).data('gno');
+	let goodName = $(this).data('gname');
+	let goodColor = $(this).data('gcolor');
+	let goodSize = $(this).data('gsize');
+	
+	$('#del_gname').val(goodName);
+	$('#del_gcolor').val(goodColor);
+	$('#del_gsize').val(goodSize);
+	$('#del_gno').val(goodNo);
+
 });
 
 </script>

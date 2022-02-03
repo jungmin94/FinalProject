@@ -32,6 +32,12 @@ public class MarketDaoImpl implements MarketDao {
 	
 		return session.selectList("market.goodsList",null,new RowBounds((cPage-1)*numPerPage,numPerPage));
 	}
+	
+	@Override
+	public List<Goods> selectOnlyGoodsList(SqlSessionTemplate session, int cPage, int numPerPage) {
+	
+		return session.selectList("market.onlyGoodsList",null,new RowBounds((cPage-1)*numPerPage,numPerPage));
+	}
 
 	@Override
 	public int selectGoodsCount(SqlSessionTemplate session) {
@@ -52,9 +58,21 @@ public class MarketDaoImpl implements MarketDao {
 	}
 	
 	@Override
+	public int searchGoodCount(SqlSessionTemplate session,Map<String, Object> param) {
+	
+		return session.selectOne("market.searchGoodCount",param);
+	}
+	
+	@Override
 	public List<Goods> searchList(SqlSessionTemplate session, Map<String, Object> param, int cPage, int numPerPage) {
 		
 		return session.selectList("market.searchList",param,new RowBounds((cPage-1)*numPerPage,numPerPage));
+	}
+	
+	@Override
+	public List<Goods> selectSearchGood(SqlSessionTemplate session, Map<String, Object> param, int cPage, int numPerPage) {
+		
+		return session.selectList("market.searchGood",param,new RowBounds((cPage-1)*numPerPage,numPerPage));
 	}
 	
 	@Override
@@ -85,6 +103,25 @@ public class MarketDaoImpl implements MarketDao {
 	public int updateGood(SqlSessionTemplate session, Map<String, Object> param) {
 	
 		return session.update("market.updateGood",param);
+	}
+	
+	@Override
+	public int deleteGood(SqlSessionTemplate session, Map<String, Object> param) {
+	
+		return session.delete("market.deleteGood",param);
+	}
+	
+	@Override
+	public int selectGoodsDetailsCount(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.selectOne("market.selectSearchGoodsDetailsCount",param);
+	}
+
+	@Override
+	public List<GoodsDetails> searchEnrolledList(SqlSessionTemplate session, Map<String, Object> param, int cPage,
+			int numPerPage) {
+		
+		return session.selectList("market.searchEnrolledList",param,new RowBounds((cPage-1)*numPerPage,numPerPage));
 	}
 	
 }
