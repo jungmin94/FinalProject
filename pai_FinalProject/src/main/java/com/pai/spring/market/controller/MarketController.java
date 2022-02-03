@@ -1,12 +1,19 @@
 package com.pai.spring.market.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pai.spring.common.PageFactory;
@@ -25,6 +32,10 @@ public class MarketController {
 	@Autowired
 	private MarketService service;
 
+	/*==============================================================================================
+																								사용자 로직
+	===============================================================================================*/
+	
 	/* 메인페이지 불러오기 */
 	@RequestMapping("/mainView.do")
 	public ModelAndView mainView(ModelAndView mv) {
@@ -100,6 +111,10 @@ public class MarketController {
 		return mv;
 		
 	}
+	
+	/*==============================================================================================
+	 																			관리자 로직
+	===============================================================================================*/
 	
 	/* 등록된 상품상세 리스트 불러오기 */
 	@RequestMapping("/enrollManageList.do")
@@ -219,6 +234,44 @@ public class MarketController {
 		
 		return mv;
 		
+	}
+	
+	@RequestMapping("/enrollGoodImage.do")
+	public ModelAndView enrollGoodImage(@RequestParam(value="upFile",required=false) MultipartFile[] upFile, 
+			HttpServletRequest req,Goods good,ModelAndView mv) {
+		
+		String path=req.getServletContext().getRealPath("/resources/upload/market/");
+		File file=new File(path);
+		if(!file.exists()) file.mkdirs();
+		for(MultipartFile mf : upFile) {
+			if(!mf.isEmpty()) {
+				try {
+					mf.transferTo(new File(path+mf.getOriginalFilename()));
+					good.setImage(mf.getOriginalFilename());
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println(good);
+		
+		int result = service.enrollGoodImage(good);
+		
+		String msg="";
+		String loc="";
+		 if(result>0) {
+			 msg="이미지 등록 성공";
+			 loc="/";			 
+		 }else {
+			 msg="이미지 등록 실패";
+			 loc="/";	
+		 }
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+
 	}
 	
 	

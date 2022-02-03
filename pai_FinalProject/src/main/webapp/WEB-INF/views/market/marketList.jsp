@@ -53,7 +53,7 @@
 						<img src="${path}/resources/images/market/이미지준비중.jpg" class="card-img-top" alt="..." style="height: 170px;">
 					</c:if>
 					<c:if test="${g.image ne null}">
-						<img src="${path}/resources/images/market/${s.image}" class="card-img-top" alt="..." style="height: 170px;">
+						<img src="${path}/resources/upload/market/${g.image}" class="card-img-top" alt="..." style="height: 170px;">
 					</c:if>
 					<div class="card-body">
 					  <h5 class="card-title">${g.goodsName}</h5>

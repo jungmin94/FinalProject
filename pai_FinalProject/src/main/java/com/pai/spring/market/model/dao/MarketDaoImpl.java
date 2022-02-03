@@ -124,4 +124,10 @@ public class MarketDaoImpl implements MarketDao {
 		return session.selectList("market.searchEnrolledList",param,new RowBounds((cPage-1)*numPerPage,numPerPage));
 	}
 	
+	@Override
+	public int enrollGoodImage(SqlSessionTemplate session, Goods good) {
+		
+		return session.update("market.enrollGoodImage",good);
+	}
+	
 }

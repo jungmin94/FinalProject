@@ -45,4 +45,6 @@ public interface MarketService {
 	
 	List<GoodsDetails> searchEnrolledList(Map<String,Object> param,int cPage,int numPerPage);
 	
+	int enrollGoodImage(Goods good);
+	
 }

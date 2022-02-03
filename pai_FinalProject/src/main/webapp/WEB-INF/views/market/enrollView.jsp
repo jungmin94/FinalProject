@@ -66,8 +66,30 @@
 			<td>${g.avgGrade}</td>
 			<td>
 				<button type="button" class="btn btn-outline-primary" onclick="">
-  				등록
+  				상품 상세등록
 				</button>
+				<c:if test="${g.image eq null}">
+					<button type="button"  id="updateGoodImageBtn" class="btn btn-outline-success" 
+					data-bs-toggle="modal" data-bs-target="#updateGoodImage" data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
+	  				대표이미지 등록
+					</button>
+				</c:if>
+				<c:if test="${g.image ne null}">
+					<button type="button"  id="updateGoodImageBtn" class="btn btn-outline-secondary" 
+					data-bs-toggle="modal" data-bs-target="#updateGoodImage" data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
+	  				대표이미지 수정
+					</button>
+				</c:if>
+				<c:if test="${g.goodsDetailImage.isEmpty()}">
+					<button type="button" class="btn btn-outline-success" onclick="">
+	  				상세이미지 등록
+					</button>
+				</c:if>
+				<c:if test="${g.goodsDetailImage.size() ne 0}">
+					<button type="button" class="btn btn-outline-secondary" onclick="">
+	  				상세이미지 수정
+					</button>
+				</c:if>
 			</td>
 		  </tr>
 		</c:forEach>
@@ -82,4 +104,85 @@
 
 </div>
 </section>
+
+<!--------------------------------------------- Modal ----------------------------------------------------------------->
+<!-- 대표 이미지 등록/수정  -->
+<div class="modal fade" id="updateGoodImage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">상품 대표이미지</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="text-align:center;">
+        <form id="enrollGoodImgFrm" action="${path}/market/enrollGoodImage.do" method="post"
+        enctype="multipart/form-data">
+        	<input type="hidden" id="img_gno" name="goodsNo">
+        	<input type="hidden" id="img_gname" name="goodsName">
+        	<img id="image_section" src="${path}/resources/images/market/add-image.PNG"  alt="your image" style="height:300px; width:300px;"/>
+        	<br><br>
+        	<input type='file' id="imgInput" name="upFile"/>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#enrollGoodImgFrm').submit();">확인</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 상세 이미지 등록/수정  -->
+<div class="modal fade" id="updateGoodDetailImage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">상품 대표이미지</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...1
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">확인</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+
+$(document).on("click", "#updateGoodImageBtn", function () { 
+	
+	let goodNo = $(this).data('gno');
+	let goodName = $(this).data('gname');
+
+	$('#img_gno').val(goodNo);
+	$('#img_gname').val(goodName);
+
+});
+
+// 대표 이미지 등록시 이미지 파일 미리 보여주기 로직
+function readURL(input) {
+	 if (input.files && input.files[0]) {
+	  var reader = new FileReader();
+	  
+	  reader.onload = function (e) {
+	   $('#image_section').attr('src', e.target.result);  
+	  }
+	  
+	  reader.readAsDataURL(input.files[0]);
+	  }
+	}
+	 
+	// 이벤트를 바인딩해서 input에 파일이 올라올때 (input에 change를 트리거할때) 위의 함수를 this context로 실행
+	$("#imgInput").change(function(){
+	   readURL(this);
+	});
+
+</script>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

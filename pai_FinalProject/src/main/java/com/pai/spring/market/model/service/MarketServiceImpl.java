@@ -132,4 +132,10 @@ public class MarketServiceImpl implements MarketService {
 		return dao.searchEnrolledList(session,param,cPage,numPerPage);
 	}
 	
+	@Override
+	public int enrollGoodImage(Goods good) {
+		
+		return dao.enrollGoodImage(session,good);
+	}
+	
 }
