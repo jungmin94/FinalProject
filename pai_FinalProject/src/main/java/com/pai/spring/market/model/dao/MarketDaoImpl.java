@@ -124,4 +124,34 @@ public class MarketDaoImpl implements MarketDao {
 		return session.selectList("market.searchEnrolledList",param,new RowBounds((cPage-1)*numPerPage,numPerPage));
 	}
 	
+	@Override
+	public int enrollGoodImage(SqlSessionTemplate session, Goods good) {
+		
+		return session.update("market.enrollGoodImage",good);
+	}
+	
+	@Override
+	public int checkExistGoodDetail(SqlSessionTemplate session, GoodsDetails gd) {
+		
+		return session.selectOne("market.checkExistGoodDetail",gd);
+	}
+	
+	@Override
+	public int enrollGoodsDetails(SqlSessionTemplate session, GoodsDetails gd) {
+		
+		return session.insert("market.enrollGoodsDetails",gd);
+	}
+	
+	@Override
+	public int checkExistGoodName(SqlSessionTemplate session, Goods good) {
+	
+		return session.selectOne("market.checkExistGoodName",good);
+	}
+	
+	@Override
+	public int enrollGoods(SqlSessionTemplate session, Goods good) {
+	
+		return session.insert("market.enrollGoods",good);
+	}
+	
 }
