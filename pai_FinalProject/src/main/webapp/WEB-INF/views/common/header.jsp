@@ -203,7 +203,7 @@ a .sub-menu-detail {
 			</c:if>
 		</div>
 		<div id="sub-menu-bar" onmouseleave="hideMenu();">
-			<a href="">
+			<a href="${path }/member/memberView.do">
 				<div class="sub-menu-detail" id="menu-mypage">내정보</div>
 			</a>
 			<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-icon 이미지 이 것 사용 <img src="https://i.ibb.co/4Z7wXR5/red-circle.png" width="13px"> -->

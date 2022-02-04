@@ -78,7 +78,7 @@ public class MemberController {
 			}
 		}else {
 			model.addAttribute("msg","로그인에 실패하였습니다.");
-			model.addAttribute("loc","member/loginMember.do");
+			model.addAttribute("loc","/member/loginMember.do");
 			return "common/msg";
 		}
 	}
@@ -164,7 +164,7 @@ public class MemberController {
 	    int result = service.updateAuthStatus(member_email);
 	    
 	    model.addAttribute("msg", "인증이 완료되었습니다. 로그인해주세요.");
-	    model.addAttribute("loc","member/loginMember.do");
+	    model.addAttribute("loc","/member/loginMember.do");
 	    return "common/msg";
 	    
 	}
@@ -321,6 +321,14 @@ public class MemberController {
 		}
 	}
 	
+	@RequestMapping("/mbti.do")
+	public String mbtipage() {
+		return "member/insertmbti";
+	}
 	
+	@RequestMapping("/memberView.do")
+	public String memberView() {
+		return "member/memberView";
+	}
 	
 }

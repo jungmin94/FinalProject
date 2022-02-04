@@ -73,7 +73,8 @@
 	.checkbox{
  		justify-content: left;
 	}
-	</style>
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <body>
 	<form class="wrap" action="${path }/member/loginMemberEnd.do" method="post">
         <div class="login">
@@ -111,14 +112,26 @@
 			<br>
                 <div style="width: 80%;">
                 	<div style="width: 49%; display: inline-block;">
-                		<input type="button" class="btn btn-outline-secondary" value="아이디 찾기" onclick="findMemberId();" style="width: 100%;">
+                		<input type="button" class="btn btn-outline-secondary" id="findId" value="아이디 찾기" style="width: 100%;">
                 	</div>
 	 		        <div  style="width: 49%; display: inline-block;">
-	 		        	<input type="button" class="btn btn-outline-secondary" value="패스워드 찾기" onclick="" style="width: 100%;">
+	 		        	<input type="button" class="btn btn-outline-secondary" id="findPwd" value="패스워드 찾기" style="width: 100%;">
 	 		        </div>
             	</div> 
         </div>
     </form>
 </body>
+<script>
+	$(function(){
+		$("#findId").on("click", function(){
+			location.href = '${ path }/member/findId'
+		})
+	})
+	$(function(){
+		$("#findPwd").on("click", function(){
+			location.href = '${ path }/member/findPwd'
+		})
+	})
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

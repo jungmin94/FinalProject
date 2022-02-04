@@ -66,7 +66,7 @@
 					<input type="password" class="form-control" placeholder="비밀번호를 다시 한 번 입력해주세요" name="member_pw2" id="member_pw2" tabindex="3" required />
 					<p id="pwCheckF" style="color: #FF6600; margin: 0;"></p>
 					<p id="pwCheckFF" style="color: #FF6600; margin: 0;"></p>
-					<span class="final_pwck_ck">비밀번호 확인을 입력해주세요.</span>
+					<span class="final_pwck_ck">비밀번호를 다시 한번 입력해주세요.</span>
 				</div>
 				<div id="memberNick-container">
 					<label for="exampleDataList" class="form-label">닉네임</label>
@@ -93,9 +93,12 @@
 					<select name="email_3" id="email_3" class="form-select">
 				        <option value="" selected>선택하세요</option>
 				        <option value="naver.com">naver.com</option>
-				        <option value="hotmail.com">hotmail.com</option>
-				        <option value="hanmail.com">hanmail.com</option>
+				        <option value="gmail.com">gmail.com</option>
+				        <option value="daum.net">daum.net</option>
+				        <option value="hanmail.net">hanmail.net</option>
+				        <option value="nate.com">nate.com</option>
 				        <option value="yahoo.co.kr">yahoo.co.kr</option>
+				        <option value="hotmail.com">hotmail.com</option>
 				        <option value="etc" selected="selected">직접입력</option>
 				    </select>
 					<span class="final_mail_ck">이메일을 입력해주세요.</span>
@@ -280,7 +283,7 @@
     	  		$('#pwCheckFF').html("패스워드 확인이 불일치 합니다");
     	 	}else{
     		  	$('#pwCheckFF').text('');
-    		  	$('#pwCheckFF').html("<font color='#70AD47'>패스워드 확인이 일치 합니다.</font>");
+    		  	$('#pwCheckFF').html("<font color='#70AD47'>패스워드가 일치 합니다.</font>");
     	 	}
     	});
      }); 
@@ -309,13 +312,13 @@
 		email();	
 	});
 	
-	$("#email_3").change(function(){
+	$("#email_2").blur(function(){
 		email();	
 	});
 
 	function email() {
 		const email = $("#email_1").val();
-		const address = $("#email_3").val();
+		const address = $("#email_2").val();
 		if(email != "" && address != "") {
 			$("#member_email").val(email+"@"+address);
 		}
