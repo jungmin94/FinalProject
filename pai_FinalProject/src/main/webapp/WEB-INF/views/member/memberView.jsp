@@ -26,7 +26,7 @@
 				</div>
 				<div id="memberContent-container">
 					<label for="exampleDataList" class="form-label">자기소개</label>
-					<textarea class="form-control" name="member_content" placeholder="자기소개를 입력해주세요..."></textarea>
+					<textarea class="form-control" name="member_content" placeholder="자기소개를"><c:out value="${member.member_content }"/></textarea>
 				</div>
 				<div id="memberId-container">
 					<label for="exampleDataList" class="form-label">아이디</label>

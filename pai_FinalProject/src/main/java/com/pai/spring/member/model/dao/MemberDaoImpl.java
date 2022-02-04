@@ -39,6 +39,44 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		return session.insert("member.insertProfile", p);
 	}
+
+	@Override
+	public int updateAuthKey(SqlSessionTemplate session, Member m) {
+		// TODO Auto-generated method stub
+		return session.update("member.updateAuthKey",m);
+	}
+
+	@Override
+	public int updateAuthStatus(SqlSessionTemplate session, String member_email) {
+		// TODO Auto-generated method stub
+		return session.update("member.updateAuthStatus",member_email);
+	}
+
+	@Override
+	public Member findId(SqlSessionTemplate session, Member m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.findId",m);
+	}
+
+	@Override
+	public Member findIdResult(SqlSessionTemplate session, Member m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.findIdResult", m);
+	}
+
+	@Override
+	public Member findPwd(SqlSessionTemplate session, Member m) {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.findPwd",m);
+	}
+
+	@Override
+	public int findPwdUpdate(SqlSessionTemplate session, Member m) {
+		// TODO Auto-generated method stub
+		return session.update("member.findPwdUpdate",m);
+	}
+
+	
 	
 	
 

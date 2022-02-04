@@ -3,6 +3,7 @@ package com.pai.spring.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -17,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +30,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.pai.spring.member.model.service.EmailSendService;
 import com.pai.spring.member.model.service.MemberService;
 import com.pai.spring.member.model.vo.Member;
 import com.pai.spring.member.model.vo.Profile;
@@ -40,6 +45,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private EmailSendService ess;
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
@@ -67,7 +75,7 @@ public class MemberController {
 			status.setComplete();
 		}
 		session.invalidate();
-		return "redirect:/";
+		return "redirect:/home";
 	}
 	
 	@RequestMapping("/enrollMember.do")
@@ -78,11 +86,11 @@ public class MemberController {
 	@RequestMapping(value="/enrollMemberEnd.do",
 			method=RequestMethod.POST)
 	public ModelAndView enrollMemberEnd(Member m,ModelAndView mv,
-			@RequestParam(value="member_profile", required=false) MultipartFile[] member_profile, HttpServletRequest req) {
-//		logger.debug("변경 전 패스워드 : {}",m.getMember_pw());
-//		logger.debug("변경 후 패스워드 : {}",encoder.encode(m.getMember_pw()));
+			@RequestParam(value="member_profile", required=false) MultipartFile[] member_profile, HttpServletRequest req)throws RuntimeException {
+		logger.debug("변경 전 패스워드 : {}",m.getMember_pw());
+		logger.debug("변경 후 패스워드 : {}",encoder.encode(m.getMember_pw()));
 		
-//		m.setMember_pw(encoder.encode(m.getMember_pw()));
+		m.setMember_pw(encoder.encode(m.getMember_pw()));
 		
 		
         String path = req.getServletContext().getRealPath("/resources/upload/member/");
@@ -91,12 +99,10 @@ public class MemberController {
         
         m.setProfile(new ArrayList<Profile>());
         for(MultipartFile mf:member_profile) {
-        	
         	if(!mf.isEmpty()) {
         		String originFileName = mf.getOriginalFilename(); // 원본 파일 명
         		String ext = originFileName.substring(originFileName.lastIndexOf("."));
         		String renamedFileName = UUID.randomUUID().toString().replaceAll("-", "") + ext;
-        		
         		try {
         			mf.transferTo(new File(path+renamedFileName));
         			Profile p=new Profile();
@@ -106,25 +112,47 @@ public class MemberController {
         		} catch (IOException e) {
         			e.printStackTrace();
         		}
-        }
-        	
-        }
+        	}
+        }	
+        int result=service.insertMember(m);
+        
+        // 이메일 인증
+		String authKey = ess.sendAuthMail(m.getMember_email());
+		m.setAuthKey(authKey);
+			
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("member_email", m.getMember_email());
+		map.put("authKey", m.getAuthKey());
+    		
+		// DB 업데이트
+	    int result2 = service.updateAuthKey(m);
         
 		log.debug("memberData : {}",m);
 		String msg="";
 		String loc="";
-		try {
-			int result=service.insertMember(m);
-			msg="회원가입성공";
+		if(result>0) {
+			msg="PAI의 회원이 되신것을 축하드립니다. 가입하신 이메일로 인증메일을 보내드렸습니다.";
 			loc="/member/loginMember.do";
-		}catch(RuntimeException e) {
-			msg="회원가입실패"+e.getMessage();
+		}else {
+			msg="회원가입실패";
 			loc="/member/enrollMember.do";
 		}
 		mv.addObject("msg",msg);
 		mv.addObject("loc",loc);
 		mv.setViewName("common/msg");
 		return mv;
+	}
+	
+	// 이메일 인증 완료시
+	@GetMapping("/signUpConfirm")
+	public String signUpConfirm(@RequestParam Map<String, String> map, Model model){
+		String member_email = map.get("member_email");
+	    int result = service.updateAuthStatus(member_email);
+	    
+	    model.addAttribute("msg", "인증이 완료되었습니다. 로그인해주세요.");
+	    model.addAttribute("loc","member/loginMember.do");
+	    return "common/msg";
+	    
 	}
 	
 	 //아이디 중복체크
@@ -167,7 +195,117 @@ public class MemberController {
 			return check;
 		}
 	
+	// 아이디 찾기 페이지 이동
+	@GetMapping("/findId")
+	public String findIdViewPage() {
+		return "member/findId";
+	}
 	
+	// 아이디 찾기
+	@PostMapping("/findId")
+	public String findId(@RequestParam String member_email,
+						 @RequestParam String member_name,
+						 Model model) {
+		Member m = new Member();
+		m.setMember_email(member_email);
+		m.setMember_name(member_name);
+		Member findMember = service.findId(m);
+		
+		if(findMember != null) {
+			String authKey = ess.sendFindIdMail(findMember.getMember_email());
+			findMember.setAuthKey(authKey);
+			
+			Map<String, String> map = new HashMap<String, String>();
+	        map.put("member_email", findMember.getMember_email());
+	        map.put("authKey", findMember.getAuthKey());
+			
+			// DB 업데이트
+			int result = service.updateAuthKey(findMember);
+			
+			model.addAttribute("msg", "인증 이메일을 발송했습니다. 이메일을 확인해주세요.");
+			return "common/msg";
+		} else {
+			model.addAttribute("msg", "입력하신 정보에 해당하는 회원정보가 존재하지 않습니다.");
+			return "common/msg";
+		}
+	}
+	
+	// 아이디 찾기 이메일 인증 완료시
+	@GetMapping("/findIdResult")
+	public String findIdResult(@RequestParam Map<String, String> map, Model model){
+		String member_email = map.get("member_email");
+		String authKey = map.get("authKey");
+		Member m = new Member();
+		m.setMember_email(member_email);
+		m.setAuthKey(authKey);
+		
+		Member member = service.findIdResult(m);
+	    
+	    model.addAttribute("member", member);
+	    model.addAttribute("msg", "인증이 완료되었습니다.");
+	    return "member/findIdResult";
+	}
+	
+	// 비밀번호찾기 페이지 이동
+	@GetMapping("/findPwd")
+	public String findPwdViewPage() {
+		return "member/findPwd";
+	}
+	
+	@PostMapping("/findPwd")
+	public String findPwd(@ModelAttribute Member m,
+						  Model model) {
+		Member findMember = service.findPwd(m);
+		
+		if(findMember != null) {
+			String authKey = ess.sendFindPwdMail(findMember.getMember_email());
+			findMember.setAuthKey(authKey);
+			
+			Map<String, String> map = new HashMap<String, String>();
+	        map.put("member_email", findMember.getMember_email());
+	        map.put("authKey", findMember.getAuthKey());
+	        
+	        int result = service.updateAuthKey(findMember);
+	        
+	        model.addAttribute("msg", "인증 이메일을 발송했습니다. 이메일을 확인해주세요.");
+			return "common/msg";
+		} else {
+			model.addAttribute("msg", "입력하신 정보에 해당하는 회원정보가 존재하지 않습니다.");
+			return "common/msg";
+		}
+	}
+	
+	@GetMapping("/findPwdResult")
+	public String findPwdResult(@RequestParam Map<String, String> map, Model model) {
+		String member_email = map.get("member_email");
+		String authKey = map.get("authKey");
+		Member m = new Member();
+		m.setMember_email(member_email);
+		m.setAuthKey(authKey);
+		
+		
+		Member member = service.findIdResult(m);
+	    
+	    model.addAttribute("member", member);
+	    model.addAttribute("msg", "인증이 완료되었습니다.");
+	    
+		return "/login/findPwdResult";
+	}
+	@PostMapping("/findPwdUpdate")
+	public String findPwdUpdate(@ModelAttribute Member m, Model model) {
+		
+		m.setMember_pw(encoder.encode(m.getMember_pw()));
+		
+		int result = service.findPwdUpdate(m);
+		
+		if(result > 0) {
+			model.addAttribute("msg", "비밀번호 수정이 완료 되었습니다. 로그인 해주세요.");
+			return "common/msg";
+		} else {
+			model.addAttribute("msg", "알 수 없는 오류 발생 !");
+			return "common/msg";
+		}
+	}
 	
 	
 	

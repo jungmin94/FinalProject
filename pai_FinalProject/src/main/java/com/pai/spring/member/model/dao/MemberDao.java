@@ -18,4 +18,16 @@ public interface MemberDao {
 	int checkId(SqlSessionTemplate session,String member_id);
 	
 	int checkNick(SqlSessionTemplate session,String member_nick);
+	
+	int updateAuthKey(SqlSessionTemplate session,Member m);
+
+	int updateAuthStatus(SqlSessionTemplate session,String member_email);
+	
+	Member findId(SqlSessionTemplate session,Member m);
+
+	Member findIdResult(SqlSessionTemplate session,Member m);
+
+	Member findPwd(SqlSessionTemplate session,Member m);
+
+	int findPwdUpdate(SqlSessionTemplate session,Member m);
 }

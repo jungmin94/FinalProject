@@ -24,9 +24,10 @@ public class Member {
 	private String member_phone;
 	private String member_content;
 	private String member_mbti;
-	private int member_check;
 	private int member_police;
 	private int member_black;
 	private Date member_enroll;
+	private String status;
+	private String authKey;
 	private List<Profile> profile;
 }

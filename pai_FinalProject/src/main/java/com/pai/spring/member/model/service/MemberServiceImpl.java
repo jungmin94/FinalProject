@@ -52,6 +52,42 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return dao.checkNick(session,member_nick);
 	}
+
+	@Override
+	public int updateAuthKey(Member m) {
+		// TODO Auto-generated method stub
+		return dao.updateAuthKey(session,m); 
+	}
+
+	@Override
+	public int updateAuthStatus(String member_email) {
+		// TODO Auto-generated method stub
+		return dao.updateAuthStatus(session,member_email);
+	}
+
+	@Override
+	public Member findId(Member m) {
+		// TODO Auto-generated method stub
+		return dao.findId(session,m);
+	}
+
+	@Override
+	public Member findIdResult(Member m) {
+		// TODO Auto-generated method stub
+		return dao.findIdResult(session,m);
+	}
+
+	@Override
+	public Member findPwd(Member m) {
+		// TODO Auto-generated method stub
+		return dao.findPwd(session,m);
+	}
+
+	@Override
+	public int findPwdUpdate(Member m) {
+		// TODO Auto-generated method stub
+		return dao.findPwdUpdate(session,m);
+	}
 	
 
 }
