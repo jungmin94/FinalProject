@@ -14,9 +14,6 @@
 
 #chat-list {
 	background-color: rgb(2, 0, 92);
-	/* width: 13%; */
-	/* min-height: 80.6%; */
-	/* position: absolute; */
 	flex: 0.6;
 }
 
@@ -48,14 +45,6 @@
 }
 
 #chat-area {
-	/* flex-wrap: wrap; */
-	/* position: fixed; */
-	/*            
-            display: inline;
-            width: 100%;
-            height: 50%;
-            left: 20%; */
-	/* position: sticky; */
 	align-self: flex-start;
 	width: 100%;
 	height: 86%;
@@ -63,7 +52,6 @@
 }
 
 .chat-enter-message {
-	/* width: 280%; */
 	left: 0;
 	flex-basis: 100%;
 	text-align: center;
@@ -197,7 +185,6 @@ input:focus {
 }
 
 #chat-attendence-list {
-	/* width: 13%; */
 	right: 0.6%;
 	background-color: rgb(240, 240, 240);
 	text-align: center;
@@ -317,9 +304,6 @@ input:focus {
 					<span id="message-send-option"> <span>받는 사람 : </span> <select
 						name="messageUser" id="user">
 							<option value="everyone">모두에게</option>
-							<!-- <option value="boradori">boradori</option>
-							<option value="ddubi">ddubi</option>
-							<option value="nana">nana</option> -->
 					</select>
 					</span> <span id="chat-uploadfile"> <label for="upload-file">
 							<img id="upload-file-img"
@@ -343,15 +327,6 @@ input:focus {
 
 		<div id="chat-attendence-list">
 			<div id="chat-attendence-head">채팅방 접속자</div>
-			<!-- <div class="chat-attendence">
-				<a href="javascript:subMenu()" class="showSubMenu">boradori</a>
-			</div>
-			<div class="chat-attendence">
-				<a href="#" class="showSubMenu">nana</a>
-			</div>
-			<div class="chat-attendence">
-				<a href="#" class="showSubMenu">ddubi</a>
-			</div> -->
 		</div>
 		<ul class="contextmenu">
 			<li><a href="#">귓속말</a></li>
@@ -496,8 +471,9 @@ input:focus {
     const sendMsg=()=>{
     	var inputMsg = document.getElementById("message").value;
     	let dm = $('#user').val();
+    	let upFile = $('#upload-file').val();
     	
-    	if (dm == 'everyone') {
+    	if (upFile == "" && dm == 'everyone') {
     		const msg = {
         			chatType:'msgEveryone',
         			senderId:userId,
@@ -510,7 +486,7 @@ input:focus {
         			
         	}
         	socket.send(JSON.stringify(msg));	
-    	} else {
+    	} else if (upFile == "" &&  dm == ""){
     		const msg = {
         			chatType:'msgDm',
         			senderId:userId,
@@ -523,6 +499,19 @@ input:focus {
         			
         	}
         	socket.send(JSON.stringify(msg));
+    	} else if (upFile != "" && dm == 'everyone') {
+    		 $.post ({
+ 				url : '/spring/chatting/uploadFile.do',
+ 				data : {
+ 					uploadFile:upFile
+ 					chatroomName : msg.chatRoomName,
+ 					chatUserMbti : msg.chatRoomName
+ 				},
+
+ 				success : function(data) {
+ 					
+ 				}
+    		 });
     	}
     	
     }
