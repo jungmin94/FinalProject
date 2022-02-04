@@ -9,7 +9,7 @@ import com.pai.spring.member.model.vo.Profile;
 
 public interface MemberDao {
 
-	Member login(SqlSessionTemplate session, Map param);
+	Member login(SqlSessionTemplate session, Member m);
 	
 	int insertMember(SqlSessionTemplate session,Member m);
 	

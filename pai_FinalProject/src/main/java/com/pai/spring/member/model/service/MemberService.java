@@ -6,7 +6,7 @@ import com.pai.spring.member.model.vo.Member;
 
 public interface MemberService {
 	
-	Member login(Map param);
+	Member login(Member m);
 	
 	int insertMember(Member m);
 	

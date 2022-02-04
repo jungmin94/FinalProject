@@ -19,9 +19,9 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao dao;
 	
 	@Override
-	public Member login(Map param) {
+	public Member login(Member m) {
 		// TODO Auto-generated method stub
-		return dao.login(session,param);
+		return dao.login(session,m);
 	}
 
 	@Override

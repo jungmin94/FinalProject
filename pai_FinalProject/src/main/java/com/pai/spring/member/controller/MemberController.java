@@ -60,13 +60,27 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/loginMemberEnd.do")
-	public String login(@RequestParam Map param,Model model) {
-		Member m=service.login(param);
-		
-		logger.debug("{}",m);
-//		if(m!=null && encoder.matches((String)param.get("member_pw"),m.getMember_pw()))
-			model.addAttribute("loginMember",m);
-		return "redirect:/";
+	public String login(@ModelAttribute Member m,Model model) {
+		Member loginMember=service.login(m);
+		if(loginMember!=null&&encoder.matches(m.getMember_pw(),loginMember.getMember_pw())) {
+			if(loginMember.getStatus().equals("N")) {
+				model.addAttribute("msg","회원님은 현재 이메일 미인증 상태입니다. 이메일 인증을 진행해 주세요 :->");
+				model.addAttribute("loc","/member/loginMember.do");
+				return "common/msg";
+			}else if(loginMember.getStatus().equals("Y")&&loginMember.getMember_mbti().equals("미입력")){
+				model.addAttribute("msg","이메일 인증이 확인되셨습니다. 커뮤니티를 본격적으로 즐기기 위해 mbti 입력 페이지로 이동됩니다.");
+				model.addAttribute("loc","/member/mbti.do");
+				return "common/msg";
+			}else {
+				logger.debug("{}",loginMember);
+				model.addAttribute("loginMember",loginMember);
+				return "redirect:/";
+			}
+		}else {
+			model.addAttribute("msg","로그인에 실패하였습니다.");
+			model.addAttribute("loc","member/loginMember.do");
+			return "common/msg";
+		}
 	}
 	
 	@RequestMapping("/logout.do")

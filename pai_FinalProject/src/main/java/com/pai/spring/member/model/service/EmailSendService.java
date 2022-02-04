@@ -40,7 +40,7 @@ public class EmailSendService {
     //인증메일 보내기
     public String sendAuthMail(String member_email) {
         //6자리 난수 인증번호 생성
-        String member_check = getKey(6);
+        String authKey = getKey(6);
 
         //인증메일 보내기
         try {
@@ -50,8 +50,8 @@ public class EmailSendService {
             .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
             .append("<a href='http://localhost:9090/spring/member/signUpConfirm?member_email=")
             .append(member_email)
-            .append("&member_check=") 
-            .append(member_check)
+            .append("&authKey=") 
+            .append(authKey)
             .append("' target='_blenk'>이메일 인증 확인</a>")
             .toString());
             sendMail.setFrom("alivepai2022@gmail.com", "관리자");
@@ -63,13 +63,13 @@ public class EmailSendService {
             e.printStackTrace();
         }
 
-          return member_check;
+          return authKey;
     }
 
     // 아이디 찾기
 	public String sendFindIdMail(String member_email) {
 		//6자리 난수 인증번호 생성
-        String member_check = getKey(6);
+        String authKey = getKey(6);
 
         //인증메일 보내기
         try {
@@ -79,8 +79,8 @@ public class EmailSendService {
             .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
             .append("<a href='http://localhost:9090/spring/member/findIdResult?member_email=")
             .append(member_email)
-            .append("&member_check=")
-            .append(member_check)
+            .append("&authKey=")
+            .append(authKey)
             .append("' target='_blenk'>이메일 인증 확인</a>")
             .toString());
             sendMail.setFrom("alivepai2022@gmail.com", "관리자");
@@ -92,13 +92,13 @@ public class EmailSendService {
             e.printStackTrace();
         }
 
-          return member_check;
+          return authKey;
 	}
 
 	// 비밀번호 찾기
 	public String sendFindPwdMail(String member_email) {
 		//6자리 난수 인증번호 생성
-        String member_check = getKey(6);
+        String authKey = getKey(6);
 
         //인증메일 보내기
         try {
@@ -108,8 +108,8 @@ public class EmailSendService {
             .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
             .append("<a href='http://localhost:9090/spring/member/findPwdResult?member_email=")
             .append(member_email)
-            .append("&member_check=")
-            .append(member_check)
+            .append("&authKey=")
+            .append(authKey)
             .append("' target='_blenk'>이메일 인증 확인</a>")
             .toString());
             sendMail.setFrom("alivepai2022@gmail.com", "관리자");
@@ -121,6 +121,6 @@ public class EmailSendService {
             e.printStackTrace();
         }
 
-          return member_check;
+          return authKey;
 	}
 }

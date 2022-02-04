@@ -11,9 +11,9 @@ import com.pai.spring.member.model.vo.Profile;
 public class MemberDaoImpl implements MemberDao {
 
 	@Override
-	public Member login(SqlSessionTemplate session, Map param) {
+	public Member login(SqlSessionTemplate session, Member m) {
 		// TODO Auto-generated method stub
-		return session.selectOne("member.selectMember",param);
+		return session.selectOne("member.login",m);
 	}
 
 	@Override
