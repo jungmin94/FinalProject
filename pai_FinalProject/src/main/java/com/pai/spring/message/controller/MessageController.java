@@ -47,6 +47,7 @@ public class MessageController {
 		mv.addObject("pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "messageBox.do"));
 		//new Gson().toJson(list);
 		mv.addObject("list",list);
+		mv.addObject("memberId",memberId);
 		mv.setViewName("message/messageBox");
 		return mv;
 	}
@@ -56,8 +57,7 @@ public class MessageController {
 	@ResponseBody
 	public String recvMsgDetail(int msgNo) {
 		Map msg = service.selectRecvMsgDetail(msgNo);
-		System.out.println(msgNo);
-		System.out.println(msg);
+	
 		return new Gson().toJson(msg);
 	}
 	
