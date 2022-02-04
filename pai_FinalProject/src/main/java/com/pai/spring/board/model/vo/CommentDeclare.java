@@ -21,4 +21,6 @@ public class CommentDeclare {
 	private Date declareResultDate;
 	private String boardTitle;
 	private String commentContent;
+	private int declareNo;
+	private int declareCount;
 }
