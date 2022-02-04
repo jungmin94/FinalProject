@@ -1,12 +1,20 @@
 package com.pai.spring.market.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.pai.spring.common.PageFactory;
@@ -25,6 +33,10 @@ public class MarketController {
 	@Autowired
 	private MarketService service;
 
+	/*==============================================================================================
+																								사용자 로직
+	===============================================================================================*/
+	
 	/* 메인페이지 불러오기 */
 	@RequestMapping("/mainView.do")
 	public ModelAndView mainView(ModelAndView mv) {
@@ -41,6 +53,8 @@ public class MarketController {
 	}
 	
 	/* 전체상품 페이지 리스트 불러오기 */
+	// 상세등록이 하나라도 되어 있어야 화면에 리스트로 출력이 된다
+	// 즉, Goods는 등록되어있으나 GoodsDetails가 하나라도 등록되어있지 않다면 리스트 출력 X
 	@RequestMapping("/goodsList.do")
 	public ModelAndView goodsList(@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="12") int numPerPage,ModelAndView mv) {
@@ -100,6 +114,10 @@ public class MarketController {
 		return mv;
 		
 	}
+	
+	/*==============================================================================================
+	 																			관리자 로직
+	===============================================================================================*/
 	
 	/* 등록된 상품상세 리스트 불러오기 */
 	@RequestMapping("/enrollManageList.do")
@@ -221,5 +239,106 @@ public class MarketController {
 		
 	}
 	
+	@RequestMapping("/enrollGoodImage.do")
+	public ModelAndView enrollGoodImage(@RequestParam(value="upFile",required=false) MultipartFile[] upFile, 
+			HttpServletRequest req,Goods good,ModelAndView mv) {
+		
+		String path=req.getServletContext().getRealPath("/resources/upload/market/");
+		File file=new File(path);
+		if(!file.exists()) file.mkdirs();
+		for(MultipartFile mf : upFile) {
+			if(!mf.isEmpty()) {
+				try {
+					mf.transferTo(new File(path+mf.getOriginalFilename()));
+					good.setImage(mf.getOriginalFilename());
+				}catch(IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println(good);
+		
+		int result = service.enrollGoodImage(good);
+		
+		String msg="";
+		String loc="";
+		 if(result>0) {
+			 msg="이미지 등록 성공";
+			 loc="/";			 
+		 }else {
+			 msg="이미지 등록 실패";
+			 loc="/";	
+		 }
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+
+	}
+	
+	/* 상품 상세 조건으로 등록되어있는지 확인 */
+	@RequestMapping("/checkExistGoodDetail.do")
+	@ResponseBody
+	public int checkExistGoodDetail(GoodsDetails gd) {
+		
+		int result = service.checkExistGoodDetail(gd);
+		
+		return result;
+	}
+	
+	@RequestMapping("/enrollGoodsDetails.do")
+	public ModelAndView enrollGoodsDetails(GoodsDetails gd,ModelAndView mv) {
+		
+		int result = service.enrollGoodsDetails(gd);
+		
+		String msg="";
+		String loc="";
+		 if(result>0) {
+			 msg="상품상세 등록 성공";
+			 loc="/";			 
+		 }else {
+			 msg="상품상세 등록 실패";
+			 loc="/";	
+		 }
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+		
+	}
+	
+	/* 상품 상세 조건으로 등록되어있는지 확인 */
+	@RequestMapping("/checkExistGoodName.do")
+	@ResponseBody
+	public int checkExistGoodName(Goods good) {
+		
+		int result = service.checkExistGoodName(good);
+		
+		return result;
+	}
+	
+	@RequestMapping("/enrollGoods.do")
+	public ModelAndView enrollGoods(Goods good,ModelAndView mv) {
+		System.out.println(good);
+		int result = service.enrollGoods(good);
+		
+		String msg="";
+		String loc="";
+		 if(result>0) {
+			 msg="상품 등록 성공";
+			 loc="/";			 
+		 }else {
+			 msg="상품 등록 실패";
+			 loc="/";	
+		 }
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+		
+	}
 	
 }

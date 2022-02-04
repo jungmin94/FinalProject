@@ -47,4 +47,14 @@ public interface MarketDao {
 	
 	List<GoodsDetails> searchEnrolledList(SqlSessionTemplate session,Map<String,Object> param,int cPage,int numPerPage);
 	
+	int enrollGoodImage(SqlSessionTemplate session,Goods good);
+	
+	int checkExistGoodDetail(SqlSessionTemplate session,GoodsDetails gd);
+	
+	int enrollGoodsDetails(SqlSessionTemplate session,GoodsDetails gd);
+	
+	int checkExistGoodName(SqlSessionTemplate session,Goods good);
+	
+	int enrollGoods(SqlSessionTemplate session,Goods good);
+	
 }

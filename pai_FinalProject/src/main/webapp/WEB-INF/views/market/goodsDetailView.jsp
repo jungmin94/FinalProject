@@ -54,7 +54,9 @@
 <div class="container">
     <div class="row">
       <div class="col">
-        <img src="https://s-i.huffpost.com/gen/3948866/thumbs/o-PEPE-THE-FROG-570.jpg?3" class="img-thumbnail" alt="..." style="width: 500px; height: 500px;">
+    
+        	<img src="https://s-i.huffpost.com/gen/3948866/thumbs/o-PEPE-THE-FROG-570.jpg?3" class="img-thumbnail" alt="..." style="width: 500px; height: 500px;">
+  
       </div>
       <div class="col">
        <form action="" method="post">

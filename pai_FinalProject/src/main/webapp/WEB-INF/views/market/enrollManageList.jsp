@@ -13,7 +13,7 @@
 
 <div class="row">
     <div class="col-2">
-      <button type="button" class="btn btn-info" onclick="location.assign('${path}/market/enrollGood.do')">상품 등록하기</button>
+      <button type="button" class="btn btn-info" onclick="location.assign('${path}/market/enrollGood.do')">상품 등록/수정</button>
     </div>
    
     <div class="col">

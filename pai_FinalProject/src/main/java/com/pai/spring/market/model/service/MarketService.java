@@ -45,4 +45,14 @@ public interface MarketService {
 	
 	List<GoodsDetails> searchEnrolledList(Map<String,Object> param,int cPage,int numPerPage);
 	
+	int enrollGoodImage(Goods good);
+	
+	int checkExistGoodDetail(GoodsDetails gd);
+
+	int enrollGoodsDetails(GoodsDetails gd);
+
+	int checkExistGoodName(Goods good);
+	
+	int enrollGoods(Goods good);
+	
 }
