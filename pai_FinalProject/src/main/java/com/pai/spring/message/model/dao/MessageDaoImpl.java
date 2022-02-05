@@ -33,6 +33,17 @@ public class MessageDaoImpl implements MessageDao {
 		return session.selectOne("message.selectRecvMsgDetail",msgNo);
 	}
 
+	@Override
+	public List<Message> selectSendMsg(SqlSessionTemplate session, String sendId, int cPage, int numPerpage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerpage,numPerpage);
+		return session.selectList("message.selectSendMessage", sendId, rb);
+	}
+
+	@Override
+	public int selectSendMessageCount(SqlSessionTemplate session, String sendId) {
+		return session.selectOne("message.selectSendMessageCount", sendId);
+	}
+
 	
 	
 	

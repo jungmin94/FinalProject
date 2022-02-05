@@ -15,4 +15,8 @@ public interface MessageService {
 	
 	Map selectRecvMsgDetail(int msgNo);
 	
+	List<Message> selectSendMsg(String sendId, int cPage, int numPerpage);
+	
+	int selectSendMessageCount(String sendId);
+	
 }

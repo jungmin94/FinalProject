@@ -61,4 +61,23 @@ public class MessageController {
 		return new Gson().toJson(msg);
 	}
 	
+	@RequestMapping(value="/sendMsg.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String sendMsgBox(String sendId, @RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerpage",defaultValue="10") int numPerpage) {
+		
+		Map<String,Object> param = new HashMap();
+		param.put("sendId", sendId);
+		param.put("cPage", cPage);
+		param.put("numPerpage", numPerpage);
+		
+		List<Message> list = service.selectSendMsg(sendId, cPage, numPerpage);
+		int totalData = service.selectSendMessageCount(sendId);
+		
+		Map<String, Object> result = Map.of("pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "sendMsg.do"),"list",list);
+
+		
+		return new Gson().toJson(result);
+	}
+	
 }
