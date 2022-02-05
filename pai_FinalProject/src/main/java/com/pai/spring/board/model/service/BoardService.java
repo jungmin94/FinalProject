@@ -7,6 +7,7 @@ import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
 import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
+import com.pai.spring.board.model.vo.CommentDeclare;
 import com.pai.spring.member.model.vo.Member;
 
 public interface BoardService {
@@ -69,4 +70,16 @@ public interface BoardService {
 	List<BoardDeclare> declareList(int cPage,int numPerPage,String memberId);
 	
 	int selectDeclareCount(String memberId);
+	
+	List<Board> infoList();
+	
+	List<Board> topList();
+	
+	List<Board> mainList();
+	
+	List<Board> searchMainBoard(String category);
+	
+	int insertCommentDeclare(CommentDeclare cd);
+	
+	List<CommentDeclare> commentDeclareList(int cPage,int numPerPage,String memberId);
 }

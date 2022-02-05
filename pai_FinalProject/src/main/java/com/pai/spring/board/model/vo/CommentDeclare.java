@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BoardDeclare {
+public class CommentDeclare {
+	private int commentNo;
 	private int boardNo;
 	private String declareWriter;
 	private String declareContent;
@@ -19,7 +20,7 @@ public class BoardDeclare {
 	private String declareResult;
 	private Date declareResultDate;
 	private String boardTitle;
-	private String boardWriter;
+	private String commentContent;
 	private int declareNo;
 	private int declareCount;
 }

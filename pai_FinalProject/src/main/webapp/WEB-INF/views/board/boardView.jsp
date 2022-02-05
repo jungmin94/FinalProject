@@ -5,6 +5,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/> 
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <%@ page import="com.pai.spring.board.model.vo.Board" %> 
 <%
 	Board b=(Board)request.getAttribute("board");
@@ -98,7 +99,9 @@ section>*{
 	      			<img style="height:15px; width:15px;"src="${path}/resources/images/board/siren.png">&nbsp;신고
 	      		</button> 
 	        	<button type="button" class="btn btn-info">
-					<img style="height:15px; width:15px;"src="${path}/resources/images/board/share.png">&nbsp;공유
+	        		 <a id="kakao-link-btn" href="javascript:kakaoShare()" style=" text-decoration: none; color:black;"> 
+						<img style="height:30px; width:30px;"src="https://developers.kakao.com/assets/img/about/logos/kakaolink/kakaolink_btn_medium.png">&nbsp;공유
+   		  			 </a>
    		  		</button>
    		  		<c:if test="${like==null}">
 			    	<button type="button" class="btn btn-info" id="recommend" onclick="location.replace('${path}/board/boardLike.do?boardNo=${board.boardNo}&memberId=${loginMember.member_id}')">
@@ -114,7 +117,7 @@ section>*{
 		    </div>
 	  </div>  
 	    
-	    <!-- 신고 모달 -->
+	    <!-- 게시글신고 모달 -->
 	    <!-- Vertically centered scrollable modal -->
 		<div class="modal fade" id="declare" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		  <div class="modal-dialog">
@@ -199,7 +202,71 @@ section>*{
 								<c:if test="${loginMember.member_id eq 'admin' || loginMember.member_nick eq bc.commentWriter}">  
 									<button type="button" data-bs-toggle="modal" data-bs-target="#commentDelete" class="btn-delete">삭제</button>
 								</c:if>
+								<c:if test="${loginMember!=null&&loginMember.member_nick ne bc.commentWriter}">  
+									<button type="button" data-bs-toggle="modal" data-bs-target="#declareComment" class="btn-delete" >신고</button>
+								</c:if>
 							</c:if>		
+							
+							<!-- 댓글 신고 모달 -->
+									<div class="modal fade" id="declareComment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+									  <div class="modal-dialog">
+									    <div class="modal-content">
+									      <div class="modal-header">
+									        <h5 class="modal-title" id="staticBackdropLabel">게시글신고</h5>
+									        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+									      </div>
+									      <form action="${path}/board/insertCommentDeclare.do"> 
+										      <div class="modal-body">
+								  				<div class="container-fluid">
+										      		<div style="text-align:center;"><h2>신고하기</h2></div>
+										      		<div>신고사유선택</div>
+								  					<div class="declare-list">
+								  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="욕설,비방,차별,폭언"  >
+														<label class="form-check-label" for="inlineRadio2">욕설,비방,차별,폭언</label>
+										      		</div>
+										      		<div class="declare-list">
+								  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="홍보,영리목적">
+														<label class="form-check-label" for="inlineRadio2">홍보,영리목적</label>
+										      		</div>
+										      		<div class="declare-list">
+								  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="불법정보">
+														<label class="form-check-label" for="inlineRadio2">불법정보</label>
+										      		</div>
+										      		<div class="declare-list">
+								  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="음란,청소년유해">
+														<label class="form-check-label" for="inlineRadio2">음란,청소년유해</label>
+										      		</div>
+										      		<div class="declare-list">
+								  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="개인정보 노출,유포,거래">
+														<label class="form-check-label" for="inlineRadio2">개인정보 노출,유포,거래</label>
+										      		</div>
+										      		<div class="declare-list">
+								  						<input class="form-check-input" type="radio" name="declareContent" id="inlineRadio2" value="도배,스팸">
+														<label class="form-check-label" for="inlineRadio2">도배,스팸</label>
+										      		</div>
+										      		<div class="declare-list">
+								  						<input class="form-check-input" type="radio"  id="otherRadio" value="기타" onclick="other();">
+														<label class="form-check-label" for="inlineRadio2">기타(직접입력)</label>
+														<div id="target" style="display:none;"></div>
+										      		</div>
+										      		<div>
+										      			<input type="hidden" name="declareWriter" value="${loginMember.member_id}">
+										      			<input type="hidden" name="commentNo" value="${bc.commentNo}">
+										      			<input type="hidden" name="boardNo" value="${board.boardNo}">
+										      		</div>
+										      		<div>
+										      			<span style="font-size:13px;font-weight:bolder;">※ 허위신고일 경우, 신고자의 서비스활동이 제한 될 수 있으니 유의하시어 <br> 신중하게 신고해주세요.</span>
+										      		</div>
+										      	</div>
+											  </div>
+										      <div class="modal-footer">
+										        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+										        <button type="submit" class="btn btn-primary">확인</button>
+										      </div>
+									      </form>
+									    </div>
+									  </div>
+									</div>
 							<!--댓글삭제 Modal -->
 							<div class="modal fade" id="commentDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 							  <div class="modal-dialog">
@@ -328,11 +395,51 @@ section>*{
 			  </div>
 			</div>
 		    
-		  </div> 	   
+		  </div>
+		  
+		   
+		  	   
 	</div>
 </section>
 
 <script>
+ 
+// SDK를 초기화,  사용할 앱의 JavaScript 키를 설정 
+Kakao.init('');
+
+// SDK 초기화 여부를 판단
+console.log(Kakao.isInitialized());
+
+function kakaoShare() {
+  Kakao.Link.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: '${board.boardTitle}',
+      description: 'MBTI커뮤니티 사이트 PAI',
+      imageUrl: 'https://i.ibb.co/7kh6Yz5/Kakao-Talk-Photo-2022-01-15-17-58-47.jpg',
+      link: {
+        mobileWebUrl: "http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null",
+        webUrl: 'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+      },
+    },
+    buttons: [
+      {
+        title: '보러가기',
+        link: {
+          mobileWebUrl: 'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+          webUrl: 'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+        },
+      },
+    ],
+    // 카카오톡 미설치 시 카카오톡 설치 경로이동
+    installTalk: true,
+  })
+}
+
+
+
+
+
 	const before=()=>{ 
 		$.ajax({
 			url:"${path}/board/ajax/boardView.do",
