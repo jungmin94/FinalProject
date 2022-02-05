@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/> 
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	.nav-link{
 		font-size:30px;
@@ -71,25 +72,68 @@
 					</tr>
 					<c:forEach var="b" items="${list}"> 
 						<tr class="tbody" >
-							<td><c:out value="${b.declareNo}"/></td>
+							<td><c:out value="${b.boardNo}"/></td>
 							<td>
 								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=null">
 									<c:out value="${b.boardTitle}"/>
 								</a>
 							</td>
 							<td><c:out value="${b.declareContent}"/></td>
-							<td><c:out value="${b.declareWriter}"/></td>
-							<td><c:out value="${b.declareDate }"/></td>
+							<td><c:out value="${b.declareWriter }"/></td>
+							<td><c:out value="${b.declareDate}"/></td>
 							<c:if test="${b.declareResult==null}">
-								<td><button type="button" class="btn btn-primary">접수</button></td>
+								<td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#declare">접수</button></td>
 							</c:if>
 							<c:if test="${b.declareResult!=null}">
 								<td><button type="button" class="btn btn-success">처리완료</button></td>
 							</c:if>
 						</tr>
+						
+						<!-- 접수 모달 -->
+						<div class="modal fade" id="declare" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="staticBackdropLabel">신고처리결과</h5>
+						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						      </div>
+						      <form action="${path}/admin/updateBoardDeclare.do"> 
+							      <div class="modal-body ">
+					  				<div class="container-fluid">  
+					  					<div class="declare-list">
+					  						<input class="form-check-input" type="checkbox" name="declareResult"   value="작성자 경고 1회부여"  >
+											<label class="form-check-label" for="inlineRadio2">작성자 경고 1회부여</label>
+							      		</div>
+							      		<div class="declare-list">
+					  						<input class="form-check-input" type="checkbox" name="declareResult"  value="작성자 블랙리스트 등록">
+											<label class="form-check-label" for="inlineRadio2">작성자 블랙리스트 등록</label>
+							      		</div>
+							      		<div class="declare-list">
+					  						<input class="form-check-input" type="checkbox" name="declareResult"  value="해당게시글 삭제">
+											<label class="form-check-label" for="inlineRadio2">해당게시글 삭제</label>
+							      		</div>  
+							      		<div class="declare-list">
+					  						<input class="form-check-input" type="checkbox"  name="declareResult" value="신고무효(신고사유에 해당되지 않음)" id="others"  >
+											<label class="form-check-label" for="inlineRadio2">신고무효(신고사유에 해당되지 않음)</label>
+											<div id="target" style="display:none;"></div>
+							      		</div>
+							      		<div>
+							      			<input type="hidden" name="boardWriter" value="${b.boardWriter}">
+							      			<input type="hidden" name="declareWriter" value="${b.declareWriter}">
+							      			<input type="hidden" name="boardNo" value="${b.boardNo}">
+							      		</div> 
+							      	</div>
+								  </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+							        <button type="submit" class="btn btn-primary">확인</button>
+							      </div>
+						      </form>
+						    </div>
+						  </div>
+						</div> 
 					</c:forEach>
-				</table>
-			 
+				</table> 
 			</div>
 			<div>
 				${pageBar}
@@ -101,5 +145,16 @@
 		
 	</div>
 </section>
+<script>
+	const other=()=>{ 
+		let others= $("#others").val();
+		console.log(others);
+ 		var text = document.createElement("textarea"); 
+ 		text.setAttribute("name","declareResult");
+ 		document.getElementById("target").append(text);
+ 		document.getElementById("target").style.display = "block"; 
+ 		others=$("textarea").val(); 
+ 	}
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -405,7 +405,7 @@ section>*{
 <script>
  
 // SDK를 초기화,  사용할 앱의 JavaScript 키를 설정 
-Kakao.init('46dd2eddcbc0ca659e9e66543e1a03d8');
+Kakao.init('');
 
 // SDK 초기화 여부를 판단
 console.log(Kakao.isInitialized());

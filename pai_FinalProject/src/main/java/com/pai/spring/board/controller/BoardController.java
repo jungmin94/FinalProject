@@ -392,6 +392,8 @@ public class BoardController {
 	@RequestMapping("/insertDeclare.do")
 	public ModelAndView insertDeclare(ModelAndView mv,BoardDeclare bd) { 
 		int result = service.insertDeclare(bd);
+		System.out.println(bd);
+		
 		
 		String msg="";
 		String loc="";

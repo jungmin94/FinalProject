@@ -5,8 +5,10 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pai.spring.admin.model.dao.AdminDao;
+import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardDeclare;
 
 @Service
@@ -41,6 +43,27 @@ public class AdminServiceImpl implements AdminService {
 	public int commentDeclareCount() {
 		// TODO Auto-generated method stub
 		return dao.commentDeclareCount(session);
+	}
+
+
+	@Override
+	@Transactional
+	public int updatePolice(String declareWriter) { 
+		return dao.updatePolice(session,declareWriter);
+	}
+
+
+	@Override
+	@Transactional
+	public int updateBoardDeclare(BoardDeclare bd) { 
+		return dao.updateBoardDeclare(session,bd);
+	}
+
+
+	@Override
+	@Transactional
+	public int insertBlack(String declareWriter) { 
+		return dao.insertBlack(session,declareWriter);
 	}
 
 }

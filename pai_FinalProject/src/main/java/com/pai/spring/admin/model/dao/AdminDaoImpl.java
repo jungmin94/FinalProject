@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardDeclare;
 
 @Repository
@@ -31,6 +32,21 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public int commentDeclareCount(SqlSessionTemplate session) { 
 		return session.selectOne("admin.commentDeclareCount");
+	}
+
+	@Override
+	public int updatePolice(SqlSessionTemplate session, String declareWriter) { 
+		return session.update("admin.updatePolice", declareWriter);
+	}
+
+	@Override
+	public int updateBoardDeclare(SqlSessionTemplate session, BoardDeclare bd) { 
+		return session.update("admin.updateBoardDeclare", bd);
+	}
+
+	@Override
+	public int insertBlack(SqlSessionTemplate session, String declareWriter) { 
+		return session.update("admin.insertBlack",declareWriter);
 	}
 
 }
