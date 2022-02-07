@@ -15,6 +15,14 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <body>
+<style>
+.final_pw_ck{
+	    display: none;
+	}
+	.final_pwck_ck{
+	    display: none;
+	}
+</style>
 	<script>
 		$(function(){
 			alert("${ msg }");
@@ -25,12 +33,18 @@
        	<h1>비밀번호 변경</h1>
        	<form action="${ path }/member/findPwdUpdate" method="POST" id="joinForm">
        		<input type="hidden" name="member_id" value="${ user.member_id }">
-       		<input type="password" id="member_pw" class="pwd" name="member_pw" placeholder="비밀번호 입력" required>
-       		<span class="final_pw_ck">비밀번호를 입력해주세요.</span>
-           	<input type="password" id="member_pw2" class="checkPwd" name="member_pw2" placeholder="비밀번호 확인">
-           	<p id="pwCheckF" style="color: #FF6600; margin: 0;"></p>
-			<p id="pwCheckFF" style="color: #FF6600; margin: 0;"></p>
-			<span class="final_pwck_ck">비밀번호를 다시 한번 입력해주세요.</span>
+       		<div id="memberPw-container">
+					<label for="exampleDataList" class="form-label">비밀번호</label>
+					<input type="password" class="form-control" placeholder="비밀번호를 입력해주세요" name="member_pw" id="member_pw" tabindex="2" oninput="checkPw(member_pw.value)" required>
+					<span class="final_pw_ck">비밀번호를 입력해주세요.</span>
+				</div>
+				<div id="memberPw2-container">
+					<label for="exampleDataList" class="form-label">비밀번호 확인</label>
+					<input type="password" class="form-control" placeholder="비밀번호를 다시 한 번 입력해주세요" name="member_pw2" id="member_pw2" tabindex="3" required />
+					<p id="pwCheckF" style="color: #FF6600; margin: 0;"></p>
+					<p id="pwCheckFF" style="color: #FF6600; margin: 0;"></p>
+					<span class="final_pwck_ck">비밀번호를 다시 한번 입력해주세요.</span>
+				</div>
             <button type="submit" class="updateBtn" id="updateBtn">확인</button>
        	</form>
     </div>
@@ -52,8 +66,8 @@
     	 	}
     	});
      }); 
-  
-    //비밀번호 실시간 유효성 체크
+     
+     //비밀번호 실시간 유효성 체크
     function checkPw(member_pw){
     	$.ajax({
     		type:"POST",
