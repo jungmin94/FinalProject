@@ -251,6 +251,11 @@ public class BoardServiceImpl implements BoardService {
 		return dao.commentDeclareList(session,cPage,numPerPage,memberId);
 	}
 
+	@Override
+	public List<Board> noticeList() { 
+		return dao.noticeList(session);
+	}
+
 	 
 
 
