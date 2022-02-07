@@ -253,9 +253,9 @@ public class MemberController {
 		m.setMember_email(member_email);
 		m.setAuthKey(authKey);
 		
-		Member member = service.findIdResult(m);
+		Member user = service.findIdResult(m);
 	    
-	    model.addAttribute("member", member);
+	    model.addAttribute("user", user);
 	    model.addAttribute("msg", "인증이 완료되었습니다.");
 	    return "member/findIdResult";
 	}
@@ -298,12 +298,12 @@ public class MemberController {
 		m.setAuthKey(authKey);
 		
 		
-		Member member = service.findIdResult(m);
+		Member user = service.findIdResult(m);
 	    
-	    model.addAttribute("member", member);
+	    model.addAttribute("user", user);
 	    model.addAttribute("msg", "인증이 완료되었습니다.");
 	    
-		return "/login/findPwdResult";
+		return "/member/findPwdResult";
 	}
 	@PostMapping("/findPwdUpdate")
 	public String findPwdUpdate(@ModelAttribute Member m, Model model) {

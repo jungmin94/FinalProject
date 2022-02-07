@@ -10,49 +10,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	.pwd{
-        width: 250px;
-        height: 40px;
-        border-radius: 5px;
-        margin-top: 15px;
-        margin-right: 95px;
-        margin-left : 95px;
-        border: 1px solid gray;
-    }
-    .checkPwd{
-        width: 250px;
-        height: 40px;
-        border-radius: 5px;
-        margin-right: 95px;
-        margin-left : 95px;
-        border: 1px solid gray;
-    }
-    .insertFormDiv{
-        border: 1px solid gray;
-        width: 450px;
-        height: 750px;
-        text-align: center;
-        position: absolute;
-        top: 10%;
-        left: 40%;
-    }
-    h1{
-        color: rgb(0, 51, 85);
-    }
-    .updateBtn{
-        background-color: rgb(0, 51, 85);
-        border-radius: 5px;
-        color: white;
-        height: 50px;
-        width:  120px;
-        font-weight : bolder;
-    }
-    .final_pw_ck{
-   		display: none;
-	}
-	.final_pwck_ck{
-	    display: none;
-	}
+	
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
@@ -66,7 +24,7 @@
 	<div class="insertFormDiv">
        	<h1>비밀번호 변경</h1>
        	<form action="${ path }/member/findPwdUpdate" method="POST" id="joinForm">
-       		<input type="hidden" name="member_id" value="${ member.member_id }">
+       		<input type="hidden" name="member_id" value="${ user.member_id }">
        		<input type="password" id="member_pw" class="pwd" name="member_pw" placeholder="비밀번호 입력" required>
        		<span class="final_pw_ck">비밀번호를 입력해주세요.</span>
            	<input type="password" id="member_pw2" class="checkPwd" name="member_pw2" placeholder="비밀번호 확인">
