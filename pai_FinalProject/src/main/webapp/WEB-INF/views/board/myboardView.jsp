@@ -25,6 +25,9 @@
 		font-size:25px;
 		font-weight:bolder; 
 	}
+	.resultLabel{
+		font-size:20px;
+	}
 </style>
 
 <section>
@@ -128,8 +131,9 @@
 		    	<div style="margin-top:20px;">${pageBar2}</div>
 		    </div>
 		    
-		    <!-- 자신페이지에만 신고접수내역이 보임  -->
-	 
+		    
+		    
+		    <!-- 자신페이지에만 신고접수내역이 보임  --> 
 			    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
 			   		
 			   		<ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:20px"> 
@@ -148,8 +152,8 @@
 					   		 	신고접수내역이 없습니다.
 					   		 </c:if>
 					   		 <c:if test="${declareList.size()>0}"> 
-					   		  <c:forEach var="d" items="${declareList}">
-					   		  <div style="border-bottom:gray 2px solid;width:950px; height:65px; margin-bottom:10px;  ">
+					   		   <c:forEach var="d" items="${declareList}" varStatus="vs">
+					   		   <div style="border-bottom:gray 2px solid;width:950px; height:65px; margin-bottom:10px;  ">
 						   		 
 						   		 <div class="row" style="text-align:justify; " >
 								    <div class="col">
@@ -160,8 +164,36 @@
 								    </div>
 								    <div class="col-2">
 								       <c:if test="${d.declareResult!=null}"> 
-								      	 <button type="button" class="btn btn-outline-warning" style="height:10px;">처리완료</button>
+								       <input type="hidden" name="declareResult_" value="${d.declareResult}">
+								      	 <button type="button" class="btn btn-outline-warning" style="height:33px;" data-bs-toggle="modal" data-bs-target='#declareResult2${vs.index}' id="declareResultBtn"> 처리완료</button>
 								       </c:if>
+								       <!-- 신고처리완료 모달  --> 
+								       <div class="modal fade" id="declareResult2${vs.index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										  <div class="modal-dialog">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <h5 class="modal-title" id="staticBackdropLabel">신고처리결과</h5>
+										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										      </div> 
+											      <div class="modal-body ">
+									  				<div class="container-fluid">  
+									  					<div class="declare-list"> 
+															<label class="form-check-label resultLabel" for="inlineRadio2"> 
+																<p>신고접수건에대하여  
+																<span style="font-weight:bolder;">${d.declareResult}</span>처리되었습니다.</p><br>
+																<P>신고처리날짜 : ${d.declareResultDate }</P>
+															</label>
+											      		</div>
+											      		 
+											      	</div>
+												  </div>
+											      <div class="modal-footer">
+											        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button> 
+											      </div> 
+										    </div>
+										  </div>
+										</div>
+								        
 								       <c:if test="${d.declareResult==null}"> 
 								      	 <button type="button" class="btn btn-outline-secondary" style="height:33px;">처리중</button>
 								       </c:if>
@@ -172,19 +204,23 @@
 								 		${d.boardTitle}
 								 	</a>	
 								 </div> 
-							  </div>	
+							  </div> 
 					   		  </c:forEach> 
 					   		  <div>${pageBar3}</div>
 							  </c:if>
+							   
 						  </div>
 						  
+						  
+						  
+						  <!-- 댓글 신고접수내역  -->
 						  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">  
 					   		  <c:if test="${commentDeclareList.size()<=0}">
 					   		  <div style="text-align:center; width:950px;"></div>
 					   		 	신고접수내역이 없습니다.
 					   		 </c:if>
 					   		 <c:if test="${commentDeclareList.size()>0}"> 
-					   		  <c:forEach var="cd" items="${commentDeclareList}">
+					   		  <c:forEach var="cd" items="${commentDeclareList}" varStatus="vs">
 					   		  <div style="border-bottom:gray 2px solid;width:950px; height:65px; margin-bottom:10px;  ">
 						   		 
 						   		 <div class="row" style="text-align:justify; " >
@@ -196,13 +232,40 @@
 								    </div>
 								    <div class="col-2">
 								       <c:if test="${cd.declareResult!=null}"> 
-								      	 <button type="button" class="btn btn-outline-warning" style="height:10px;">처리완료</button>
+								      	 <button type="button" class="btn btn-outline-warning" style="height:35px; " data-bs-toggle="modal" data-bs-target='#declareResult3${vs.index}'>처리완료</button>
 								       </c:if>
 								       <c:if test="${cd.declareResult==null}"> 
 								      	 <button type="button" class="btn btn-outline-secondary" style="height:33px;">처리중</button>
 								       </c:if>
 								    </div>
 								  </div>
+								  
+								   <!-- 신고처리완료 모달  --> 
+								       <div class="modal fade" id="declareResult3${vs.index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										  <div class="modal-dialog">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <h5 class="modal-title" id="staticBackdropLabel">신고처리결과</h5>
+										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										      </div> 
+											      <div class="modal-body ">
+									  				<div class="container-fluid">  
+									  					<div class="declare-list"> 
+															<label class="form-check-label resultLabel" for="inlineRadio2"> 
+																<p>신고접수건에대하여  
+																<span style="font-weight:bolder;">${cd.declareResult}</span>처리되었습니다.</p><br>
+																<P>신고처리날짜 : ${cd.declareResultDate }</P>
+															</label>
+											      		</div>
+											      		 
+											      	</div>
+												  </div>
+											      <div class="modal-footer">
+											        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button> 
+											      </div> 
+										    </div>
+										  </div>
+										</div>
 								 <div style="background-color:cornflowerblue;  display: table; table-layout: fixed ; ">
 								 	<a style="text-decoration:none; color:white;" href="${path}/board/boardView.do?boardNo=${cd.boardNo}&memberId=null">
 								 		${cd.commentContent}
@@ -213,11 +276,7 @@
 					   		  <div>${pageBar3}</div>
 							  </c:if> 
 						  </div> 
-					</div>
-					
-					  
-					  
-					   
+					</div> 
 			    </div> 
 		  </div>
 		</div>
@@ -236,4 +295,16 @@
 	</div>
 </section>
 
+
+<script>
+//아이디 중복확인하기
+$(()=>{
+	$("#declareResultBtn").click(e=>{
+		const declareResult=$("input[name=declareResult_]").val().trim();
+		console.log(declareResult);
+	  
+	});
+});
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

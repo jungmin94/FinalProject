@@ -180,7 +180,7 @@ section>*{
 	   <!-- 댓글보기  --> 
 	   	<p style="font-size: 15px;font-weight: bolder;">전체댓글 : ${commentCount}개</p>
  	    <table class="container" id="tbl-comment" style="border-top:2px black solid;">
-	    	<c:forEach var="bc" items="${comments}"> 
+	    	<c:forEach var="bc" items="${comments}" varStatus="vs"> 
 	    	  <c:if test="${bc.commentLevel==1}">
 			    	<tr class="level1" style="border-bottom:1px gray solid;">
 			    		<td>
@@ -200,15 +200,15 @@ section>*{
 							<c:if test="${loginMember!=null}">  
 								<button class="btn-reply" value=<c:out value="${bc.commentNo}"/>>답글</button>
 								<c:if test="${loginMember.member_id eq 'admin' || loginMember.member_nick eq bc.commentWriter}">  
-									<button type="button" data-bs-toggle="modal" data-bs-target="#commentDelete" class="btn-delete">삭제</button>
+									<button type="button" data-bs-toggle="modal" data-bs-target="#commentDelete${vs.index}" class="btn-delete">삭제</button>
 								</c:if>
 								<c:if test="${loginMember!=null&&loginMember.member_nick ne bc.commentWriter}">  
-									<button type="button" data-bs-toggle="modal" data-bs-target="#declareComment" class="btn-delete" >신고</button>
+									<button type="button" data-bs-toggle="modal" data-bs-target="#declareComment${vs.index}" class="btn-delete" >신고</button>
 								</c:if>
 							</c:if>		
 							
 							<!-- 댓글 신고 모달 -->
-									<div class="modal fade" id="declareComment" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+									<div class="modal fade" id="declareComment${vs.index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 									  <div class="modal-dialog">
 									    <div class="modal-content">
 									      <div class="modal-header">
@@ -268,7 +268,7 @@ section>*{
 									  </div>
 									</div>
 							<!--댓글삭제 Modal -->
-							<div class="modal fade" id="commentDelete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							<div class="modal fade" id="commentDelete${vs.index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 							  <div class="modal-dialog">
 							    <div class="modal-content">
 							      <div class="modal-header">
@@ -306,12 +306,12 @@ section>*{
 						</td>
 						<td>
 							<c:if test="${loginMember.member_id eq 'admin' || loginMember.member_nick eq bc.commentWriter}">  
-									<button type="button" data-bs-toggle="modal" data-bs-target="#commentDelete2" class="btn-delete">삭제</button>
+									<button type="button" data-bs-toggle="modal" data-bs-target="#commentDelete2${vs.index}" class="btn-delete">삭제</button>
 							</c:if>
 						</td>
 					</tr>
 				      <!-- 답글 삭제 Modal -->
-							<div class="modal fade" id="commentDelete2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+							<div class="modal fade" id="commentDelete2${vs.index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 							  <div class="modal-dialog">
 							    <div class="modal-content">
 							      <div class="modal-header">
@@ -328,9 +328,9 @@ section>*{
 							    </div>
 							  </div>
 							</div>	
-	    	  </c:if>
-		    </c:forEach>		
-	    </table>
+	    	        </c:if>
+		         </c:forEach>		
+	          </table>
 	    
  
 	   <!-- 댓글 입력창 -->
