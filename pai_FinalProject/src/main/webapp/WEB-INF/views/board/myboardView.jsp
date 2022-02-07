@@ -120,7 +120,7 @@
 		    		<c:forEach var="c" items="${commentAll}">
 		    			<div class="row" style="border-bottom:lightGray 1px solid;width:950px; height:40px;"> 
 				    	<div class="col-9"style="margin-left:30px; margin-top:10px;">
-				    		<a style="text-decoration:none; color:black; " href="${path}/board/boardView.do?boardNo=${c.boardRef}&memberId=null"><c:out value="${c.commentContent}"/></a></div>
+				    		<a style="text-decoration:none; color:black; " href="${path}/board/boardView.do?boardNo=${c.boardRef}&memberId=${loginMember.member_id}"><c:out value="${c.commentContent}"/></a></div>
 				    	<div class="col"  >
 				    		<span style="font-weight:bolder;font-size:16px;"><c:out value="${c.commentWriter}"/></span>
 				    		<span style="font-size:12px;"><c:out value="${c.commentDate}"/></span>
@@ -200,7 +200,7 @@
 								    </div>
 								  </div>
 								 <div style="background-color:cornflowerblue;   display: table; table-layout: fixed ;  ">
-								 	<a style="text-decoration:none; color:white;" href="${path}/board/boardView.do?boardNo=${d.boardNo}&memberId=null">
+								 	<a style="text-decoration:none; color:white;" href="${path}/board/boardView.do?boardNo=${d.boardNo}&memberId=${loginMember.member_id}">
 								 		${d.boardTitle}
 								 	</a>	
 								 </div> 
@@ -267,7 +267,7 @@
 										  </div>
 										</div>
 								 <div style="background-color:cornflowerblue;  display: table; table-layout: fixed ; ">
-								 	<a style="text-decoration:none; color:white;" href="${path}/board/boardView.do?boardNo=${cd.boardNo}&memberId=null">
+								 	<a style="text-decoration:none; color:white;" href="${path}/board/boardView.do?boardNo=${cd.boardNo}&memberId=${loginMember.member_id}">
 								 		${cd.commentContent}
 								 	</a>	
 								 </div> 

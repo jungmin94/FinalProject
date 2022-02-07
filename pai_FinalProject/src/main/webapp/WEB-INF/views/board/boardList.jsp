@@ -142,7 +142,7 @@ section>*{
 						</c:if>
 					</td>
 					<td style="text-align:left; text-decoration:none;">
-							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${n.boardNo}&memberId=${n.boardWriter.member_id}">
+							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${n.boardNo}&memberId=${loginMember.member_id}">
 								<c:out value="${n.boardTitle}"/>
 								<span style="font-weight:bolder;">[<c:out value="${n.comment.size()}"/>]</span> 
 							</a>
@@ -169,7 +169,7 @@ section>*{
 						</c:if>
 					</td>
 					<td style="text-align:left; text-decoration:none;">
-							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=${b.boardWriter.member_id}">
+							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=${loginMember.member_id}">
 								<c:out value="${b.boardTitle}"/>
 								<span style="font-weight:bolder;">[<c:out value="${b.comment.size()}"/>]</span> 
 							</a>

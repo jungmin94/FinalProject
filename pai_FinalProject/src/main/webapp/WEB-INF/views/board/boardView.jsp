@@ -26,7 +26,7 @@ section>*{
 <section>
 	<div class="container" style="margin-top:50px;"> 
 	 <div class="row main" style="border-bottom:1px gray solid;">
-	    <div class="col-1">
+	    <div class="col-1" style="margin-right:10px;">
 	      <h1 style="color:blue; font-family:fantasy">${board.boardCategory}</h1>
 	    </div>
 	    <div class="col">
