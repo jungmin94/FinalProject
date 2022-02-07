@@ -162,4 +162,16 @@ public class MarketServiceImpl implements MarketService {
 		return dao.enrollGoods(session, good);
 	}
 	
+	@Override
+	public List<GoodsDetails> sizeInvenList(GoodsDetails gd) {
+	
+		return dao.sizeInvenList(session, gd);
+	}
+	
+	@Override
+	public int goodPrice(GoodsDetails gd) {
+		
+		return dao.goodPrice(session, gd);
+	}
+	
 }

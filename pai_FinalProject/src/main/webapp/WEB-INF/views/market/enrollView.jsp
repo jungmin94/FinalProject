@@ -223,11 +223,11 @@
 		<span id="cate_size_text">카테고리2(사이즈)</span>
         <select id="cate_size" class="form-control" name="size" required>
 			<option value="" disabled selected>사이즈</option>
-			<option value="XS">XS</option>
-			<option value="S">S</option>
-			<option value="M">M</option>
-			<option value="L">L</option>
-			<option value="XL">XL</option>
+			<option value="1.XS">1.XS</option>
+			<option value="2.S">2.S</option>
+			<option value="3.M">3.M</option>
+			<option value="4.L">4.L</option>
+			<option value="5.XL">5.XL</option>
 		</select>
 		<br>
 	  <span id="enr_invencount_text">재고수량</span>

@@ -52,7 +52,7 @@
 	}
 </style>
 <section>
-	<div class="container" style="margin-top:30px;"> 
+	<%-- <div class="container" style="margin-top:30px;"> 
 		<!-- 종합인기글, 인기정보글 -->
 		<div class="row">
 			<div class="col title">
@@ -166,15 +166,15 @@
 			</div>
 	
 	
-	</div>
+	</div> --%>
 </section>
 
 <script>
-	$("#category").change(e=>{
+/* 	$("#category").change(e=>{
 		searchMainBoard.action="${path}/searchMainBoard.do";
 		searchMainBoard.category.value=$("#category").val();
 		searchMainBoard.submit();
-	})
+	}) */
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -51,34 +51,36 @@
 <jsp:include page="/WEB-INF/views/market/searchBar.jsp"/>
 	<br>
 </div>
+<input type="hidden" id="gName" value="${good.goodsName}">
+<input type="hidden" id="price" >
 <div class="container">
     <div class="row">
       <div class="col">
-    
-        	<img src="https://s-i.huffpost.com/gen/3948866/thumbs/o-PEPE-THE-FROG-570.jpg?3" class="img-thumbnail" alt="..." style="width: 500px; height: 500px;">
-  
+          	<c:if test="${good.image ne null}">
+        		<img src="${path}/resources/upload/market/${good.image}" class="img-thumbnail" alt="..." style="width: 500px; height: 500px;">
+  			</c:if>
+    		<c:if test="${good.image eq null}">
+        		<img src="https://hanamsport.or.kr/www/images/contents/thum_detail.jpg" class="img-thumbnail" alt="..." style="width: 500px; height: 500px;">
+  			</c:if>
       </div>
       <div class="col">
-       <form action="" method="post">
+       <form action="${path}/market/purchaseGood.do" method="post">
         카테고리 1 (색상)
-        <select class="form-select" aria-label="Default select example">
-            <option selected>색상을 선택하세요</option>
+        <select class="form-select" id="select_color" aria-label="Default select example">
+            <option disabled selected>색상을 선택하세요</option>
             <c:forEach items="${colorList}" var="c">
             	   <option value="${c.color}">${c.color}</option>
             </c:forEach>
           </select>
           <br>
           카테고리 2 (사이즈)
-          <select class="form-select" aria-label="Default select example">
-            <option selected>사이즈를 선택해주세요</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <select class="form-select"  id="select_size" aria-label="Default select example">
+            <option disabled selected>사이즈를 선택해주세요</option>
           </select>
           <br>
           카테고리 3 (MBTI로고) <span style="color:red;">@주문제작@</span>
           <select class="form-select" aria-label="Default select example">
-            <option selected>MBTI로고를 선택해주세요</option>
+            <option disabled selected>MBTI로고를 선택해주세요</option>
             <option value="ISTJ">ISTJ</option>
             <option value="ISFJ">ISFJ</option>
             <option value="INFJ">INFJ</option>
@@ -98,11 +100,13 @@
           </select>
           <br>
           수량
-          <input type="number" class="form-control" start=1 id="inputGoodsName" name="buyCount">
+          <input type="number" class="form-control"  id="inputBuyCount" name="buyCount">
           <br>
-          가격
-          <input type="hidden" class="form-control" start=1 id="inputTotlaPrice" name="totalPrice">
-			<p><fmt:formatNumber  value="10000"  type="currency"/>원</p>
+         
+          <!-- <input type="hidden" class="form-control" start=1 id="inputTotlaPrice" name="totalPrice"> -->
+			<%-- <p><fmt:formatNumber var="totalPrice" value=""  type="currency"/>원</p> --%>
+			<input type="number"  id="inputTotalPrice" name="totalPrice" readonly>원
+		  <br>
           <br>
           <button type="submit" class="btn btn-outline-primary">구매하기</button>
           <button type="button" class="btn btn-outline-info">장바구니</button>
@@ -137,13 +141,24 @@
 	<img src="${path}/resources/images/market/MBTI1.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
 	<img src="${path}/resources/images/market/MBTI2.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
 	<!-- 반복문 통해 제품 사진 올리는 부분 -->
-    <img src="https://hanamsport.or.kr/www/images/contents/thum_detail.jpg" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
-    <img src="https://hanamsport.or.kr/www/images/contents/thum_detail.jpg" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
-    <img src="https://hanamsport.or.kr/www/images/contents/thum_detail.jpg" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<c:if test="${imageList eq null || imageList.size() eq 0}">
+    	<img src="https://hanamsport.or.kr/www/images/contents/thum_detail.jpg" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+    </c:if>
+    <c:if test="${imageList ne null && imageList.size() ne 0}">
+    	<img src="${path}/resources/upload/market/${imageList.filePath}" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+    </c:if>
 	<!-- 제품 사진 끝부분 (최대 3장 올릴 것) -->
-	<img src="${path}/resources/images/market/상품정보1.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/인쇄예시.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<br>
+	<br>
+	<div style="text-align:center; color:purple;">(반발 사이즈)<br><span style="color:red;">(남/여)</span></div>
+	<br>
 	<img src="${path}/resources/images/market/사이즈1.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
 	<img src="${path}/resources/images/market/사이즈2.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<br>
+	<br>
+	<div style="text-align:center; color:purple;">(긴팔 사이즈)</div>
+	<br>
 	<img src="${path}/resources/images/market/세탁방법.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
   </div>
 
@@ -160,7 +175,57 @@
 
 <br>
 
-
-
 </section>
+
+<script>
+
+$(document).ready(function () {
+    $('#select_color').change(function () {
+    	$.ajax({
+    		url:"${path}/market/sizeInvenList.do",
+    		data:{color:$("#select_color").val(),goodsName:$("#gName").val()}, 
+    		success:data=>{
+    		$('#select_size').empty();
+    			   				
+				for(let i=0; i<data.length; i++){
+					let option;
+					if(data[i].invenCount==0){
+						option = $("<option disabled value='"+data[i].size+"'>"+data[i].size+" 품절</option>");
+					}else if(0<data[i].invenCount && data[i].invenCount<5){
+						option = $("<option value='"+data[i].size+"'>"+data[i].size+" -"+data[i].invenCount+"개남음-품절임박-</option>");
+					}else{
+						option = $("<option value='"+data[i].size+"'>"+data[i].size+" -"+data[i].invenCount+"개남음-</option>");
+					}
+					$('#select_size').append(option);
+    			}  
+    		}	
+    	});	
+    });
+});
+
+$(document).ready(function () {
+    $('#select_size').change(function () {
+    	$.ajax({
+    		url:"${path}/market/goodPrice.do",
+    		data:{color:$("#select_color").val(),goodsName:$("#gName").val(),size:$("#select_size").val()}, 
+    		success:data=>{
+    				$('#price').val(data);
+    				$('#inputTotalPrice').val(data);
+    			}  
+    		})	
+    	});	
+    });
+    
+$(document).ready(function () {
+    $('#inputBuyCount').change(function () {
+			let count = parseInt($('#inputBuyCount').val());
+			let price = parseInt($('#price').val());		
+			let total = count*price;
+			$('#inputTotalPrice').val(total);
+    	});	
+    });
+
+
+</script>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

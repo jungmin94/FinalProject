@@ -100,7 +100,7 @@ public class MarketController {
 		
 		// 해당 제품 제품 상세 사진 가져오기
 		List<GoodsDetailImage> imageList = service.selectImageList(goodsName);
-		
+		System.out.println(imageList);
 		// 해당 제품 컬러 모두 가져오기
 		List<GoodsDetails> colorList = service.selectColorList(goodsName); 
 		
@@ -108,13 +108,30 @@ public class MarketController {
 		mv.addObject("imageList",imageList);
 		mv.addObject("colorList",colorList);
 		System.out.println(colorList);
-		
+		System.out.println(good);
 		mv.setViewName("market/goodsDetailView");
 		
 		return mv;
 		
 	}
 	
+	/* 상품상세페이지에서 색상 선택시 사이즈 및 재고 가져오기 */
+	@RequestMapping("/sizeInvenList.do")
+	@ResponseBody
+	public List<GoodsDetails> sizeInvenList(GoodsDetails gd){
+		
+		List<GoodsDetails> gdList = service.sizeInvenList(gd);
+		
+		return gdList;
+	}
+	
+	@RequestMapping("/goodPrice.do")
+	@ResponseBody
+	public int goodPrice(GoodsDetails gd) {
+		int price = service.goodPrice(gd);
+		
+		return price;
+	}
 	/*==============================================================================================
 	 																			관리자 로직
 	===============================================================================================*/
