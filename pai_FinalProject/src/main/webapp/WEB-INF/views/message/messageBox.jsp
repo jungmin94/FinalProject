@@ -83,13 +83,14 @@
 		</div>
 	
 	<!-- 받은편지 삭제 -->
-	<form action="${path}/message/deleteRecvMsg.do" method="post" id="delete_recvMsg_frm">
+<%-- 	<form action="${path}/message/deleteRecvMsg.do" method="post" id="delete_recvMsg_frm">
 		<div id="exampleModal" class="modal" tabindex="-1">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h5 class="modal-title">정말 삭제하시겠습니까?</h5>
 		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      	<input type="text" id="selectRecvMsg" name="msgNo[]">
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-primary">예</button>
@@ -98,7 +99,7 @@
 		    </div>
 		  </div>
 		</div>
-	</form>
+	</form> --%>
 </body>
 
 <script>
@@ -175,7 +176,7 @@ function recvMsgBox(cPage){
 				for(let i=0; i<recvMsgList.length; i++){
 					let tr2 = $("<tr>").css("text-align","center");
 					let td1 = $("<td>");
-					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"recvMsgCheck", value:recvMsgList[i]["MSGNO"]});
+					let check = $("<input>").attr({class:"form-check-input recvMsgCheck", type:"checkbox", name:"recvMsgCheck", value:recvMsgList[i]["MSGNO"]});
 					//let msgNo = $("<td>").html(((cPage-1)*10)+i+1);
 					let no = $("<td>").html(num++);
 					if(cPage>=2){
@@ -195,16 +196,48 @@ function recvMsgBox(cPage){
 					tr2.append(td1).append(no).append(msgTitle).append(sendNick).append(msgSendTime);
 					td1.append(check);
 				}
-				let del = $("<button>").attr({type:"button", id:"delRecvMsg", class:"btn btn-primary", 'data-bs-toggle':"modal", 'data-bs-target':"#exampleModal"}).html("삭제");
+				let del = $("<button>").attr({type:"button", id:"delRecvMsg", class:"btn btn-primary"}).html("삭제");
 				table.append(del);
 			}
 			const div=$("<div style='text-align:center;'>").attr("id","pageBar3").html(data["pageBar"]);
 			$("#pageNavContainer").append(div);
 			$("#body-container").html(table);
 			
-			$("#delRecvMsg").click(){
-				
-			}
+/* 			$("#delRecvMsg").click(function(){
+				if($("input:checkbox[name='recvMsgCheck']:checked").length === 0){
+					alert("삭제할 항목을 선택해 주세요.");
+					return;
+				}
+				var selectCheck = $("input:checkbox[name='recvMsgCheck']:checked").each(function(m,msgNo){
+					console.log(msgNo.value);
+					$("#selectRecvMsg").val(msgNo.value);
+				});
+			}); */
+			
+			 $("#delRecvMsg").click(function(){
+				if($("input:checkbox[name='recvMsgCheck']:checked").length === 0){
+					alert("삭제할 항목을 선택해 주세요.");
+					return;
+				}
+				  var confirm_val = confirm("정말 삭제하시겠습니까?");
+				  
+				  if(confirm_val) {
+				   var checkArr = new Array();
+				   
+				   $("input[class='recvMsgCheck']:checked").each(function(){
+				    checkArr.push($(this).attr("data-msgNo"));
+				   });
+				    
+				   $.ajax({
+				    url : "/message/deleteRecvMsg.do",
+				    type : "post",
+				    data : { msgNo : checkArr },
+				    success : data => {
+				     console.log(msgNo)
+				    }
+				   });
+				  } 
+				 });
 			//삭제,목록버튼 생성해야함
 		}
 	});

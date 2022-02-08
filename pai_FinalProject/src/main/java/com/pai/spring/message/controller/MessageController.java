@@ -60,12 +60,13 @@ public class MessageController {
 	}
 	
 	//받은쪽지 삭제
-//	@RequestMapping(value="/deleteRecvMsg.do")
-//	public ModelAndView deleteRecvMsg(String msgNo) {
-//		//개별 삭제, 다중 삭제 모두 데이터 메세지번호 가져와야함
-//		//delete처리가 아닌 받은편지 삭제처리 유무를 Y값으로 변경 -> 사실상 업데이트 -> db에서 실제 삭제가 아님
-//		
-//	}
+	@RequestMapping(value="/deleteRecvMsg.do")
+	public ModelAndView deleteRecvMsg(ModelAndView mv, List msgNo) {
+		System.out.println(msgNo);
+		//개별 삭제, 다중 삭제 모두 데이터 메세지번호 가져와야함
+		//delete처리가 아닌 받은편지 삭제처리 유무를 Y값으로 변경 -> 사실상 업데이트 -> db에서 실제 삭제가 아님
+		return mv;
+	}
 	
 //	@RequestMapping(value="/messageBox.do", produces="text/plain;charset=UTF-8")
 //	public ModelAndView messageBox(ModelAndView mv, String memberId, @RequestParam(value="cPage",defaultValue="1") int cPage,
