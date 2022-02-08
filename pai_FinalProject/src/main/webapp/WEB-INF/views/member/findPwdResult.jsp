@@ -30,6 +30,9 @@
 	</script>
 	
 	<div class="insertFormDiv">
+		<div class="headDiv">
+        	<img src="${ path }/resources/images/logo_white.jpg" class="homeimg">
+    	</div>
        	<h1>비밀번호 변경</h1>
        	<form action="${ path }/member/findPwdUpdate" method="POST" id="joinForm">
        		<input type="hidden" name="member_id" value="${ user.member_id }">

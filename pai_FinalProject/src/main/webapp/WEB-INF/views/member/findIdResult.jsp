@@ -22,7 +22,7 @@
 	</script>
 	
 	<div class="headDiv">
-        <a href="${ path }/home"><img src="${ path }/resources/images/relief.jpg" class="homeimg"></a>
+        <a href="${ path }/home"><img src="${ path }/resources/images/logo_white.jpg" class="homeimg"></a>
     </div>
     <div class="headDiv2">
         <h1>아이디 찾기</h1>

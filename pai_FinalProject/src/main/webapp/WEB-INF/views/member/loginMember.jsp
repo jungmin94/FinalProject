@@ -74,11 +74,10 @@
  		justify-content: left;
 	}
 </style>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <body>
 	<form class="wrap" action="${path }/member/loginMemberEnd.do" method="post">
         <div class="login">
-            <h2>LOGIN</h2><br>
+            <img src="" style="width:200px; height:200px;">
             
             <div style="width: 80%;">
 	            <div class="form-floating mb-3" style="width: 100%">
@@ -97,7 +96,7 @@
 			  <div class="login_etc" style="margin-top: 15px;">
                 <div class="checkbox">
                 	<%-- <input type="checkbox" name="saveId" id="saveId" <%=saveId!=null?"checked":""%>> --%>
-                	<label for="saveId">아이디저장</label>
+                	<!-- <label for="saveId">아이디저장</label> -->
                 </div>
             </div>
             <div class="submit btn-outline-secondary">

@@ -27,51 +27,41 @@
 				</div>
 				<div id="memberContent-container">
 					<label for="exampleDataList" class="form-label">자기소개</label>
-					<textarea class="form-control" name="member_content" placeholder="자기소개를"><c:out value="${member.member_content }"/></textarea>
+					<textarea class="form-control" name="member_content"><c:out value="${loginMember.member_content }"/></textarea>
 				</div>
 				<div id="memberId-container">
 					<label for="exampleDataList" class="form-label">아이디</label>
-					<input type="text" class="form-control" placeholder="아이디 (4글자이상)" name="member_id" id="member_id" required oninput="checkId()"/>
+					<input type="text" class="form-control" value="${loginMember.member_userId }" name="member_id" id="member_id" readonly/>
 				</div>
 				<div id="memberNick-container">
 					<label for="exampleDataList" class="form-label">닉네임</label>
-					<input type="text" class="form-control" placeholder="닉네임을 입력해주세요" name="member_nick" id="member_nick" required oninput="checkNick()">
+					<input type="text" class="form-control" value="${loginMember.member_nick }" name="member_nick" id="member_nick" readonly>
 				</div>
 				<div id="memberName-container">
 					<label for="exampleDataList" class="form-label">이름</label>
-					<input type="text" class="form-control" placeholder="이름을 입력해주세요" name="member_name" id="member_name" required>
+					<input type="text" class="form-control" name="member_name" id="member_name" value="${loginMember.member_date }" readonly>
 				</div>	
 				<div id="memberDate-container">
 					<label for="exampleDataList" class="form-label">생년월일</label>
-					<input type="date" class="form-control" placeholder="" name="member_date" id="member_date">
+					<input type="date" class="form-control" name="member_date" value="${loginMember.member_date }" id="member_date" readonly>
 				</div>			
 				<div id="memberEmail-container">
 					<label for="exampleDataList" class="form-label">이메일</label>
-					<input type="text" class="form-control" name="email_1" id="email_1" value="" maxlength="30"/>
+					<input type="text" class="form-control" name="member_email" id="member_email" value="${loginMember.member_email }" maxlength="30" readonly/>
 				</div>				
 				<div id="memberPhone-container">
 					<label for="exampleDataList" class="form-label">전화번호</label>
-					<input type="tel" class="form-control" placeholder="전화번호 (예:01012345678)" name="member_phone" id="member_phone" maxlength="11" required>
+					<input type="tel" class="form-control" value="${loginMember.member_phone }" name="member_phone" id="member_phone" maxlength="11" readonly>
 				</div>
 				<div id="memberAddr-container">
 					<label for="exampleDataList" class="form-label">주소</label>
 					<div class="form-group">                   
-						<input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호" name="member_addr1" id="member_addr1" type="text" disabled="disabled" >
-					</div>
-					<div class="form-group">
-					    <input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="member_addr2" id="member_addr2" type="text" disabled="disabled" />
-					</div>
-					<div class="form-group">
-					    <input class="form-control" placeholder="상세주소" name="member_addr3" id="member_addr3" type="text"  />
+						<input class="form-control" style="width: 40%; display: inline;" value="${loginMember.member_addr }" name="member_addr" id="member_addr" type="text" readonly>
 					</div>
 				</div>
 				<div id="memberGender-container">
 					<label for="exampleDataList" class="form-label">성별</label>
-					<div class="form-check">
-					  <label class="form-check-label" for="flexRadioDefault1">
-					    남자
-					  </label>
-					</div>
+					<input type="text" class="form-control" value="${loginMember.member_gender }" name="member_gender" id="member_gender" maxlength="30" readonly/>
 				</div>				
 				<input type="submit" class="btn btn-outline-success" id="join" value="회원정보수정" >&nbsp;
 				<input type="reset" class="btn btn-outline-success" value="비밀번호 변경">

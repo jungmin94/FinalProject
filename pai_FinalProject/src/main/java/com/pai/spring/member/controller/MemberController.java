@@ -67,14 +67,30 @@ public class MemberController {
 				model.addAttribute("msg","회원님은 현재 이메일 미인증 상태입니다. 이메일 인증을 진행해 주세요 :->");
 				model.addAttribute("loc","/member/loginMember.do");
 				return "common/msg";
-			}else if(loginMember.getStatus().equals("Y")&&loginMember.getMember_mbti().equals("미입력")){
-				model.addAttribute("msg","이메일 인증이 확인되셨습니다. 커뮤니티를 본격적으로 즐기기 위해 mbti 입력 페이지로 이동됩니다.");
-				model.addAttribute("loc","/member/mbti.do");
-				return "common/msg";
+			}else if(loginMember.getStatus().equals("Y")){
+				if(loginMember.getMember_mbti().equals("미입력")) {
+					model.addAttribute("msg","이메일 인증이 확인되셨습니다. 커뮤니티를 본격적으로 즐기기 위해 mbti 입력 페이지로 이동됩니다.");
+					model.addAttribute("loc","/member/mbti.do");
+					return "common/msg";
+				}else if(loginMember.getMember_mbti().equals("INTJ")||loginMember.getMember_mbti().equals("INTP")||loginMember.getMember_mbti().equals("INFJ")
+						||loginMember.getMember_mbti().equals("INFP")||loginMember.getMember_mbti().equals("ISTJ")||loginMember.getMember_mbti().equals("ISTP")
+						||loginMember.getMember_mbti().equals("ISFJ")||loginMember.getMember_mbti().equals("ISFP")||loginMember.getMember_mbti().equals("ENTJ")
+						||loginMember.getMember_mbti().equals("ENTP")||loginMember.getMember_mbti().equals("ENFJ")||loginMember.getMember_mbti().equals("ENFP")
+						||loginMember.getMember_mbti().equals("ESTJ")||loginMember.getMember_mbti().equals("ESTP")||loginMember.getMember_mbti().equals("ESFJ")
+						||loginMember.getMember_mbti().equals("ESFP")){
+					model.addAttribute("loginMember",loginMember);
+					model.addAttribute("msg",loginMember.getMember_mbti()+"성격인 "+loginMember.getMember_nick()+"님! PAI에 접속을 환영합니다.");
+					model.addAttribute("loc","/");
+					return "common/msg";
+				}else {
+					model.addAttribute("msg","로그인에 실패하였습니다.");
+					model.addAttribute("loc","/member/loginMember.do");
+					return "common/msg";
+				}
 			}else {
-				logger.debug("{}",loginMember);
-				model.addAttribute("loginMember",loginMember);
-				return "redirect:/";
+				model.addAttribute("msg","로그인에 실패하였습니다.");
+				model.addAttribute("loc","/member/loginMember.do");
+				return "common/msg";
 			}
 		}else {
 			model.addAttribute("msg","로그인에 실패하였습니다.");
