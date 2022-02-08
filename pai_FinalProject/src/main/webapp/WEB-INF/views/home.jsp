@@ -66,6 +66,7 @@
 		</div>
 		
 		 <div class="row">
+		 <!-- 종합인기글 -->
 		    <div class="col">
 		      <div class="contents">
 		      <table style="width:590px;"> 
@@ -92,6 +93,7 @@
 				</table>
 		      </div>
 		    </div>
+		    <!-- 정보인기글 -->
 		    <div class="col">
 		      <div class="contents">
 		      	<table style="width:590px;"> 
@@ -100,7 +102,7 @@
 							<td style="font-size:20px;   font-weight:bolder;font-family: Georgia">[<c:out value="${i.boardCategory}"/>]</td>
 							<td style="font-size:20px;"> 
 							<c:if test="${loginMember==null }">
-								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${t.boardNo}&memberId=null">
+								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${i.boardNo}&memberId=null">
 									<c:out value="${i.boardTitle}"/>
 									<span style="font-weight:bolder;">
 										[<c:out value="${i.commentCount}"/>]
