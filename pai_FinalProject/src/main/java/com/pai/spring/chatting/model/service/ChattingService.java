@@ -14,7 +14,9 @@ public interface ChattingService {
 	
 	int insertChatRoom(ChatMessage cMsg);
 	
-	List<String> attendenceList(String chatroomUser);
+	List<String> attendenceList(String chatroomName);
+	
+	List<String> attendenceChatroom();
 	
 	int deleteChatRoom(ChatMessage cMsg);
 

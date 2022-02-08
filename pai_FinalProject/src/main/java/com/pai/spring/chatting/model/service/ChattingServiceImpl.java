@@ -39,10 +39,15 @@ public class ChattingServiceImpl implements ChattingService {
 	}
 
 	@Override
-	public List<String> attendenceList(String chatroomUser) {
+	public List<String> attendenceList(String chatroomName) {
 		// TODO Auto-generated method stub
-		List<String> result = chattingDao.attendenceList(chatroomUser, session);
+		List<String> result = chattingDao.attendenceList(chatroomName, session);
 		return result;
+	}
+	
+	@Override
+	public List<String> attendenceChatroom() {
+		return chattingDao.attendenceChatroom(session);
 	}
 	
 	@Override
