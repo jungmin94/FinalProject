@@ -15,6 +15,7 @@
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+	
 	<div id="header-container">		
 		<ul class="nav">
 			<li class="nav-item"><a class="nav-link active" aria-current="page" href="#" onclick="recvMsgBox();">받은쪽지함</a></li>
@@ -37,8 +38,7 @@
 		</form>
 	</div>
 	
-	<!-- 받은편지함 -->
-	<div id="recvMsg">
+	<div id="body-container">
 		<%-- <table class="table table-hover">
 			<thead>
 				<tr style='text-align:center'>
@@ -73,18 +73,33 @@
 
 			</tbody>
 		</table> --%>
-		 <div id="pageBar">
-	        	<%-- ${pageBar } --%>
-	     </div>
 		</div>
 		
-		<!-- 보낸편지함 -->
-		<div id="sendMsg">
-		</div>
-     		<div id="pageNavContainer" style="display: flex; justify-content: center; margin-top: 15px; "></div>
+     		<div id="pageNavContainer" style="display: flex; justify-content: center; margin-top: 15px; ">
+     		</div>
+			<div id="deleteMsg">
+			</div>
 		<div id="recvMsgDetail">
 		</div>
-
+	
+	<!-- 받은편지 삭제 -->
+<%-- 	<form action="${path}/message/deleteRecvMsg.do" method="post" id="delete_recvMsg_frm">
+		<div id="exampleModal" class="modal" tabindex="-1">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">정말 삭제하시겠습니까?</h5>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      	<input type="text" id="selectRecvMsg" name="msgNo[]">
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary">예</button>
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</form> --%>
 </body>
 
 <script>
@@ -116,10 +131,11 @@ function selectAllRecvMsg(e)  {
 
 //받은편지함 전체조회
 function recvMsgBox(cPage){
-	$("#sendMsg").hide();
-	$("#recvMsgDetail").hide();
+	//$("#sendMsg").hide();
+	//$("#recvMsgDetail").hide();
 	//$("#pageNavContainer").hide();
-	$("#recvMsg").show();
+	//$("#recvMsg").show();
+	var num=1;
 
 	$.ajax({
 		url:"${path}/message/recvBox.do",
@@ -128,6 +144,7 @@ function recvMsgBox(cPage){
 		dataType: "json",
 		success: data => {
 			$("#pageNavContainer").html("");
+			$("#body-container").html("");
 			const recvMsgList = data["list"];
 			
 			const table=$('<table>').attr("class","table table-hover");
@@ -159,22 +176,68 @@ function recvMsgBox(cPage){
 				for(let i=0; i<recvMsgList.length; i++){
 					let tr2 = $("<tr>").css("text-align","center");
 					let td1 = $("<td>");
-					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"recvMsgCheck", value:recvMsgList[i]["MSGNO"]});
-					let msgNo = $("<td>").html(((cPage-1)*10)+i+1);
-					let msgTitle = $("<td>").html(recvMsgList[i]["MSGTITLE"]);
+					let check = $("<input>").attr({class:"form-check-input recvMsgCheck", type:"checkbox", name:"recvMsgCheck", value:recvMsgList[i]["MSGNO"]});
+					//let msgNo = $("<td>").html(((cPage-1)*10)+i+1);
+					let no = $("<td>").html(num++);
+					if(cPage>=2){
+						no = $("<td>").html(((cPage-1)*10)+i+1);
+					}
+			/* 		let a = $("<a>").on("click", function(){
+						recvMsgView(this);
+					}); */
+					let msgTitle = $("<td onClick='recvMsgView(this);'>").html(recvMsgList[i]["MSGTITLE"]);
+					let msgNo = $("<input>").attr({type:"hidden", value:recvMsgList[i]["MSGNO"]});
+					msgTitle.append(msgNo);
+					
 					let sendNick = $("<td>").html(recvMsgList[i]["SENDNICK"]);
 					let msgSendTime = $("<td>").html(recvMsgList[i]["MSGSENDTIME"]);
-					console.log(typeof msgSendTime);
 					tbody.append(tr2);
 					table.append(tbody);
-					tr2.append(td1).append(msgNo).append(msgTitle).append(sendNick).append(msgSendTime);
+					tr2.append(td1).append(no).append(msgTitle).append(sendNick).append(msgSendTime);
 					td1.append(check);
 				}
+				let del = $("<button>").attr({type:"button", id:"delRecvMsg", class:"btn btn-primary"}).html("삭제");
+				table.append(del);
 			}
-			
 			const div=$("<div style='text-align:center;'>").attr("id","pageBar3").html(data["pageBar"]);
 			$("#pageNavContainer").append(div);
-			$("#recvMsg").html(table);
+			$("#body-container").html(table);
+			
+/* 			$("#delRecvMsg").click(function(){
+				if($("input:checkbox[name='recvMsgCheck']:checked").length === 0){
+					alert("삭제할 항목을 선택해 주세요.");
+					return;
+				}
+				var selectCheck = $("input:checkbox[name='recvMsgCheck']:checked").each(function(m,msgNo){
+					console.log(msgNo.value);
+					$("#selectRecvMsg").val(msgNo.value);
+				});
+			}); */
+			
+			 $("#delRecvMsg").click(function(){
+				if($("input:checkbox[name='recvMsgCheck']:checked").length === 0){
+					alert("삭제할 항목을 선택해 주세요.");
+					return;
+				}
+				  var confirm_val = confirm("정말 삭제하시겠습니까?");
+				  
+				  if(confirm_val) {
+				   var checkArr = new Array();
+				   
+				   $("input[class='recvMsgCheck']:checked").each(function(){
+				    checkArr.push($(this).attr("data-msgNo"));
+				   });
+				    
+				   $.ajax({
+				    url : "/message/deleteRecvMsg.do",
+				    type : "post",
+				    data : { msgNo : checkArr },
+				    success : data => {
+				     console.log(msgNo)
+				    }
+				   });
+				  } 
+				 });
 			//삭제,목록버튼 생성해야함
 		}
 	});
@@ -183,17 +246,21 @@ function recvMsgBox(cPage){
 	
 };
 
+//보낸편지함
 function sendMsgBox(cPage){
-	$("#recvMsg").hide();
-	$("#recvMsgDetail").hide();
-	$("#pageNavContainer").show();
-	$("#sendMsg").show();
+	//$("#recvMsg").hide();
+	//$("#recvMsgDetail").hide();
+	//$("#pageNavContainer").show();
+	//$("#sendMsg").show();
+	var num=1;
+	
 	$.ajax({
 		url:"${path}/message/sendMsg.do",
 		type: "post",
 		data: {"sendId":"${param.memberId}", cPage:cPage},
 		dataType: "json",
 		success: data => {
+			$("#body-container").html("");
 			$("#pageNavContainer").html("");
 			const sendMsgList = data["list"];
 			
@@ -229,14 +296,19 @@ function sendMsgBox(cPage){
 					let td1 = $("<td>");
 					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"sendMsgCheck", value:sendMsgList[i]["MSGNO"]});
 					//let msgNo = $("<td>").html(sendMsgList[i]["MSGNO"]);
-					let msgNo = $("<td>").html(((cPage-1)*10)+i+1);
-					let msgTitle = $("<td>").html(sendMsgList[i]["MSGTITLE"]);
+					let no = $("<td>").html(num++);
+					if(cPage>=2){
+						no = $("<td>").html(((cPage-1)*10)+i+1);
+					}					
+					let msgTitle = $("<td onClick='recvMsgView(this);'>").html(sendMsgList[i]["MSGTITLE"]);
+					let msgNo = $("<input>").attr({type:"hidden", value:sendMsgList[i]["MSGNO"]});
+					msgTitle.append(msgNo);
+					
 					let recvId = $("<td>").html(sendMsgList[i]["RECVNICK"]);
 					let msgSendTime = $("<td>").html(sendMsgList[i]["MSGSENDTIME"]);
-					console.log(typeof msgSendTime);
 					tbody.append(tr2);
 					table.append(tbody);
-					tr2.append(td1).append(msgNo).append(msgTitle).append(recvId).append(msgSendTime);
+					tr2.append(td1).append(no).append(msgTitle).append(recvId).append(msgSendTime);
 					td1.append(check);
 				}
 			}
@@ -244,7 +316,7 @@ function sendMsgBox(cPage){
 			const pageBar=$("<div style='text-align:center;'>").attr("id","pageBar2").html(data["pageBar"]);
 			$("#pageNavContainer").append(pageBar);
 			//$("#pageNavContainer").show();
-			$("#sendMsg").html(table);
+			$("#body-container").html(table);
 			//삭제,목록버튼 생성해야함
 		}
 	});
@@ -286,9 +358,9 @@ $("#endDate").change(e=>{
 });
 
 
-
+//보낸편지 상세보기
 function recvMsgView(e){
-	$("#recvMsg").hide();
+	//$("#recvMsg").hide();
 	//let val = $(e).children();
 	//let msgNo = val.eq(1).text();
 	let msgNo = $(e).children().val();
@@ -298,6 +370,9 @@ function recvMsgView(e){
 		data: {"msgNo":msgNo},
 		dataType: "json",
 		success: data => {
+			$("#body-container").html("");
+			$("#pageNavContainer").html("");
+			
 			const table=$('<table>').attr("class","table");
 			let thead=$("<thead>");
 			let tbody=$('<tbody>');
@@ -314,7 +389,7 @@ function recvMsgView(e){
 			let tr3=$("<tr>");
 			let th4=$("<th>").html("받는사람").attr("scope","col");
 			let recvNick = $("<td>").html(data["RECVNICK"]);
-			let th5=$("<th>").html("받은날짜").attr("scope","col");
+			let th5=$("<th>").html("받은시간").attr("scope","col");
 			let msgReadCheck = $("<td>").html("읽지않음");
 			let msgReadTime = $("<td>").html(data["MSGREADTIME"]);
 			
@@ -339,7 +414,7 @@ function recvMsgView(e){
 			
 			table.append(thead);
 			table.append(tbody);
-			$("#recvMsgDetail").html(table);
+			$("#body-container").html(table);
 			//답장,삭제,목록버튼 생성해야함
 		}
 	});

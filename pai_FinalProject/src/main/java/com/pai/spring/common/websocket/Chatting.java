@@ -52,7 +52,7 @@ public class Chatting extends TextWebSocketHandler{
 //		ChatMessage cMsg = objectMapper.readValue(message.getPayload(), ChatMessage.class);
 		
 		Map<String, String> mapReceive = objectMapper.readValue(message.getPayload(), Map.class);
-
+		
 	
 		switch (mapReceive.get("chatType")) {
 		
@@ -88,10 +88,31 @@ public class Chatting extends TextWebSocketHandler{
 			}
 			break;
 			
+		case "enter-all":
+			// 세션 리스트에 저장
+			ChatMessage cMsg2 = ChatMessage.builder().senderId(mapReceive.get("senderId")).chatMessage(mapReceive.get("chatMessage")).build();
+			int result2 = chattingService.insertMessage(cMsg2);
+			Map<String, Object> map2 = new HashMap<String, Object>();
+			map2.put("chatRoomName", mapReceive.get("chatRoomName"));
+			map2.put("session", session);
+			map2.put("senderId", mapReceive.get("senderId"));
+			sessionList.add(map2);
+						
+			// 모든 채팅방에 입장 메세지 전송
+			for (int i = 0; i < sessionList.size(); i++) {
+				Map<String, Object> mapSessionList = sessionList.get(i);
+				String chatRoomName = (String) mapSessionList.get("chatRoomName");
+				String senderId = (String) mapSessionList.get("senderId");
+				WebSocketSession sess = (WebSocketSession) mapSessionList.get("session");
+				sess.sendMessage(message);
+						
+			}
+			break;
+			
 		// CLIENT 메세지
 		case "msgEveryone":
-			ChatMessage cMsg2 = ChatMessage.builder().senderId(mapReceive.get("senderId")).chatMessage(mapReceive.get("msg")).build();
-			int result2 = chattingService.insertMessage(cMsg2);
+			ChatMessage cMsg3 = ChatMessage.builder().senderId(mapReceive.get("senderId")).chatMessage(mapReceive.get("msg")).uploadFile(mapReceive.get("uploadFile")).build();
+			int result3 = chattingService.insertMessage(cMsg3);
 			
 			// 같은 채팅방에 메세지 전송
 			for (int i = 0; i < sessionList.size(); i++) {
@@ -119,14 +140,10 @@ public class Chatting extends TextWebSocketHandler{
 			break;
 			
 		case "msgDm" :
-			ChatMessage cMsg3 = ChatMessage.builder().senderId(mapReceive.get("senderId")).receiverId(mapReceive.get("receiverId")).chatMessage(mapReceive.get("msg")).build();
-			int result3 = chattingService.insertMessage(cMsg3);
+			ChatMessage cMsg4 = ChatMessage.builder().senderId(mapReceive.get("senderId")).receiverId(mapReceive.get("receiverId")).uploadFile(mapReceive.get("uploadFile")).chatMessage(mapReceive.get("msg")).build();
+			int result4 = chattingService.insertMessage(cMsg4);
 			
 			String receiveId = mapReceive.get("receiverId");
-			for (int i = 0; i < sessionList.size(); i++) {
-				System.out.println("testtest" + sessionList.get(i));
-			}
-			
 			//해당 아이디에 귓속말 보내기
 			for (int i = 0; i < sessionList.size(); i++) {
 				Map<String, Object> mapSessionList = sessionList.get(i);

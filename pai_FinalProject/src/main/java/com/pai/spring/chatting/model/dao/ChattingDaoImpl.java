@@ -32,9 +32,14 @@ public class ChattingDaoImpl implements ChattingDao{
 	}
 
 	@Override
-	public List<String> attendenceList(String chatroomUser, SqlSessionTemplate session) {
+	public List<String> attendenceList(String chatroomName, SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
-		return session.selectList("chatting.selectAttendenceList", chatroomUser);
+		return session.selectList("chatting.selectAttendenceList", chatroomName);
+	}
+	
+	@Override
+	public List<String>attendenceChatroom (SqlSessionTemplate session) {
+		return session.selectList("chatting.selectChatroomList");
 	}
 	
 	@Override

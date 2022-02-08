@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.pai.spring.board.model.service.BoardService;
 import com.pai.spring.board.model.vo.Board;
-import com.pai.spring.member.model.vo.Member;
 
 /**
  * Handles requests for the application home page.
@@ -26,8 +25,7 @@ public class HomeController {
 	public String home(Model model) { 
 		List<Board> infoList=service.infoList();
 		List<Board> topList=service.topList(); 
-		List<Board> list=service.mainList();
-		 
+		List<Board> list=service.mainList(); 
 		model.addAttribute("list", list);
 		model.addAttribute("top", topList);
 		model.addAttribute("info", infoList);
