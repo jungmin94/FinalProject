@@ -12,6 +12,7 @@ import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
 import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
+import com.pai.spring.board.model.vo.CommentDeclare;
 import com.pai.spring.member.model.vo.Member;
 
 @Repository
@@ -193,6 +194,48 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public int selectDeclareCount(SqlSessionTemplate session, String memberId) { 
 		return session.selectOne("board.selectDeclareCount", memberId);
+	}
+
+	@Override
+	public List<Board> infoList(SqlSessionTemplate session) { 
+		return session.selectList("board.infoList");
+	}
+
+	@Override
+	public List<Board> topList(SqlSessionTemplate session) { 
+		return session.selectList("board.topList");
+	}
+
+	@Override
+	public List<Board> mainList(SqlSessionTemplate session) { 
+		return session.selectList("board.mainList");
+	}
+
+	@Override
+	public List<Board> searchMainBoard(SqlSessionTemplate session, String category) { 
+		return session.selectList("board.searchMainBoard", category);
+	}
+
+	@Override
+	public int insertCommentDeclare(SqlSessionTemplate session, CommentDeclare cd) { 
+		return session.insert("board.insertCommentDeclare", cd);
+	}
+
+	@Override
+	public List<CommentDeclare> commentDeclareList(SqlSessionTemplate session, int cPage, int numPerPage,
+			String memberId) { 
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.commentDeclareList", memberId, rb);
+	}
+
+	@Override
+	public List<Board> noticeList(SqlSessionTemplate session) { 
+		return session.selectList("board.noticeList");
+	}
+
+	@Override
+	public int commentCount(SqlSessionTemplate session, int boardNo) { 
+		return session.selectOne("board.commentCount", boardNo);
 	}
 
 

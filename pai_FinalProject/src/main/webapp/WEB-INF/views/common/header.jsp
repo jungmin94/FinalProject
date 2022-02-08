@@ -182,6 +182,9 @@ a .sub-menu-detail {
 				<a href="${path}/market/mainView.do"><div class="menu-bar">MBTI 마켓</div></a>
 				<a href="${path }/chatting/toSeeMyChatroomInfo.do"><div class="menu-bar">채팅</div></a>
 				<a href="${path }/taste/taste.do"><div class="menu-bar">친구찾기</div></a>
+				<c:if test="${loginMember!=null&&loginMember.member_id eq 'admin'}"> 
+					<a href="${path}/admin/adminView.do"><div class="menu-bar">회원관리</div></a>
+				</c:if>
 			</div>
 			<c:if test="${loginMember==null }">
 			<!-- 만약 로그인하지 않은 상태라면 하단의 div #login-box출력 -->

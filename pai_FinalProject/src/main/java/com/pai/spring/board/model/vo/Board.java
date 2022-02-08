@@ -24,6 +24,7 @@ public class Board {
 	private Date boardEnrollDate;
 	private int boardReadCount;
 	private int recommendCount;
+	private int commentCount;
 	private List<AttachFile> attachFile;
 	private List<BoardComment> comment;
 	private List<BoardLike> like;

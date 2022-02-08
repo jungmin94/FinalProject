@@ -25,6 +25,9 @@
 		font-size:25px;
 		font-weight:bolder; 
 	}
+	.resultLabel{
+		font-size:20px;
+	}
 </style>
 
 <section>
@@ -54,7 +57,7 @@
 		  </div>
 		  <div class="tab-content" id="v-pills-tabContent">
 		    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-		    	<div class="title">게시글 일부공개(10)</div>
+		    	<div class="title" style="border-bottom:black 2px solid;">게시글 일부공개(10)</div>
 		    	<c:if test="${list.size()<=0}">
 		    		등록된 게시글이 없습니다.
 		    	</c:if>
@@ -68,7 +71,7 @@
 				    	</div>
 			    	</div> 
 		    	</c:forEach>
-		     	<div class="title" style="margin-top:20px;">댓글 일부공개(10)</div> 
+		     	<div class="title" style="margin-top:20px; border-bottom:black 2px solid;">댓글 일부공개(10)</div> 
 		     	<c:if test="${comments.size()<=0}">
 		    		<p style="margin-top:20px;font-size:13px;">등록된 댓글이 없습니다.</p>
 		    	</c:if>
@@ -89,14 +92,14 @@
 		    
 		    
 		    <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
-		   		<div class="title" style="margin-bottom:20px;">전체게시글</div>
+		   		<div class="title" style=" border-bottom:black 2px solid;">전체게시글</div>
 		    	<div>
 		    		<c:if test="${listAll.size()<=0}">
 		    		등록된 게시글이 없습니다.
 		    		</c:if>
 		    		<c:forEach var="b" items="${listAll}">
-		    			<div class="row" style="border-bottom:gray 1px solid;width:950px; height:30px;"> 
-				    	<div class="col-9"style="margin-left:30px;">
+		    			<div class="row" style="border-bottom:lightGray 2px solid;width:950px; height:40px;"> 
+				    	<div class="col-9"style="margin-left:30px; margin-top:10px;	">
 				    		<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=${b.boardWriter.member_id}"><c:out value="${b.boardTitle}"/></a></div>
 				    	<div class="col"  >
 				    		<span style="font-weight:bolder;font-size:16px;"><c:out value="${b.boardWriter.member_nick}"/></span>
@@ -109,15 +112,15 @@
 		    </div>
 		    
 		    <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-		    	<div class="title"  style="margin-bottom:20px;">전체댓글</div> 
+		    	<div class="title"  style=" border-bottom:black 2px solid;" >전체댓글</div> 
 		    	<div>
 		    		<c:if test="${commentAll.size()<=0}">
 		    		등록된 댓글 없습니다.
 		    		</c:if>
 		    		<c:forEach var="c" items="${commentAll}">
-		    			<div class="row" style="border-bottom:gray 1px solid;width:950px; height:30px;"> 
-				    	<div class="col-9"style="margin-left:30px;">
-				    		<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${c.boardRef}&memberId=null"><c:out value="${c.commentContent}"/></a></div>
+		    			<div class="row" style="border-bottom:lightGray 1px solid;width:950px; height:40px;"> 
+				    	<div class="col-9"style="margin-left:30px; margin-top:10px;">
+				    		<a style="text-decoration:none; color:black; " href="${path}/board/boardView.do?boardNo=${c.boardRef}&memberId=${loginMember.member_id}"><c:out value="${c.commentContent}"/></a></div>
 				    	<div class="col"  >
 				    		<span style="font-weight:bolder;font-size:16px;"><c:out value="${c.commentWriter}"/></span>
 				    		<span style="font-size:12px;"><c:out value="${c.commentDate}"/></span>
@@ -128,39 +131,153 @@
 		    	<div style="margin-top:20px;">${pageBar2}</div>
 		    </div>
 		    
-		    <!-- 자신페이지에만 신고접수내역이 보임  -->
-	 
-			    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-			   		 <div class="title" style="border-bottom:black 2px solid;" >신고접수내역</div> 
-			   		  <c:forEach var="d" items="${declareList}">
-			   		  <div style="border-bottom:gray 2px solid;width:950px; height:70px; margin-bottom:10px;  ">
-				   		 <div class="row" style="text-align:justify; margin-top:10px;" >
-						    <div class="col">
-						        ${d.declareContent }
-						    </div>
-						    <div class="col-2" style="width:150px;">
-						      ${d.declareDate}
-						    </div>
-						    <div class="col-2">
-						       <c:if test="${d.declareResult!=null}"> 
-						      	 <button type="button" class="btn btn-outline-warning">처리완료</button>
-						       </c:if>
-						       <c:if test="${d.declareResult==null}"> 
-						      	 <button type="button" class="btn btn-outline-secondary">처리중</button>
-						       </c:if>
-						    </div>
-						  </div>
-						 <div style="background-color:cornflowerblue;  width:300px ">
-						 	<a style="text-decoration:none; color:white;" href="${path}/board/boardView.do?boardNo=${d.boardNo}&memberId=null">
-						 		${d.boardTitle}
-						 	</a>	
-						 </div> 
-					  </div>	 
-			   		  </c:forEach> 
-			   		 <div>${pageBar3}</div>
-			    </div>
-		     
 		    
+		    
+		    <!-- 자신페이지에만 신고접수내역이 보임  --> 
+			    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+			   		
+			   		<ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top:20px"> 
+						  <li class="nav-item" role="presentation">
+						    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">게시글</button>
+						  </li>
+						  <li class="nav-item" role="presentation">
+						    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">댓글</button>
+						  </li> 
+					</ul>
+					
+					<div class="tab-content" id="myTabContent">
+						  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">  
+					   		  <c:if test="${declareList.size()<=0}">
+					   		  <div style="text-align:center; width:950px;"></div>
+					   		 	신고접수내역이 없습니다.
+					   		 </c:if>
+					   		 <c:if test="${declareList.size()>0}"> 
+					   		   <c:forEach var="d" items="${declareList}" varStatus="vs">
+					   		   <div style="border-bottom:gray 2px solid;width:950px; height:65px; margin-bottom:10px;  ">
+						   		 
+						   		 <div class="row" style="text-align:justify; " >
+								    <div class="col">
+								        ${d.declareContent }
+								    </div>
+								    <div class="col-2" style="width:150px;">
+								      ${d.declareDate}
+								    </div>
+								    <div class="col-2">
+								       <c:if test="${d.declareResult!=null}"> 
+								       <input type="hidden" name="declareResult_" value="${d.declareResult}">
+								      	 <button type="button" class="btn btn-outline-warning" style="height:33px;" data-bs-toggle="modal" data-bs-target='#declareResult2${vs.index}' id="declareResultBtn"> 처리완료</button>
+								       </c:if>
+								       <!-- 신고처리완료 모달  --> 
+								       <div class="modal fade" id="declareResult2${vs.index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										  <div class="modal-dialog">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <h5 class="modal-title" id="staticBackdropLabel">신고처리결과</h5>
+										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										      </div> 
+											      <div class="modal-body ">
+									  				<div class="container-fluid">  
+									  					<div class="declare-list"> 
+															<label class="form-check-label resultLabel" for="inlineRadio2"> 
+																<p>신고접수건에대하여  
+																<span style="font-weight:bolder;">${d.declareResult}</span>처리되었습니다.</p><br>
+																<P>신고처리날짜 : ${d.declareResultDate }</P>
+															</label>
+											      		</div>
+											      		 
+											      	</div>
+												  </div>
+											      <div class="modal-footer">
+											        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button> 
+											      </div> 
+										    </div>
+										  </div>
+										</div>
+								        
+								       <c:if test="${d.declareResult==null}"> 
+								      	 <button type="button" class="btn btn-outline-secondary" style="height:33px;">처리중</button>
+								       </c:if>
+								    </div>
+								  </div>
+								 <div style="background-color:cornflowerblue;   display: table; table-layout: fixed ;  ">
+								 	<a style="text-decoration:none; color:white;" href="${path}/board/boardView.do?boardNo=${d.boardNo}&memberId=${loginMember.member_id}">
+								 		${d.boardTitle}
+								 	</a>	
+								 </div> 
+							  </div> 
+					   		  </c:forEach> 
+					   		  <div>${pageBar3}</div>
+							  </c:if>
+							   
+						  </div>
+						  
+						  
+						  
+						  <!-- 댓글 신고접수내역  -->
+						  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">  
+					   		  <c:if test="${commentDeclareList.size()<=0}">
+					   		  <div style="text-align:center; width:950px;"></div>
+					   		 	신고접수내역이 없습니다.
+					   		 </c:if>
+					   		 <c:if test="${commentDeclareList.size()>0}"> 
+					   		  <c:forEach var="cd" items="${commentDeclareList}" varStatus="vs">
+					   		  <div style="border-bottom:gray 2px solid;width:950px; height:65px; margin-bottom:10px;  ">
+						   		 
+						   		 <div class="row" style="text-align:justify; " >
+								    <div class="col">
+								        ${cd.declareContent }
+								    </div>
+								    <div class="col-2" style="width:150px;">
+								      ${cd.declareDate}
+								    </div>
+								    <div class="col-2">
+								       <c:if test="${cd.declareResult!=null}"> 
+								      	 <button type="button" class="btn btn-outline-warning" style="height:35px; " data-bs-toggle="modal" data-bs-target='#declareResult3${vs.index}'>처리완료</button>
+								       </c:if>
+								       <c:if test="${cd.declareResult==null}"> 
+								      	 <button type="button" class="btn btn-outline-secondary" style="height:33px;">처리중</button>
+								       </c:if>
+								    </div>
+								  </div>
+								  
+								   <!-- 신고처리완료 모달  --> 
+								       <div class="modal fade" id="declareResult3${vs.index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+										  <div class="modal-dialog">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <h5 class="modal-title" id="staticBackdropLabel">신고처리결과</h5>
+										        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+										      </div> 
+											      <div class="modal-body ">
+									  				<div class="container-fluid">  
+									  					<div class="declare-list"> 
+															<label class="form-check-label resultLabel" for="inlineRadio2"> 
+																<p>신고접수건에대하여  
+																<span style="font-weight:bolder;">${cd.declareResult}</span>처리되었습니다.</p><br>
+																<P>신고처리날짜 : ${cd.declareResultDate }</P>
+															</label>
+											      		</div>
+											      		 
+											      	</div>
+												  </div>
+											      <div class="modal-footer">
+											        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button> 
+											      </div> 
+										    </div>
+										  </div>
+										</div>
+								 <div style="background-color:cornflowerblue;  display: table; table-layout: fixed ; ">
+								 	<a style="text-decoration:none; color:white;" href="${path}/board/boardView.do?boardNo=${cd.boardNo}&memberId=${loginMember.member_id}">
+								 		${cd.commentContent}
+								 	</a>	
+								 </div> 
+							  </div>	
+					   		  </c:forEach> 
+					   		  <div>${pageBar3}</div>
+							  </c:if> 
+						  </div> 
+					</div> 
+			    </div> 
 		  </div>
 		</div>
 	
@@ -178,4 +295,16 @@
 	</div>
 </section>
 
+
+<script>
+//아이디 중복확인하기
+$(()=>{
+	$("#declareResultBtn").click(e=>{
+		const declareResult=$("input[name=declareResult_]").val().trim();
+		console.log(declareResult);
+	  
+	});
+});
+
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

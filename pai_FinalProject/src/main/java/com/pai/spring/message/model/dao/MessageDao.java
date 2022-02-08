@@ -15,5 +15,9 @@ public interface MessageDao{
 	
 	int selectRecvMessageCount(SqlSessionTemplate session, String memberId);
 	
-	Message selectRecvMsgDetail(SqlSessionTemplate session, int msgNo);
+	Map selectRecvMsgDetail(SqlSessionTemplate session, int msgNo);
+	
+	List<Message> selectSendMsg(SqlSessionTemplate session, String sendId, int cPage, int numPerpage);
+	
+	int selectSendMessageCount(SqlSessionTemplate session, String sendId);
 }

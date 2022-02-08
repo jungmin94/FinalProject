@@ -45,6 +45,10 @@ section>*{
 	text-decoration: none;
 	text-align:center;
 }
+
+.notices>td{
+	font-weight:bolder;
+}
  
 </style>
  <section> 
@@ -126,7 +130,35 @@ section>*{
 				<td style="width:150px;color:#004080;font-size:16px;text-align:center;background:url(http://www.todayhumor.co.kr/board/images/bar_back.gif);">날짜</td>
 				<td style="width:50px;color:#004080;font-size:16px;text-align:center;background:url(http://www.todayhumor.co.kr/board/images/bar_back.gif);">조회</td>
 				<td style="width:50px;color:#004080;font-size:16px;text-align:center; background:url(http://www.todayhumor.co.kr/board/images/bar_right_back.gif) no-repeat -17px 0px;">추천</td> 
-			</tr>
+			</tr> 
+		<!-- 공지글 상단고정 -->
+			<c:forEach var="n" items="${notice}">
+				<tr class="notices" style="background-color:lightGray; border-bottom:1px gray solid; height:40px;">
+					<td><img src="${path}/resources/images/board/notice.png" style="width:30px; height:30px;"></td>
+					<td><c:out value="${n.boardCategory}"/></td>
+					<td>
+						<c:if test="${n.attachFile.size()>0}">
+							<img src="${path}/resources/images/board/file.png" style="width:30px; height:30px;">
+						</c:if>
+					</td>
+					<td style="text-align:left; text-decoration:none;">
+							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${n.boardNo}&memberId=${loginMember.member_id}">
+								<c:out value="${n.boardTitle}"/>
+								<span style="font-weight:bolder;">[<c:out value="${n.comment.size()}"/>]</span> 
+							</a>
+					</td>
+					<td>
+						<a style="text-decoration:none; color:black;" href="${path}/board/myboardView.do?memberId=${n.boardWriter.member_id}">
+						 관리자 
+						</a>
+					</td>
+					<td><c:out value="${n.boardEnrollDate}"/></td>
+					<td><c:out value="${n.boardReadCount}"/></td>
+					<td><c:out value="${n.recommendCount}"/></td>  
+				</tr> 
+			</c:forEach>
+			
+			
 			<c:forEach var="b" items="${list}">
 				<tr style="border-bottom:1px gray solid; height:40px;">
 					<td><c:out value="${b.boardNo}"/></td>
@@ -137,7 +169,7 @@ section>*{
 						</c:if>
 					</td>
 					<td style="text-align:left; text-decoration:none;">
-							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=${b.boardWriter.member_id}">
+							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=${loginMember.member_id}">
 								<c:out value="${b.boardTitle}"/>
 								<span style="font-weight:bolder;">[<c:out value="${b.comment.size()}"/>]</span> 
 							</a>

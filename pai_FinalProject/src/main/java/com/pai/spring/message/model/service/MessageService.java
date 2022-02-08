@@ -13,6 +13,10 @@ public interface MessageService {
 	
 	int selectRecvMessageCount(String memberId);
 	
-	Message selectRecvMsgDetail(int msgNo);
+	Map selectRecvMsgDetail(int msgNo);
+	
+	List<Message> selectSendMsg(String sendId, int cPage, int numPerpage);
+	
+	int selectSendMessageCount(String sendId);
 	
 }
