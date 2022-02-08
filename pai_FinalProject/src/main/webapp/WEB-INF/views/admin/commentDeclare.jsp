@@ -63,30 +63,109 @@
 				<table> 
 					<tr class="thead" style="background-color:lightGray;">
 						<td style="width:100px;">번호</td>
-						<td style="width:700px;">제목</td>
-						<td style="width:700px;">신고사유</td>
+						<td style="width:700px;">내용</td>
+						<td>작성자</td>
+						<td style="width:650px;">신고사유</td>
 						<td>신고자</td>
 						<td>신고일시</td>
 						<td>처리현황</td>
 					</tr>
-					<c:forEach var="b" items="${list}"> 
+					<c:forEach var="b" items="${list}" varStatus="vs"> 
 						<tr class="tbody" >
-							<td><c:out value="${b.declareNo}"/></td>
+							<td><c:out value="${b.commentNo}"/></td>
 							<td>
 								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=null">
 									<c:out value="${b.commentContent}"/>
 								</a>
 							</td>
+							<td><c:out value="${b.commentWriter}"/></td>
 							<td><c:out value="${b.declareContent}"/></td>
 							<td><c:out value="${b.declareWriter}"/></td>
 							<td><c:out value="${b.declareDate }"/></td>
 							<c:if test="${b.declareResult==null}">
-								<td><button type="button" class="btn btn-primary">접수</button></td>
+								<td>
+									<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop${vs.index}">
+									  접수
+									</button>
+								 </td>
 							</c:if>
 							<c:if test="${b.declareResult!=null}">
-								<td><button type="button" class="btn btn-success">처리완료</button></td>
+								<td><button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#declareResult${vs.index}" >처리완료</button></td>
 							</c:if>
 						</tr>
+						<!-- 처리결과 모달 -->
+						<div class="modal fade" id="declareResult${vs.index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="staticBackdropLabel">신고처리결과</h5>
+						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						      </div> 
+							      <div class="modal-body ">
+					  				<div class="container-fluid">  
+					  					<div class="declare-list"> 
+											<label class="form-check-label" for="inlineRadio2"> 
+												<p>${b.declareResult}</p>
+											</label>
+							      		</div>
+							      		<div class="declare-list"> 
+											<label class="form-check-label" for="inlineRadio2"> 
+												<p>처리일시 : ${b.declareResultDate}</p>
+											</label>
+							      		</div>
+							      		 
+							      	</div>
+								  </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">확인</button> 
+							      </div> 
+						    </div>
+						  </div>
+						</div> 
+						
+						
+						<!-- 댓글신고 접수 Modal -->
+						<div class="modal fade" id="staticBackdrop${vs.index}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="staticBackdropLabel">댓글신고접수</h5>
+						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						      </div>
+						      <form action="${path}/admin/updateCommentDeclare.do"> 
+							      <div class="modal-body"> 
+							      		<div>처리결과선택</div>
+					  					<div class="form-check">
+									        <input class="form-check-input" type="checkbox" name="declareResult"   value="작성자 경고 1회부여"  >
+											<label class="form-check-label" for="inlineRadio2">작성자 경고 1회부여</label>
+									    </div>
+									    <div class="form-check">
+									        <input class="form-check-input" type="checkbox" name="declareResult"  value="작성자 블랙리스트 등록">
+											<label class="form-check-label" for="inlineRadio2">작성자 블랙리스트 등록</label>
+									    </div>
+									    <div class="form-check">
+									        <input class="form-check-input" type="checkbox" name="declareResult"  value="해당게시글 삭제">
+											<label class="form-check-label" for="inlineRadio2">해당댓글 삭제</label>
+									    </div>  
+									    <div class="form-check">
+									        <input class="form-check-input" type="checkbox"  name="declareResult" value="신고무효(신고사유에 해당되지 않음)" id="others"  >
+											<label class="form-check-label" for="inlineRadio2">신고무효(신고사유에 해당되지 않음)</label>
+											<div id="target" style="display:none;"></div>
+									     </div>
+									     <div>
+									     	<input type="hidden" name="commentNo" value="${b.commentNo}">
+									     	<input type="hidden" name="declareWriter" value="${b.declareWriter}"> 
+									     	<input type="hidden" name="commentWriter" value="${b.commentWriter}">
+									     </div>
+							      </div>
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+							        <button type="submit" class="btn btn-primary">확인</button>
+							      </div>
+							   </form>   
+						    </div>
+						  </div>
+						</div>
 					</c:forEach>
 				</table>
 			 

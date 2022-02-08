@@ -44,9 +44,11 @@ public class BoardController {
 		List<Board> list=service.boardList(cPage,numPerPage); 
 		List<Board> readList=service.readList(); 
 		List<Board> likeList=service.likeList();
+		List<Board> noticeList=service.noticeList(); 
 		int totalDate=service.selectBoardCount();
 		 
 		mv.addObject("readList", readList);
+		mv.addObject("notice", noticeList);
 		mv.addObject("likeList", likeList);
 		mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "boardList.do",""));
 		mv.addObject("list", list); 
@@ -115,14 +117,16 @@ public class BoardController {
 		}
 		
 		
-		Board b=service.selectBoard(boardNo,isRead);   
+		Board b=service.selectBoard(boardNo,isRead);
+		int commentCount = service.commentCount(boardNo);
 		List<BoardComment> list=service.boardCommentList(boardNo);
 		Map param=Map.of("memberId",memberId,"boardNo",boardNo);
 		BoardLike like = service.selectBoardLike(param);
+		
 		mv.addObject("like",like);
 		mv.addObject("board", b); 
 		mv.addObject("comments", list); 
-		mv.addObject("commentCount", b.getComment().size());
+		mv.addObject("commentCount", commentCount);
 		return mv;
 	}
 	
@@ -229,30 +233,7 @@ public class BoardController {
 		int result=service.updateBoard(b); 
 		return result>0;
 	}
-	
-	
-/*	@RequestMapping("/insertBoardComment.do")
-	public ModelAndView insertComment(ModelAndView mv,@RequestParam(value="commentWriter") String commentWriter,
-									@RequestParam(value="commentContent") String content,@RequestParam(value="commentLevel") int level,
-									@RequestParam(value="boardRef") int boardRef, @RequestParam(value="commentRef") int commentRef) {
-		 Member m=Member.builder().member_id(commentWriter).build();
-		 BoardComment bc = BoardComment.builder().commentLevel(level).commentWriter(m).commentContent(content).boardRef(boardRef).commentRef(commentRef).build();
-		 int result=service.insertComment(bc);
-		 String msg="";
-		 String loc="";
-		 if(result>0) {
-			 msg="댓글 등록 성공";
-			 loc="/board/boardView.do?boardNo="+boardRef;		 
-		 }else {
-			 msg="댓글 등록 실패";
-			 loc="/board/boardView.do?boardNo="+boardRef;
-		 }
-		 mv.addObject("msg", msg);
-		 mv.addObject("loc", loc);
-		 mv.setViewName("common/msg");
-		return mv;
-	} */
-	
+	 
 	@RequestMapping("/insertBoardComment.do")
 	public ModelAndView insertComment(ModelAndView mv,BoardComment bc) {
 		  //System.out.println(bc);
@@ -365,6 +346,9 @@ public class BoardController {
 		List<Board> readList=service.readList(); 
 		List<Board> likeList=service.likeList();
 		int totalDate=service.selectBoardCount();
+		
+		List<Board> noticeList=service.noticeList();
+		mv.addObject("notice", noticeList);
 		mv.addObject("select", select); 
 		mv.addObject("readList", readList);
 		mv.addObject("likeList", likeList);
@@ -380,6 +364,9 @@ public class BoardController {
 		List<Board> readList=service.readList(); 
 		List<Board> likeList=service.likeList();
 		int totalDate=service.selectBoardCount();
+		
+		List<Board> noticeList=service.noticeList();
+		mv.addObject("notice", noticeList);
 		mv.addObject("select", select); 
 		mv.addObject("readList", readList);
 		mv.addObject("likeList", likeList);
