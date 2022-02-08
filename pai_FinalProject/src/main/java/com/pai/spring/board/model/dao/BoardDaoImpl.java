@@ -233,6 +233,11 @@ public class BoardDaoImpl implements BoardDao {
 		return session.selectList("board.noticeList");
 	}
 
+	@Override
+	public int commentCount(SqlSessionTemplate session, int boardNo) { 
+		return session.selectOne("board.commentCount", boardNo);
+	}
+
 
 	
 }

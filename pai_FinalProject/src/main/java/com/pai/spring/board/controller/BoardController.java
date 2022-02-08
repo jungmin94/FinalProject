@@ -117,14 +117,16 @@ public class BoardController {
 		}
 		
 		
-		Board b=service.selectBoard(boardNo,isRead);   
+		Board b=service.selectBoard(boardNo,isRead);
+		int commentCount = service.commentCount(boardNo);
 		List<BoardComment> list=service.boardCommentList(boardNo);
 		Map param=Map.of("memberId",memberId,"boardNo",boardNo);
 		BoardLike like = service.selectBoardLike(param);
+		
 		mv.addObject("like",like);
 		mv.addObject("board", b); 
 		mv.addObject("comments", list); 
-		mv.addObject("commentCount", b.getComment().size());
+		mv.addObject("commentCount", commentCount);
 		return mv;
 	}
 	

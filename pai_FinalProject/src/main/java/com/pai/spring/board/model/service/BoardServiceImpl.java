@@ -256,6 +256,11 @@ public class BoardServiceImpl implements BoardService {
 		return dao.noticeList(session);
 	}
 
+	@Override
+	public int commentCount(int boardNo) { 
+		return dao.commentCount(session,boardNo);
+	}
+
 	 
 
 

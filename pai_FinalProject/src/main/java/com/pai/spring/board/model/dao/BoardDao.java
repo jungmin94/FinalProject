@@ -96,4 +96,6 @@ public interface BoardDao {
 	List<CommentDeclare> commentDeclareList(SqlSessionTemplate session,int cPage,int numPerPage,String memberId);
 	
 	List<Board> noticeList(SqlSessionTemplate session);
+
+	int commentCount(SqlSessionTemplate session, int boardNo);
 }
