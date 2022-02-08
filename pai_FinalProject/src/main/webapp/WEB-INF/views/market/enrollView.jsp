@@ -79,7 +79,7 @@
 				</c:if>
 				<c:if test="${g.image ne null}">
 					<button type="button"  id="updateGoodImageBtn" class="btn btn-outline-warning" 
-					data-bs-toggle="modal" data-bs-target="#updateGoodImage" data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
+					data-bs-toggle="modal" data-bs-target="#updateGoodImage" data-gno="${g.goodsNo}" data-gname="${g.goodsName}" data-img="${g.image}">
 	  				대표이미지 수정
 					</button>
 				</c:if>
@@ -126,7 +126,7 @@
         enctype="multipart/form-data">
         	<input type="hidden" id="img_gno" name="goodsNo">
         	<input type="hidden" id="img_gname" name="goodsName">
-        	<img id="image_section" src="${path}/resources/images/market/add-image.PNG"  alt="your image" style="height:300px; width:300px;"/>
+        	<img id="image_section" src=""  alt="your image" style="height:300px; width:300px;"/>
         	<br><br>
         	<input type='file' id="imgInput" name="upFile"/>
         </form>
@@ -282,12 +282,17 @@
 
 $(document).on("click", "#updateGoodImageBtn", function () { 
 	
+	$("#image_section").attr("src", "${path}/resources/images/market/add-image.PNG");
 	let goodNo = $(this).data('gno');
 	let goodName = $(this).data('gname');
-
+	let img = $(this).data('img');
+	console.log(img);
 	$('#img_gno').val(goodNo);
 	$('#img_gname').val(goodName);
-
+	if(img != undefined){
+		$("#image_section").attr("src", "${path}/resources/upload/market/"+img);
+	}
+	
 });
 
 $(document).on("click", "#enrollGoodDetailBtn", function () { 

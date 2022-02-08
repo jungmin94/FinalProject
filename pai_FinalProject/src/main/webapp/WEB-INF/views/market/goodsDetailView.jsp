@@ -129,7 +129,7 @@
 		<span>M</span>
 		<span>B</span>
 		<span>T</span>
-		<span>I</span>
+		<span>I</span>	
 		<span>성</span>
 		<span>격</span>
 		<span>유</span>
@@ -140,6 +140,9 @@
   <div class="container" style="text-align: center;">
 	<img src="${path}/resources/images/market/MBTI1.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
 	<img src="${path}/resources/images/market/MBTI2.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/마켓설명1.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/마켓설명2.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/카툰.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 2100px;">
 	<!-- 반복문 통해 제품 사진 올리는 부분 -->
 	<c:if test="${imageList eq null || imageList.size() eq 0}">
     	<img src="https://hanamsport.or.kr/www/images/contents/thum_detail.jpg" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
@@ -159,7 +162,10 @@
 	<br>
 	<div style="text-align:center; color:purple;">(긴팔 사이즈)</div>
 	<br>
+	<img src="${path}/resources/images/market/사이즈3.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/사이즈4.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
 	<img src="${path}/resources/images/market/세탁방법.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+	<img src="${path}/resources/images/market/제품증명.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
   </div>
 
   	<div class="container" style="text-align: center;">
