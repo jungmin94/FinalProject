@@ -82,4 +82,8 @@ public interface BoardService {
 	int insertCommentDeclare(CommentDeclare cd);
 	
 	List<CommentDeclare> commentDeclareList(int cPage,int numPerPage,String memberId);
+	
+	List<Board> noticeList(); 
+	
+	int commentCount(int boardNo);
 }

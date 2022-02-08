@@ -1,11 +1,13 @@
 package com.pai.spring.admin.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
-import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardDeclare;
+import com.pai.spring.board.model.vo.CommentDeclare;
+import com.pai.spring.member.model.vo.Member;
 
 public interface AdminDao {
 
@@ -22,4 +24,12 @@ public interface AdminDao {
 	int updateBoardDeclare(SqlSessionTemplate session,BoardDeclare bd);
 	
 	int insertBlack(SqlSessionTemplate session,String declareWriter);
+	
+	BoardDeclare selectBoardDeclare(SqlSessionTemplate session, Map param);
+	
+	CommentDeclare selectCommentDeclare(SqlSessionTemplate session,Map param);
+	
+	int commentDeclareCount(SqlSessionTemplate session,CommentDeclare cd);
+	
+	Member selectMember(SqlSessionTemplate session,String CommentWriter);
 }

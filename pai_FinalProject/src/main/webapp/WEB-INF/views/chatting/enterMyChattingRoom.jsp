@@ -56,9 +56,9 @@ button {
 <section>
 	<div>
 		<div id="chat-list">
-			<a href="${path }/chatting/toSeeChatroomInfo.do">
+			<a href="${path }/chatting/toSeeMyChatroomInfo.do">
 				<div class="chat-list-detail">MY MBTI CHAT</div>
-			</a> <a href="">
+			</a> <a href="${path }/chatting/toSeeAllChatroomInfo.do">
 				<div class="chat-list-detail">EVERY MBTI CHAT</div>
 			</a>
 		</div>

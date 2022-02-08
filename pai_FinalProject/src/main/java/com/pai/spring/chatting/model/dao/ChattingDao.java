@@ -17,7 +17,9 @@ public interface ChattingDao {
 	
 	int insertChatAttendence(ChatMessage cMsg, SqlSessionTemplate session);
 
-	List<String> attendenceList(String chatroomUser, SqlSessionTemplate session);
+	List<String> attendenceList(String chatroomName, SqlSessionTemplate session);
 
+	List<String> attendenceChatroom (SqlSessionTemplate session);
+	
 	int deleteChatAttendence(ChatMessage cMsg, SqlSessionTemplate session);
 }

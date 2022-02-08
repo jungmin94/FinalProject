@@ -66,17 +66,26 @@
 		</div>
 		
 		 <div class="row">
+		 <!-- 종합인기글 -->
 		    <div class="col">
 		      <div class="contents">
 		      <table style="width:590px;"> 
 					<c:forEach var="t" items="${top}">
 						<tr style="border-bottom: lightgrey 1px solid; height:60px;">
 							<td style="font-size:20px;   font-weight:bolder;font-family: Georgia">[<c:out value="${t.boardCategory}"/>]</td>
-							<td style="font-size:20px;">
+							<td style="font-size:20px;"> 
+							<c:if test="${loginMember==null}"> 
 								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${t.boardNo}&memberId=null">
 									<c:out value="${t.boardTitle}"/>
 									<span style="font-weight:bolder;">[<c:out value="${t.commentCount}"/>]</span>
-								</a>
+								</a> 
+							</c:if>	
+							<c:if test="${loginMember!=null}"> 
+								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${t.boardNo}&memberId=${loginMember.member_id}">
+									<c:out value="${t.boardTitle}"/>
+									<span style="font-weight:bolder;">[<c:out value="${t.commentCount}"/>]</span>
+								</a> 
+							</c:if>
 							</td>
 							<td style="width:50px;color:#004080;font-size:20px;text-align:right;"><c:out value="${t.recommendCount}"/></td> 
 						</tr>
@@ -84,19 +93,30 @@
 				</table>
 		      </div>
 		    </div>
+		    <!-- 정보인기글 -->
 		    <div class="col">
 		      <div class="contents">
 		      	<table style="width:590px;"> 
 					<c:forEach var="i" items="${info}">
 						<tr style="border-bottom: lightgrey 1px solid; height:60px;">
 							<td style="font-size:20px;   font-weight:bolder;font-family: Georgia">[<c:out value="${i.boardCategory}"/>]</td>
-							<td style="font-size:20px;">
+							<td style="font-size:20px;"> 
+							<c:if test="${loginMember==null }">
 								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${i.boardNo}&memberId=null">
 									<c:out value="${i.boardTitle}"/>
 									<span style="font-weight:bolder;">
 										[<c:out value="${i.commentCount}"/>]
 									</span>
-								</a>
+								</a> 
+							</c:if>	
+							<c:if test="${loginMember!=null }">
+								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${i.boardNo}&memberId=${loginMember.member_id}">
+									<c:out value="${i.boardTitle}"/>
+									<span style="font-weight:bolder;">
+										[<c:out value="${i.commentCount}"/>]
+									</span>
+								</a> 
+							</c:if>	
 							</td>
 							<td style="width:50px;color:#004080;font-size:20px;text-align:right;"><c:out value="${i.recommendCount}"/></td> 
 						</tr>
@@ -152,9 +172,16 @@
 					<tr class="main-content"> 
 						<td><c:out value="${b.boardCategory}"/></td>
 						<td>
-							<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=null">
-								<c:out value="${b.boardTitle}"/><span style="font-weight:bolder;">[<c:out value="${b.commentCount}"/>]</span>
-							</a>
+							<c:if test="${loginMember!=null }"> 
+								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=${loginMember.member_id}">
+									<c:out value="${b.boardTitle}"/><span style="font-weight:bolder;">[<c:out value="${b.commentCount}"/>]</span>
+								</a>
+							</c:if>
+							<c:if test="${loginMember==null }"> 
+								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${b.boardNo}&memberId=null">
+									<c:out value="${b.boardTitle}"/><span style="font-weight:bolder;">[<c:out value="${b.commentCount}"/>]</span>
+								</a>
+							</c:if>
 						</td>
 						<td><c:out value="${b.boardWriter.member_nick}"/></td>
 						<td><c:out value="${b.boardEnrollDate}"/></td>
