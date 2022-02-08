@@ -59,4 +59,6 @@ public interface MarketService {
 	
 	int goodPrice(GoodsDetails gd);
 	
+	int deleteTitleGood(Goods good);
+	
 }

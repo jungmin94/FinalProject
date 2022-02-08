@@ -93,6 +93,10 @@
 	  				상세이미지 수정
 					</button>
 				</c:if>
+				<button type="button"  id="deleteTitleGoodBtn" class="btn btn-outline-danger" 
+					data-bs-toggle="modal" data-bs-target="#deleteGoods" data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
+	  				상품 삭제
+				</button>
 			</td>
 		  </tr>
 		</c:forEach>
@@ -244,6 +248,36 @@
   </div>
 </div>
 
+
+<!-- 상품 삭제  -->
+<div class="modal fade" id="deleteGoods" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">상품삭제</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="text-align:center;">
+        삭제하시겠습니까?
+        <br>
+        <span style="color:red;">(해당상품 삭제시 등록된 재고가 모두 삭제됩니다)</span>
+        <br>
+        <br>
+        상품코드<input type="text"  id="de_gno_text" name="delgoodsno" class="form-control"   value="" readonly><br>
+        상품명<input type="text" id="de_gname_text" name="delgoodsname" class="form-control"   value="" readonly><br>
+        <form id="delTitleGood" action="${path}/market/deleteTitleGood.do">
+        <input type="hidden" id="de_gno_" name="goodsNo" value="">
+        <input type="hidden" id="de_gname_" name="goodsName" value="">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#delTitleGood').submit();">삭제</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 
 $(document).on("click", "#updateGoodImageBtn", function () { 
@@ -342,6 +376,21 @@ function readURL(input) {
 	// 이벤트를 바인딩해서 input에 파일이 올라올때 (input에 change를 트리거할때) 위의 함수를 this context로 실행
 	$("#imgInput").change(function(){
 	   readURL(this);
+	});
+	
+
+	
+	$(document).on("click", "#deleteTitleGoodBtn", function () { 
+		
+		let goodNo = $(this).data('gno');
+		let goodName = $(this).data('gname');
+
+		$('#de_gno_text').val(goodNo);
+		$('#de_gname_text').val(goodName);
+		
+		$('#de_gno_').val(goodNo);
+		$('#de_gname_').val(goodName);
+
 	});
 
 </script>

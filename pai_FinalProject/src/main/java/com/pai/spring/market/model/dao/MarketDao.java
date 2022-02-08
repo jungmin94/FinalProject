@@ -61,4 +61,6 @@ public interface MarketDao {
 	
 	int goodPrice(SqlSessionTemplate session,GoodsDetails gd);
 	
+	int deleteTitleGood(SqlSessionTemplate session,Goods good);
+	
 }

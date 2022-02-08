@@ -108,7 +108,7 @@ public class MarketDaoImpl implements MarketDao {
 	@Override
 	public int deleteGood(SqlSessionTemplate session, Map<String, Object> param) {
 	
-		return session.delete("market.deleteGood",param);
+		return session.delete("market.deleteGoodDetails",param);
 	}
 	
 	@Override
@@ -162,8 +162,14 @@ public class MarketDaoImpl implements MarketDao {
 	
 	@Override
 	public int goodPrice(SqlSessionTemplate session, GoodsDetails gd) {
-		// TODO Auto-generated method stub
+
 		return session.selectOne("market.goodPrice",gd);
+	}
+	
+	@Override
+	public int deleteTitleGood(SqlSessionTemplate session, Goods good) {
+	
+		return session.delete("market.deleteTitleGood",good);
 	}
 	
 }
