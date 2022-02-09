@@ -21,4 +21,6 @@ public interface MessageService {
 	
 	int deleteRecvMsg(int msgNo);
 	
+	int deleteSendMsg(int msgNo);
+	
 }

@@ -55,6 +55,12 @@ public class MessageServiceImpl implements MessageService {
 	}
 	
 	
+	@Override
+	public int deleteSendMsg(int msgNo) {
+		return dao.deleteSendMsg(session, msgNo);
+	}
+	
+	
 	
 	
 }

@@ -14,6 +14,8 @@
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
+
 <body>
 	
 	<div id="header-container">		
@@ -223,10 +225,6 @@ function recvMsgBox(cPage){
 						
 					});
 				}
-			/* 	var selectCheck = $("input:checkbox[name='recvMsgCheck']:checked").each(function(m,msgNo){
-					console.log(msgNo.value);
-					$("#selectRecvMsg").val(msgNo.value);
-				}); */
 			});
 		
 			//삭제,목록버튼 생성해야함
@@ -302,13 +300,37 @@ function sendMsgBox(cPage){
 					tr2.append(td1).append(no).append(msgTitle).append(recvId).append(msgSendTime);
 					td1.append(check);
 				}
+				let del = $("<button>").attr({type:"button", id:"delSendMsg", class:"btn btn-primary"}).html("삭제");
+				table.append(del);
 			}
 			
 			const pageBar=$("<div style='text-align:center;'>").attr("id","pageBar2").html(data["pageBar"]);
 			$("#pageNavContainer").append(pageBar);
 			//$("#pageNavContainer").show();
 			$("#body-container").html(table);
-			//삭제,목록버튼 생성해야함
+			//삭제버튼 생성해야함
+			
+			$("#delSendMsg").click(function(){
+				var checkArr = [];
+				if($("input:checkbox[name='sendMsgCheck']:checked").length === 0){
+					alert("삭제할 항목을 선택해 주세요.");
+				} else{
+					$("input:checkbox[name='sendMsgCheck']:checked").each(function(e) {
+						checkArr.push($(this).val());
+					});
+					$.ajax({
+						url:"${path}/message/deleteSendMsg.do",
+						type:"post",
+						data:{"checkArrTest" : checkArr},
+						dataType:"json",
+						success: result => {
+							alert(result.result);
+							location.reload();
+						}
+						
+					});
+				}
+			});
 		}
 	});
 
@@ -349,7 +371,7 @@ $("#endDate").change(e=>{
 });
 
 
-//보낸편지 상세보기
+//편지 상세보기
 function recvMsgView(e){
 	//$("#recvMsg").hide();
 	//let val = $(e).children();
@@ -405,6 +427,10 @@ function recvMsgView(e){
 			
 			table.append(thead);
 			table.append(tbody);
+			
+			let list = $("<button>").attr({class:"btn btn-primary", type:"button", onclick:"location.reload();"}).html("목록");
+			table.append(list);
+			
 			$("#body-container").html(table);
 			//답장,삭제,목록버튼 생성해야함
 		}

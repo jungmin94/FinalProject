@@ -22,4 +22,6 @@ public interface MessageDao{
 	int selectSendMessageCount(SqlSessionTemplate session, String sendId);
 	
 	int deleteRecvMsg(SqlSessionTemplate session, int msgNo);
+
+	int deleteSendMsg(SqlSessionTemplate session, int msgNo);
 }

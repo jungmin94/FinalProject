@@ -15,7 +15,6 @@ import com.pai.spring.market.model.vo.GoodsDetails;
 @Service
 public class MarketServiceImpl implements MarketService {
 
-
 	@Autowired
 	private SqlSessionTemplate session;
 	
@@ -160,6 +159,24 @@ public class MarketServiceImpl implements MarketService {
 	public int enrollGoods(Goods good) {
 		
 		return dao.enrollGoods(session, good);
+	}
+	
+	@Override
+	public List<GoodsDetails> sizeInvenList(GoodsDetails gd) {
+	
+		return dao.sizeInvenList(session, gd);
+	}
+	
+	@Override
+	public int goodPrice(GoodsDetails gd) {
+		
+		return dao.goodPrice(session, gd);
+	}
+	
+	@Override
+	public int deleteTitleGood(Goods good) {
+
+		return dao.deleteTitleGood(session, good);
 	}
 	
 }

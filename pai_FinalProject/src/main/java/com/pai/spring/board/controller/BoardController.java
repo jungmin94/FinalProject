@@ -75,9 +75,11 @@ public class BoardController {
 		param.put("numPerPage", numPerPage);
 		List<Board> list=service.searchBoard(param,cPage,numPerPage);
 		int totalDate=service.searchBoardCount(param);
-		
+		List<Board> noticeList=service.noticeList();
 		List<Board> readList=service.readList(); 
 		List<Board> likeList=service.likeList(); 
+	
+		mv.addObject("notice", noticeList);
 		mv.addObject("category", category); 
 		mv.addObject("searchType", searchType); 
 		mv.addObject("keyword", keyword); 
@@ -277,6 +279,7 @@ public class BoardController {
 	public ModelAndView deleteBoard(ModelAndView mv,int boardNo) {
 		 int result=service.deleteBoard(boardNo);
 		
+		 
 		 String msg="";
 		 String loc="";
 		 if(result>0) {

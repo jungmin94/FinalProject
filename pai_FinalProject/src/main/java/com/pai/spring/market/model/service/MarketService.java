@@ -55,4 +55,10 @@ public interface MarketService {
 	
 	int enrollGoods(Goods good);
 	
+	List<GoodsDetails> sizeInvenList(GoodsDetails gd);
+	
+	int goodPrice(GoodsDetails gd);
+	
+	int deleteTitleGood(Goods good);
+	
 }

@@ -57,4 +57,10 @@ public interface MarketDao {
 	
 	int enrollGoods(SqlSessionTemplate session,Goods good);
 	
+	List<GoodsDetails> sizeInvenList(SqlSessionTemplate session,GoodsDetails gd);
+	
+	int goodPrice(SqlSessionTemplate session,GoodsDetails gd);
+	
+	int deleteTitleGood(SqlSessionTemplate session,Goods good);
+	
 }

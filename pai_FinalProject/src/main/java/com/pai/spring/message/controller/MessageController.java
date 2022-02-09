@@ -125,4 +125,23 @@ public class MessageController {
 		return new Gson().toJson(result);
 	}
 	
+	
+	//보낸쪽지 선택삭제
+	@RequestMapping(value="/deleteSendMsg.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String deleteSendMsg(@RequestParam(value="checkArrTest[]") List<Integer> checkArr) {
+		System.out.println(checkArr);
+		int num=0;
+		for(int i=0; i<checkArr.size(); i++) {
+			int deleteSendMsg = service.deleteSendMsg(checkArr.get(i));
+			if(deleteSendMsg!=0) {
+				num++;
+			}
+		}
+		Map<String, Object> result = Map.of("result", num+"개의 쪽지를 삭제 완료하였습니다.");
+		System.out.println(result);
+		return new Gson().toJson(result);
+		
+	}
+	
 }

@@ -48,6 +48,12 @@ public class MessageDaoImpl implements MessageDao {
 	public int deleteRecvMsg(SqlSessionTemplate session, int msgNo) {
 		return session.update("message.deleteRecvMsg",msgNo);
 	}
+	
+	
+	@Override
+	public int deleteSendMsg(SqlSessionTemplate session, int msgNo) {
+		return session.update("message.deleteSendMsg",msgNo);
+	}
 
 	
 	

@@ -154,4 +154,22 @@ public class MarketDaoImpl implements MarketDao {
 		return session.insert("market.enrollGoods",good);
 	}
 	
+	@Override
+	public List<GoodsDetails> sizeInvenList(SqlSessionTemplate session, GoodsDetails gd) {
+		
+		return session.selectList("market.sizeInvenList",gd);
+	}
+	
+	@Override
+	public int goodPrice(SqlSessionTemplate session, GoodsDetails gd) {
+
+		return session.selectOne("market.goodPrice",gd);
+	}
+	
+	@Override
+	public int deleteTitleGood(SqlSessionTemplate session, Goods good) {
+	
+		return session.delete("market.deleteTitleGood",good);
+	}
+	
 }
