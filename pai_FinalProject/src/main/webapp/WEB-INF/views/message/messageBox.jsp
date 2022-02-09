@@ -176,7 +176,7 @@ function recvMsgBox(cPage){
 				for(let i=0; i<recvMsgList.length; i++){
 					let tr2 = $("<tr>").css("text-align","center");
 					let td1 = $("<td>");
-					let check = $("<input>").attr({class:"form-check-input recvMsgCheck", type:"checkbox", name:"recvMsgCheck", value:recvMsgList[i]["MSGNO"]});
+					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"recvMsgCheck", value:recvMsgList[i]["MSGNO"]});
 					//let msgNo = $("<td>").html(((cPage-1)*10)+i+1);
 					let no = $("<td>").html(num++);
 					if(cPage>=2){
@@ -203,41 +203,32 @@ function recvMsgBox(cPage){
 			$("#pageNavContainer").append(div);
 			$("#body-container").html(table);
 			
-/* 			$("#delRecvMsg").click(function(){
+			$("#delRecvMsg").click(function(){
+				var checkArr = [];
 				if($("input:checkbox[name='recvMsgCheck']:checked").length === 0){
 					alert("삭제할 항목을 선택해 주세요.");
-					return;
+				} else{
+					$("input:checkbox[name='recvMsgCheck']:checked").each(function(e) {
+						checkArr.push($(this).val());
+					});
+					$.ajax({
+						url:"${path}/message/deleteRecvMsg.do",
+						type:"post",
+						data:{"checkArrTest" : checkArr},
+						dataType:"json",
+						success: result => {
+							alert(result.result);
+							location.reload();
+						}
+						
+					});
 				}
-				var selectCheck = $("input:checkbox[name='recvMsgCheck']:checked").each(function(m,msgNo){
+			/* 	var selectCheck = $("input:checkbox[name='recvMsgCheck']:checked").each(function(m,msgNo){
 					console.log(msgNo.value);
 					$("#selectRecvMsg").val(msgNo.value);
-				});
-			}); */
-			
-			 $("#delRecvMsg").click(function(){
-				if($("input:checkbox[name='recvMsgCheck']:checked").length === 0){
-					alert("삭제할 항목을 선택해 주세요.");
-					return;
-				}
-				  var confirm_val = confirm("정말 삭제하시겠습니까?");
-				  
-				  if(confirm_val) {
-				   var checkArr = new Array();
-				   
-				   $("input[class='recvMsgCheck']:checked").each(function(){
-				    checkArr.push($(this).attr("data-msgNo"));
-				   });
-				    
-				   $.ajax({
-				    url : "/message/deleteRecvMsg.do",
-				    type : "post",
-				    data : { msgNo : checkArr },
-				    success : data => {
-				     console.log(msgNo)
-				    }
-				   });
-				  } 
-				 });
+				}); */
+			});
+		
 			//삭제,목록버튼 생성해야함
 		}
 	});

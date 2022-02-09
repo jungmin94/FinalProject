@@ -108,7 +108,7 @@ public class MarketDaoImpl implements MarketDao {
 	@Override
 	public int deleteGood(SqlSessionTemplate session, Map<String, Object> param) {
 	
-		return session.delete("market.deleteGood",param);
+		return session.delete("market.deleteGoodDetails",param);
 	}
 	
 	@Override

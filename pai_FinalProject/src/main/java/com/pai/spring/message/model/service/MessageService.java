@@ -19,4 +19,6 @@ public interface MessageService {
 	
 	int selectSendMessageCount(String sendId);
 	
+	int deleteRecvMsg(int msgNo);
+	
 }

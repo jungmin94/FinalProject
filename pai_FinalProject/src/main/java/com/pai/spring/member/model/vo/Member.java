@@ -1,6 +1,7 @@
 package com.pai.spring.member.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,11 +22,12 @@ public class Member {
 	private String member_email;
 	private String member_addr;
 	private String member_phone;
-//	private String member_profile;
 	private String member_content;
 	private String member_mbti;
-	private int member_check;
 	private int member_police;
 	private int member_black;
 	private Date member_enroll;
+	private String status;
+	private String authKey;
+	private List<Profile> profile;
 }
