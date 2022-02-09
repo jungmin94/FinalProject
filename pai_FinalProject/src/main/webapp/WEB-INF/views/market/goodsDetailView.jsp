@@ -100,7 +100,7 @@
           </select>
           <br>
           수량
-          <input type="number" class="form-control"  id="inputBuyCount" name="buyCount">
+          <input type="number" class="form-control"  min="1" id="inputBuyCount" name="buyCount">
           <br>
          
           <!-- <input type="hidden" class="form-control" start=1 id="inputTotlaPrice" name="totalPrice"> -->
@@ -192,18 +192,19 @@ $(document).ready(function () {
     		data:{color:$("#select_color").val(),goodsName:$("#gName").val()}, 
     		success:data=>{
     		$('#select_size').empty();
-    			   				
+    		let defoption=$("<option disabled selected>"+"사이즈를 선택하세요"+"</option>");
+    		$('#select_size').append(defoption);
 				for(let i=0; i<data.length; i++){
 					let option;
 					if(data[i].invenCount==0){
 						option = $("<option disabled value='"+data[i].size+"'>"+data[i].size+" 품절</option>");
 					}else if(0<data[i].invenCount && data[i].invenCount<5){
-						option = $("<option value='"+data[i].size+"'>"+data[i].size+" -"+data[i].invenCount+"개남음-품절임박-</option>");
+						option = $("<option style='color:#F781BE;' value='"+data[i].size+"'>"+data[i].size+" 품절임박("+data[i].invenCount+"개남음)</option>");
 					}else{
 						option = $("<option value='"+data[i].size+"'>"+data[i].size+" -"+data[i].invenCount+"개남음-</option>");
 					}
 					$('#select_size').append(option);
-    			}  
+    			}
     		}	
     	});	
     });
@@ -215,8 +216,10 @@ $(document).ready(function () {
     		url:"${path}/market/goodPrice.do",
     		data:{color:$("#select_color").val(),goodsName:$("#gName").val(),size:$("#select_size").val()}, 
     		success:data=>{
-    				$('#price').val(data);
-    				$('#inputTotalPrice').val(data);
+    				$('#price').val(data.price);
+    				$('#inputTotalPrice').val(data.price);
+    				$('#inputBuyCount').val(1);
+    				$('#inputBuyCount').attr("max",data.invenCount);
     			}  
     		})	
     	});	
@@ -224,12 +227,23 @@ $(document).ready(function () {
     
 $(document).ready(function () {
     $('#inputBuyCount').change(function () {
+    		if($(this).val()<1){
+    			alert('수량은 최소 1개입니다. 다시 입력하세요.');
+    			$(this).val(1);    		
+    		}else if(parseInt($('#inputBuyCount').attr("max"))<$(this).val()){
+    			alert('현재 남아있는 재고보다 많이 주문하실 수 없습니다. 죄송합니다');
+    			let con = parseInt($(this).val());
+    			$(this).val(parseInt($('#inputBuyCount').attr("max")));			
+    		}
 			let count = parseInt($('#inputBuyCount').val());
 			let price = parseInt($('#price').val());		
 			let total = count*price;
 			$('#inputTotalPrice').val(total);
     	});	
     });
+    
+    
+
 
 
 </script>

@@ -161,7 +161,7 @@ public class MarketDaoImpl implements MarketDao {
 	}
 	
 	@Override
-	public int goodPrice(SqlSessionTemplate session, GoodsDetails gd) {
+	public GoodsDetails goodPrice(SqlSessionTemplate session, GoodsDetails gd) {
 
 		return session.selectOne("market.goodPrice",gd);
 	}

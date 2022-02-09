@@ -57,7 +57,7 @@ public interface MarketService {
 	
 	List<GoodsDetails> sizeInvenList(GoodsDetails gd);
 	
-	int goodPrice(GoodsDetails gd);
+	GoodsDetails goodPrice(GoodsDetails gd);
 	
 	int deleteTitleGood(Goods good);
 	

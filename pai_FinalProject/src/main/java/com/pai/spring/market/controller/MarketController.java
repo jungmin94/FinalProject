@@ -127,10 +127,10 @@ public class MarketController {
 	
 	@RequestMapping("/goodPrice.do")
 	@ResponseBody
-	public int goodPrice(GoodsDetails gd) {
-		int price = service.goodPrice(gd);
+	public GoodsDetails goodPrice(GoodsDetails gd) {
+		GoodsDetails gds = service.goodPrice(gd);
 		
-		return price;
+		return gds;
 	}
 	/*==============================================================================================
 	 																			관리자 로직

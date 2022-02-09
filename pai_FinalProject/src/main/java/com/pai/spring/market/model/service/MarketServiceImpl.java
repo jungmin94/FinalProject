@@ -168,7 +168,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
-	public int goodPrice(GoodsDetails gd) {
+	public GoodsDetails goodPrice(GoodsDetails gd) {
 		
 		return dao.goodPrice(session, gd);
 	}
