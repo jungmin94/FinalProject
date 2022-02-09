@@ -28,7 +28,7 @@ public interface MessageDao{
 
 	int deleteSendMsg(SqlSessionTemplate session, int msgNo);
 	
-	
+	void autoMessageDelete(SqlSessionTemplate session);
 	
 	
 	

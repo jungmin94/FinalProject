@@ -64,6 +64,11 @@ public class MessageDaoImpl implements MessageDao {
 		return session.update("message.deleteSendMsg",msgNo);
 	}
 
+	@Override
+	public void autoMessageDelete(SqlSessionTemplate session) {
+		session.delete("message.autoMessageDelete");
+	}
+
 
 	
 	

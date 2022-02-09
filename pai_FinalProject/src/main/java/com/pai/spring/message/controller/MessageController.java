@@ -1,11 +1,14 @@
 package com.pai.spring.message.controller;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -178,5 +181,15 @@ public class MessageController {
 	
 		return new Gson().toJson(msg);
 	}
+	
+	
+	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class, SQLException.class }, readOnly = false)
+	public boolean autoMessageDelete() throws Exception {
+	       
+	    System.out.println("스케줄링 테스트");
+	    
+	    return true;
+	}
+	
 	
 }

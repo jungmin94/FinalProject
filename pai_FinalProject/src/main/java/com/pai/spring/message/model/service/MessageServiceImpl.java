@@ -5,11 +5,14 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.pai.spring.message.model.dao.MessageDao;
 import com.pai.spring.message.model.vo.Message;
 
+@Component
 @Service
 public class MessageServiceImpl implements MessageService {
 
@@ -66,6 +69,13 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public int deleteSendMsg(int msgNo) {
 		return dao.deleteSendMsg(session, msgNo);
+	}
+
+	@Override
+	@Scheduled(cron="0 57 2 * * *")
+	public void autoMessageDelete() {
+		dao.autoMessageDelete(session);
+		
 	}
 
 	
