@@ -30,4 +30,6 @@ public interface MemberDao {
 	Member findPwd(SqlSessionTemplate session,Member m);
 
 	int findPwdUpdate(SqlSessionTemplate session,Member m);
+	
+	int insertMbti(SqlSessionTemplate session,Member m);
 }

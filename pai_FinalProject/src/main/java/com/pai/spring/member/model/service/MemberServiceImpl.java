@@ -89,5 +89,10 @@ public class MemberServiceImpl implements MemberService {
 		return dao.findPwdUpdate(session,m);
 	}
 	
+	@Override
+	public int insertMbti(Member m) {
+		// TODO Auto-generated method stub
+		return dao.insertMbti(session,m);
+	}
 
 }

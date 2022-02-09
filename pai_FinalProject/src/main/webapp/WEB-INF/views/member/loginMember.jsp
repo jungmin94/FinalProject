@@ -77,7 +77,7 @@
 <body>
 	<form class="wrap" action="${path }/member/loginMemberEnd.do" method="post">
         <div class="login">
-            <img src="" style="width:200px; height:200px;">
+            <img src="${path }/resources/images/member/logo_white.jpg" style="width:200px; height:200px;">
             
             <div style="width: 80%;">
 	            <div class="form-floating mb-3" style="width: 100%">

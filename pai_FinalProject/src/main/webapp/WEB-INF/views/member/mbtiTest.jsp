@@ -108,7 +108,7 @@
                 ($("#TF").val()<2) ? mbti+="F" : mbti+="T";
                 ($("#JP").val()<2) ? mbti+="P" : mbti+="J";
                 alert(mbti);
-                $("#img").attr("src","img/"+result[mbti]["img"]);
+                $("#img").attr("src","/resources/images/member/"+result[mbti]["img"]);
                 $("#mbti").html(result[mbti]["mbti"]);
                 $("#explain").html(result[mbti]["explain"]);
             }else{

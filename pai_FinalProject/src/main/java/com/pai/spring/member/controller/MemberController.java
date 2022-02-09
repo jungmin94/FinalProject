@@ -329,7 +329,7 @@ public class MemberController {
 		int result = service.findPwdUpdate(m);
 		
 		if(result > 0) {
-			model.addAttribute("msg", "비밀번호 수정이 완료 되었습니다. 로그인 해주세요.");
+			model.addAttribute("msg", "비밀번호가 변경 되었습니다. 다시 로그인 해주세요.");
 			return "common/msg";
 		} else {
 			model.addAttribute("msg", "알 수 없는 오류 발생 !");
@@ -338,9 +338,28 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/mbti.do")
-	public String mbtipage() {
-		return "member/insertmbti";
+	public String mbtiPage() {
+		return "member/insertMbti";
 	}
+	
+	@RequestMapping("/mbtiTest.do")
+	public String mbtiTest() {
+		return "member/mbtiTest";
+	}
+	
+	@RequestMapping("insertMbti.do")
+	public String insertMbti(Member m, Model model) {
+		int result=service.insertMbti(m);
+		if(result > 0) {
+			model.addAttribute("msg", "MBTI 입력이 완료 되었습니다. 다시 로그인 해주세요.");
+			return "common/msg";
+		} else {
+			model.addAttribute("msg", "알 수 없는 오류 발생 !");
+			return "common/msg";
+		}
+	}
+	
+	
 	
 	@RequestMapping("/memberView.do")
 	public String memberView() {

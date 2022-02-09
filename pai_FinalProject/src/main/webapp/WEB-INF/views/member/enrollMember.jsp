@@ -312,13 +312,13 @@
 		email();	
 	});
 	
-	$("#email_2").blur(function(){
+	$("#email_3").change(function(){
 		email();	
 	});
 
 	function email() {
 		const email = $("#email_1").val();
-		const address = $("#email_2").val();
+		const address = $("#email_3").val();
 		if(email != "" && address != "") {
 			$("#member_email").val(email+"@"+address);
 		}

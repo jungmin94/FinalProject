@@ -26,4 +26,6 @@ public interface MemberService {
 	
 	int findPwdUpdate(Member m);
 	
+	int insertMbti(Member m);
+	
 }

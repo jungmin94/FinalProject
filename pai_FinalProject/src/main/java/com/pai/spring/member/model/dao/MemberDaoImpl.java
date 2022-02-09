@@ -76,6 +76,12 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("member.findPwdUpdate",m);
 	}
 
+	@Override
+	public int insertMbti(SqlSessionTemplate session, Member m) {
+		// TODO Auto-generated method stub
+		return session.update("member.insertMbti",m);
+	}
+
 	
 	
 	
