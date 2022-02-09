@@ -178,10 +178,13 @@ a .sub-menu-detail {
 			</div>
 
 			<div id="nav-menu">
-				<a href="${path}/board/boardList.do"><div class="menu-bar">게시판</div></a> 
+				<a href="${path}/board/boardList.do"><div class="menu-bar">게시판</div></a>
 				<a href="${path}/market/mainView.do"><div class="menu-bar">MBTI 마켓</div></a>
-				<a href=""><div class="menu-bar">채팅</div></a>
+				<a href="${path }/chatting/toSeeMyChatroomInfo.do"><div class="menu-bar">채팅</div></a>
 				<a href="${path }/taste/taste.do"><div class="menu-bar">친구찾기</div></a>
+				<c:if test="${loginMember!=null&&loginMember.member_id eq 'admin'}"> 
+					<a href="${path}/admin/adminView.do"><div class="menu-bar">회원관리</div></a>
+				</c:if>
 			</div>
 			<c:if test="${loginMember==null }">
 			<!-- 만약 로그인하지 않은 상태라면 하단의 div #login-box출력 -->
@@ -207,12 +210,15 @@ a .sub-menu-detail {
 				<div class="sub-menu-detail" id="menu-mypage">내정보</div>
 			</a>
 			<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-icon 이미지 이 것 사용 <img src="https://i.ibb.co/4Z7wXR5/red-circle.png" width="13px"> -->
-			<a href="">
+			<a href="javascript:fn_messageBox();">
 				<div class="sub-menu-detail" id="menu-message">쪽지함
 				<span id="message-icon"><img src="https://i.ibb.co/ZT0XhL5/2022-01-20-10-00-48.png" width="13px"></span><span id="message-count">1</span>
 				</div>
+				<form id="myIdData" action="${path}/message/messageBox.do" method="post" target="msgBox">
+				  <input type="hidden" name="memberId" value="${loginMember.member_id}">
+				</form>
 			</a>
-			<a href="">
+			<a href="${path}/board/myboardView.do?memberId=${loginMember.member_id}">
 				<div class="sub-menu-detail" id="menu-myboard">내 게시글</div>
 			</a>
 			<a href="${path}/member/logout.do }">
@@ -239,7 +245,15 @@ a .sub-menu-detail {
           myModal.addEventListener('shown.bs.modal', function () {
           myInput.focus();
           })
-        } 
+        }
+        
+        //쪽지함 새창으로 열기
+        const fn_messageBox=()=>{
+        	 $('#myIdData').attr("target", "msgBox");
+        	 open("", "msgBox", "height=800, width=800, menubar=no, scrollbars=yes, resizable=no, toolbar=no, status=no, left=50, top=50");
+        	$("#myIdData").submit();
+			/* open("${path}/message/messageBox.do","_blank","width=800,height=800"); */
+		}
         
     </script>
 	</nav>

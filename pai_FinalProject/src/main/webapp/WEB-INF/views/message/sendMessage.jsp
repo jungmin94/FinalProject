@@ -13,35 +13,35 @@
 </head>
 
 <body>
-<form id="sendMessage" action="">
+<form id="sendMessage" action="" method="post">
   <div class="mb-3 row">
   	<h2>쪽지 보내기</h2>
     <label for="msg_title" class="col-sm-2 col-form-label badge bg-secondary">제목</label>
     <div class="col-sm-10">
-      <input type="text" name="msg_title" class="form-control" id="msg_title">
+      <input type="text" name="msgTitle" class="form-control" id="msgTitle">
     </div>
   </div>
   
   <div class="mb-3 row">
   <label for="send_nick" class="col-sm-2 col-form-label badge bg-secondary">보낸사람</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control-plaintext" id="send_nick" value="${loginMember.member_nick}" readonly>
-      <input type="hidden" name="send_id" id="send_id" value="${loginMember.member_id}">
+      <input type="text" class="form-control-plaintext" id="sendNick" value="${loginMember.member_nick}" readonly>
+      <input type="hidden" name="sendId" id="sendId" value="${loginMember.member_id}">
     </div>
   </div>
   
   <div class="mb-3 row">
     <label for="recv_nick" class="col-sm-2 col-form-label badge bg-secondary">받는사람</label>
     <div class="col-sm-10">
-      <input type="text" readonly class="form-control-plaintext" id="member_nick" value="${param.member_nick }">
-      <input type="hidden" name="recv_id" id="recv_id" value="${param.member_id }"/>
+      <input type="text" class="form-control-plaintext" id="recvNick" value="${param.member_nick }" readonly>
+      <input type="hidden" name="recvId" id="recvId" value="${param.member_id }"/>
     </div>
   </div>
     
   <div class="mb-3 row">
     <label for="msg_content" class="col-sm-12 col-form-label badge bg-secondary">내용</label>
     <div class="col-sm-12">
-      <textarea class="form-control" name="msg_content" id="msg_content" rows="5" cols="30">디자인은 나중에 수정예정</textarea>
+      <textarea class="form-control" name="msgContent" id="msgContent" rows="5" cols="30">디자인은 나중에 수정예정</textarea>
     </div>
   </div>
 
@@ -58,12 +58,12 @@
 	 	console.log(e);
 	}
 	const sendMsg=()=>{
-		socket.send(JSON.stringify({"보낸사람":'${loginMember.member_id}',"받는사람":$("#member_id").val(),"제목":$("#msg_title").val(), "내용":$("#msg_content").val()}));
+		socket.send(JSON.stringify({"send_id":'${loginMember.member_id}',"recvId":$("#recvId").val(),
+				"msgTitle":$("#msgTitle").val(), "msgContent":$("#msgContent").val()}));
 	}
 	socket.onmessage=message=>{
 		console.log(message.data);
-		console.log(message.timeStamp);
-		$("#container").append($("<h4>").html(message.data+"<sub>"+new Date(message.timeStamp)+"</sub>"));
+
 		
 	} 
 /* 	var socket = null;

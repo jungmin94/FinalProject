@@ -10,7 +10,9 @@ import org.springframework.stereotype.Repository;
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
+import com.pai.spring.board.model.vo.CommentDeclare;
 import com.pai.spring.member.model.vo.Member;
 
 @Repository
@@ -131,6 +133,109 @@ public class BoardDaoImpl implements BoardDao {
 	@Override
 	public List<Board> likeList(SqlSessionTemplate session) { 
 		return session.selectList("board.likeList");
+	}
+
+	@Override
+	public List<Board> boardReadList(SqlSessionTemplate session, int cPage, int numPerPage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.boardReadList",null,rb);
+	}
+	
+	@Override
+	public List<Board> boardLikeList(SqlSessionTemplate session, int cPage, int numPerPage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.boardLikeList",null,rb);
+	}
+
+	@Override
+	public int insertDeclare(SqlSessionTemplate session, BoardDeclare bd) { 
+		return session.insert("board.insertDeclare", bd);
+	}
+
+	@Override
+	public List<Board> previewBoardList(SqlSessionTemplate session, String memberId) { 
+		return session.selectList("board.previewBoardList", memberId);
+	}
+
+	@Override
+	public List<BoardComment> previewCommentList(SqlSessionTemplate session, String memberNick) { 
+		return session.selectList("board.previewCommentList",memberNick);
+	}
+
+	@Override
+	public List<Board> myboardList(SqlSessionTemplate session, int cPage, int numPerPage, String memberId) { 
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.myboardList", memberId, rb);
+	}
+
+	@Override
+	public int selectMyBoardCount(SqlSessionTemplate session, String memberId) { 
+		return session.selectOne("board.selectMyBoardCount", memberId);
+	}
+
+	@Override
+	public List<BoardComment> myboardCommentList(SqlSessionTemplate session, int cPage, int numPerPage,
+			String memberId) { 
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.myboardCommentList", memberId, rb);
+	}
+
+	@Override
+	public int selectCommentAll(SqlSessionTemplate session, String memberNick) { 
+		return session.selectOne("board.selectCommentAll",memberNick);
+	}
+
+	@Override
+	public List<BoardDeclare> declareList(SqlSessionTemplate session, int cPage, int numPerPage, String memberId) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.declareList",memberId,rb);
+	}
+
+	@Override
+	public int selectDeclareCount(SqlSessionTemplate session, String memberId) { 
+		return session.selectOne("board.selectDeclareCount", memberId);
+	}
+
+	@Override
+	public List<Board> infoList(SqlSessionTemplate session) { 
+		return session.selectList("board.infoList");
+	}
+
+	@Override
+	public List<Board> topList(SqlSessionTemplate session) { 
+		return session.selectList("board.topList");
+	}
+
+	@Override
+	public List<Board> mainList(SqlSessionTemplate session) { 
+		return session.selectList("board.mainList");
+	}
+
+	@Override
+	public List<Board> searchMainBoard(SqlSessionTemplate session, String category) { 
+		return session.selectList("board.searchMainBoard", category);
+	}
+
+	@Override
+	public int insertCommentDeclare(SqlSessionTemplate session, CommentDeclare cd) { 
+		return session.insert("board.insertCommentDeclare", cd);
+	}
+
+	@Override
+	public List<CommentDeclare> commentDeclareList(SqlSessionTemplate session, int cPage, int numPerPage,
+			String memberId) { 
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("board.commentDeclareList", memberId, rb);
+	}
+
+	@Override
+	public List<Board> noticeList(SqlSessionTemplate session) { 
+		return session.selectList("board.noticeList");
+	}
+
+	@Override
+	public int commentCount(SqlSessionTemplate session, int boardNo) { 
+		return session.selectOne("board.commentCount", boardNo);
 	}
 
 

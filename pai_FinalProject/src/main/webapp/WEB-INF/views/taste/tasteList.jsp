@@ -20,19 +20,21 @@
 			</div>
 			
 			<c:forEach var="t" items="${list }">
-			  <div class="col">
-				<div class="card" style="width: 18rem;">
-					<%-- <img src="${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;"> --%>
-					<div class="card-body">
-					  <p class="card-text"><c:out value="${t.member_id.member_id }"/></p>
-					  <p class="card-text"><c:out value="${t.member_id.member_nick }"/></p>
-					  <p class="card-text"><c:out value="${t.member_id.member_date }"/></p>
-					  <p class="card-text"><c:out value="${t.member_id.member_gender }"/></p>
-					  <p class="card-text"><c:out value="${t.member_id.member_mbti }"/></p>
-					  <button onclick="sendMessage(this);" class="btn btn-primary">쪽지 보내기</button>
-					</div>
+				<c:if test="${loginMember.member_id ne t.member_id.member_id }">
+				  <div class="col">
+					<div class="card" style="width: 18rem;">
+						<%-- <img src="${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;"> --%>
+						<div class="card-body">
+						  <p class="card-text"><c:out value="${t.member_id.member_id }"/></p>
+						  <p class="card-text"><c:out value="${t.member_id.member_nick }"/></p>
+						  <p class="card-text"><c:out value="${t.member_id.member_date }"/></p>
+						  <p class="card-text"><c:out value="${t.member_id.member_gender }"/></p>
+						  <p class="card-text"><c:out value="${t.member_id.member_mbti }"/></p>
+						  <button onclick="sendMessage(this);" class="btn btn-primary">쪽지 보내기</button>
+						</div>
+					  </div>
 				  </div>
-			  </div>
+			  </c:if>
 			</c:forEach>
 
 

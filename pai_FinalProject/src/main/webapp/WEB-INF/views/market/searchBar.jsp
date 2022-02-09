@@ -26,14 +26,14 @@
 			  </div>
 
 			  <div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" id="gridCheck3" name="top" value="상의">
-				<label class="form-check-label" for="gridCheck3">상의</label>
+				<input class="form-check-input" type="checkbox" id="gridCheck3" name="top" value="반팔">
+				<label class="form-check-label" for="gridCheck3">반팔</label>
 			  </div>
 
 			  
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="checkbox" id="gridCheck4" name="pants" value="하의">
-				<label class="form-check-label" for="gridCheck4">하의</label>
+				<input class="form-check-input" type="checkbox" id="gridCheck4" name="pants" value="긴팔">
+				<label class="form-check-label" for="gridCheck4">긴팔</label>
 			  </div>
 
 		  </div>

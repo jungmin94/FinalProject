@@ -5,11 +5,17 @@ import java.util.Map;
 
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
+import com.pai.spring.board.model.vo.CommentDeclare;
 import com.pai.spring.member.model.vo.Member;
 
 public interface BoardService {
 	List<Board> boardList(int cPage,int numPerPage);
+	
+	List<Board> boardReadList(int cPage,int numPerPage);
+	
+	List<Board> boardLikeList(int cPage,int numPerPage);
 	
 	int selectBoardCount();
 	
@@ -46,5 +52,38 @@ public interface BoardService {
 	int deleteBoardLike(Map param);
 	
 	List<Board> likeList();
+	
+	int insertDeclare(BoardDeclare bd);
+	
+	List<Board> previewBoardList(String memberId);
 
+	List<BoardComment> previewCommentList(String memberNick);
+	
+	List<Board> myboardList(int cPage,int numPerPage,String memberId);
+	
+	int selectMyBoardCount(String memberId);
+	
+	List<BoardComment> myboardCommentList(int cPage,int numPerPage,String memberId);
+	
+	int selectCommentAll(String memberNick);
+	
+	List<BoardDeclare> declareList(int cPage,int numPerPage,String memberId);
+	
+	int selectDeclareCount(String memberId);
+	
+	List<Board> infoList();
+	
+	List<Board> topList();
+	
+	List<Board> mainList();
+	
+	List<Board> searchMainBoard(String category);
+	
+	int insertCommentDeclare(CommentDeclare cd);
+	
+	List<CommentDeclare> commentDeclareList(int cPage,int numPerPage,String memberId);
+	
+	List<Board> noticeList(); 
+	
+	int commentCount(int boardNo);
 }

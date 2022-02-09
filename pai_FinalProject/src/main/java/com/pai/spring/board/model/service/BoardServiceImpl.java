@@ -12,7 +12,9 @@ import com.pai.spring.board.model.dao.BoardDao;
 import com.pai.spring.board.model.vo.AttachFile;
 import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardComment;
+import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.BoardLike;
+import com.pai.spring.board.model.vo.CommentDeclare;
 import com.pai.spring.member.model.vo.Member;
 
 @Service
@@ -161,6 +163,102 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Board> likeList() { 
 		return dao.likeList(session);
+	}
+
+	@Override
+	public List<Board> boardReadList(int cPage, int numPerPage) {
+		 return dao.boardReadList(session,cPage,numPerPage);
+	}
+
+	@Override
+	public List<Board> boardLikeList(int cPage, int numPerPage) { 
+		return dao.boardLikeList(session,cPage,numPerPage);
+	}
+
+	@Override
+	@Transactional
+	public int insertDeclare(BoardDeclare bd) { 
+		return dao.insertDeclare(session,bd);
+	}
+
+	@Override
+	public List<Board> previewBoardList(String memberId) { 
+		return dao.previewBoardList(session,memberId);
+	}
+
+	@Override
+	public List<BoardComment> previewCommentList(String memberNick) { 
+		return dao.previewCommentList(session,memberNick);
+	}
+
+	@Override
+	public List<Board> myboardList(int cPage, int numPerPage, String memberId) { 
+		return dao.myboardList(session,cPage,numPerPage,memberId);
+	}
+
+	@Override
+	public int selectMyBoardCount(String memberId) { 
+		return dao.selectMyBoardCount(session,memberId);
+	}
+
+	@Override
+	public List<BoardComment> myboardCommentList(int cPage, int numPerPage, String memberId) { 
+		return dao.myboardCommentList(session,cPage,numPerPage,memberId);
+	}
+
+	@Override
+	public int selectCommentAll(String memberNick) { 
+		return dao.selectCommentAll(session,memberNick);
+	}
+
+	@Override
+	public List<BoardDeclare> declareList(int cPage, int numPerPage, String memberId) { 
+		return dao.declareList(session,cPage,numPerPage,memberId);
+	}
+
+	@Override
+	public int selectDeclareCount(String memberId) { 
+		return dao.selectDeclareCount(session,memberId);
+	}
+
+	@Override
+	public List<Board> infoList() { 
+		return dao.infoList(session);
+	}
+
+	@Override
+	public List<Board> topList() { 
+		return dao.topList(session);
+	}
+
+	@Override
+	public List<Board> mainList() { 
+		return dao.mainList(session);
+	}
+
+	@Override
+	public List<Board> searchMainBoard(String category) { 
+		return dao.searchMainBoard(session,category);
+	}
+
+	@Override
+	public int insertCommentDeclare(CommentDeclare cd) { 
+		return dao.insertCommentDeclare(session,cd);
+	}
+
+	@Override
+	public List<CommentDeclare> commentDeclareList(int cPage, int numPerPage, String memberId) { 
+		return dao.commentDeclareList(session,cPage,numPerPage,memberId);
+	}
+
+	@Override
+	public List<Board> noticeList() { 
+		return dao.noticeList(session);
+	}
+
+	@Override
+	public int commentCount(int boardNo) { 
+		return dao.commentCount(session,boardNo);
 	}
 
 	 
