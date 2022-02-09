@@ -49,6 +49,14 @@ public class MessageServiceImpl implements MessageService {
 		return dao.selectSendMessageCount(session, sendId);
 	}
 
+	
+	
+	
+	@Override
+	public Map selectSendMsgDetail(int msgNo) {
+		return dao.selectSendMSgDetail(session, msgNo);
+	}
+
 	@Override
 	public int deleteRecvMsg(int msgNo) {
 		return dao.deleteRecvMsg(session, msgNo);

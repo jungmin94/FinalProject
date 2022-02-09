@@ -18,6 +18,8 @@ public interface MessageService {
 	List<Message> selectSendMsg(String sendId, int cPage, int numPerpage);
 	
 	int selectSendMessageCount(String sendId);
+
+	Map selectSendMsgDetail(int msgNo);
 	
 	int deleteRecvMsg(int msgNo);
 	

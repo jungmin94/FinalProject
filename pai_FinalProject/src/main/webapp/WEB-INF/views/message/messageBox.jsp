@@ -289,7 +289,7 @@ function sendMsgBox(cPage){
 					if(cPage>=2){
 						no = $("<td>").html(((cPage-1)*10)+i+1);
 					}					
-					let msgTitle = $("<td onClick='recvMsgView(this);'>").html(sendMsgList[i]["MSGTITLE"]);
+					let msgTitle = $("<td onClick='sendMsgView(this);'>").html(sendMsgList[i]["MSGTITLE"]);
 					let msgNo = $("<input>").attr({type:"hidden", value:sendMsgList[i]["MSGNO"]});
 					msgTitle.append(msgNo);
 					
@@ -308,7 +308,6 @@ function sendMsgBox(cPage){
 			$("#pageNavContainer").append(pageBar);
 			//$("#pageNavContainer").show();
 			$("#body-container").html(table);
-			//삭제버튼 생성해야함
 			
 			$("#delSendMsg").click(function(){
 				var checkArr = [];
@@ -371,11 +370,8 @@ $("#endDate").change(e=>{
 });
 
 
-//편지 상세보기
+//받은편지 상세보기 답장/목록/삭제버튼 필요
 function recvMsgView(e){
-	//$("#recvMsg").hide();
-	//let val = $(e).children();
-	//let msgNo = val.eq(1).text();
 	let msgNo = $(e).children().val();
 	$.ajax({
 		url:"${path}/message/recvMsgDetail.do",
@@ -408,7 +404,6 @@ function recvMsgView(e){
 			
 			let tr4=$("<tr>");
 			let msgContent = $("<td>").html(data["MSGCONTENT"]);
-			let msgNo = $("<input>").attr({type:"hidden",name:"msgNo",id:"msgNo",value:data["MSGNO"]});
 			
 			thead.append(tr).append(tr2).append(tr3);
 			
@@ -438,6 +433,86 @@ function recvMsgView(e){
 			$("#delRecvMsg").click(function(){
 				$.ajax({
 					url:"${path}/message/deleteRecvMsgOne.do",
+					type:"post",
+					data:{"msgNo" : data["MSGNO"]},
+					dataType:"json",
+					success: data => {
+					console.log(msgNo);
+						alert(data.result);
+						location.reload();
+					}
+						
+				});
+			});
+			
+		}
+	});
+};
+
+
+//보낸편지 상세보기 목록/삭제버튼 필요
+function sendMsgView(e){
+	let msgNo = $(e).children().val();
+	$.ajax({
+		url:"${path}/message/sendMsgDetail.do",
+		type: "post",
+		data: {"msgNo":msgNo},
+		dataType: "json",
+		success: data => {
+			$("#body-container").html("");
+			$("#pageNavContainer").html("");
+			
+			const table=$('<table>').attr("class","table");
+			let thead=$("<thead>");
+			let tbody=$('<tbody>');
+			let tr=$("<tr>");
+			let th1=$("<th>").html("제목").attr({scope:"col", colspan:"2"});
+			let msgTitle = $("<td>").html(data["MSGTITLE"]).attr("colspan","2");
+			
+			let tr2=$("<tr>");
+			let th2=$("<th>").html("보낸사람").attr("scope","col");
+			let sendNick = $("<td>").html(data["SENDNICK"]);
+			let sendId = $("<input>").attr({type:"hidden",name:"sendId",id:"sendId",value:data["SENDID"]});
+			let th3=$("<th>").html("보낸시간").attr("scope","col");
+			let msgSendTime = $("<td>").html(data["MSGSENDTIME"]);
+			let tr3=$("<tr>");
+			let th4=$("<th>").html("받는사람").attr("scope","col");
+			let recvNick = $("<td>").html(data["RECVNICK"]);
+			let th5=$("<th>").html("받은시간").attr("scope","col");
+			let msgReadCheck = $("<td>").html("읽지않음");
+			let msgReadTime = $("<td>").html(data["MSGREADTIME"]);
+			
+			let tr4=$("<tr>");
+			let msgContent = $("<td>").html(data["MSGCONTENT"]);
+			
+			thead.append(tr).append(tr2).append(tr3);
+			
+			tr.append(th1).append(msgTitle);
+			
+			tr2.append(th2).append(sendNick);
+			tr2.append(th3).append(msgSendTime);
+			
+			tr3.append(th4).append(recvNick);
+			if(data["MSGREADTIME"]==null){
+				tr3.append(th5).append(msgReadCheck);
+			} else{
+				tr3.append(th5).append(msgReadTime);
+			}
+			tbody.append(tr4);
+			tr4.append(msgContent);
+			
+			table.append(thead);
+			table.append(tbody);
+			
+			let list = $("<button>").attr({class:"btn btn-primary", type:"button", onclick:"location.reload();"}).html("목록");
+			let del = $("<button>").attr({type:"button", id:"delSendMsg", class:"btn btn-primary"}).html("삭제");
+			table.append(list).append(del);
+			
+			$("#body-container").html(table);
+			//답장,삭제,목록버튼 생성해야함
+			$("#delSendMsg").click(function(){
+				$.ajax({
+					url:"${path}/message/deleteSendMsgOne.do",
 					type:"post",
 					data:{"msgNo" : data["MSGNO"]},
 					dataType:"json",

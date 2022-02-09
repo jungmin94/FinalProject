@@ -39,6 +39,8 @@ public class MessageController {
 		mv.setViewName("message/messageBox");
 		return mv;
 	}
+
+//------------------------받은족지--------------------------------------------------------------
 	
 	//받은쪽지함
 	@RequestMapping(value="/recvBox.do", produces="text/plain;charset=UTF-8")
@@ -59,7 +61,7 @@ public class MessageController {
 		return new Gson().toJson(result);
 	}
 	
-	//받은쪽지 선택삭제
+	//받은쪽지 다중 삭제
 	@RequestMapping(value="/deleteRecvMsg.do", produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String deleteRecvMsg(@RequestParam(value="checkArrTest[]") List<Integer> checkArr) {
@@ -77,26 +79,7 @@ public class MessageController {
 		
 	}
 	
-//	@RequestMapping(value="/messageBox.do", produces="text/plain;charset=UTF-8")
-//	public ModelAndView messageBox(ModelAndView mv, String memberId, @RequestParam(value="cPage",defaultValue="1") int cPage,
-//			@RequestParam(value="numPerpage",defaultValue="10") int numPerpage) {
-//		
-//		Map<String,Object> param = new HashMap();
-//		param.put("memberId", memberId);
-//		param.put("cPage", cPage);
-//		param.put("numPerpage", numPerpage);
-//		
-//		List<Message> list = service.selectRecvMessage(memberId, cPage, numPerpage);
-//		int totalData = service.selectRecvMessageCount(memberId);
-//		
-//		mv.addObject("totalContents",totalData);
-//		mv.addObject("pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "messageBox.do", "recvMsgBox"));
-//		//new Gson().toJson(list);
-//		mv.addObject("list",list);
-//		mv.addObject("memberId",memberId);
-//		mv.setViewName("message/messageBox");
-//		return mv;
-//	}
+
 	
 	//받은쪽지 상세보기
 	@RequestMapping(value="/recvMsgDetail.do",produces="text/plain;charset=UTF-8")
@@ -107,7 +90,7 @@ public class MessageController {
 		return new Gson().toJson(msg);
 	}
 	
-	//받은쪽지 개별삭제
+	//받은쪽지 상세보기화면에서 삭제
 	@RequestMapping(value="/deleteRecvMsgOne.do", produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String deleteRecvMsg(int msgNo) {
@@ -127,6 +110,7 @@ public class MessageController {
 		
 	}
 	
+//-------------------------------보낸쪽지-----------------------------------------------------------------
 	
 	//보낸쪽지함
 	@RequestMapping(value="/sendMsg.do", produces="text/plain;charset=UTF-8")
@@ -147,7 +131,7 @@ public class MessageController {
 	}
 	
 	
-	//보낸쪽지 선택삭제
+	//보낸쪽지 다중 삭제
 	@RequestMapping(value="/deleteSendMsg.do", produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String deleteSendMsg(@RequestParam(value="checkArrTest[]") List<Integer> checkArr) {
@@ -163,6 +147,36 @@ public class MessageController {
 		System.out.println(result);
 		return new Gson().toJson(result);
 		
+	}
+	
+	//보낸쪽지 상세페이지에서 삭제
+	@RequestMapping(value="/deleteSendMsgOne.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String deleteSendMsg(int msgNo) {
+		System.out.println(msgNo);
+		
+		Map<String, Object> result;
+		int deleteSendMsg = service.deleteSendMsg(msgNo);
+		if(deleteSendMsg==1) {
+			result = Map.of("result", "쪽지 삭제 완료하였습니다.");
+		} else {
+			result = Map.of("result", "쪽지 삭제에 실패하였습니다.");
+			
+		}
+	
+		System.out.println(result);
+		return new Gson().toJson(result);
+		
+	}
+	
+	
+	//보낸쪽지 상세보기
+	@RequestMapping(value="/sendMsgDetail.do",produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String sendMsgDetail(int msgNo) {
+		Map msg = service.selectSendMsgDetail(msgNo);
+	
+		return new Gson().toJson(msg);
 	}
 	
 }
