@@ -55,6 +55,7 @@ public class MessageDaoImpl implements MessageDao {
 		return session.update("message.deleteSendMsg",msgNo);
 	}
 
+
 	
 	
 	

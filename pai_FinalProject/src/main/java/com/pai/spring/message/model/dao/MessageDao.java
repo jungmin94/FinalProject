@@ -24,4 +24,9 @@ public interface MessageDao{
 	int deleteRecvMsg(SqlSessionTemplate session, int msgNo);
 
 	int deleteSendMsg(SqlSessionTemplate session, int msgNo);
+	
+	
+	
+	
+	
 }

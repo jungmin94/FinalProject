@@ -408,6 +408,7 @@ function recvMsgView(e){
 			
 			let tr4=$("<tr>");
 			let msgContent = $("<td>").html(data["MSGCONTENT"]);
+			let msgNo = $("<input>").attr({type:"hidden",name:"msgNo",id:"msgNo",value:data["MSGNO"]});
 			
 			thead.append(tr).append(tr2).append(tr3);
 			
@@ -429,10 +430,26 @@ function recvMsgView(e){
 			table.append(tbody);
 			
 			let list = $("<button>").attr({class:"btn btn-primary", type:"button", onclick:"location.reload();"}).html("목록");
-			table.append(list);
+			let del = $("<button>").attr({type:"button", id:"delRecvMsg", class:"btn btn-primary"}).html("삭제");
+			table.append(list).append(del);
 			
 			$("#body-container").html(table);
 			//답장,삭제,목록버튼 생성해야함
+			$("#delRecvMsg").click(function(){
+				$.ajax({
+					url:"${path}/message/deleteRecvMsgOne.do",
+					type:"post",
+					data:{"msgNo" : data["MSGNO"]},
+					dataType:"json",
+					success: data => {
+					console.log(msgNo);
+						alert(data.result);
+						location.reload();
+					}
+						
+				});
+			});
+			
 		}
 	});
 };

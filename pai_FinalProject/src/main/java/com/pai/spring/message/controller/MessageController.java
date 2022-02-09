@@ -59,7 +59,7 @@ public class MessageController {
 		return new Gson().toJson(result);
 	}
 	
-	//받은쪽지 삭제
+	//받은쪽지 선택삭제
 	@RequestMapping(value="/deleteRecvMsg.do", produces="text/plain;charset=UTF-8")
 	@ResponseBody
 	public String deleteRecvMsg(@RequestParam(value="checkArrTest[]") List<Integer> checkArr) {
@@ -106,6 +106,27 @@ public class MessageController {
 	
 		return new Gson().toJson(msg);
 	}
+	
+	//받은쪽지 개별삭제
+	@RequestMapping(value="/deleteRecvMsgOne.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String deleteRecvMsg(int msgNo) {
+		System.out.println(msgNo);
+		
+		Map<String, Object> result;
+		int deleteRecvMsg = service.deleteRecvMsg(msgNo);
+		if(deleteRecvMsg==1) {
+			result = Map.of("result", "쪽지 삭제 완료하였습니다.");
+		} else {
+			result = Map.of("result", "쪽지 삭제에 실패하였습니다.");
+			
+		}
+	
+		System.out.println(result);
+		return new Gson().toJson(result);
+		
+	}
+	
 	
 	//보낸쪽지함
 	@RequestMapping(value="/sendMsg.do", produces="text/plain;charset=UTF-8")

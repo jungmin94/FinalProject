@@ -59,6 +59,7 @@ public class MessageServiceImpl implements MessageService {
 	public int deleteSendMsg(int msgNo) {
 		return dao.deleteSendMsg(session, msgNo);
 	}
+
 	
 	
 	
