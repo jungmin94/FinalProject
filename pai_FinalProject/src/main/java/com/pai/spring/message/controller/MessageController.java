@@ -183,13 +183,7 @@ public class MessageController {
 	}
 	
 	
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class, SQLException.class }, readOnly = false)
-	public boolean autoMessageDelete() throws Exception {
-	       
-	    System.out.println("스케줄링 테스트");
-	    
-	    return true;
-	}
+
 	
 	
 }

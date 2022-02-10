@@ -9,10 +9,6 @@ import com.pai.spring.message.model.service.MessageService;
 @Component
 public class MessageScheduler {
 	
-//	@Scheduled(fixedRate=2000)
-//	public void text1() {
-//		System.out.println("fix방식 2초");
-//	}
 	@Autowired
 	private MessageService service;
 	

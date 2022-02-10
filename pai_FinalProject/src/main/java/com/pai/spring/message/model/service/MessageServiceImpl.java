@@ -72,7 +72,6 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	@Scheduled(cron="0 57 2 * * *")
 	public void autoMessageDelete() {
 		dao.autoMessageDelete(session);
 		

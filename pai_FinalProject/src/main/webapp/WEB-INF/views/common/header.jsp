@@ -255,6 +255,17 @@ a .sub-menu-detail {
 			/* open("${path}/message/messageBox.do","_blank","width=800,height=800"); */
 		}
         
+    	const socket = new SockJS("http://localhost:9090${pageContext.request.contextPath}");	
+    	socket.onopen=e=>{
+    	 	console.log(e);
+    	}
+        
+   /*      var socket = null;
+        $(document).ready(function(){
+        	connectWS();
+        	console.log("소켓연결 성공")
+        }); */
+        
     </script>
 	</nav>
 </header>

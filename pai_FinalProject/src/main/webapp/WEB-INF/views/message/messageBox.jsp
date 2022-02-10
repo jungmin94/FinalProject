@@ -25,7 +25,7 @@
 		</ul>
 	</div>
 	<div id="searchMessage">
-		<form action="#">
+<!-- 		<form id="searchMsg" action="#">
 			<select name="searchType">
 				<option value="msg_title">제목</option>
 				<option value="send_id">보낸사람</option>
@@ -37,7 +37,7 @@
 			<input type="date" id="endDate" name="endDate">
 
 			<input type="submit" value="검색"/>
-		</form>
+		</form> -->
 	</div>
 	
 	<div id="body-container">
@@ -131,8 +131,10 @@ function selectAllRecvMsg(e)  {
 
 
 
+
 //받은편지함 전체조회
 function recvMsgBox(cPage){
+
 	//$("#sendMsg").hide();
 	//$("#recvMsgDetail").hide();
 	//$("#pageNavContainer").hide();
@@ -229,6 +231,17 @@ function recvMsgBox(cPage){
 		
 			//삭제,목록버튼 생성해야함
 		}
+		let form = $("<form>").attr({method:"post"});
+		let select = $("<select>").attr({name:"searchType"});
+		let option1 = $("<option>").value("msg_title").html("제목");
+		let option2 = $("<option>").value("send_id").html("보낸사람");
+		let keyword = $("<input>").attr({type:"text", name:"keyword"});
+		let startDate = $("<input>").attr({type:"date", name:"startDate"});
+		let endDate = $("<input>").attr({type:"date", name:"endDate"});
+		let search = $("<button>").attr({type:"submit"}).html("검색");
+		select.append(option1).append(option2);
+		form.append(select).append(keyword).append(startDate).append(endDate).append(search);
+		$("#searchMessage").append(form);
 	});
 	
 	
