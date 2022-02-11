@@ -25,6 +25,7 @@ public class Order {
 	private String receiverPhone;
 	private List<OrderDetail> orderDetail;
 	private int totalOrderPrice;
+	private String image; // 구매목록 이미지 출력을 위한 변수
 	
 	
 }

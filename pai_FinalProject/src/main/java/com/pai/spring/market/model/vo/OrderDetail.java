@@ -20,5 +20,6 @@ public class OrderDetail {
 	private String mbtiLogo;
 	private int orderCount;
 	private int orderPrice;
+	private String checkReview;
 	
 }

@@ -65,7 +65,7 @@
       <div class="col">
        <form id="purchaseFrm" action="${path}/market/purchaseGood.do" method="post">
         카테고리 1 (색상)
-        <select class="form-select" id="select_color"  name="orderColor" aria-label="Default select example">
+        <select class="form-select" id="select_color"  name="orderColor" aria-label="Default select example" required>
             <option disabled selected>색상을 선택하세요</option>
             <c:forEach items="${colorList}" var="c">
             	   <option value="${c.color}">${c.color}</option>
@@ -73,12 +73,12 @@
           </select>
           <br>
           카테고리 2 (사이즈)
-          <select class="form-select"  id="select_size"  name="orderSize" aria-label="Default select example">
+          <select class="form-select"  id="select_size"  name="orderSize" aria-label="Default select example" required>
             <option disabled selected>사이즈를 선택해주세요</option>
           </select>
           <br>
           카테고리 3 (MBTI로고) <span style="color:red;">@주문제작@</span>
-          <select class="form-select" aria-label="Default select example" name="mbtiLogo">
+          <select class="form-select" aria-label="Default select example" name="mbtiLogo" required>
             <option disabled selected>MBTI로고를 선택해주세요</option>
             <option value="ISTJ">ISTJ</option>
             <option value="ISFJ">ISFJ</option>

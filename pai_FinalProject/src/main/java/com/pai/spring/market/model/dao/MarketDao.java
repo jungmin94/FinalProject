@@ -71,4 +71,8 @@ public interface MarketDao {
 	
 	int updateInven(SqlSessionTemplate session,GoodsDetails gd);
 	
+	List<Order> orderDetailList(SqlSessionTemplate session,int cPage,int numPerPage);
+	
+	int selectOrderDetailCount(SqlSessionTemplate session);
+	
 }

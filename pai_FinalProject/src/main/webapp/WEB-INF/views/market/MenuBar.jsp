@@ -5,7 +5,7 @@
 		  <a class="nav-link active" aria-current="page" href="#">장바구니</a>
 		</li>
 		<li class="nav-item">
-		  <a class="nav-link" href="#">나의 구매목록</a>
+		  <a class="nav-link" href="${pageContext.request.contextPath}/market/myOrderedView.do">나의 구매목록</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link" href="#">리뷰관리</a>

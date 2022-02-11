@@ -200,4 +200,16 @@ public class MarketServiceImpl implements MarketService {
 		return dao.updateInven(session, gd);
 	}
 	
+	@Override
+	public List<Order> orderDetailList(int cPage, int numPerPage) {
+		
+		return dao.orderDetailList(session, cPage, numPerPage);
+	}
+
+	@Override
+	public int selectOrderDetailCount() {
+		
+		return dao.selectOrderDetailCount(session);
+	}
+	
 }

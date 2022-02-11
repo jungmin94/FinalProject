@@ -144,6 +144,7 @@ public class MarketController {
 		return mv;
 	}
 	
+	
 	@RequestMapping("purchaseGoodEnd.do")
 	@Transactional
 	public ModelAndView purchaseGoodEnd(Order order,OrderDetail orderDetail,ModelAndView mv) {
@@ -195,7 +196,24 @@ public class MarketController {
 
 		return mv;
 		
+	}
+	
+	@RequestMapping("/myOrderedView.do")
+	public ModelAndView myOrderdView(@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,ModelAndView mv) {
 		
+	List<Order> list = service.orderDetailList(cPage,numPerPage);	
+	System.out.println("결과나와랍 : "+list);
+	
+	int totalOrderDetail = service.selectOrderDetailCount();
+	
+		
+	mv.addObject("pageBar",PageFactory.getPageBar(totalOrderDetail, cPage, numPerPage,5, "myOrderdView.do", null));	
+	mv.addObject("List",list);	
+	
+	mv.setViewName("market/myOrderedView");
+	
+	return mv;
 	}
 	
 	

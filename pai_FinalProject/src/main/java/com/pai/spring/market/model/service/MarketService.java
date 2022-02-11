@@ -69,4 +69,8 @@ public interface MarketService {
 	
 	int updateInven(GoodsDetails gd);
 	
+	List<Order> orderDetailList(int cPage,int numPerPage);
+	
+	int selectOrderDetailCount();
+	
 }

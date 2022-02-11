@@ -15,7 +15,7 @@ public class GoodsDetails {
 
 	private String color;
 	private String size;
-	private int goodsNo;
+	private String goodsNo;
 	private String goodsName;
 	private int invenCount;
 	private int price;

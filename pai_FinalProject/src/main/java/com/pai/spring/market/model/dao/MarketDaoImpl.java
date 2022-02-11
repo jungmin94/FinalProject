@@ -192,4 +192,16 @@ public class MarketDaoImpl implements MarketDao {
 		return session.update("market.updateInven",gd);
 	}
 	
+	@Override
+	public List<Order> orderDetailList(SqlSessionTemplate session, int cPage, int numPerPage) {
+	
+		return session.selectList("market.orderDetailList",null,new RowBounds((cPage-1)*numPerPage,numPerPage));
+	}
+
+	@Override
+	public int selectOrderDetailCount(SqlSessionTemplate session) {
+	
+		return session.selectOne("market.selectOrderDetailCount");
+	}
+	
 }
