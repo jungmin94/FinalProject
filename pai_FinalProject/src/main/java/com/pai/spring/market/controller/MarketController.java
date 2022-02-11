@@ -2,8 +2,6 @@ package com.pai.spring.market.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,11 +22,14 @@ import com.pai.spring.market.model.service.MarketService;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
+import com.pai.spring.market.model.vo.Order;
+import com.pai.spring.market.model.vo.OrderDetail;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/market")
+@SessionAttributes({"loginMember"})
 @Slf4j
 public class MarketController {
 	
@@ -132,6 +135,70 @@ public class MarketController {
 		
 		return gds;
 	}
+	
+	@RequestMapping("/purchaseGood.do")
+	public ModelAndView purchaseGood(OrderDetail orderDetail,ModelAndView mv) {
+
+		mv.addObject("orderDetail",orderDetail);
+		mv.setViewName("market/purchaseDetailView");
+		return mv;
+	}
+	
+	@RequestMapping("purchaseGoodEnd.do")
+	@Transactional
+	public ModelAndView purchaseGoodEnd(Order order,OrderDetail orderDetail,ModelAndView mv) {
+		
+		String msg="";
+		String loc="";
+		int insertOrderResult = service.insertOrder(order);
+		if(insertOrderResult>0) {
+			int insertOrderDetailResult = service.insertOrderDetail(orderDetail);
+			
+			if(insertOrderDetailResult>0) {
+				GoodsDetails gd = new GoodsDetails();
+				gd.setGoodsName(orderDetail.getGoodsName());
+				gd.setColor(orderDetail.getOrderColor());
+				gd.setSize(orderDetail.getOrderSize());
+				int inven = service.goodPrice(gd).getInvenCount();
+				int finalInven = inven-orderDetail.getOrderCount();
+				gd.setInvenCount(finalInven);
+				
+				int updateInvenResult = service.updateInven(gd);
+				if(updateInvenResult>0) {
+					 msg="구매 완료되었습니다. 이용해주셔서 감사합니다";
+					 loc="/market/goodsList.do";	
+				}else {
+					 msg="구매에 문제가 발생하였습니다. 다시 결제 부탁드립니다 :(";
+					 loc="/market/goodsList.do";	
+				}
+				
+			}else {
+				 msg="구매에 문제가 발생하였습니다. 다시 결제 부탁드립니다 :(";
+				 loc="/market/goodsDetailView.do?goodsName="+orderDetail.getGoodsName();	
+			}
+		}else {
+			 msg="구매에 문제가 발생하였습니다. 다시 결제 부탁드립니다 :(";
+			 loc="/market/goodsDetailView.do?goodsName="+orderDetail.getGoodsName();	
+		}
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		return mv;
+	}
+	
+	@RequestMapping("/pay.do")
+	public ModelAndView pay(Order order,OrderDetail orderDetail,ModelAndView mv) {
+
+		mv.addObject("order",order);
+		mv.addObject("orderDetail",orderDetail);
+		mv.setViewName("market/pay");
+
+		return mv;
+		
+		
+	}
+	
+	
 	/*==============================================================================================
 	 																			관리자 로직
 	===============================================================================================*/

@@ -6,6 +6,8 @@ import java.util.Map;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
+import com.pai.spring.market.model.vo.Order;
+import com.pai.spring.market.model.vo.OrderDetail;
 
 public interface MarketService {
 
@@ -60,5 +62,11 @@ public interface MarketService {
 	GoodsDetails goodPrice(GoodsDetails gd);
 	
 	int deleteTitleGood(Goods good);
+	
+	int insertOrder(Order order);
+	
+	int insertOrderDetail(OrderDetail orderDetail);
+	
+	int updateInven(GoodsDetails gd);
 	
 }

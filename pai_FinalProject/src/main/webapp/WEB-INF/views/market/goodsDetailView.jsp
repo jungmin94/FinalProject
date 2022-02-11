@@ -51,7 +51,6 @@
 <jsp:include page="/WEB-INF/views/market/searchBar.jsp"/>
 	<br>
 </div>
-<input type="hidden" id="gName" value="${good.goodsName}">
 <input type="hidden" id="price" >
 <div class="container">
     <div class="row">
@@ -64,9 +63,9 @@
   			</c:if>
       </div>
       <div class="col">
-       <form action="${path}/market/purchaseGood.do" method="post">
+       <form id="purchaseFrm" action="${path}/market/purchaseGood.do" method="post">
         카테고리 1 (색상)
-        <select class="form-select" id="select_color" aria-label="Default select example">
+        <select class="form-select" id="select_color"  name="orderColor" aria-label="Default select example">
             <option disabled selected>색상을 선택하세요</option>
             <c:forEach items="${colorList}" var="c">
             	   <option value="${c.color}">${c.color}</option>
@@ -74,12 +73,12 @@
           </select>
           <br>
           카테고리 2 (사이즈)
-          <select class="form-select"  id="select_size" aria-label="Default select example">
+          <select class="form-select"  id="select_size"  name="orderSize" aria-label="Default select example">
             <option disabled selected>사이즈를 선택해주세요</option>
           </select>
           <br>
           카테고리 3 (MBTI로고) <span style="color:red;">@주문제작@</span>
-          <select class="form-select" aria-label="Default select example">
+          <select class="form-select" aria-label="Default select example" name="mbtiLogo">
             <option disabled selected>MBTI로고를 선택해주세요</option>
             <option value="ISTJ">ISTJ</option>
             <option value="ISFJ">ISFJ</option>
@@ -100,15 +99,17 @@
           </select>
           <br>
           수량
-          <input type="number" class="form-control"  min="1" id="inputBuyCount" name="buyCount">
+          <input type="number" class="form-control"  min="1" id="inputBuyCount" name="orderCount">
           <br>
          
           <!-- <input type="hidden" class="form-control" start=1 id="inputTotlaPrice" name="totalPrice"> -->
 			<%-- <p><fmt:formatNumber var="totalPrice" value=""  type="currency"/>원</p> --%>
-			<input type="number"  id="inputTotalPrice" name="totalPrice" readonly>원
+			<input type="number"  id="inputTotalPrice" name="orderPrice" readonly>원
 		  <br>
           <br>
-          <button type="submit" class="btn btn-outline-primary">구매하기</button>
+          <input type="hidden" id="gName"  name="goodsName" value="${good.goodsName}">
+          <input type="hidden" id="gNo"  name="goodsNo" value="${good.goodsNo}">
+          <button type="submit" class="btn btn-outline-primary" onclick="$('#purchaseFrm').submit();">구매하기</button>
           <button type="button" class="btn btn-outline-info">장바구니</button>
        </form>
       </div>
@@ -197,7 +198,7 @@ $(document).ready(function () {
 				for(let i=0; i<data.length; i++){
 					let option;
 					if(data[i].invenCount==0){
-						option = $("<option disabled value='"+data[i].size+"'>"+data[i].size+" 품절</option>");
+						option = $("<option style='color:red;' disabled value='"+data[i].size+"'>"+data[i].size+" 품절</option>");
 					}else if(0<data[i].invenCount && data[i].invenCount<5){
 						option = $("<option style='color:#F781BE;' value='"+data[i].size+"'>"+data[i].size+" 품절임박("+data[i].invenCount+"개남음)</option>");
 					}else{

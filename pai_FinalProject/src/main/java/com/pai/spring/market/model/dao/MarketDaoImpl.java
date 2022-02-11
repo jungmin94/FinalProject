@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
+import com.pai.spring.market.model.vo.Order;
+import com.pai.spring.market.model.vo.OrderDetail;
 
 @Repository
 public class MarketDaoImpl implements MarketDao {
@@ -163,13 +165,31 @@ public class MarketDaoImpl implements MarketDao {
 	@Override
 	public GoodsDetails goodPrice(SqlSessionTemplate session, GoodsDetails gd) {
 
-		return session.selectOne("market.goodPrice",gd);
+		return session.selectOne("market.goodPriceAndInven",gd);
 	}
 	
 	@Override
 	public int deleteTitleGood(SqlSessionTemplate session, Goods good) {
 	
 		return session.delete("market.deleteTitleGood",good);
+	}
+	
+	@Override
+	public int insertOrder(SqlSessionTemplate session, Order order) {
+		
+		return session.insert("market.insertOrder",order);
+	}
+	
+	@Override
+	public int insertOrderDetail(SqlSessionTemplate session, OrderDetail orderDetail) {
+		
+		return session.insert("market.insertOrderDetail",orderDetail);
+	}
+	
+	@Override
+	public int updateInven(SqlSessionTemplate session, GoodsDetails gd) {
+
+		return session.update("market.updateInven",gd);
 	}
 	
 }

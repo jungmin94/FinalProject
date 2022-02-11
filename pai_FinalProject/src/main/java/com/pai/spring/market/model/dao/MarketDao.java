@@ -8,6 +8,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
+import com.pai.spring.market.model.vo.Order;
+import com.pai.spring.market.model.vo.OrderDetail;
 
 public interface MarketDao {
 
@@ -62,5 +64,11 @@ public interface MarketDao {
 	GoodsDetails goodPrice(SqlSessionTemplate session,GoodsDetails gd);
 	
 	int deleteTitleGood(SqlSessionTemplate session,Goods good);
+	
+	int insertOrder(SqlSessionTemplate session,Order order);
+	
+	int insertOrderDetail(SqlSessionTemplate session,OrderDetail orderDetail);
+	
+	int updateInven(SqlSessionTemplate session,GoodsDetails gd);
 	
 }
