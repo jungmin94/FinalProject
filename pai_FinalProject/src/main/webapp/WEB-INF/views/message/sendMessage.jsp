@@ -45,7 +45,7 @@
     </div>
   </div>
 
-	<button class="btn btn-primary" onclick="sendMsg();">보내기</button>
+	<button class="btn btn-primary" id="btnSend">보내기</button>
 	<div id="container">
 	</div>
 
@@ -53,8 +53,59 @@
 
 	
 <script>
- 	const socket = new SockJS("http://localhost:9090${pageContext.request.contextPath}/message");	
-	socket.onopen=e=>{
+ 	const socket;
+ 	var memberId = "${loginMember.member_id}"; // sendId
+ 	
+ 	function connect(){
+ 		socket = new SockJS("http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message");
+ 		
+ 		socket.onopen = function(){
+ 			console.log("open");
+ 			register();
+ 		};
+ 		
+ 		socket.onmessage = function(e){
+ 			console.log("onmessage");
+			var data = e.data;
+			addMsg(data);
+ 			
+ 		};
+ 		
+ 		socket.onclose = function(){
+ 			console.log("close");
+ 		};
+ 		
+ 		
+ 		function register(){
+ 			var msg = {
+ 					type:"register",
+ 					sendId:"${loginMember.member_id}"
+ 			};
+ 			socket.send(JSON.stringify(msg));
+ 		}
+ 		
+ 		function sendMsg(){
+ 			var msg = {
+				type:"message",
+				target:"${param.member_id }",
+				message:$("#msgContent").val()
+ 			};
+ 			socket.send(JSON.stringify(msg));
+ 		}
+ 		
+ 		$(function(){
+ 			connect();
+ 			$('#btnSend').on("click",function()){
+ 				var chat 
+ 			}
+ 		});
+ 		
+ 		
+ 	}
+ 	
+ 	
+ 	/* const socket = new SockJS("http://localhost:9090${pageContext.request.contextPath}/message"); */	
+/* 	socket.onopen=e=>{
 	 	console.log(e);
 	}
 	const sendMsg=()=>{
@@ -65,7 +116,10 @@
 		console.log(message.data);
 
 		
-	} 
+	}  */
+	
+	
+	
 /* 	var socket = null;
 	function connect(){
 		var ws = new WebSocket("ws://localhost:9090{pageContext.request.contextPath}/message");
