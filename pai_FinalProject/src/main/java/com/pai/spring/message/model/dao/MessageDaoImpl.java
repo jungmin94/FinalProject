@@ -48,4 +48,30 @@ public class MessageDaoImpl implements MessageDao {
 	
 	
 	
+	@Override
+	public Map selectSendMSgDetail(SqlSessionTemplate session, int msgNo) {
+		return session.selectOne("message.selectSendMsgDetail", msgNo);
+	}
+
+	@Override
+	public int deleteRecvMsg(SqlSessionTemplate session, int msgNo) {
+		return session.update("message.deleteRecvMsg",msgNo);
+	}
+	
+	
+	@Override
+	public int deleteSendMsg(SqlSessionTemplate session, int msgNo) {
+		return session.update("message.deleteSendMsg",msgNo);
+	}
+
+	@Override
+	public void autoMessageDelete(SqlSessionTemplate session) {
+		session.delete("message.autoMessageDelete");
+	}
+
+
+	
+	
+	
+	
 }
