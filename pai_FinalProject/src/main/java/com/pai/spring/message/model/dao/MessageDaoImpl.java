@@ -69,6 +69,11 @@ public class MessageDaoImpl implements MessageDao {
 		session.delete("message.autoMessageDelete");
 	}
 
+	@Override
+	public int selectUnreadMsg(SqlSessionTemplate session, String memberId) {
+		return session.selectOne("message.selectUnreadMsg",memberId);
+	}
+
 
 	
 	

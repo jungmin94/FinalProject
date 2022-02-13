@@ -30,6 +30,6 @@ public interface MessageDao{
 	
 	void autoMessageDelete(SqlSessionTemplate session);
 	
-	
+	int selectUnreadMsg(SqlSessionTemplate session, String memberId);
 	
 }

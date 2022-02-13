@@ -255,6 +255,11 @@ a .sub-menu-detail {
 			/* open("${path}/message/messageBox.do","_blank","width=800,height=800"); */
 		}
         
+        //소켓 전역변수
+        var socket = null;
+        
+        //한번만 메시지 알림을 위해 받은편지 count 변수설정
+        
     	const socket = new SockJS("http://localhost:9090${pageContext.request.contextPath}");	
     	socket.onopen=e=>{
     	 	console.log(e);

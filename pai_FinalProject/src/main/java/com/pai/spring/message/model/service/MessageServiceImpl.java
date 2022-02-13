@@ -77,6 +77,11 @@ public class MessageServiceImpl implements MessageService {
 		
 	}
 
+	@Override
+	public int selectUnreadMsg(String memberId) {
+		return dao.selectUnreadMsg(session, memberId);
+	}
+
 	
 	
 	

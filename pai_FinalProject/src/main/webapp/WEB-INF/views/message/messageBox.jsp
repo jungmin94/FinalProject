@@ -25,7 +25,7 @@
 		</ul>
 	</div>
 	<div id="searchMessage">
-<!-- 		<form id="searchMsg" action="#">
+ 		<form id="searchMsg" action="#">
 			<select name="searchType">
 				<option value="msg_title">제목</option>
 				<option value="send_id">보낸사람</option>
@@ -37,7 +37,7 @@
 			<input type="date" id="endDate" name="endDate">
 
 			<input type="submit" value="검색"/>
-		</form> -->
+		</form>
 	</div>
 	
 	<div id="body-container">
@@ -231,7 +231,7 @@ function recvMsgBox(cPage){
 		
 			//삭제,목록버튼 생성해야함
 		}
-		let form = $("<form>").attr({method:"post"});
+	/* 	let form = $("<form>").attr({method:"post"});
 		let select = $("<select>").attr({name:"searchType"});
 		let option1 = $("<option>").value("msg_title").html("제목");
 		let option2 = $("<option>").value("send_id").html("보낸사람");
@@ -241,7 +241,7 @@ function recvMsgBox(cPage){
 		let search = $("<button>").attr({type:"submit"}).html("검색");
 		select.append(option1).append(option2);
 		form.append(select).append(keyword).append(startDate).append(endDate).append(search);
-		$("#searchMessage").append(form);
+		$("#searchMessage").append(form); */
 	});
 	
 	
