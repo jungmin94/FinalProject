@@ -20,6 +20,6 @@ public class Review {
 	private int grade;
 	private String reviewText;
 	private Date reviewDate;
-	private OrderDetail orderdetail;
+	private OrderDetail orderDetail;
 	
 }

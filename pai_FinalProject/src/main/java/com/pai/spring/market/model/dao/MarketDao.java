@@ -10,6 +10,7 @@ import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 import com.pai.spring.market.model.vo.Order;
 import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.market.model.vo.Review;
 import com.pai.spring.member.model.vo.Member;
 
 public interface MarketDao {
@@ -83,5 +84,15 @@ public interface MarketDao {
 	int updateAvgGrade(SqlSessionTemplate session,Goods good);
 	
 	int updateCheckReviewDo(SqlSessionTemplate session,Map<String,Object> param);
+	
+	List<Review> selectReviewList(SqlSessionTemplate session,int cPage,int numPerPage,Member m);
+	
+	int selectReviewCount(SqlSessionTemplate session,Member m);
+	
+	int updateReview(SqlSessionTemplate session,Review rv);
+	
+	Review selectReviewUseNo(SqlSessionTemplate session,Review rv);
+	
+	int deleteReview(SqlSessionTemplate session,Review rv);
 	
 }

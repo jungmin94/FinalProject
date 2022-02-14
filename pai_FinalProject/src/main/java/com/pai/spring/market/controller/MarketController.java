@@ -25,6 +25,7 @@ import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 import com.pai.spring.market.model.vo.Order;
 import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.market.model.vo.Review;
 import com.pai.spring.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -234,7 +235,7 @@ public class MarketController {
 			int reviewTotalCount = service.reviewTotalCount(goodsName);
 			Goods good = service.selectGood(goodsName);
 			int avgGrade=good.getAvgGrade();
-			int updateGrade = Math.round((avgGrade+grade)/reviewTotalCount);
+			int updateGrade = Math.round((avgGrade*(reviewTotalCount-1)+grade)/reviewTotalCount);
 			good.setAvgGrade(updateGrade);
 			
 			int updateAvgGrageResult = service.updateAvgGrade(good);
@@ -252,6 +253,93 @@ public class MarketController {
 			 loc="/market/myOrderedView.do";	
 		}
 		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+	}
+	
+	@RequestMapping("/myReviewList.do")
+	public ModelAndView myReviewList(@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="5") int numPerPage,HttpSession session,ModelAndView mv) {
+		Member m = (Member)session.getAttribute("loginMember");
+
+		List<Review> reviewList = service.selectReviewList(cPage,numPerPage,m);
+		
+		int totalData = service.selectReviewCount(m);
+		
+		mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage,5, "myReviewList.do", null));	
+		mv.addObject("reviewList",reviewList);	
+		
+		mv.setViewName("market/myReview");
+		
+		return mv;
+	}
+	
+	@RequestMapping("/updateReview.do")
+	@Transactional
+	public ModelAndView updaterReview(Review rv,ModelAndView mv) {
+		
+		String msg="";
+		String loc="";
+		
+		Review review = service.selectReviewUseNo(rv);
+		String goodsName = review.getGoodsName();
+		Goods good = service.selectGood(goodsName);
+		int avgGrade=good.getAvgGrade();
+		int reviewTotalCount = service.reviewTotalCount(goodsName);
+		
+		int updateGrade = Math.round(((avgGrade*reviewTotalCount)-review.getGrade()+rv.getGrade())/reviewTotalCount);
+		good.setAvgGrade(updateGrade);
+		
+		int updateAvgGrageResult = service.updateAvgGrade(good);
+		int updateReviewResult = service.updateReview(rv);
+		
+		 if(updateReviewResult>0 && updateAvgGrageResult>0) {
+			 msg="리뷰 수정 성공";
+			 loc="/market/myReviewList.do";			 
+		 }else {
+			 msg="리뷰 수정 실패";
+			 loc="/market/myReviewList.do";	
+		 }
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+		
+	}
+	
+	@RequestMapping("/deleteReview.do")
+	@Transactional
+	public ModelAndView deleteReview(Review rv,ModelAndView mv) {
+		
+		String msg="";
+		String loc="";
+		
+		Review review = service.selectReviewUseNo(rv);
+		String goodsName = review.getGoodsName();
+		Goods good = service.selectGood(goodsName);
+		int avgGrade=good.getAvgGrade();
+		int reviewTotalCount = service.reviewTotalCount(goodsName);
+		
+		int TotalCount = reviewTotalCount-1;
+		if(TotalCount==0)TotalCount=1;
+		
+		int updateGrade = Math.round(((avgGrade*reviewTotalCount)-review.getGrade())/(TotalCount));
+		good.setAvgGrade(updateGrade);
+		
+		int updateAvgGrageResult = service.updateAvgGrade(good);
+		int deleteReviewResult = service.deleteReview(rv);
+		
+		 if(deleteReviewResult>0 && updateAvgGrageResult>0) {
+			 msg="리뷰 삭제 성공";
+			 loc="/market/myReviewList.do";			 
+		 }else {
+			 msg="리뷰 삭제 실패";
+			 loc="/market/myReviewList.do";	
+		 }
 		mv.addObject("msg",msg);
 		mv.addObject("loc",loc);
 		mv.setViewName("common/msg");

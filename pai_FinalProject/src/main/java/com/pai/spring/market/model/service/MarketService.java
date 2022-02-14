@@ -8,6 +8,7 @@ import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 import com.pai.spring.market.model.vo.Order;
 import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.market.model.vo.Review;
 import com.pai.spring.member.model.vo.Member;
 
 public interface MarketService {
@@ -81,5 +82,15 @@ public interface MarketService {
 	int updateAvgGrade(Goods good);
 	
 	int updateCheckReviewDo(Map<String,Object> param);
+	
+	List<Review> selectReviewList(int cPage,int numPerPage,Member m);
+	
+	int selectReviewCount(Member m);
+	
+	int updateReview(Review rv);
+	
+	Review selectReviewUseNo(Review rv);
+	
+	int deleteReview(Review rv);
 	
 }

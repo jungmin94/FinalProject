@@ -13,6 +13,7 @@ import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 import com.pai.spring.market.model.vo.Order;
 import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.market.model.vo.Review;
 import com.pai.spring.member.model.vo.Member;
 
 @Service
@@ -235,6 +236,36 @@ public class MarketServiceImpl implements MarketService {
 	public int updateCheckReviewDo(Map<String, Object> param) {
 		
 		return dao.updateCheckReviewDo(session, param);
+	}
+	
+	@Override
+	public List<Review> selectReviewList(int cPage, int numPerPage, Member m) {
+	
+		return dao.selectReviewList(session, cPage, numPerPage, m);
+	}
+
+	@Override
+	public int selectReviewCount(Member m) {
+	
+		return dao.selectReviewCount(session, m);
+	}
+	
+	@Override
+	public int updateReview(Review rv) {
+		
+		return dao.updateReview(session, rv);
+	}
+	
+	@Override
+	public Review selectReviewUseNo(Review rv) {
+
+		return dao.selectReviewUseNo(session, rv);
+	}
+
+	@Override
+	public int deleteReview(Review rv) {
+
+		return dao.deleteReview(session, rv);
 	}
 	
 }

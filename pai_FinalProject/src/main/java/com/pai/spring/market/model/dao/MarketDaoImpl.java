@@ -12,6 +12,7 @@ import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 import com.pai.spring.market.model.vo.Order;
 import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.market.model.vo.Review;
 import com.pai.spring.member.model.vo.Member;
 
 @Repository
@@ -227,6 +228,36 @@ public class MarketDaoImpl implements MarketDao {
 	public int updateCheckReviewDo(SqlSessionTemplate session, Map<String, Object> param) {
 		
 		return session.update("market.updateCheckReviewDo",param);
+	}
+	
+	@Override
+	public List<Review> selectReviewList(SqlSessionTemplate session, int cPage, int numPerPage, Member m) {
+	
+		return session.selectList("market.selectReviewList",m,new RowBounds((cPage-1)*numPerPage,numPerPage));
+	}
+
+	@Override
+	public int selectReviewCount(SqlSessionTemplate session, Member m) {
+	
+		return session.selectOne("market.selectReviewCount",m);
+	}
+	
+	@Override
+	public int updateReview(SqlSessionTemplate session, Review rv) {
+		
+		return session.update("market.updateReview",rv);
+	}
+	
+	@Override
+	public Review selectReviewUseNo(SqlSessionTemplate session, Review rv) {
+	
+		return session.selectOne("market.selectReviewUseNo",rv);
+	}
+	
+	@Override
+	public int deleteReview(SqlSessionTemplate session, Review rv) {
+	
+		return session.delete("market.deleteReview",rv);
 	}
 	
 }
