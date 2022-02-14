@@ -217,6 +217,46 @@ public class MarketController {
 	}
 	
 	
+	@RequestMapping("/enrollReview.do")
+	@Transactional
+	public ModelAndView enrollReview(@RequestParam Map<String,Object> param,ModelAndView mv) {
+		
+		String msg="";
+		String loc="";
+		int grade = Integer.parseInt(param.get("grade").toString());
+		
+		int insertReviewResult = service.insertReview(param);
+		if(insertReviewResult>0) {
+			String goodsName = (String)(param.get("goodsName"));
+			int reviewTotalCount = service.reviewTotalCount(goodsName);
+			Goods good = service.selectGood(goodsName);
+			int avgGrade=good.getAvgGrade();
+			int updateGrade = Math.round((avgGrade+grade)/reviewTotalCount);
+			good.setAvgGrade(updateGrade);
+			
+			int updateAvgGrageResult = service.updateAvgGrade(good);
+			int updateCheckReviewDo = service.updateCheckReviewDo(param);
+			
+			if(0<updateAvgGrageResult && updateCheckReviewDo>0) {
+				 msg="리뷰등록이 완료되었습니다. 감사합니다 :)";
+				 loc="/market/myOrderedView.do";	
+			}else {
+				 msg="리뷰등록에 문제가 발생하였습니다. 다시 입력 부탁드립니다. :(";
+				 loc="/market/myOrderedView.do";	
+			}	
+		}else {
+			 msg="리뷰등록에 문제가 발생하였습니다. 다시 입력 부탁드립니다. :(";
+			 loc="/market/myOrderedView.do";	
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+		
+		return mv;
+	}
+	
+	
 	/*==============================================================================================
 	 																			관리자 로직
 	===============================================================================================*/

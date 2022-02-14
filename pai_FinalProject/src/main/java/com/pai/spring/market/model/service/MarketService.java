@@ -73,4 +73,12 @@ public interface MarketService {
 	
 	int selectOrderDetailCount();
 	
+	int insertReview(Map<String,Object> param);
+	
+	int reviewTotalCount(String goodsName);
+	
+	int updateAvgGrade(Goods good);
+	
+	int updateCheckReviewDo(Map<String,Object> param);
+	
 }

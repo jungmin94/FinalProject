@@ -212,4 +212,28 @@ public class MarketServiceImpl implements MarketService {
 		return dao.selectOrderDetailCount(session);
 	}
 	
+	@Override
+	public int insertReview(Map<String, Object> param) {
+		
+		return dao.insertReview(session,param);
+	}
+	
+	@Override
+	public int reviewTotalCount(String goodsName) {
+	
+		return dao.reviewTotalCount(session, goodsName);
+	}
+	
+	@Override
+	public int updateAvgGrade(Goods good) {
+	
+		return dao.updateAvgGrade(session, good);
+	}
+	
+	@Override
+	public int updateCheckReviewDo(Map<String, Object> param) {
+		
+		return dao.updateCheckReviewDo(session, param);
+	}
+	
 }

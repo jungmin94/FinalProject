@@ -75,4 +75,12 @@ public interface MarketDao {
 	
 	int selectOrderDetailCount(SqlSessionTemplate session);
 	
+	int insertReview(SqlSessionTemplate session,Map<String,Object> param);
+	
+	int reviewTotalCount(SqlSessionTemplate session,String goodsName);
+	
+	int updateAvgGrade(SqlSessionTemplate session,Goods good);
+	
+	int updateCheckReviewDo(SqlSessionTemplate session,Map<String,Object> param);
+	
 }

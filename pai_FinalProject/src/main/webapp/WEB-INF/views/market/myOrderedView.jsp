@@ -84,7 +84,8 @@
 			<td><fmt:formatNumber  value="${l.orderDetail.get(0).orderPrice}"  type="currency"/>원</td>
 			<td>
 				<c:if test="${l.orderDetail.get(0).checkReview.equals('N')}">
-					<button type="button"  id="enrollReviewBtn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#enrollReviewModal">리뷰등록</button>
+					<button type="button"  id="enrollReviewBtn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#enrollReviewModal"
+					data-gno="${l.orderDetail.get(0).goodsNo}" data-gname="${l.orderDetail.get(0).goodsName}" data-detailno="${l.orderDetail.get(0).orderDetailNo}">리뷰등록</button>
 				</c:if>
 				<c:if test="${l.orderDetail.get(0).checkReview.equals('Y')}">
 					<button type="button" class="btn btn-outline-secondary">등록완료</button>
@@ -111,31 +112,35 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" >
-      <form>
+      <form id="enrollReviewFrm" action="${path}/market/enrollReview.do">
     	<span style="color:purple;">별점</span>
 		<div class="star-rating" >
-		  <input type="radio" id="5-stars" name="rating" value="5" />
+		  <input type="radio" id="5-stars" name="grade" value="5" />
 		  <label for="5-stars" class="star">&#9733;</label>
-		  <input type="radio" id="4-stars" name="rating" value="4" />
+		  <input type="radio" id="4-stars" name="grade" value="4" />
 		  <label for="4-stars" class="star">&#9733;</label>
-		  <input type="radio" id="3-stars" name="rating" value="3" />
+		  <input type="radio" id="3-stars" name="grade" value="3" />
 		  <label for="3-stars" class="star">&#9733;</label>
-		  <input type="radio" id="2-stars" name="rating" value="2" />
+		  <input type="radio" id="2-stars" name="grade" value="2" />
 		  <label for="2-stars" class="star">&#9733;</label>
-		  <input type="radio" id="1-star" name="rating" value="1" />
+		  <input type="radio" id="1-star" name="grade" value="1" />
 		  <label for="1-star" class="star">&#9733;</label>
 		</div>
 		<br>
 		<span style="color:purple;">내용작성</span>
 		<div class="form-floating">
-		  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px;"></textarea>
+		  <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"  name="reviewText" style="height: 200px;"></textarea>
 		</div>
+		<input type="hidden" id="re_mem_id" name="member_id" value="${loginMember.member_id}">
+		<input type="hidden" id="re_goodsNo" name="goodsNo">
+		<input type="hidden" id="re_goodsName" name="goodsName">
+		<input type="hidden" id="re_detailNo" name="orderDetailNo">
 	</form>
 
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="$('#delTitleGood').submit();">삭제</button>
+        <button type="button" class="btn btn-primary" onclick="$('#enrollReviewFrm').submit();">등록</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
@@ -143,7 +148,17 @@
 </div>
 
 <script>
+$(document).on("click", "#enrollReviewBtn", function () { 
+	
+	let goodNo = $(this).data('gno');
+	let goodName = $(this).data('gname');
+	let detailNo = $(this).data('detailno');
+	
+	$('#re_goodsName').val(goodName);
+	$('#re_goodsNo').val(goodNo);
+	$('#re_detailNo').val(detailNo);
 
+});
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

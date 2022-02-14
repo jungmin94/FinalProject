@@ -204,4 +204,28 @@ public class MarketDaoImpl implements MarketDao {
 		return session.selectOne("market.selectOrderDetailCount");
 	}
 	
+	@Override
+	public int insertReview(SqlSessionTemplate session,Map<String, Object> param) {
+	
+		return session.insert("market.insertReview",param);
+	}
+	
+	@Override
+	public int reviewTotalCount(SqlSessionTemplate session, String goodsName) {
+	
+		return session.selectOne("market.reviewTotalCount",goodsName);
+	}
+	
+	@Override
+	public int updateAvgGrade(SqlSessionTemplate session, Goods good) {
+	
+		return session.update("market.updateAvgGrade",good);
+	}
+	
+	@Override
+	public int updateCheckReviewDo(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.update("market.updateCheckReviewDo",param);
+	}
+	
 }
