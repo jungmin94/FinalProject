@@ -74,6 +74,11 @@ public class MessageDaoImpl implements MessageDao {
 		return session.selectOne("message.selectUnreadMsg",memberId);
 	}
 
+	@Override
+	public int sendMessage(SqlSessionTemplate session, Map param) {
+		return session.insert("message.sendMessage",param);
+	}
+
 
 	
 	

@@ -32,4 +32,6 @@ public interface MessageService {
 	//받은편지중 읽지않은 쪽지 갯수
 	int selectUnreadMsg(String memberId);
 	
+	int sendMessage(Map param);
+	
 }

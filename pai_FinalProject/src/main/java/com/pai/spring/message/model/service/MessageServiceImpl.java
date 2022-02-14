@@ -82,6 +82,11 @@ public class MessageServiceImpl implements MessageService {
 		return dao.selectUnreadMsg(session, memberId);
 	}
 
+	@Override
+	public int sendMessage(Map param) {
+		return dao.sendMessage(session, param);
+	}
+
 	
 	
 	

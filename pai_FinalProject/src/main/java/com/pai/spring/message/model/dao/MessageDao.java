@@ -32,4 +32,6 @@ public interface MessageDao{
 	
 	int selectUnreadMsg(SqlSessionTemplate session, String memberId);
 	
+	int sendMessage(SqlSessionTemplate session, Map param);
+	
 }

@@ -45,9 +45,9 @@ public class MessageServer extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("Socket 연결");
 		sessions.add(session);
-		logger.info(currentUserName(session));//현재 접속한 사람
-		String senderId = currentUserName(session);
-		userSessionsMap.put(senderId,session);
+//		logger.info(currentUserName(session));//현재 접속한 사람
+//		String senderId = currentUserName(session);
+//		userSessionsMap.put(senderId,session);
 		// 접속한 전체 유저 아이디
 //		clients.add(session);
 //

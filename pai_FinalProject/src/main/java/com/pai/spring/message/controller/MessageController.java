@@ -182,7 +182,16 @@ public class MessageController {
 		return new Gson().toJson(msg);
 	}
 	
+	//쪽지보내기
+	@RequestMapping(value="/sendMessage.do", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String sendMessage(@RequestParam Map param) {
+		int msg = service.sendMessage(param);
+		Map<String, Object> result = Map.of("sendId",param.get("sendId"), "recvId",param.get("recvId"));
+			
 	
+		return new Gson().toJson(result);
+	}
 
 	
 	

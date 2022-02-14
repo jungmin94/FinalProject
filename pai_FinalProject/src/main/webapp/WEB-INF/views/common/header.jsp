@@ -12,6 +12,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
 <title>PAI</title>
 <style>
 body {  
@@ -215,7 +217,7 @@ a .sub-menu-detail {
 				<span class="badge bg-danger">4</span>
 				</div>
 				<form id="myIdData" action="${path}/message/messageBox.do" method="post" target="msgBox">
-				  <input type="hidden" name="memberId" value="${loginMember.member_id}">
+				  <input type="hidden" name="memberId" value="${loginMember.member_id}" id="memberId">
 				</form>
 			</a>
 			<a href="${path}/board/myboardView.do?memberId=${loginMember.member_id}">
@@ -255,22 +257,72 @@ a .sub-menu-detail {
 			/* open("${path}/message/messageBox.do","_blank","width=800,height=800"); */
 		}
         
-        //소켓 전역변수
-        var socket = null;
         
         //한번만 메시지 알림을 위해 받은편지 count 변수설정
         
-    	const socket = new SockJS("http://localhost:9090${pageContext.request.contextPath}");	
-    	socket.onopen=e=>{
-    	 	console.log(e);
-    	}
+
+        //소켓 전역변수
+        var socket = null;
+		$(document).ready(function(){
+		if(${loginMember.member_id != null}){
+		connectWs();
+		}
+		})
+		
+		
+		//소켓
+		
+		
+		function connectWs(){
+		console.log("tttttt")
+		//var ws = new SockJS("http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message");
+		var ws = new SockJS("http://localhost:9090${pageContext.request.contextPath}/");
+		socket = ws;
+		
+			ws.onopen = function() {
+		 console.log('open');
+		 
+		 };
+		};
         
-   /*      var socket = null;
-        $(document).ready(function(){
-        	connectWS();
-        	console.log("소켓연결 성공")
-        }); */
+        
+        
+        
+        
+    /*      var socket = null;
+         $(document).ready(function(){
+        	    // 웹소켓 연결
+        	    sock = new SockJS("http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message");
+
+        	    socket = sock;
+        	    socket.onopen = function(){
+        	    	
+        	    console.log('Info: connection opened');
+        	    }
+
+        	    // 데이터를 전달 받았을때 
+        	    //sock.onmessage = onMessage; // toast 생성
+        	}); */
+        
+     // toast생성 및 추가
+/*         function onMessage(evt){
+            var data = evt.data;
+            // toast
+            let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+            toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+            toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+            toast += "<span aria-hidden='true'>&times;</span></button>";
+            toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+            $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
+            $(".toast").toast({"animation": true, "autohide": false});
+            $('.toast').toast('show');
+        }; */
         
     </script>
 	</nav>
+	
+	 <div id="msgStack"></div>
+	
 </header>
+
+

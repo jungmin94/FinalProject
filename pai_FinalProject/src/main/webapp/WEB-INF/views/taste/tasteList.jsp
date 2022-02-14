@@ -74,9 +74,8 @@
                 <h5 class="modal-title">쪽지 보내기</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form class="msg_form">
+                <form class="msg_form" method="post">
                     <input type="hidden" id="flag" name="flag" value="insert"/>
-                    <input type="hidden" name="member_id" id="member_id" >
                     <div class="modal-body fn-font">
                         <table>
                             <colgroup>
@@ -87,8 +86,8 @@
                                 <tr>
                                     <th>보낸 사람</th>
                                     <th>
-                                    	<input type="text" class="form-control-plaintext" name="send_nick" id="send_nick" value="${loginMember.member_nick}" readonly/>
-                                    	<input type="hidden" name="send_id" id="send_id" value="${loginMember.member_id}">
+                                    	<input type="text" class="form-control-plaintext" name="sendNick" id="sendNick" value="${loginMember.member_nick}" readonly/>
+                                    	<input type="hidden" name="sendId" id="sendId" value="${loginMember.member_id}">
                                     </th>
                                 </tr>
                                 <tr>
@@ -110,11 +109,11 @@
                             </tbody>
                         </table>
                     </div>
-                </form>
                 <div class="modal-footer fn-font">
-                    <button class="btn btn-primary" id="msgSend">보내기</button>
+                    <button class="btn btn-primary" id="msgSend" type="submit">보내기</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -146,21 +145,27 @@ const sendMessage=(e)=>{
 
 
 $("#msgSend").click(function(){
-    var msg= "쪽지를 보낼래?";
+     var msg= "정말 발송하시겠습니까?";
     
     if(!confirm(msg))
         return false;
     
     $.ajax({
-        url : "/message/message_proc.do",
+        url : "${path}/message/sendMessage.do",
         dataType : "json",
         type : "post",
         data : $(".msg_form").serialize(),
         success:function(data){
-            alert("쪽지를 보냈습니다.");                
+        	console.log(data);
+            alert("쪽지를 보냈습니다.");  
+            socket.send("관리자,"+target+","+content+","+url);
         }
     })
+
+ 
+    modal.find('.modal-body textarea').val('');	// textarea 초기화
 });
+
 
 
 </script>
