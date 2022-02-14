@@ -260,4 +260,16 @@ public class MarketDaoImpl implements MarketDao {
 		return session.delete("market.deleteReview",rv);
 	}
 	
+	@Override
+	public int updateTotalCell(SqlSessionTemplate session, Goods good) {
+		
+		return session.update("market.updateTotalCell",good);
+	}
+	
+	@Override
+	public List<Review> selectReviewList(SqlSessionTemplate session, int cPage, int numPerPage, String goodsName) {
+	
+		return session.selectList("market.selectReviewMainList",goodsName,new RowBounds((cPage-1)*numPerPage,numPerPage));
+	}
+	
 }

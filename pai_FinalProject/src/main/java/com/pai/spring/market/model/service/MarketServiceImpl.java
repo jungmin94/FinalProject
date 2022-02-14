@@ -268,4 +268,16 @@ public class MarketServiceImpl implements MarketService {
 		return dao.deleteReview(session, rv);
 	}
 	
+	@Override
+	public int updateTotalCell(Goods good) {
+
+		return dao.updateTotalCell(session, good);
+	}
+	
+	@Override
+	public List<Review> selectReviewList(int cPage, int numPerPage, String goodsName) {
+		
+		return dao.selectReviewList(session, cPage, numPerPage, goodsName);
+	}
+	
 }

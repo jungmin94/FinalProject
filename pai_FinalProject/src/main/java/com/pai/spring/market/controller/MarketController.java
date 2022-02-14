@@ -99,7 +99,8 @@ public class MarketController {
 	
 	/* 상품 상세페이지 불러오기 */
 	@RequestMapping("/goodsDetailView.do")
-	public ModelAndView goodsDetailView(String goodsName,ModelAndView mv) {
+	public ModelAndView goodsDetailView(String goodsName,@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,ModelAndView mv) {
 		
 		// 해당 제품 정보 가져오기
 		Goods good = service.selectGood(goodsName);
@@ -108,7 +109,15 @@ public class MarketController {
 		List<GoodsDetailImage> imageList = service.selectImageList(goodsName);
 		System.out.println(imageList);
 		// 해당 제품 컬러 모두 가져오기
-		List<GoodsDetails> colorList = service.selectColorList(goodsName); 
+		List<GoodsDetails> colorList = service.selectColorList(goodsName);
+		
+		// 해당 제품 리뷰 가져오기
+		List<Review> reviewList = service.selectReviewList(cPage, numPerPage,goodsName);
+		
+		int totalData =service.reviewTotalCount(goodsName);
+		
+		mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage,5, "goodsDetailView.do", null));	
+		mv.addObject("reviewList",reviewList);
 		
 		mv.addObject("good",good);
 		mv.addObject("imageList",imageList);
@@ -168,7 +177,14 @@ public class MarketController {
 				gd.setInvenCount(finalInven);
 				
 				int updateInvenResult = service.updateInven(gd);
-				if(updateInvenResult>0) {
+				
+				String goodsName=orderDetail.getGoodsName();			
+				Goods good = service.selectGood(goodsName);
+				good.setTotalCell(good.getTotalCell()+1);
+				
+				int updateTotalCellResult = service.updateTotalCell(good);
+				
+				if(updateInvenResult>0 && updateTotalCellResult>0) {
 					 msg="구매 완료되었습니다. 이용해주셔서 감사합니다";
 					 loc="/market/goodsList.do";	
 				}else {

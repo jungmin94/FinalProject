@@ -93,4 +93,8 @@ public interface MarketService {
 	
 	int deleteReview(Review rv);
 	
+	int updateTotalCell(Goods good);
+	
+	List<Review> selectReviewList(int cPage,int numPerPage,String goodsName);
+	
 }

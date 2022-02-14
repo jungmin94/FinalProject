@@ -41,6 +41,62 @@
 			    transform: scale(0.8);
 			  }
 			}
+			
+.star-rating {
+  border:solid 1px #ccc;
+  display:flex;
+  flex-direction: row-reverse;
+  font-size:1.5em;
+  justify-content:space-around;
+  padding:0 .2em;
+  text-align:center;
+  width:5em;
+}
+
+.star-rating input {
+  display:none;
+}
+
+.star-rating label {
+  color:#ccc;
+  cursor:pointer;
+}
+
+.star-rating :checked ~ label {
+  color:#f90;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color:#fc0;
+}
+
+.star-ratings {
+  color: #aaa9a9; 
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+}
+ 
+.star-ratings-fill {
+  color: #fff58c;
+  padding: 0;
+  position: absolute; 
+  z-index: 1;
+  display: flex;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  -webkit-text-fill-color: gold;
+}
+ 
+.star-ratings-base {
+  z-index: 0; 
+  padding-left: 0;
+}			
 </style>
 <section>
 <div class="container">
@@ -168,10 +224,58 @@
 	<img src="${path}/resources/images/market/세탁방법.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
 	<img src="${path}/resources/images/market/제품증명.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
   </div>
+	<br>
+	<br>
+  	<div class="container" style="text-align: center; color:purple;">
+		<h3>상품리뷰</h3>
+	<table class="table align-middle" style="text-align: center;">
+		<thead>
+		  <tr>
+			<th scope="col">구매자</th>
+			<th scope="col">색상</th>
+			<th scope="col">사이즈</th>
+			<th scope="col">MBTI로고</th>
+			<th scope="col" >별점</th>
+			<th scope="col">구매후기</th>
+		  </tr>
+		</thead>
+		<tbody>
+		<c:forEach items="${reviewList}" var="r">
+		  <tr>
+			<td>${r.member_id}</td>
+			<td>${r.orderDetail.orderColor}</td>
+			<td>${r.orderDetail.orderSize}</td>
+			<td>${r.orderDetail.mbtiLogo}</td>
+			<td>
+					<div class="star-ratings" >
+						<div class="star-ratings-fill space-x-2 text-lg" >
+							<!--  &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp -->
+							<c:choose>
+								<c:when test="${r.grade==1}"><span>★</span></c:when>
+								<c:when test="${r.grade==2}"><span>★</span><span>★</span></c:when>
+								<c:when test="${r.grade==3}"><span>★</span><span>★</span><span>★</span></c:when>
+								<c:when test="${r.grade==4}"><span>★</span><span>★</span><span>★</span><span>★</span></c:when>
+								<c:when test="${r.grade==5}"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></c:when>
+							</c:choose>
+						</div>
+						<div class="star-ratings-base space-x-2 text-lg">
+				<!-- 			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp -->
+							<span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+						</div>
+					</div>
+			</td>
+			<td style="width:200px;">${r.reviewText}</td>
+		  </tr>
+		</c:forEach>
 
-  	<div class="container" style="text-align: center;">
-
+		</tbody>
+	  </table>
+		
 	</div>
+	<div style="text-align:center;">
+		${pageBar}
+	</div>
+
 
 	<br>
   <div class="container" style="text-align: center;">

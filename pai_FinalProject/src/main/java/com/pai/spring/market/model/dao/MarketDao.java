@@ -95,4 +95,8 @@ public interface MarketDao {
 	
 	int deleteReview(SqlSessionTemplate session,Review rv);
 	
+	int updateTotalCell(SqlSessionTemplate session,Goods good);
+	
+	List<Review> selectReviewList(SqlSessionTemplate session,int cPage,int numPerPage,String goodsName);
+	
 }
