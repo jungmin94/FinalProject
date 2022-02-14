@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 import com.pai.spring.market.model.vo.Order;
 import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -200,12 +202,13 @@ public class MarketController {
 	
 	@RequestMapping("/myOrderedView.do")
 	public ModelAndView myOrderdView(@RequestParam(value="cPage",defaultValue="1") int cPage,
-			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,ModelAndView mv) {
-		
-	List<Order> list = service.orderDetailList(cPage,numPerPage);	
-	System.out.println("결과나와랍 : "+list);
+			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,HttpSession session,ModelAndView mv) {
+	Member m = (Member)session.getAttribute("loginMember");
+	System.out.println(m);
 	
-	int totalOrderDetail = service.selectOrderDetailCount();
+	List<Order> list = service.orderDetailList(cPage,numPerPage,m);	
+	
+	int totalOrderDetail = service.selectOrderDetailCount(m);
 	
 		
 	mv.addObject("pageBar",PageFactory.getPageBar(totalOrderDetail, cPage, numPerPage,5, "myOrderdView.do", null));	

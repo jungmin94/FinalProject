@@ -10,6 +10,7 @@ import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 import com.pai.spring.market.model.vo.Order;
 import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.member.model.vo.Member;
 
 public interface MarketDao {
 
@@ -71,9 +72,9 @@ public interface MarketDao {
 	
 	int updateInven(SqlSessionTemplate session,GoodsDetails gd);
 	
-	List<Order> orderDetailList(SqlSessionTemplate session,int cPage,int numPerPage);
+	List<Order> orderDetailList(SqlSessionTemplate session,int cPage,int numPerPage,Member m);
 	
-	int selectOrderDetailCount(SqlSessionTemplate session);
+	int selectOrderDetailCount(SqlSessionTemplate session,Member m);
 	
 	int insertReview(SqlSessionTemplate session,Map<String,Object> param);
 	

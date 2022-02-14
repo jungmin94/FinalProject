@@ -8,6 +8,7 @@ import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 import com.pai.spring.market.model.vo.Order;
 import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.member.model.vo.Member;
 
 public interface MarketService {
 
@@ -69,9 +70,9 @@ public interface MarketService {
 	
 	int updateInven(GoodsDetails gd);
 	
-	List<Order> orderDetailList(int cPage,int numPerPage);
+	List<Order> orderDetailList(int cPage,int numPerPage,Member m);
 	
-	int selectOrderDetailCount();
+	int selectOrderDetailCount(Member m);
 	
 	int insertReview(Map<String,Object> param);
 	

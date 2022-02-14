@@ -13,6 +13,7 @@ import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 import com.pai.spring.market.model.vo.Order;
 import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.member.model.vo.Member;
 
 @Service
 public class MarketServiceImpl implements MarketService {
@@ -201,15 +202,15 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
-	public List<Order> orderDetailList(int cPage, int numPerPage) {
+	public List<Order> orderDetailList(int cPage, int numPerPage,Member m) {
 		
-		return dao.orderDetailList(session, cPage, numPerPage);
+		return dao.orderDetailList(session, cPage, numPerPage,m);
 	}
 
 	@Override
-	public int selectOrderDetailCount() {
+	public int selectOrderDetailCount(Member m) {
 		
-		return dao.selectOrderDetailCount(session);
+		return dao.selectOrderDetailCount(session,m);
 	}
 	
 	@Override

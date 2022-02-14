@@ -12,6 +12,7 @@ import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 import com.pai.spring.market.model.vo.Order;
 import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.member.model.vo.Member;
 
 @Repository
 public class MarketDaoImpl implements MarketDao {
@@ -193,15 +194,15 @@ public class MarketDaoImpl implements MarketDao {
 	}
 	
 	@Override
-	public List<Order> orderDetailList(SqlSessionTemplate session, int cPage, int numPerPage) {
+	public List<Order> orderDetailList(SqlSessionTemplate session, int cPage, int numPerPage,Member m) {
 	
-		return session.selectList("market.orderDetailList",null,new RowBounds((cPage-1)*numPerPage,numPerPage));
+		return session.selectList("market.orderDetailList",m,new RowBounds((cPage-1)*numPerPage,numPerPage));
 	}
 
 	@Override
-	public int selectOrderDetailCount(SqlSessionTemplate session) {
+	public int selectOrderDetailCount(SqlSessionTemplate session,Member m) {
 	
-		return session.selectOne("market.selectOrderDetailCount");
+		return session.selectOne("market.selectOrderDetailCount",m);
 	}
 	
 	@Override
