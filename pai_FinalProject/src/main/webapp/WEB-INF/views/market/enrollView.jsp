@@ -84,7 +84,7 @@
 					</button>
 				</c:if>
 				<c:if test="${g.goodsDetailImage.isEmpty()}">
-					<button type="button"  id="updateGoodDetailImageBtn" class="btn btn-outline-success"  
+					<button type="button"  id="enrollGoodDetailImageBtn" class="btn btn-outline-success"  
 					data-bs-toggle="modal" data-bs-target="#enrollGoodDetailImage"  data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
 	  				상세이미지 등록
 					</button>
@@ -151,7 +151,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <div style="text-align:center; color:purple;">최대 3장까지 등록가능합니다</div>
+      <div style="text-align:center; color:purple;">최대 3장까지 등록 가능합니다</div>
       <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
 		  <div class="carousel-indicators">
 		    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -193,9 +193,9 @@
       
         <form id="enrollGoodDetailImgFrm" action="${path}/market/enrollGoodDetailImage.do" method="post"
         enctype="multipart/form-data">
-			<input type='file' id="imgInput1" name="upFile"/><br><br>
-			<input type='file' id="imgInput2" name="upFile"/><br><br>
-			<input type='file' id="imgInput3" name="upFile"/><br><br>
+			<input type='file' id="imgInput1" name="upFile" required/><br><br>
+			<input type='file' id="imgInput2" name="upFile" required/><br><br>
+			<input type='file' id="imgInput3" name="upFile" required/><br><br>
 			<input type="hidden" id="detailImg_gno" name="goodsNo">
         	<input type="hidden" id="detailImg_gname" name="goodsName">
         </form>
@@ -219,7 +219,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-      <div style="text-align:center; color:purple;">최대 3장까지 등록가능합니다</div>
+      <div style="text-align:center; color:purple;">1~3개(낱개별) 수정 가능합니다</div>
       <div id="carouselExampleCaptions1" class="carousel slide" data-bs-ride="carousel">
 		  <div class="carousel-indicators">
 		    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -547,9 +547,9 @@ function readURL(input) {
 		$("#lab_img1").text("");
 		$("#lab_img2").text("");
 		$("#lab_img3").text("");
-		$("#car_img1").attr("src", "${path}/resources/images/market/add-image.PNG");
-		$("#car_img2").attr("src", "${path}/resources/images/market/add-image.PNG");
-		$("#car_img3").attr("src", "${path}/resources/images/market/add-image.PNG");
+		$("#up_car_img1").attr("src", "${path}/resources/images/market/add-image.PNG");
+		$("#up_car_img2").attr("src", "${path}/resources/images/market/add-image.PNG");
+		$("#up_car_img3").attr("src", "${path}/resources/images/market/add-image.PNG");
 		
 		let detImg=$(this).data('dlist');
 		let goodNo = $(this).data('gno');
@@ -565,18 +565,32 @@ function readURL(input) {
 				success:data=>{
 					if(data!=null){
 						for(let i=0; i<data.length; i++){
-							/* $("#car_img"+i).attr("src", "${path}/resources/upload/market/"+data[i].filePath); */
 							if(i==0){
-								$("#up_car_img1").attr("src", "${path}/resources/upload/market/"+data[i].filePath);
-								$("#lab_img1").text("기존 등록된 파일명 : "+data[i].filePath);
+								if(data[i].filePath==null){
+									$("#lab_img1").text("기존 등록된 파일명 : 등록된 파일이 없습니다");
+									$("#up_car_img1").attr("src", "${path}/resources/images/market/add-image.PNG");
+								}else{
+									$("#lab_img1").text("기존 등록된 파일명 : "+data[i].filePath);
+									$("#up_car_img1").attr("src", "${path}/resources/upload/market/"+data[i].filePath);
+								} 
 								$("#imgNo1").val(data[i].imgNo);
-							}else if(i==1){
-								$("#up_car_img2").attr("src", "${path}/resources/upload/market/"+data[i].filePath);
-								$("#lab_img2").text("기존 등록된 파일명 : "+data[i].filePath);
+							}else if(i==1){							
+								if(data[i].filePath==null){
+									$("#lab_img2").text("기존 등록된 파일명 : 등록된 파일이 없습니다");
+									$("#up_car_img2").attr("src", "${path}/resources/images/market/add-image.PNG");
+								}else{
+									$("#lab_img2").text("기존 등록된 파일명 : "+data[i].filePath);
+									$("#up_car_img2").attr("src", "${path}/resources/upload/market/"+data[i].filePath);
+								} 
 								$("#imgNo2").val(data[i].imgNo);
 							}else if(i==2){
-								$("#up_car_img3").attr("src", "${path}/resources/upload/market/"+data[i].filePath);
-								$("#lab_img3").text("기존 등록된 파일명 : "+data[i].filePath);
+								if(data[i].filePath==null){
+									$("#lab_img3").text("기존 등록된 파일명 : 등록된 파일이 없습니다");
+									$("#up_car_img3").attr("src", "${path}/resources/images/market/add-image.PNG");
+								}else{
+									$("#lab_img3").text("기존 등록된 파일명 : "+data[i].filePath);
+									$("#up_car_img3").attr("src", "${path}/resources/upload/market/"+data[i].filePath);
+								} 
 								$("#imgNo3").val(data[i].imgNo);
 							}
 						}
