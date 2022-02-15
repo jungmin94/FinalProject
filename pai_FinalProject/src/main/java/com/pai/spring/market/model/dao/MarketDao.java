@@ -99,4 +99,8 @@ public interface MarketDao {
 	
 	List<Review> selectReviewList(SqlSessionTemplate session,int cPage,int numPerPage,String goodsName);
 	
+	int insertGoodsDetailImage(SqlSessionTemplate session,GoodsDetailImage gdi);
+
+	int updateGoodsDetailImage(SqlSessionTemplate session,GoodsDetailImage gdi);
+	
 }

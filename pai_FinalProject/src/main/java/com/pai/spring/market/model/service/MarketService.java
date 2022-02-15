@@ -97,4 +97,8 @@ public interface MarketService {
 	
 	List<Review> selectReviewList(int cPage,int numPerPage,String goodsName);
 	
+	int insertGoodsDetailImage(List<GoodsDetailImage> filenames);
+
+	int updateGoodsDetailImage(List<GoodsDetailImage> filenames);
+	
 }

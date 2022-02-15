@@ -205,7 +205,9 @@
     	<img src="https://hanamsport.or.kr/www/images/contents/thum_detail.jpg" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
     </c:if>
     <c:if test="${imageList ne null && imageList.size() ne 0}">
-    	<img src="${path}/resources/upload/market/${imageList.filePath}" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+    	<c:forEach items="${imageList}" var="i">
+    		<img src="${path}/resources/upload/market/${i.filePath}" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">
+    	</c:forEach>
     </c:if>
 	<!-- 제품 사진 끝부분 (최대 3장 올릴 것) -->
 	<img src="${path}/resources/images/market/인쇄예시.PNG" class="img-thumbnail" alt="..." style="width: 800px; height: 800px;">

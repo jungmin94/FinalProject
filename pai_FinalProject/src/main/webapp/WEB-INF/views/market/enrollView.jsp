@@ -84,19 +84,21 @@
 					</button>
 				</c:if>
 				<c:if test="${g.goodsDetailImage.isEmpty()}">
-					<button type="button" class="btn btn-outline-success" onclick="">
+					<button type="button"  id="updateGoodDetailImageBtn" class="btn btn-outline-success"  
+					data-bs-toggle="modal" data-bs-target="#enrollGoodDetailImage"  data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
 	  				상세이미지 등록
 					</button>
 				</c:if>
 				<c:if test="${g.goodsDetailImage.size() ne 0}">
-					<button type="button" class="btn btn-outline-secondary" onclick="">
+					<button type="button" id="updateGoodDetailImageBtn"   class="btn btn-outline-warning" 
+					data-bs-toggle="modal" data-bs-target="#updateGoodDetailImage"  data-gno="${g.goodsNo}" data-gname="${g.goodsName}" data-dlist="${g.goodsDetailImage}">
 	  				상세이미지 수정
 					</button>
 				</c:if>
 				<button type="button"  id="deleteTitleGoodBtn" class="btn btn-outline-danger" 
 					data-bs-toggle="modal" data-bs-target="#deleteGoods" data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
 	  				상품 삭제
-				</button>
+			</button>
 			</td>
 		  </tr>
 		</c:forEach>
@@ -128,35 +130,159 @@
         	<input type="hidden" id="img_gname" name="goodsName">
         	<img id="image_section" src=""  alt="your image" style="height:300px; width:300px;"/>
         	<br><br>
-        	<input type='file' id="imgInput" name="upFile"/>
+        	<input type='file' id="imgInput" name="upFile"/><br>
+        	<label class="form-label"  id="lab_img" style="color:#7401DF;"></label>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="$('#enrollGoodImgFrm').submit();">확인</button>
+        <button type="button" class="btn btn-primary" onclick="$('#enrollGoodImgFrm').submit();">수정</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- 상세 이미지 등록/수정  -->
-<div class="modal fade" id="updateGoodDetailImage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- 상세 이미지 등록  -->
+<div class="modal fade" id="enrollGoodDetailImage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">상품 대표이미지</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">상품 상세이미지</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...1
+      <div style="text-align:center; color:purple;">최대 3장까지 등록가능합니다</div>
+      <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+		  <div class="carousel-indicators">
+		    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+		    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+		    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+		  </div>
+		  <div class="carousel-inner">
+		    <div class="carousel-item active">
+		      <img src=""  id="car_img1" class="d-block w-100" alt="..." style="height:300px; width:300px;">
+		      <div class="carousel-caption d-none d-md-block">
+		        <h5 id="h_img1"></h5>
+		      </div>
+		    </div>
+		    <div class="carousel-item">
+		      <img src="" id="car_img2"  class="d-block w-100" alt="..." style="height:300px; width:300px;">
+		      <div class="carousel-caption d-none d-md-block">
+		        <h5 id="h_img2"></h5>
+		      </div>
+		    </div>
+		    <div class="carousel-item">
+		      <img src="" id="car_img3"  class="d-block w-100" alt="..." style="height:300px; width:300px;">
+		      <div class="carousel-caption d-none d-md-block">
+		        <h5 id="h_img3"></h5>
+		      </div>
+		    </div>
+		  </div>
+		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Previous</span>
+		  </button>
+		  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Next</span>
+		  </button>
+		</div>
+      
+      	<br>
+      	<br>
+      
+        <form id="enrollGoodDetailImgFrm" action="${path}/market/enrollGoodDetailImage.do" method="post"
+        enctype="multipart/form-data">
+			<input type='file' id="imgInput1" name="upFile"/><br><br>
+			<input type='file' id="imgInput2" name="upFile"/><br><br>
+			<input type='file' id="imgInput3" name="upFile"/><br><br>
+			<input type="hidden" id="detailImg_gno" name="goodsNo">
+        	<input type="hidden" id="detailImg_gname" name="goodsName">
+        </form>
+        
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">확인</button>
+        <button type="button" class="btn btn-primary" onclick="$('#enrollGoodDetailImgFrm').submit();">등록</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
   </div>
 </div>
+
+
+<!-- 상세 이미지 수정  -->
+<div class="modal fade" id="updateGoodDetailImage" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">상품 상세이미지</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <div style="text-align:center; color:purple;">최대 3장까지 등록가능합니다</div>
+      <div id="carouselExampleCaptions1" class="carousel slide" data-bs-ride="carousel">
+		  <div class="carousel-indicators">
+		    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+		    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+		    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+		  </div>
+		  <div class="carousel-inner">
+		    <div class="carousel-item active">
+		      <img src=""  id="up_car_img1" class="d-block w-100" alt="..." style="height:300px; width:300px;">
+		      <div class="carousel-caption d-none d-md-block">
+		        <h5 id="h_img1"></h5>
+		      </div>
+		    </div>
+		    <div class="carousel-item">
+		      <img src="" id="up_car_img2"  class="d-block w-100" alt="..." style="height:300px; width:300px;">
+		      <div class="carousel-caption d-none d-md-block">
+		        <h5 id="h_img2"></h5>
+		      </div>
+		    </div>
+		    <div class="carousel-item">
+		      <img src="" id="up_car_img3"  class="d-block w-100" alt="..." style="height:300px; width:300px;">
+		      <div class="carousel-caption d-none d-md-block">
+		        <h5 id="h_img3"></h5>
+		      </div>
+		    </div>
+		  </div>
+		  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide="prev">
+		    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Previous</span>
+		  </button>
+		  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide="next">
+		    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+		    <span class="visually-hidden">Next</span>
+		  </button>
+		</div>
+      
+      	<br>
+      	<br>
+      
+        <form id="updateGoodDetailImgFrm" action="${path}/market/updateGoodDetailImage.do" method="post"
+        enctype="multipart/form-data">
+        
+			<input type='file' id="up_imgInput1" name="upFile"/><br><label class="form-label"  id="lab_img1" style="color:#7401DF;"></label><br>
+			<input type='file' id="up_imgInput2" name="upFile"/><br><label class="form-label" id="lab_img2" style="color:#7401DF;"></label><br>
+			<input type='file' id="up_imgInput3" name="upFile"/><br><label class="form-label" id="lab_img3" style="color:#7401DF;"></label><br>
+			<input type="hidden" id="up_detailImg_gno" name="goodsNo">
+        	<input type="hidden" id="up_detailImg_gname" name="goodsName">
+        	<input type="hidden" id="up_imgNo1" name="imgNo">
+        	<input type="hidden" id="up_imgNo2" name="imgNo">
+        	<input type="hidden" id="up_imgNo3" name="imgNo">
+        </form>
+            <input type="hidden" id="imgNo1" >
+        	<input type="hidden" id="imgNo2" >
+        	<input type="hidden" id="imgNo3" >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#updateGoodDetailImgFrm').submit();">수정</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- 상품 등록  -->
 <div class="modal fade" id="enrollGoods" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -281,7 +407,7 @@
 <script>
 
 $(document).on("click", "#updateGoodImageBtn", function () { 
-	
+	$("#lab_img").text("");
 	$("#image_section").attr("src", "${path}/resources/images/market/add-image.PNG");
 	let goodNo = $(this).data('gno');
 	let goodName = $(this).data('gname');
@@ -291,6 +417,7 @@ $(document).on("click", "#updateGoodImageBtn", function () {
 	$('#img_gname').val(goodName);
 	if(img != undefined){
 		$("#image_section").attr("src", "${path}/resources/upload/market/"+img);
+		$("#lab_img").text("기존 등록된 파일명 : "+img);
 	}
 	
 });
@@ -397,6 +524,146 @@ function readURL(input) {
 		$('#de_gname_').val(goodName);
 
 	});
+	
+	
+	$(document).on("click", "#enrollGoodDetailImageBtn", function () { 
+		
+		$("#car_img1").attr("src", "${path}/resources/images/market/add-image.PNG");
+		$("#car_img2").attr("src", "${path}/resources/images/market/add-image.PNG");
+		$("#car_img3").attr("src", "${path}/resources/images/market/add-image.PNG");
+		
+		let detImg=$(this).data('dlist');
+		let goodNo = $(this).data('gno');
+		let goodName = $(this).data('gname');
+
+		$('#detailImg_gno').val(goodNo);
+		$('#detailImg_gname').val(goodName);
+		
+	});
+	
+	
+	$(document).on("click", "#updateGoodDetailImageBtn", function () { 
+		
+		$("#lab_img1").text("");
+		$("#lab_img2").text("");
+		$("#lab_img3").text("");
+		$("#car_img1").attr("src", "${path}/resources/images/market/add-image.PNG");
+		$("#car_img2").attr("src", "${path}/resources/images/market/add-image.PNG");
+		$("#car_img3").attr("src", "${path}/resources/images/market/add-image.PNG");
+		
+		let detImg=$(this).data('dlist');
+		let goodNo = $(this).data('gno');
+		let goodName = $(this).data('gname');
+
+		$('#up_detailImg_gno').val(goodNo);
+		$('#up_detailImg_gname').val(goodName);
+		
+		if(detImg != undefined){
+			$.ajax({
+				url:"${path}/market/goodDetailImageList.do",
+				data:{goodsName:goodName}, //키:벨류 형식으로 데이터를 전송한다
+				success:data=>{
+					if(data!=null){
+						for(let i=0; i<data.length; i++){
+							/* $("#car_img"+i).attr("src", "${path}/resources/upload/market/"+data[i].filePath); */
+							if(i==0){
+								$("#up_car_img1").attr("src", "${path}/resources/upload/market/"+data[i].filePath);
+								$("#lab_img1").text("기존 등록된 파일명 : "+data[i].filePath);
+								$("#imgNo1").val(data[i].imgNo);
+							}else if(i==1){
+								$("#up_car_img2").attr("src", "${path}/resources/upload/market/"+data[i].filePath);
+								$("#lab_img2").text("기존 등록된 파일명 : "+data[i].filePath);
+								$("#imgNo2").val(data[i].imgNo);
+							}else if(i==2){
+								$("#up_car_img3").attr("src", "${path}/resources/upload/market/"+data[i].filePath);
+								$("#lab_img3").text("기존 등록된 파일명 : "+data[i].filePath);
+								$("#imgNo3").val(data[i].imgNo);
+							}
+						}
+					}else{
+						alert('실패');		
+					}			
+				}	
+			});	
+		} 
+
+	});
+	
+	
+	$("#up_imgInput1").change(function(){
+		 let imgval=$('#imgNo1').val();
+		 $('#up_imgNo1').val(imgval);
+		});
+	
+	$("#up_imgInput2").change(function(){
+		 let imgval=$('#imgNo2').val();
+		 $('#up_imgNo2').val(imgval);
+		});
+	
+	$("#up_imgInput3").change(function(){
+		 let imgval=$('#imgNo3').val();
+		 $('#up_imgNo3').val(imgval);
+		});
+	
+	
+	
+	 
+	// 이벤트를 바인딩해서 input에 파일이 올라올때 (input에 change를 트리거할때) 위의 함수를 this context로 실행
+	$("#imgInput1").change(function(){
+	   readURL1(this);
+	});
+	
+
+	$("#imgInput2").change(function(){
+	   readURL2(this);
+	});
+	
+
+	$("#imgInput3").change(function(){
+	   readURL3(this);
+	});
+	
+	// 대표 이미지 등록시 이미지 파일 미리 보여주기 로직
+	function readURL1(input) {
+		 if (input.files && input.files[0]) {
+		  var reader = new FileReader();
+		  
+		  reader.onload = function (e) {
+		   $('#car_img1').attr('src', e.target.result);  
+		  }
+		  
+		  reader.readAsDataURL(input.files[0]);
+		  }
+		}
+
+	
+	// 대표 이미지 등록시 이미지 파일 미리 보여주기 로직
+	function readURL2(input) {
+		 if (input.files && input.files[0]) {
+		  var reader = new FileReader();
+		  
+		  reader.onload = function (e) {
+		   $('#car_img2').attr('src', e.target.result);  
+		  }
+		  
+		  reader.readAsDataURL(input.files[0]);
+		  }
+		}
+	
+	
+	// 대표 이미지 등록시 이미지 파일 미리 보여주기 로직
+	function readURL3(input) {
+		 if (input.files && input.files[0]) {
+		  var reader = new FileReader();
+		  
+		  reader.onload = function (e) {
+		   $('#car_img3').attr('src', e.target.result);  
+		  }
+		  
+		  reader.readAsDataURL(input.files[0]);
+		  }
+		}
+		 
 
 </script>
 

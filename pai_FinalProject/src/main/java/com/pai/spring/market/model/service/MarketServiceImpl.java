@@ -6,6 +6,7 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pai.spring.market.model.dao.MarketDao;
 import com.pai.spring.market.model.vo.Goods;
@@ -278,6 +279,30 @@ public class MarketServiceImpl implements MarketService {
 	public List<Review> selectReviewList(int cPage, int numPerPage, String goodsName) {
 		
 		return dao.selectReviewList(session, cPage, numPerPage, goodsName);
+	}
+	
+	@Override
+	@Transactional
+	public int insertGoodsDetailImage(List<GoodsDetailImage> filenames) {
+		int result=0;
+		if(!filenames.isEmpty()) {
+			for(GoodsDetailImage gdi : filenames) {
+				result = dao.insertGoodsDetailImage(session, gdi);
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	@Transactional
+	public int updateGoodsDetailImage(List<GoodsDetailImage> filenames) {
+		int result=0;
+		if(!filenames.isEmpty()) {
+			for(GoodsDetailImage gdi : filenames) {
+				result = dao.updateGoodsDetailImage(session, gdi);
+			}
+		}
+		return result;
 	}
 	
 }

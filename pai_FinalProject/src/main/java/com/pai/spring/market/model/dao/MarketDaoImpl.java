@@ -272,4 +272,16 @@ public class MarketDaoImpl implements MarketDao {
 		return session.selectList("market.selectReviewMainList",goodsName,new RowBounds((cPage-1)*numPerPage,numPerPage));
 	}
 	
+	@Override
+	public int insertGoodsDetailImage(SqlSessionTemplate session, GoodsDetailImage gdi) {
+		
+		return session.insert("market.insertGoodsDetailImage",gdi);
+	}
+	
+	@Override
+	public int updateGoodsDetailImage(SqlSessionTemplate session, GoodsDetailImage gdi) {
+		
+		return session.update("market.updateGoodsDetailImage",gdi);
+	}
+	
 }
