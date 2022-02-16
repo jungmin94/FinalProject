@@ -86,7 +86,7 @@ public class MessageDaoImpl implements MessageDao {
 
 	@Override
 	public int cancelSendMsg(SqlSessionTemplate session, int msgNo) {
-		return session.delete("messgae.cancelSendMsg",msgNo);
+		return session.delete("message.cancelSendMsg",msgNo);
 	}
 
 

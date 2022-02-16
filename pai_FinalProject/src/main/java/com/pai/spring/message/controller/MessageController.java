@@ -213,13 +213,16 @@ public class MessageController {
 	@ResponseBody
 	public String cancelSendMsg(int msgNo) {
 		int cancel = service.cancelSendMsg(msgNo);
-		String result;
+		System.out.println("msgNo"+msgNo);
+		System.out.println("cancel"+cancel);
+		Map<String, Object> result;
 		if(cancel==1) {
-			result = "발송 전 취소 완료하였습니다.";
+			result = Map.of("result", "발송 전 취소 완료하였습니다.");
 		} else {
-			result = "취소 실패하였습니다.";
+			result = Map.of("result", "취소 실패하였습니다.");
 		}
 		return new Gson().toJson(result);
+		
 	}
 
 	

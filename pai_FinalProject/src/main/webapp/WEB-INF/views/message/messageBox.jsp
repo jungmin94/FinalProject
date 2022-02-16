@@ -318,9 +318,10 @@ function sendMsgBox(cPage){
 					let msgSendTime = $("<td>").html(sendMsgList[i]["MSGSENDTIME"]);
 					let msgReadCheck = $("<td>");
 					let cancelMsg = $("<td>");
+					let cancelMsgNo = $("<input>").attr({type:"hidden", value:sendMsgList[i]["MSGNO"]});
 					if(sendMsgList[i]["MSGREADCHECK"]=='N'){
 						msgReadCheck.html("읽지않음");
-						cancelMsg.append("<button type='button' class='btn btn-outline-secondary' onClick='cancelMsg(this);'>발송취소").append(msgNo);
+						cancelMsg.append("<button type='button' class='btn btn-outline-secondary' onclick='cancelMsg(this);'>발송취소").append(cancelMsgNo);
 					} else {
 						msgReadCheck.html("읽음");
 					}
@@ -329,15 +330,13 @@ function sendMsgBox(cPage){
 					tr2.append(td1).append(no).append(msgTitle).append(recvId).append(msgSendTime).append(msgReadCheck).append(cancelMsg);
 					td1.append(check);
 					
-					if(msgReadCheck=="읽지않음"){
-						let cancelMsg = $("<th>").html("발송취소").attr("scope","col");
-						tr1.append(cancelMsg);
-					}
+				
 					
 				}
 				let del = $("<button>").attr({type:"button", id:"delSendMsg", class:"btn btn-primary"}).html("삭제");
 				table.append(del);
 			}
+		
 			
 			const pageBar=$("<div style='text-align:center;'>").attr("id","pageBar2").html(data["pageBar"]);
 			$("#pageNavContainer").append(pageBar);
@@ -373,19 +372,22 @@ function sendMsgBox(cPage){
 
 //상대방이 읽기전 발송취소
 function cancelMsg(e){
-	let msgNo = $(e).parent().children().eq(1).val();
-	$.ajax({
+	let cancelNum = $(e).next().val();
+	//let msgNo = $(e).parent().children().eq(1).val();
+	console.log($(e).next().val());
+ 	$.ajax({
 		url:"${path}/message/cancelSendMsg.do",
 		type:"post",
-		data:{"msgNo":msgNo},
+		data:{"msgNo":cancelNum},
 		dataType:"json",
 		success: data =>{
 			alert(data.result);
+			location.reload();
 			
 		}
 		
-	})
-}
+	}) 
+};  
 
 
 //시작 날짜 
