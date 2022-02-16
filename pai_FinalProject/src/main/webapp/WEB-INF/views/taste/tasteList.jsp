@@ -104,7 +104,7 @@
                                 </tr>
                                 <tr>
                                     <th>내용</th>
-                                    <th><textarea class="form-control" name="msgContent" id="msgContent" rows="5" cols="30">디자인은 나중에 수정예정</textarea></th>
+                                    <th><textarea class="form-control" name="msgContent" id="msgContent" rows="5" cols="30"></textarea></th>
                                 </tr>
                             </tbody>
                         </table>
@@ -144,26 +144,50 @@ const sendMessage=(e)=>{
 };
 
 
-$("#msgSend").click(function(){
-     var msg= "정말 발송하시겠습니까?";
+$("#msgSend").click(e=>{
+ /*      var msg= "정말 발송하시겠습니까?";
     
     if(!confirm(msg))
-        return false;
+        return false; */
+    //족지 제목 미입력시 포커스
+  	if($("#msgTitle").val().trim().length == 0){
+       $("#msgTitle").focus();
+       return false;
+    }
+    //쪽지 내용 미입력시 포커스
+  	if($("#msgContent").val().trim().length == 0){
+       $("#msgContent").focus();
+       return false;
+    }  
     
     $.ajax({
         url : "${path}/message/sendMessage.do",
         dataType : "json",
         type : "post",
         data : $(".msg_form").serialize(),
-        success:function(data){
+        success: data=>{
+    		alert(data);
+    		alert(sendData);
         	console.log(data);
-            alert("쪽지를 보냈습니다.");  
-            socket.send("관리자,"+target+","+content+","+url);
+            const sendData = {
+            	"msgType":'sendMessage',
+            	"sendId":data["sendId"],
+            	"sendNick":data["sendNick"],
+            	"recvId":data["recvId"],
+            	"recvNick":data["recvNick"],
+            	"msgTitle":data["msgTitle"],
+            	"msgContent":data["msgContent"]
+            }
+            
+            let jsonData = JSON.stringify(sendData)
+            console.log(sendData);
+    		socket.send(sendData);
+			console.log('send');
         }
     })
 
  
-    modal.find('.modal-body textarea').val('');	// textarea 초기화
+    //modal.find('.modal-body textarea').val('');
 });
 
 

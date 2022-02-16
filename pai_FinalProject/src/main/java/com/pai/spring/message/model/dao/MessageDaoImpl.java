@@ -79,6 +79,16 @@ public class MessageDaoImpl implements MessageDao {
 		return session.insert("message.sendMessage",param);
 	}
 
+	@Override
+	public int recvMsgRead(SqlSessionTemplate session, int msgNo) {
+		return session.update("message.recvMsgRead",msgNo);
+	}
+
+	@Override
+	public int cancelSendMsg(SqlSessionTemplate session, int msgNo) {
+		return session.delete("messgae.cancelSendMsg",msgNo);
+	}
+
 
 	
 	

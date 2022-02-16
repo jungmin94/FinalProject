@@ -17,6 +17,8 @@ public interface MessageService {
 	
 	Map selectRecvMsgDetail(int msgNo);
 	
+	int recvMsgRead(int msgNo);
+	
 	List<Message> selectSendMsg(String sendId, int cPage, int numPerpage);
 	
 	int selectSendMessageCount(String sendId);
@@ -33,5 +35,7 @@ public interface MessageService {
 	int selectUnreadMsg(String memberId);
 	
 	int sendMessage(Map param);
+	
+	int cancelSendMsg(int msgNo);
 	
 }

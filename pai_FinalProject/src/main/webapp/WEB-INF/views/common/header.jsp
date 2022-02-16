@@ -183,7 +183,12 @@ a .sub-menu-detail {
 				<a href="${path}/board/boardList.do"><div class="menu-bar">게시판</div></a>
 				<a href="${path}/market/mainView.do"><div class="menu-bar">MBTI 마켓</div></a>
 				<a href="${path }/chatting/toSeeMyChatroomInfo.do"><div class="menu-bar">채팅</div></a>
+				<c:if test="${loginMember eq null}"> 
+				<a href="${path }/" onclick="msg();"><div class="menu-bar">친구찾기</div></a>
+				</c:if>
+				<c:if test="${loginMember ne null}"> 
 				<a href="${path }/taste/taste.do"><div class="menu-bar">친구찾기</div></a>
+				</c:if>
 				<c:if test="${loginMember!=null&&loginMember.member_id eq 'admin'}"> 
 					<a href="${path}/admin/adminView.do"><div class="menu-bar">회원관리</div></a>
 				</c:if>
@@ -199,7 +204,7 @@ a .sub-menu-detail {
 				<div class="nav-lists" id="mypage-icon">
 					<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-arrived는 보이지 않게 설정 필요 -->
 					<!-- 만약 받은 쪽지가 없을 경우 하단의 span .login-area의 이미지 주소는 https://i.ibb.co/vxM4TDk/2022-01-18-17-51-35.png 사용 필요 -->
-					<span id="message-arrived">쪽지가 도착했습니다!</span><br>
+					<span id="message-arrived"></span><br>
 					<span id="loginMember"><c:out value="${loginMember.member_nick }님 접속을 환영합니다"/></span>
 					<span class="login-area" onmouseover="dropDownMenu();">
 						<img src="https://i.ibb.co/4Z7wXR5/2022-01-20-10-00-48.png" width="50px">
@@ -214,7 +219,7 @@ a .sub-menu-detail {
 			<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-icon 이미지 이 것 사용 <img src="https://i.ibb.co/4Z7wXR5/red-circle.png" width="13px"> -->
 			<a href="javascript:fn_messageBox();">
 				<div class="sub-menu-detail" id="menu-message">쪽지함
-				<span class="badge bg-danger">4</span>
+				<span class="badge bg-danger" id="msgCount"></span>
 				</div>
 				<form id="myIdData" action="${path}/message/messageBox.do" method="post" target="msgBox">
 				  <input type="hidden" name="memberId" value="${loginMember.member_id}" id="memberId">
@@ -258,55 +263,41 @@ a .sub-menu-detail {
 		}
         
         
-        //한번만 메시지 알림을 위해 받은편지 count 변수설정
         
 
         //소켓 전역변수
         var socket = null;
-		$(document).ready(function(){
-		if(${loginMember.member_id != null}){
-		connectWs();
-		}
-		})
+        
+        //로그인시 connectSocket함수 실행
+		//$(document).ready(function(){
+			if(${loginMember.member_id != null}){
+				connectSocket();
+			}
+		//});
 		
+        //웹소켓 연결
+	 	function connectSocket(){
+			var sock = "http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message";
+			socket = new SockJS(sock);
+			
+			socket.onopen = onOpen;
+			socket.onmessage = onMessage;
 		
-		//소켓
-		
-		
-		function connectWs(){
-		console.log("tttttt")
-		//var ws = new SockJS("http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message");
-		var ws = new SockJS("http://localhost:9090${pageContext.request.contextPath}/");
-		socket = ws;
-		
-			ws.onopen = function() {
-		 console.log('open');
-		 
-		 };
-		};
+			/* sock.onopen = function() {
+		 		console.log('open');
+		 	};  */
+		 	//sock.onmessage = onMessage;
+		 }; 
         
         
         
-        
-        
-    /*      var socket = null;
-         $(document).ready(function(){
-        	    // 웹소켓 연결
-        	    sock = new SockJS("http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message");
 
-        	    socket = sock;
-        	    socket.onopen = function(){
-        	    	
-        	    console.log('Info: connection opened');
-        	    }
-
-        	    // 데이터를 전달 받았을때 
-        	    //sock.onmessage = onMessage; // toast 생성
-        	}); */
         
      // toast생성 및 추가
-/*         function onMessage(evt){
+/*         sock.onmessage = function(evt){
+        		console.log('onmessage');
             var data = evt.data;
+            console.log(data);
             // toast
             let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
             toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
@@ -317,6 +308,51 @@ a .sub-menu-detail {
             $(".toast").toast({"animation": true, "autohide": false});
             $('.toast').toast('show');
         }; */
+        
+        function onOpen(){
+        	console.log('open');
+        }
+        
+        function onMessage(message){
+        	console.log('onMessage'+message.data);
+        	let socketAlert = $('span#message-arrived');
+    		socketAlert.html(message.data)
+    		socketAlert.css('display', 'block');
+    		
+    		setTimeout(function(){
+    			$socketAlert.css('display','none');
+    			
+    		}, 5000);
+        };
+        
+    	
+    	
+   /*  	sock.onclose = function() {
+    	    console.log('close');
+     	}; */
+        
+        
+        
+       //로그인시 쪽지 갯수
+	        if(${loginMember.member_id != null}){
+		        $.ajax({
+		        	url:"${path}/message/msgCount.do",
+		        	data:{"memberId":'${loginMember.member_id}'},
+		        	dataType:"json",
+		        	type:"post",
+		        	success:data=>{
+		        		$("#msgCount").text(data);
+		        	}
+		        	
+		        })
+		        $("#friendsSearch").on("click")
+        	}
+       
+	        function msg(){
+   				alert("로그인 후 이용가능합니다.");
+	        };
+   			
+	    
         
     </script>
 	</nav>

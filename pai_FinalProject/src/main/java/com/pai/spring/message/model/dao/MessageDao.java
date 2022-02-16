@@ -34,4 +34,7 @@ public interface MessageDao{
 	
 	int sendMessage(SqlSessionTemplate session, Map param);
 	
+	int recvMsgRead(SqlSessionTemplate session, int msgNo);
+	
+	int cancelSendMsg(SqlSessionTemplate session, int msgNo);
 }

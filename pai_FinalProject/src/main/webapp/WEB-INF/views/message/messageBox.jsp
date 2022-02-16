@@ -179,6 +179,12 @@ function recvMsgBox(cPage){
 				
 				for(let i=0; i<recvMsgList.length; i++){
 					let tr2 = $("<tr>").css("text-align","center");
+					console.log(recvMsgList[i]["MSGREADCHECK"])
+					if(recvMsgList[i]["MSGREADCHECK"]=='N'){
+						tr2.css({"color":"#0459c1","font-weight":"bold"});
+					} else{
+						tr2.css({"color":"#212529"});
+					}
 					let td1 = $("<td>");
 					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"recvMsgCheck", value:recvMsgList[i]["MSGNO"]});
 					//let msgNo = $("<td>").html(((cPage-1)*10)+i+1);
@@ -276,18 +282,20 @@ function sendMsgBox(cPage){
 			let th3=$("<th>").html("제목").attr("scope","col");
 			let th4=$("<th>").html("받는사람").attr("scope","col");
 			let th5=$("<th>").html("날짜").attr("scope","col");
+			let th6=$("<th>").html("읽음여부").attr("scope","col");
+			let th7=$("<th>").html("발송취소").attr("scope","col");
 			
 			table.append(thead);
 			thead.append(tr1);
 			tr1.append(th1);
 			th1.append(checkAll);
-			tr1.append(th2).append(th3).append(th4).append(th5);
+			tr1.append(th2).append(th3).append(th4).append(th5).append(th6).append(th7);
 			
 			
 			if(sendMsgList.length==0){
 				let tr2 = $("<tr>").css("text-align","center");
 				let ntd=$("<td>").html("보낸쪽지가 없습니다.");
-				ntd.attr("colspan","5");
+				ntd.attr("colspan","7");
 				tr2.append(ntd);
 				tbody.append(tr2);
 				table.append(tbody);
@@ -308,10 +316,24 @@ function sendMsgBox(cPage){
 					
 					let recvId = $("<td>").html(sendMsgList[i]["RECVNICK"]);
 					let msgSendTime = $("<td>").html(sendMsgList[i]["MSGSENDTIME"]);
+					let msgReadCheck = $("<td>");
+					let cancelMsg = $("<td>");
+					if(sendMsgList[i]["MSGREADCHECK"]=='N'){
+						msgReadCheck.html("읽지않음");
+						cancelMsg.append("<button type='button' class='btn btn-outline-secondary' onClick='cancelMsg(this);'>발송취소").append(msgNo);
+					} else {
+						msgReadCheck.html("읽음");
+					}
 					tbody.append(tr2);
 					table.append(tbody);
-					tr2.append(td1).append(no).append(msgTitle).append(recvId).append(msgSendTime);
+					tr2.append(td1).append(no).append(msgTitle).append(recvId).append(msgSendTime).append(msgReadCheck).append(cancelMsg);
 					td1.append(check);
+					
+					if(msgReadCheck=="읽지않음"){
+						let cancelMsg = $("<th>").html("발송취소").attr("scope","col");
+						tr1.append(cancelMsg);
+					}
+					
 				}
 				let del = $("<button>").attr({type:"button", id:"delSendMsg", class:"btn btn-primary"}).html("삭제");
 				table.append(del);
@@ -347,6 +369,23 @@ function sendMsgBox(cPage){
 	});
 
 };
+
+
+//상대방이 읽기전 발송취소
+function cancelMsg(e){
+	let msgNo = $(e).parent().children().eq(1).val();
+	$.ajax({
+		url:"${path}/message/cancelSendMsg.do",
+		type:"post",
+		data:{"msgNo":msgNo},
+		dataType:"json",
+		success: data =>{
+			alert(data.result);
+			
+		}
+		
+	})
+}
 
 
 //시작 날짜 

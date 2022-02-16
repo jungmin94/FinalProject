@@ -87,6 +87,16 @@ public class MessageServiceImpl implements MessageService {
 		return dao.sendMessage(session, param);
 	}
 
+	@Override
+	public int recvMsgRead(int msgNo) {
+		return dao.recvMsgRead(session, msgNo);
+	}
+
+	@Override
+	public int cancelSendMsg(int msgNo) {
+		return dao.cancelSendMsg(session, msgNo);
+	}
+
 	
 	
 	
