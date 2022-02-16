@@ -32,4 +32,10 @@ public interface MemberDao {
 	int findPwdUpdate(SqlSessionTemplate session,Member m);
 	
 	int insertMbti(SqlSessionTemplate session,Member m);
+	
+	int insertNaverAccount(SqlSessionTemplate session,Member loginMember);
+	
+	int updateNaverAccount(SqlSessionTemplate session, Member m);
+	
+	int delete(SqlSessionTemplate session,String member_id)throws Exception;
 }

@@ -28,4 +28,9 @@ public interface MemberService {
 	
 	int insertMbti(Member m);
 	
+	int insertNaverAccount(Member loginMember);
+	
+	int updateNaverAccount(Member m);
+	
+	int delete(String member_id)throws Exception;
 }

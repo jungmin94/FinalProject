@@ -82,6 +82,24 @@ public class MemberDaoImpl implements MemberDao {
 		return session.update("member.insertMbti",m);
 	}
 
+	@Override
+	public int insertNaverAccount(SqlSessionTemplate session, Member loginMember) {
+		// TODO Auto-generated method stub
+		return session.insert("member.insertNaverAccount", loginMember);
+	}
+
+	@Override
+	public int updateNaverAccount(SqlSessionTemplate session, Member m) {
+		// TODO Auto-generated method stub
+		return session.update("member.updateNaverAccount", m);
+	}
+
+	@Override
+	public int delete(SqlSessionTemplate session, String member_id) throws Exception {
+		// TODO Auto-generated method stub
+		return session.delete("member.delete",member_id);
+	}
+
 	
 	
 	

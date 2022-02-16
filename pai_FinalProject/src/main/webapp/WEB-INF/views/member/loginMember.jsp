@@ -7,6 +7,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="로그인"/>
 </jsp:include>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	* {
 	  margin: 0;
@@ -102,21 +104,24 @@
             <div class="submit btn-outline-secondary">
             	
                 <button type="submit" value="로그인" class="btn btn-outline-secondary">로그인</button>
-            
             </div>
+            <br>
+           	<div>
+            	<a href="${ url }"><img width="150" height="50" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"></a>
+          	</div>
 	        <div class="enrollMember btn-outline-secondary">
  		        <input type="button" class="btn btn-outline-secondary" value="회원가입" onclick="location.assign('${path}/member/enrollMember.do')">
 		        
 	        </div>
 			<br>
-                <div style="width: 80%;">
-                	<div style="width: 49%; display: inline-block;">
-                		<input type="button" class="btn btn-outline-secondary" id="findId" value="아이디 찾기" style="width: 100%;">
-                	</div>
-	 		        <div  style="width: 49%; display: inline-block;">
-	 		        	<input type="button" class="btn btn-outline-secondary" id="findPwd" value="패스워드 찾기" style="width: 100%;">
-	 		        </div>
-            	</div> 
+            <div style="width: 80%;">
+	           	<div style="width: 49%; display: inline-block;">
+	           		<input type="button" class="btn btn-outline-secondary" id="findId" value="아이디 찾기" style="width: 100%;">
+	           	</div>
+		        <div  style="width: 49%; display: inline-block;">
+		        	<input type="button" class="btn btn-outline-secondary" id="findPwd" value="패스워드 찾기" style="width: 100%;">
+		        </div>
+           	</div> 
         </div>
     </form>
 </body>

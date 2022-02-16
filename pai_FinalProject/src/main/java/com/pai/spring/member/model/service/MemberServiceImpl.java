@@ -95,4 +95,23 @@ public class MemberServiceImpl implements MemberService {
 		return dao.insertMbti(session,m);
 	}
 
+	@Override
+	public int insertNaverAccount(Member loginMember) {
+		// TODO Auto-generated method stub
+		return dao.insertNaverAccount(session,loginMember);
+	}
+
+	@Override
+	public int updateNaverAccount(Member m) {
+		// TODO Auto-generated method stub
+		return dao.updateNaverAccount(session, m);
+	}
+
+	@Override
+	public int delete(String member_id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.delete(session,member_id);
+	}
+
+	
 }

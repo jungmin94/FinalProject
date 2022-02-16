@@ -18,11 +18,11 @@
 			  	<label>${member_nick } 님의 MBTI를 입력하세요</label>
     		</div>        
             <div style="width: 80%;">
-	            <div class="form-floating mb-3" style="width: 100%">
+	            <div class="form-floating mb-3">
 				  	<input type="text" class="form-control" id="floatingInput" name="member_mbti" placeholder="MBTI 입력">
 				  	<label for="floatingInput">MBTI입력</label>
 				</div> 
-			</div>
+			</div>	
 			<div class="submit btn-outline-secondary">
             	
                 <button type="submit" value="MBTI입력" class="btn btn-outline-secondary">MBTI입력</button>

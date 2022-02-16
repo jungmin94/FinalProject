@@ -39,7 +39,7 @@
         <button id="B" type="button" class="btn btn-primary mt-5">대답B</button>
     </article>
     <article class="result">
-        <img id="img" class="rounded-circle mt-5" src="lion.jpg" alt="mbti">
+        <img id="img" class="mt-5" src="lion.jpg" alt="mbti">
         <h2 id="mbti" class="text-center mt-5">나의 MBTI는</h2>
         <h3 id="explain"class="text-center mt-5">설명</h3>
     </article>
@@ -108,7 +108,7 @@
                 ($("#TF").val()<2) ? mbti+="F" : mbti+="T";
                 ($("#JP").val()<2) ? mbti+="P" : mbti+="J";
                 alert(mbti);
-                $("#img").attr("src","/resources/images/member/"+result[mbti]["img"]);
+                $("#img").attr("src","${path}/resources/images/member/"+result[mbti]["img"]);
                 $("#mbti").html(result[mbti]["mbti"]);
                 $("#explain").html(result[mbti]["explain"]);
             }else{

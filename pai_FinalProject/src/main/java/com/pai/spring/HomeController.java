@@ -28,6 +28,8 @@ public class HomeController {
 //		model.addAttribute("list", list);
 //		model.addAttribute("top", topList);
 //		model.addAttribute("info", infoList);
+		
+		
 		return "home";
 	}
 	
