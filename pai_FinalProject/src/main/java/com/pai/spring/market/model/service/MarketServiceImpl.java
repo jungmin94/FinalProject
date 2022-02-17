@@ -6,14 +6,20 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pai.spring.market.model.dao.MarketDao;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
+import com.pai.spring.market.model.vo.Order;
+import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.market.model.vo.Review;
+import com.pai.spring.member.model.vo.Member;
 
 @Service
 public class MarketServiceImpl implements MarketService {
+
 
 	@Autowired
 	private SqlSessionTemplate session;
@@ -168,7 +174,7 @@ public class MarketServiceImpl implements MarketService {
 	}
 	
 	@Override
-	public int goodPrice(GoodsDetails gd) {
+	public GoodsDetails goodPrice(GoodsDetails gd) {
 		
 		return dao.goodPrice(session, gd);
 	}
@@ -177,6 +183,132 @@ public class MarketServiceImpl implements MarketService {
 	public int deleteTitleGood(Goods good) {
 
 		return dao.deleteTitleGood(session, good);
+	}
+	
+	@Override
+	public int insertOrder(Order order) {
+	
+		return dao.insertOrder(session, order);
+	}
+	
+	@Override
+	public int insertOrderDetail(OrderDetail orderDetail) {
+	
+		return dao.insertOrderDetail(session,orderDetail);
+	}
+	
+	@Override
+	public int updateInven(GoodsDetails gd) {
+	
+		return dao.updateInven(session, gd);
+	}
+	
+	@Override
+	public List<Order> orderDetailList(int cPage, int numPerPage,Member m) {
+		
+		return dao.orderDetailList(session, cPage, numPerPage,m);
+	}
+
+	@Override
+	public int selectOrderDetailCount(Member m) {
+		
+		return dao.selectOrderDetailCount(session,m);
+	}
+	
+	@Override
+	public int insertReview(Map<String, Object> param) {
+		
+		return dao.insertReview(session,param);
+	}
+	
+	@Override
+	public int reviewTotalCount(String goodsName) {
+	
+		return dao.reviewTotalCount(session, goodsName);
+	}
+	
+	@Override
+	public int updateAvgGrade(Goods good) {
+	
+		return dao.updateAvgGrade(session, good);
+	}
+	
+	@Override
+	public int updateCheckReviewDo(Map<String, Object> param) {
+		
+		return dao.updateCheckReviewDo(session, param);
+	}
+	
+	@Override
+	public List<Review> selectReviewList(int cPage, int numPerPage, Member m) {
+	
+		return dao.selectReviewList(session, cPage, numPerPage, m);
+	}
+
+	@Override
+	public int selectReviewCount(Member m) {
+	
+		return dao.selectReviewCount(session, m);
+	}
+	
+	@Override
+	public int updateReview(Review rv) {
+		
+		return dao.updateReview(session, rv);
+	}
+	
+	@Override
+	public Review selectReviewUseNo(Review rv) {
+
+		return dao.selectReviewUseNo(session, rv);
+	}
+
+	@Override
+	public int deleteReview(Review rv) {
+
+		return dao.deleteReview(session, rv);
+	}
+	
+	@Override
+	public int updateTotalCell(Goods good) {
+
+		return dao.updateTotalCell(session, good);
+	}
+	
+	@Override
+	public List<Review> selectReviewList(int cPage, int numPerPage, String goodsName) {
+		
+		return dao.selectReviewList(session, cPage, numPerPage, goodsName);
+	}
+	
+	@Override
+	@Transactional
+	public int insertGoodsDetailImage(List<GoodsDetailImage> filenames) {
+		int result=0;
+		if(!filenames.isEmpty()) {
+			for(GoodsDetailImage gdi : filenames) {
+				result = dao.insertGoodsDetailImage(session, gdi);
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	@Transactional
+	public int updateGoodsDetailImage(List<GoodsDetailImage> filenames) {
+		int result=0;
+		if(!filenames.isEmpty()) {
+			for(GoodsDetailImage gdi : filenames) {
+				result = dao.updateGoodsDetailImage(session, gdi);
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	public int updateGoodOutput(String goodsName) {
+		
+		return dao.updateGoodOutput(session, goodsName);
 	}
 	
 }

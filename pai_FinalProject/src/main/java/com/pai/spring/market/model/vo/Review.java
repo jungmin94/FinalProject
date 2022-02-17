@@ -11,13 +11,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class GoodsDetails {
+public class Review {
 
-	private String color;
-	private String size;
-	private String goodsNo;
+	private int reviewNo;
+	private String member_id;
+	private int goodsNo;
 	private String goodsName;
-	private int invenCount;
-	private int price;
+	private int grade;
+	private String reviewText;
+	private Date reviewDate;
+	private OrderDetail orderDetail;
 	
 }
