@@ -52,17 +52,21 @@
 	}
 </style>
 <section>
-	<%-- <div class="container" style="margin-top:30px;"> 
+	 <div class="container" style="margin-top:30px;"> 
 		<!-- 종합인기글, 인기정보글 -->
 		<div class="row">
 			<div class="col title">
 				<img src="${path}/resources/images/board/star.png" style="width:50px;height:50px;"/>
 				종합인기글 TOP5
+				<span style="margin-left:230px; font-size:15px; color:black;">추천수</span>
 			</div>
+			
+			
 			<div class="col title">
 				<img src="${path}/resources/images/board/fire.png" style="width:50px;height:50px;"/>
-				인기정보글 TOP5	
-			</div>
+				 인기정보글 TOP5 
+				<span style="margin-left:230px; font-size:15px; color:black;">추천수</span>	
+			</div> 
 		</div>
 		
 		 <div class="row">
@@ -193,15 +197,15 @@
 			</div>
 	
 	
-	</div> --%>
+	</div> 
 </section>
 
 <script>
-/* 	$("#category").change(e=>{
+ 	$("#category").change(e=>{
 		searchMainBoard.action="${path}/searchMainBoard.do";
 		searchMainBoard.category.value=$("#category").val();
 		searchMainBoard.submit();
-	}) */
+	}) 
 
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

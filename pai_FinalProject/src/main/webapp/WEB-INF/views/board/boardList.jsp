@@ -9,27 +9,34 @@
 	margin: 0px auto;
 	padding-top: 30px;
 }
-.left-top{
+.left-top{ 
 	background-color: red;
-	margin-right: 29px;
+	margin-left:1px;
+	margin-right: 30px; ;
 	border-start-end-radius: 30px;
 	border-top-left-radius: 30px;
+	width:645px;   
 }
 .right-top{
 	background-color: orange; 
 	border-start-end-radius: 30px;
 	border-top-left-radius: 30px;
+	width:645px;
+	margin-right:1px;
+	margin-left:1px;
 }
 .left-box{
 	border: red 4px solid;
-	margin-right: 30px;
+	margin-right: 23px;
 	border-end-start-radius: 30px;
-	border-end-end-radius: 30px;
+	border-end-end-radius: 30px; 
+	padding-right:18px;
 }
 .right-box{
 	border: orange 4px solid;
 	border-end-start-radius: 30px;
 	border-end-end-radius: 30px;
+	margin-left:7px;
 }
 section>*{
 	font-family: sans-serif;
@@ -54,41 +61,51 @@ section>*{
  <section> 
 	<div class="container">
 		<div class="main-box">
-		
 		 	<div class="row">
-			    <div class="col left-top" >
-			     <h2 style="font-weight: bolder;">조회수 인기글</h2>
-			    </div>
-			    <div class="col right-top">
-			      <h2 style="font-weight: bolder;">추천수 인기글</h2>
+			    <div class="col left-top row" >
+			    	<div class="col-7"> 
+			     		<h2 style="font-weight: bolder;  ">조회수 인기글</h2>
+			     	</div> 
+			     	<div class="col" style=" padding:0px; height:10px; width:50px; margin-top:20px;">
+			     		<p style="text-align:end;  ">조회수</p>
+			     	</div>
+			    </div> 
+			    
+			    <div class="col right-top row">
+			    	<div class="col-9"> 
+			     		 <h2 style="font-weight: bolder;">추천수 인기글</h2>
+			      	</div>
+			      	<div class="col" style=" height:10px; padding:0px;  margin-top:20px;">
+			     		<p style="text-align:end; ">추천수</p>
+			     	</div>
 			    </div>
 		    </div>
 		   	<div class="row">
 			    <div class="col left-box" >
-					<table style="width:600px;"> 
-					<c:forEach var="r" items="${readList}">
-						<tr>
+					<table style="width:610px; "> 
+					<c:forEach var="r" items="${readList}" varStatus="vs"> 
+						<tr style="margin-right:60px;">
 							<td style="font-size:20px; font-weight:bolder;color:blue;"> <c:out value="${r.boardCategory}"/></td>
 							<td style="font-size:20px;">
 								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${r.boardNo}&memberId=${loginMember.member_id}">
 									<c:out value="${r.boardTitle}"/>
-									<span style="font-weight:bolder;">[<c:out value="${r.comment.size()}"/>]</span>
+									<%-- <span style="font-weight:bolder;">[<c:out value="${r.comment.size()}"/>]</span> --%>
 								</a>
 							</td>
 							<td style="width:50px;color:#004080;font-size:20px;text-align:right;"><c:out value="${r.boardReadCount}"/></td> 
-						</tr>
+						</tr> 
 					</c:forEach>
 					</table> 
 			    </div>
 			    <div class="col right-box">
-			    	<table style="width:600px;"> 
+			    	<table style="width:610px;"> 
 					<c:forEach var="like" items="${likeList}">
 						<tr>
 							<td style="font-size:20px; font-weight:bolder;color:blue;"> <c:out value="${like.boardCategory}"/></td>
 							<td style="font-size:20px;">
 								<a style="text-decoration:none; color:black;" href="${path}/board/boardView.do?boardNo=${like.boardNo}&memberId=${loginMember.member_id}">
 									<c:out value="${like.boardTitle}"/>
-									<span style="font-weight:bolder;">[<c:out value="${like.comment.size()}"/>]</span>
+									<%-- <span style="font-weight:bolder;">[<c:out value="${like.comment.size()}"/>]</span> --%>
 								</a>
 							</td>
 							<td style="width:50px;color:#004080;font-size:20px;text-align:right;"><c:out value="${like.recommendCount}"/></td> 

@@ -416,7 +416,7 @@ function kakaoShare() {
     content: {
       title: '${board.boardTitle}',
       description: 'MBTI커뮤니티 사이트 PAI',
-      imageUrl: 'https://i.ibb.co/7kh6Yz5/Kakao-Talk-Photo-2022-01-15-17-58-47.jpg',
+      imageUrl: 'https://newsimg.hankookilbo.com/cms/articlerelease/2021/08/06/d05b2f4a-4b71-4d85-88ac-c2ca0938559e.jpg',
       link: {
         mobileWebUrl: "http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null",
         webUrl: 'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
