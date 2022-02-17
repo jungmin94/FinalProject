@@ -37,9 +37,9 @@
 				<c:if test="${loginMember.member_id ne t.member_id.member_id }">
 				  <div class="col">
 					<div class="card" style="width: 18rem;">
-						<%-- <img src="${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;"> --%>
+						<img src="${path }/resources/upload/member/${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;">
 						<div class="card-body">
-						  <p class="card-text"><c:out value="${t.member_id.member_id }"/></p>
+						  <input type="hidden" value="${t.member_id.member_id }">
 						  <p class="card-text"><c:out value="${t.member_id.member_nick }"/></p>
 						  <p class="card-text"><c:out value="${t.member_id.member_date }"/></p>
 						  <p class="card-text"><c:out value="${t.member_id.member_gender }"/></p>
@@ -127,7 +127,7 @@
 <script>
 
 const sendMessage=(e)=>{
- 	 var recvId = e.parentElement.children[0].innerText;
+ 	 var recvId = e.parentElement.children[0].value;
 	 var recvNick = e.parentElement.children[1].innerText;
 	 var sendDate = e.parentElement.children[2].innerText;
 	 var memberGender = e.parentElement.children[3].innerText;
