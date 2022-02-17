@@ -17,6 +17,8 @@ public interface MessageService {
 	
 	Map selectRecvMsgDetail(int msgNo);
 	
+	int recvMsgRead(int msgNo);
+	
 	List<Message> selectSendMsg(String sendId, int cPage, int numPerpage);
 	
 	int selectSendMessageCount(String sendId);
@@ -27,6 +29,15 @@ public interface MessageService {
 	
 	int deleteSendMsg(int msgNo);
 	
-	void autoMessageDelete();
+	void oldMessageDelete();
+	
+	void perDelete();
+	
+	//받은편지중 읽지않은 쪽지 갯수
+	int selectUnreadMsg(String memberId);
+	
+	int sendMessage(Map param);
+	
+	int cancelSendMsg(int msgNo);
 	
 }

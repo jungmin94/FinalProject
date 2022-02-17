@@ -72,10 +72,36 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	@Scheduled(cron="0 57 2 * * *")
-	public void autoMessageDelete() {
-		dao.autoMessageDelete(session);
+	public void oldMessageDelete() {
+		dao.oldMessageDelete(session);
 		
+	}
+	
+	
+
+	@Override
+	public void perDelete() {
+		dao.perDelete(session);
+	}
+
+	@Override
+	public int selectUnreadMsg(String memberId) {
+		return dao.selectUnreadMsg(session, memberId);
+	}
+
+	@Override
+	public int sendMessage(Map param) {
+		return dao.sendMessage(session, param);
+	}
+
+	@Override
+	public int recvMsgRead(int msgNo) {
+		return dao.recvMsgRead(session, msgNo);
+	}
+
+	@Override
+	public int cancelSendMsg(int msgNo) {
+		return dao.cancelSendMsg(session, msgNo);
 	}
 
 	

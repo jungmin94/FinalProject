@@ -25,7 +25,7 @@
 		</ul>
 	</div>
 	<div id="searchMessage">
-		<form action="#">
+ 		<form id="searchMsg" action="#">
 			<select name="searchType">
 				<option value="msg_title">제목</option>
 				<option value="send_id">보낸사람</option>
@@ -102,6 +102,60 @@
 		  </div>
 		</div>
 	</form> --%>
+	
+<!-- 답장보내기 모달창 -->
+	<div class="modal fade" id="MsgForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content ">
+                <div class="modal-header">
+                <h5 class="modal-title">쪽지 보내기</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form class="msg_form" method="post">
+                    <input type="hidden" id="flag" name="flag" value="insert"/>
+                    <div class="modal-body fn-font">
+                        <table>
+                            <colgroup>
+                                <col style="width:150px;"/>
+                                <col style="width:px;"/>
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th>보낸 사람</th>
+                                    <th>
+                                    	<input type="text" class="form-control-plaintext" name="sendNick" id="sendNick" value="${loginMember.member_nick}" readonly/>
+                                    	<input type="hidden" name="sendId" id="sendId" value="${loginMember.member_id}">
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th>받는 사람</th>
+                                    <th>
+                                    	<input type="text" class="form-control-plaintext" name="recvNick" id="recvNick" readonly/>
+                                    	<input type="hidden" name="recvId" id="recvId">
+                                   	</th>
+                                </tr>
+                                <tr>
+                                    <th>제목</th>
+                                    <th><input type="text" name="msgTitle" class="form-control" id="msgTitle"></th>
+                                    
+                                </tr>
+                                <tr>
+                                    <th>내용</th>
+                                    <th><textarea class="form-control" name="msgContent" id="msgContent" rows="5" cols="30"></textarea></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <div class="modal-footer fn-font">
+                    <button class="btn btn-primary" id="msgSend" type="submit">보내기</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>	
+	
+	
 </body>
 
 <script>
@@ -131,8 +185,10 @@ function selectAllRecvMsg(e)  {
 
 
 
+
 //받은편지함 전체조회
 function recvMsgBox(cPage){
+
 	//$("#sendMsg").hide();
 	//$("#recvMsgDetail").hide();
 	//$("#pageNavContainer").hide();
@@ -177,6 +233,12 @@ function recvMsgBox(cPage){
 				
 				for(let i=0; i<recvMsgList.length; i++){
 					let tr2 = $("<tr>").css("text-align","center");
+					console.log(recvMsgList[i]["MSGREADCHECK"])
+					if(recvMsgList[i]["MSGREADCHECK"]=='N'){
+						tr2.css({"color":"#0459c1","font-weight":"bold"});
+					} else{
+						tr2.css({"color":"#212529"});
+					}
 					let td1 = $("<td>");
 					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"recvMsgCheck", value:recvMsgList[i]["MSGNO"]});
 					//let msgNo = $("<td>").html(((cPage-1)*10)+i+1);
@@ -229,6 +291,17 @@ function recvMsgBox(cPage){
 		
 			//삭제,목록버튼 생성해야함
 		}
+	/* 	let form = $("<form>").attr({method:"post"});
+		let select = $("<select>").attr({name:"searchType"});
+		let option1 = $("<option>").value("msg_title").html("제목");
+		let option2 = $("<option>").value("send_id").html("보낸사람");
+		let keyword = $("<input>").attr({type:"text", name:"keyword"});
+		let startDate = $("<input>").attr({type:"date", name:"startDate"});
+		let endDate = $("<input>").attr({type:"date", name:"endDate"});
+		let search = $("<button>").attr({type:"submit"}).html("검색");
+		select.append(option1).append(option2);
+		form.append(select).append(keyword).append(startDate).append(endDate).append(search);
+		$("#searchMessage").append(form); */
 	});
 	
 	
@@ -263,18 +336,20 @@ function sendMsgBox(cPage){
 			let th3=$("<th>").html("제목").attr("scope","col");
 			let th4=$("<th>").html("받는사람").attr("scope","col");
 			let th5=$("<th>").html("날짜").attr("scope","col");
+			let th6=$("<th>").html("읽음여부").attr("scope","col");
+			let th7=$("<th>").html("발송취소").attr("scope","col");
 			
 			table.append(thead);
 			thead.append(tr1);
 			tr1.append(th1);
 			th1.append(checkAll);
-			tr1.append(th2).append(th3).append(th4).append(th5);
+			tr1.append(th2).append(th3).append(th4).append(th5).append(th6).append(th7);
 			
 			
 			if(sendMsgList.length==0){
 				let tr2 = $("<tr>").css("text-align","center");
 				let ntd=$("<td>").html("보낸쪽지가 없습니다.");
-				ntd.attr("colspan","5");
+				ntd.attr("colspan","7");
 				tr2.append(ntd);
 				tbody.append(tr2);
 				table.append(tbody);
@@ -295,14 +370,27 @@ function sendMsgBox(cPage){
 					
 					let recvId = $("<td>").html(sendMsgList[i]["RECVNICK"]);
 					let msgSendTime = $("<td>").html(sendMsgList[i]["MSGSENDTIME"]);
+					let msgReadCheck = $("<td>");
+					let cancelMsg = $("<td>");
+					let cancelMsgNo = $("<input>").attr({type:"hidden", value:sendMsgList[i]["MSGNO"]});
+					if(sendMsgList[i]["MSGREADCHECK"]=='N'){
+						msgReadCheck.html("읽지않음");
+						cancelMsg.append("<button type='button' class='btn btn-outline-secondary' onclick='cancelMsg(this);'>발송취소").append(cancelMsgNo);
+					} else {
+						msgReadCheck.html("읽음");
+					}
 					tbody.append(tr2);
 					table.append(tbody);
-					tr2.append(td1).append(no).append(msgTitle).append(recvId).append(msgSendTime);
+					tr2.append(td1).append(no).append(msgTitle).append(recvId).append(msgSendTime).append(msgReadCheck).append(cancelMsg);
 					td1.append(check);
+					
+				
+					
 				}
 				let del = $("<button>").attr({type:"button", id:"delSendMsg", class:"btn btn-primary"}).html("삭제");
 				table.append(del);
 			}
+		
 			
 			const pageBar=$("<div style='text-align:center;'>").attr("id","pageBar2").html(data["pageBar"]);
 			$("#pageNavContainer").append(pageBar);
@@ -334,6 +422,26 @@ function sendMsgBox(cPage){
 	});
 
 };
+
+
+//상대방이 읽기전 발송취소
+function cancelMsg(e){
+	let cancelNum = $(e).next().val();
+	//let msgNo = $(e).parent().children().eq(1).val();
+	console.log($(e).next().val());
+ 	$.ajax({
+		url:"${path}/message/cancelSendMsg.do",
+		type:"post",
+		data:{"msgNo":cancelNum},
+		dataType:"json",
+		success: data =>{
+			alert(data.result);
+			location.reload();
+			
+		}
+		
+	}) 
+};  
 
 
 //시작 날짜 
@@ -370,7 +478,7 @@ $("#endDate").change(e=>{
 });
 
 
-//받은편지 상세보기 답장/목록/삭제버튼 필요
+//받은편지 상세보기
 function recvMsgView(e){
 	let msgNo = $(e).children().val();
 	$.ajax({
@@ -426,10 +534,11 @@ function recvMsgView(e){
 			
 			let list = $("<button>").attr({class:"btn btn-primary", type:"button", onclick:"location.reload();"}).html("목록");
 			let del = $("<button>").attr({type:"button", id:"delRecvMsg", class:"btn btn-primary"}).html("삭제");
-			table.append(list).append(del);
+			let answer = $("<button>").attr({type:"button", id:"answer", class:"btn btn-primary"}).html("답장");
+			table.append(answer).append(list).append(del);
 			
 			$("#body-container").html(table);
-			//답장,삭제,목록버튼 생성해야함
+			//상세보기 페이지 삭제버튼
 			$("#delRecvMsg").click(function(){
 				$.ajax({
 					url:"${path}/message/deleteRecvMsgOne.do",
@@ -445,12 +554,127 @@ function recvMsgView(e){
 				});
 			});
 			
+			//답장버튼
+			$("#answer").click(function(){
+				
+				$('#recvNick').val(data["SENDNICK"]);
+				$('#recvId').val(data["SENDID"]);
+				$('#MsgForm').modal("show");
+		
+			});
 		}
 	});
 };
 
 
-//보낸편지 상세보기 목록/삭제버튼 필요
+//답장 보내기
+$("#msgSend").click(e=>{
+	
+	//욕설 입력 금지
+    var SlangList = new Array('10새','10새기','10새리','10세리','10쉐이','10쉑','10스','10쌔',
+    		'10쌔기','10쎄','10알','10창','10탱','18것','18넘','18년','18노','18놈',
+    		'18뇬','18럼','18롬','18새','18새끼','18색','18세끼','18세리','18섹','18쉑','18스','18아',
+    		'c파','c팔','fuck',
+    		'ㄱㅐ','ㄲㅏ','ㄲㅑ','ㄲㅣ','ㅅㅂㄹㅁ','ㅅㅂ','ㅅㅐ','ㅆㅂㄹㅁ','ㅆㅍ','ㅆㅣ','ㅆ앙','ㅍㅏ','凸',
+    		'갈보','갈보년','강아지','같은년','같은뇬','개같은','개구라','개년','개놈',
+    		'개뇬','개대중','개독','개돼중','개랄','개보지','개뻥','개뿔','개새','개새기','개새끼',
+    		'개새키','개색기','개색끼','개색키','개색히','개섀끼','개세','개세끼','개세이','개소리','개쑈',
+    		'개쇳기','개수작','개쉐','개쉐리','개쉐이','개쉑','개쉽','개스끼','개시키','개십새기',
+    		'개십새끼','개쐑','개씹','개아들','개자슥','개자지','개접','개좆','개좌식','개허접','걔새',
+    		'걔수작','걔시끼','걔시키','걔썌','걸레','게색기','게색끼','광뇬','구녕','구라','구멍',
+    		'그년','그새끼','냄비','놈현','뇬','눈깔','뉘미럴','니귀미','니기미','니미','니미랄','니미럴',
+    		'니미씹','니아배','니아베','니아비','니어매','니어메','니어미','닝기리','닝기미','대가리',
+    		'뎡신','도라이','돈놈','돌아이','돌은놈','되질래','뒈져','뒈져라','뒈진','뒈진다','뒈질',
+    		'뒤질래','등신','디져라','디진다','디질래','딩시','따식','때놈','또라이','똘아이','똘아이',
+    		'뙈놈','뙤놈','뙨넘','뙨놈','뚜쟁','띠바','띠발','띠불','띠팔','메친넘','메친놈','미췬',
+    		'미췬','미친','미친넘','미친년','미친놈','미친새끼','미친스까이','미틴','미틴넘','미틴년',
+    		'미틴놈','바랄년','병자','뱅마','뱅신','벼엉신','병쉰','병신','부랄','부럴','불알','불할','붕가',
+    		'붙어먹','뷰웅','븅','븅신','빌어먹','빙시','빙신','빠가','빠구리','빠굴','빠큐','뻐큐',
+    		'뻑큐','뽁큐','상넘이','상놈을','상놈의','상놈이','새갸','새꺄','새끼','새새끼','새키',
+    		'색끼','생쑈','세갸','세꺄','세끼','섹스','쇼하네','쉐','쉐기','쉐끼','쉐리','쉐에기',
+    		'쉐키','쉑','쉣','쉨','쉬발','쉬밸','쉬벌','쉬뻘','쉬펄','쉽알','스패킹','스팽','시궁창','시끼',
+    		'시댕','시뎅','시랄','시발','시벌','시부랄','시부럴','시부리','시불','시브랄','시팍',
+    		'시팔','시펄','신발끈','심발끈','심탱','십8','십라','십새','십새끼','십세','십쉐','십쉐이','십스키',
+    		'십쌔','십창','십탱','싶알','싸가지','싹아지','쌉년','쌍넘','쌍년','쌍놈','쌍뇬','쌔끼',
+    		'쌕','쌩쑈','쌴년','썅','썅년','썅놈','썡쇼','써벌','썩을년','썩을놈','쎄꺄','쎄엑',
+    		'쒸벌','쒸뻘','쒸팔','쒸펄','쓰바','쓰박','쓰발','쓰벌','쓰팔','씁새','씁얼','씌파','씨8',
+    		'씨끼','씨댕','씨뎅','씨바','씨바랄','씨박','씨발','씨방','씨방새','씨방세','씨밸','씨뱅',
+    		'씨벌','씨벨','씨봉','씨봉알','씨부랄','씨부럴','씨부렁','씨부리','씨불','씨붕','씨브랄',
+    		'씨빠','씨빨','씨뽀랄','씨앙','씨파','씨팍','씨팔','씨펄','씸년','씸뇬','씸새끼','씹같','씹년',
+    		'씹뇬','씹보지','씹새','씹새기','씹새끼','씹새리','씹세','씹쉐','씹스키','씹쌔','씹이','씹자지',
+    		'씹질','씹창','씹탱','씹퇭','씹팔','씹할','씹헐','아가리','아갈','아갈이','아갈통',
+    		'아구창','아구통','아굴','얌마','양넘','양년','양놈','엄창','엠병','여물통','염병','엿같','옘병',
+    		'옘빙','오입','왜년','왜놈','욤병','육갑','은년','을년','이년','이새끼','이새키','이스끼',
+    		'이스키','임마','자슥','잡것','잡넘','잡년','잡놈','저년','저새끼','접년','젖밥','조까',
+    		'조까치','조낸','조또','조랭','조빠','조쟁이','조지냐','조진다','조찐','조질래','존나','존나게','존니','존만',
+    		'존만한','좀물','좁년','좁밥','좃까','좃또','좃만','좃밥','좃이','좃찐','좆같','좆까','좆나',
+    		'좆또','좆만','좆밥','좆이','좆찐','좇같','좇이','좌식','주글','주글래','주데이','주뎅',
+    		'주뎅이','주둥아리','주둥이','주접','주접떨','죽고잡','죽을래','죽통','쥐랄','쥐롤',
+    		'쥬디','지랄','지럴','지롤','지미랄','짜식','짜아식','쪼다','쫍빱','찌랄','창녀','캐년',
+    		'캐놈','캐스끼','캐스키','캐시키','탱구','팔럼','퍽큐','호로','호로놈','호로새끼',
+    		'호로색','호로쉑','호로스까이','호로스키','후라들','후래자식','후레','후뢰');
+    //제목, 내용 모두 빈값이나 비속어 사용 불가
+    var TmpTitle;
+    var TmpContent;
+    for(i=0 ; i<SlangList.length ; i++){
+    	TmpTitle = $("#msgTitle").val().toLowerCase().indexOf(SlangList[i]);
+        if(TmpTitle >= 0){
+            alert('비속어는 입력할 수 없습니다. 제목을 다시 입력해주세요');
+            $("#msgTitle").focus();
+            return false;
+        }
+        TmpContent = $("#msgContent").val().toLowerCase().indexOf(SlangList[i]);
+        if(TmpContent >= 0){
+            alert('비속어는 입력할 수 없습니다. 내용을 다시 입력해주세요');
+            $("#msgContent").focus();
+            return false;
+        }
+    }
+    //족지 제목 미입력시 포커스
+  	if($("#msgTitle").val().trim().length == 0){
+       $("#msgTitle").focus();
+       return false;
+    }
+    //쪽지 내용 미입력시 포커스
+  	if($("#msgContent").val().trim().length == 0){
+       $("#msgContent").focus();
+       return false;
+    }  
+    
+    console.log($(".msg_form").serialize());
+    confirm("테스트?");
+/*     $.ajax({
+        url : "${path}/message/sendMessage.do",
+        dataType : "json",
+        type : "post",
+        data : $(".msg_form").serialize(),
+        success: data=>{
+    		alert(data);
+    		alert(sendData);
+        	console.log(data);
+            const sendData = {
+            	"msgType":'sendMessage',
+            	"sendId":data["sendId"],
+            	"sendNick":data["sendNick"],
+            	"recvId":data["recvId"],
+            	"recvNick":data["recvNick"],
+            	"msgTitle":data["msgTitle"],
+            	"msgContent":data["msgContent"]
+            }
+            
+            let jsonData = JSON.stringify(sendData)
+            console.log(sendData);
+    		socket.send(sendData);
+			console.log('send');
+        }
+    }) */
+
+ 
+    //modal.find('.modal-body textarea').val('');
+});
+
+
+//보낸편지 상세보기
 function sendMsgView(e){
 	let msgNo = $(e).children().val();
 	$.ajax({

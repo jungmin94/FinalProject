@@ -12,6 +12,8 @@ import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
 import com.pai.spring.market.model.vo.Order;
 import com.pai.spring.market.model.vo.OrderDetail;
+import com.pai.spring.market.model.vo.Review;
+import com.pai.spring.member.model.vo.Member;
 
 @Repository
 public class MarketDaoImpl implements MarketDao {
@@ -193,15 +195,99 @@ public class MarketDaoImpl implements MarketDao {
 	}
 	
 	@Override
-	public List<Order> orderDetailList(SqlSessionTemplate session, int cPage, int numPerPage) {
+	public List<Order> orderDetailList(SqlSessionTemplate session, int cPage, int numPerPage,Member m) {
 	
-		return session.selectList("market.orderDetailList",null,new RowBounds((cPage-1)*numPerPage,numPerPage));
+		return session.selectList("market.orderDetailList",m,new RowBounds((cPage-1)*numPerPage,numPerPage));
 	}
 
 	@Override
-	public int selectOrderDetailCount(SqlSessionTemplate session) {
+	public int selectOrderDetailCount(SqlSessionTemplate session,Member m) {
 	
-		return session.selectOne("market.selectOrderDetailCount");
+		return session.selectOne("market.selectOrderDetailCount",m);
+	}
+	
+	@Override
+	public int insertReview(SqlSessionTemplate session,Map<String, Object> param) {
+	
+		return session.insert("market.insertReview",param);
+	}
+	
+	@Override
+	public int reviewTotalCount(SqlSessionTemplate session, String goodsName) {
+	
+		return session.selectOne("market.reviewTotalCount",goodsName);
+	}
+	
+	@Override
+	public int updateAvgGrade(SqlSessionTemplate session, Goods good) {
+	
+		return session.update("market.updateAvgGrade",good);
+	}
+	
+	@Override
+	public int updateCheckReviewDo(SqlSessionTemplate session, Map<String, Object> param) {
+		
+		return session.update("market.updateCheckReviewDo",param);
+	}
+	
+	@Override
+	public List<Review> selectReviewList(SqlSessionTemplate session, int cPage, int numPerPage, Member m) {
+	
+		return session.selectList("market.selectReviewList",m,new RowBounds((cPage-1)*numPerPage,numPerPage));
+	}
+
+	@Override
+	public int selectReviewCount(SqlSessionTemplate session, Member m) {
+	
+		return session.selectOne("market.selectReviewCount",m);
+	}
+	
+	@Override
+	public int updateReview(SqlSessionTemplate session, Review rv) {
+		
+		return session.update("market.updateReview",rv);
+	}
+	
+	@Override
+	public Review selectReviewUseNo(SqlSessionTemplate session, Review rv) {
+	
+		return session.selectOne("market.selectReviewUseNo",rv);
+	}
+	
+	@Override
+	public int deleteReview(SqlSessionTemplate session, Review rv) {
+	
+		return session.delete("market.deleteReview",rv);
+	}
+	
+	@Override
+	public int updateTotalCell(SqlSessionTemplate session, Goods good) {
+		
+		return session.update("market.updateTotalCell",good);
+	}
+	
+	@Override
+	public List<Review> selectReviewList(SqlSessionTemplate session, int cPage, int numPerPage, String goodsName) {
+	
+		return session.selectList("market.selectReviewMainList",goodsName,new RowBounds((cPage-1)*numPerPage,numPerPage));
+	}
+	
+	@Override
+	public int insertGoodsDetailImage(SqlSessionTemplate session, GoodsDetailImage gdi) {
+		
+		return session.insert("market.insertGoodsDetailImage",gdi);
+	}
+	
+	@Override
+	public int updateGoodsDetailImage(SqlSessionTemplate session, GoodsDetailImage gdi) {
+		
+		return session.update("market.updateGoodsDetailImage",gdi);
+	}
+	
+	@Override
+	public int updateGoodOutput(SqlSessionTemplate session, String goodsName) {
+	
+		return session.update("market.updateGoodOutput",goodsName);
 	}
 	
 }

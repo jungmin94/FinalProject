@@ -89,6 +89,12 @@ public class MessageController {
 	@ResponseBody
 	public String recvMsgDetail(int msgNo) {
 		Map msg = service.selectRecvMsgDetail(msgNo);
+		
+		//메세지 읽음여부가 N인경우 아직 읽기전 -> 상세보기시 Y처리 및 읽은 시간 등록 필요
+		if(msg.get("MSGREADCHECK").equals("N")) {
+			service.recvMsgRead(msgNo);
+		}
+		System.out.println(msg.get("MSGREADCHECK"));
 	
 		return new Gson().toJson(msg);
 	}
@@ -182,14 +188,43 @@ public class MessageController {
 		return new Gson().toJson(msg);
 	}
 	
+	//쪽지보내기
+	@RequestMapping(value="/sendMessage.do", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String sendMessage(@RequestParam Map param) {
+		System.out.println(param);
+		int msg = service.sendMessage(param);
+		//Map<String, Object> result = Map.of("sendId",param.get("sendId"), "recvId",param.get("recvId"), "sendNick",param.get("sendNick"));
+		//System.out.println(result);
 	
-	@Transactional(propagation = Propagation.REQUIRED, rollbackFor = { Exception.class, SQLException.class }, readOnly = false)
-	public boolean autoMessageDelete() throws Exception {
-	       
-	    System.out.println("스케줄링 테스트");
-	    
-	    return true;
+		return new Gson().toJson(param);
 	}
+	
+	//안읽은 쪽지개수
+	@RequestMapping(value="/msgCount.do")
+	@ResponseBody
+	public String selectUnreadMsg(String memberId) {
+		int msgCount = service.selectUnreadMsg(memberId);
+		return new Gson().toJson(msgCount);
+	}
+	
+	//읽기전 발송취소
+	@RequestMapping(value="/cancelSendMsg.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String cancelSendMsg(int msgNo) {
+		int cancel = service.cancelSendMsg(msgNo);
+		System.out.println("msgNo"+msgNo);
+		System.out.println("cancel"+cancel);
+		Map<String, Object> result;
+		if(cancel==1) {
+			result = Map.of("result", "발송 전 취소 완료하였습니다.");
+		} else {
+			result = Map.of("result", "취소 실패하였습니다.");
+		}
+		return new Gson().toJson(result);
+		
+	}
+
 	
 	
 }**/

@@ -28,8 +28,15 @@ public interface MessageDao{
 
 	int deleteSendMsg(SqlSessionTemplate session, int msgNo);
 	
-	void autoMessageDelete(SqlSessionTemplate session);
+	void oldMessageDelete(SqlSessionTemplate session);
 	
+	void perDelete(SqlSessionTemplate session);
 	
+	int selectUnreadMsg(SqlSessionTemplate session, String memberId);
 	
+	int sendMessage(SqlSessionTemplate session, Map param);
+	
+	int recvMsgRead(SqlSessionTemplate session, int msgNo);
+	
+	int cancelSendMsg(SqlSessionTemplate session, int msgNo);
 }

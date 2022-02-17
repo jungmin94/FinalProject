@@ -12,6 +12,8 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
 <title>PAI</title>
 <style>
 body {  
@@ -181,8 +183,10 @@ a .sub-menu-detail {
 				<a href="${path}/board/boardList.do"><div class="menu-bar">게시판</div></a>
 				<a href="${path}/market/mainView.do"><div class="menu-bar">MBTI 마켓</div></a>
 				<a href="${path }/chatting/toSeeMyChatroomInfo.do"><div class="menu-bar">채팅</div></a>
-				<a href="${path }/taste/taste.do"><div class="menu-bar">친구찾기</div></a>
-				<c:if test="${loginMember!=null&&loginMember.member_id eq 'jungmin'}"> 
+				<c:if test="${loginMember eq null}"> 
+				<a href="${path }/" onclick="msg();"><div class="menu-bar">친구찾기</div></a>
+				</c:if>
+				<c:if test="${loginMember!=null&&loginMember.member_id eq 'admin'}"> 
 					<a href="${path}/admin/adminView.do"><div class="menu-bar">회원관리</div></a>
 				</c:if>
 			</div>
@@ -197,7 +201,7 @@ a .sub-menu-detail {
 				<div class="nav-lists" id="mypage-icon">
 					<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-arrived는 보이지 않게 설정 필요 -->
 					<!-- 만약 받은 쪽지가 없을 경우 하단의 span .login-area의 이미지 주소는 https://i.ibb.co/vxM4TDk/2022-01-18-17-51-35.png 사용 필요 -->
-					<span id="message-arrived">쪽지가 도착했습니다!</span><br>
+					<span id="message-arrived"></span><br>
 					<span id="loginMember"><c:out value="${loginMember.member_nick }님 접속을 환영합니다"/></span>
 					<span class="login-area" onmouseover="dropDownMenu();">
 						<img src="https://i.ibb.co/4Z7wXR5/2022-01-20-10-00-48.png" width="50px">
@@ -212,10 +216,10 @@ a .sub-menu-detail {
 			<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-icon 이미지 이 것 사용 <img src="https://i.ibb.co/4Z7wXR5/red-circle.png" width="13px"> -->
 			<a href="javascript:fn_messageBox();">
 				<div class="sub-menu-detail" id="menu-message">쪽지함
-				<span id="message-icon"><img src="https://i.ibb.co/ZT0XhL5/2022-01-20-10-00-48.png" width="13px"></span><span id="message-count">1</span>
+				<span class="badge bg-danger" id="msgCount"></span>
 				</div>
 				<form id="myIdData" action="${path}/message/messageBox.do" method="post" target="msgBox">
-				  <input type="hidden" name="memberId" value="${loginMember.member_id}">
+				  <input type="hidden" name="memberId" value="${loginMember.member_id}" id="memberId">
 				</form>
 			</a>
 			<a href="${path}/board/myboardView.do?memberId=${loginMember.member_id}">
@@ -255,6 +259,103 @@ a .sub-menu-detail {
 			/* open("${path}/message/messageBox.do","_blank","width=800,height=800"); */
 		}
         
+        
+        
+
+        //소켓 전역변수
+        var socket = null;
+        
+        //로그인시 connectSocket함수 실행
+		//$(document).ready(function(){
+			if(${loginMember.member_id != null}){
+				connectSocket();
+			}
+		//});
+		
+        //웹소켓 연결
+	 	function connectSocket(){
+			var sock = "http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message";
+			socket = new SockJS(sock);
+			
+			socket.onopen = onOpen;
+			socket.onmessage = onMessage;
+		
+			/* sock.onopen = function() {
+		 		console.log('open');
+		 	};  */
+		 	//sock.onmessage = onMessage;
+		 }; 
+        
+        
+        
+
+        
+     // toast생성 및 추가
+/*         sock.onmessage = function(evt){
+        		console.log('onmessage');
+            var data = evt.data;
+            console.log(data);
+            // toast
+            let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+            toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+            toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+            toast += "<span aria-hidden='true'>&times;</span></button>";
+            toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+            $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
+            $(".toast").toast({"animation": true, "autohide": false});
+            $('.toast').toast('show');
+        }; */
+        
+        function onOpen(){
+        	console.log('open');
+        }
+        
+        function onMessage(message){
+        	console.log('onMessage'+message.data);
+        	let socketAlert = $('span#message-arrived');
+    		socketAlert.html(message.data)
+    		socketAlert.css('display', 'block');
+    		
+    		setTimeout(function(){
+    			$socketAlert.css('display','none');
+    			
+    		}, 5000);
+        };
+        
+    	
+    	
+   /*  	sock.onclose = function() {
+    	    console.log('close');
+     	}; */
+        
+        
+        
+       //로그인시 쪽지 갯수
+	        if(${loginMember.member_id != null}){
+		        $.ajax({
+		        	url:"${path}/message/msgCount.do",
+		        	data:{"memberId":'${loginMember.member_id}'},
+		        	dataType:"json",
+		        	type:"post",
+		        	success:data=>{
+		        		$("#msgCount").text(data);
+		        	}
+		        	
+		        })
+		        $("#friendsSearch").on("click")
+        	}
+       
+	        function msg(){
+   				alert("로그인 후 이용가능합니다.");
+	        };
+   			
+	    
+        
     </script>
 	</nav>
+	
+	 <div id="msgStack"></div>
+	
 </header>
+
+
