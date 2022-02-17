@@ -20,4 +20,16 @@ public interface MessageDao{
 	List<Message> selectSendMsg(SqlSessionTemplate session, String sendId, int cPage, int numPerpage);
 	
 	int selectSendMessageCount(SqlSessionTemplate session, String sendId);
+	
+	Map selectSendMSgDetail(SqlSessionTemplate session, int msgNo);
+	
+	
+	int deleteRecvMsg(SqlSessionTemplate session, int msgNo);
+
+	int deleteSendMsg(SqlSessionTemplate session, int msgNo);
+	
+	void autoMessageDelete(SqlSessionTemplate session);
+	
+	
+	
 }

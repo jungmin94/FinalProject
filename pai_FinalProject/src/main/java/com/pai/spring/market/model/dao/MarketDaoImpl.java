@@ -10,6 +10,8 @@ import org.springframework.stereotype.Repository;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
+import com.pai.spring.market.model.vo.Order;
+import com.pai.spring.market.model.vo.OrderDetail;
 
 @Repository
 public class MarketDaoImpl implements MarketDao {
@@ -108,7 +110,7 @@ public class MarketDaoImpl implements MarketDao {
 	@Override
 	public int deleteGood(SqlSessionTemplate session, Map<String, Object> param) {
 	
-		return session.delete("market.deleteGood",param);
+		return session.delete("market.deleteGoodDetails",param);
 	}
 	
 	@Override
@@ -152,6 +154,54 @@ public class MarketDaoImpl implements MarketDao {
 	public int enrollGoods(SqlSessionTemplate session, Goods good) {
 	
 		return session.insert("market.enrollGoods",good);
+	}
+	
+	@Override
+	public List<GoodsDetails> sizeInvenList(SqlSessionTemplate session, GoodsDetails gd) {
+		
+		return session.selectList("market.sizeInvenList",gd);
+	}
+	
+	@Override
+	public GoodsDetails goodPrice(SqlSessionTemplate session, GoodsDetails gd) {
+
+		return session.selectOne("market.goodPriceAndInven",gd);
+	}
+	
+	@Override
+	public int deleteTitleGood(SqlSessionTemplate session, Goods good) {
+	
+		return session.delete("market.deleteTitleGood",good);
+	}
+	
+	@Override
+	public int insertOrder(SqlSessionTemplate session, Order order) {
+		
+		return session.insert("market.insertOrder",order);
+	}
+	
+	@Override
+	public int insertOrderDetail(SqlSessionTemplate session, OrderDetail orderDetail) {
+		
+		return session.insert("market.insertOrderDetail",orderDetail);
+	}
+	
+	@Override
+	public int updateInven(SqlSessionTemplate session, GoodsDetails gd) {
+
+		return session.update("market.updateInven",gd);
+	}
+	
+	@Override
+	public List<Order> orderDetailList(SqlSessionTemplate session, int cPage, int numPerPage) {
+	
+		return session.selectList("market.orderDetailList",null,new RowBounds((cPage-1)*numPerPage,numPerPage));
+	}
+
+	@Override
+	public int selectOrderDetailCount(SqlSessionTemplate session) {
+	
+		return session.selectOne("market.selectOrderDetailCount");
 	}
 	
 }

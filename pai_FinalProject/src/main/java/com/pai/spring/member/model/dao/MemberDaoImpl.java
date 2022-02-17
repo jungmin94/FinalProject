@@ -12,7 +12,7 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public Member login(SqlSessionTemplate session, Map param) {
 		// TODO Auto-generated method stub
-		return session.selectOne("member.selectMember",param);
+		return session.selectOne("member.login",param);
 	}
 
 	@Override

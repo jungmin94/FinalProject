@@ -79,7 +79,7 @@
 				</c:if>
 				<c:if test="${g.image ne null}">
 					<button type="button"  id="updateGoodImageBtn" class="btn btn-outline-warning" 
-					data-bs-toggle="modal" data-bs-target="#updateGoodImage" data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
+					data-bs-toggle="modal" data-bs-target="#updateGoodImage" data-gno="${g.goodsNo}" data-gname="${g.goodsName}" data-img="${g.image}">
 	  				대표이미지 수정
 					</button>
 				</c:if>
@@ -93,6 +93,10 @@
 	  				상세이미지 수정
 					</button>
 				</c:if>
+				<button type="button"  id="deleteTitleGoodBtn" class="btn btn-outline-danger" 
+					data-bs-toggle="modal" data-bs-target="#deleteGoods" data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
+	  				상품 삭제
+				</button>
 			</td>
 		  </tr>
 		</c:forEach>
@@ -122,7 +126,7 @@
         enctype="multipart/form-data">
         	<input type="hidden" id="img_gno" name="goodsNo">
         	<input type="hidden" id="img_gname" name="goodsName">
-        	<img id="image_section" src="${path}/resources/images/market/add-image.PNG"  alt="your image" style="height:300px; width:300px;"/>
+        	<img id="image_section" src=""  alt="your image" style="height:300px; width:300px;"/>
         	<br><br>
         	<input type='file' id="imgInput" name="upFile"/>
         </form>
@@ -223,11 +227,11 @@
 		<span id="cate_size_text">카테고리2(사이즈)</span>
         <select id="cate_size" class="form-control" name="size" required>
 			<option value="" disabled selected>사이즈</option>
-			<option value="XS">XS</option>
-			<option value="S">S</option>
-			<option value="M">M</option>
-			<option value="L">L</option>
-			<option value="XL">XL</option>
+			<option value="1.XS">1.XS</option>
+			<option value="2.S">2.S</option>
+			<option value="3.M">3.M</option>
+			<option value="4.L">4.L</option>
+			<option value="5.XL">5.XL</option>
 		</select>
 		<br>
 	  <span id="enr_invencount_text">재고수량</span>
@@ -244,16 +248,51 @@
   </div>
 </div>
 
+
+<!-- 상품 삭제  -->
+<div class="modal fade" id="deleteGoods" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">상품삭제</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="text-align:center;">
+        삭제하시겠습니까?
+        <br>
+        <span style="color:red;">(해당상품 삭제시 등록된 재고가 모두 삭제됩니다)</span>
+        <br>
+        <br>
+        상품코드<input type="text"  id="de_gno_text" name="delgoodsno" class="form-control"   value="" readonly><br>
+        상품명<input type="text" id="de_gname_text" name="delgoodsname" class="form-control"   value="" readonly><br>
+        <form id="delTitleGood" action="${path}/market/deleteTitleGood.do">
+        <input type="hidden" id="de_gno_" name="goodsNo" value="">
+        <input type="hidden" id="de_gname_" name="goodsName" value="">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="$('#delTitleGood').submit();">삭제</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
 
 $(document).on("click", "#updateGoodImageBtn", function () { 
 	
+	$("#image_section").attr("src", "${path}/resources/images/market/add-image.PNG");
 	let goodNo = $(this).data('gno');
 	let goodName = $(this).data('gname');
-
+	let img = $(this).data('img');
+	console.log(img);
 	$('#img_gno').val(goodNo);
 	$('#img_gname').val(goodName);
-
+	if(img != undefined){
+		$("#image_section").attr("src", "${path}/resources/upload/market/"+img);
+	}
+	
 });
 
 $(document).on("click", "#enrollGoodDetailBtn", function () { 
@@ -342,6 +381,21 @@ function readURL(input) {
 	// 이벤트를 바인딩해서 input에 파일이 올라올때 (input에 change를 트리거할때) 위의 함수를 this context로 실행
 	$("#imgInput").change(function(){
 	   readURL(this);
+	});
+	
+
+	
+	$(document).on("click", "#deleteTitleGoodBtn", function () { 
+		
+		let goodNo = $(this).data('gno');
+		let goodName = $(this).data('gname');
+
+		$('#de_gno_text').val(goodNo);
+		$('#de_gname_text').val(goodName);
+		
+		$('#de_gno_').val(goodNo);
+		$('#de_gname_').val(goodName);
+
 	});
 
 </script>

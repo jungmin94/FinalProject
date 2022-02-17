@@ -11,6 +11,8 @@ import com.pai.spring.market.model.dao.MarketDao;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
+import com.pai.spring.market.model.vo.Order;
+import com.pai.spring.market.model.vo.OrderDetail;
 
 @Service
 public class MarketServiceImpl implements MarketService {
@@ -160,6 +162,54 @@ public class MarketServiceImpl implements MarketService {
 	public int enrollGoods(Goods good) {
 		
 		return dao.enrollGoods(session, good);
+	}
+	
+	@Override
+	public List<GoodsDetails> sizeInvenList(GoodsDetails gd) {
+	
+		return dao.sizeInvenList(session, gd);
+	}
+	
+	@Override
+	public GoodsDetails goodPrice(GoodsDetails gd) {
+		
+		return dao.goodPrice(session, gd);
+	}
+	
+	@Override
+	public int deleteTitleGood(Goods good) {
+
+		return dao.deleteTitleGood(session, good);
+	}
+	
+	@Override
+	public int insertOrder(Order order) {
+	
+		return dao.insertOrder(session, order);
+	}
+	
+	@Override
+	public int insertOrderDetail(OrderDetail orderDetail) {
+	
+		return dao.insertOrderDetail(session,orderDetail);
+	}
+	
+	@Override
+	public int updateInven(GoodsDetails gd) {
+	
+		return dao.updateInven(session, gd);
+	}
+	
+	@Override
+	public List<Order> orderDetailList(int cPage, int numPerPage) {
+		
+		return dao.orderDetailList(session, cPage, numPerPage);
+	}
+
+	@Override
+	public int selectOrderDetailCount() {
+		
+		return dao.selectOrderDetailCount(session);
 	}
 	
 }

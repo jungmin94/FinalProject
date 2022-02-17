@@ -182,7 +182,7 @@ a .sub-menu-detail {
 				<a href="${path}/market/mainView.do"><div class="menu-bar">MBTI 마켓</div></a>
 				<a href="${path }/chatting/toSeeMyChatroomInfo.do"><div class="menu-bar">채팅</div></a>
 				<a href="${path }/taste/taste.do"><div class="menu-bar">친구찾기</div></a>
-				<c:if test="${loginMember!=null&&loginMember.member_id eq 'admin'}"> 
+				<c:if test="${loginMember!=null&&loginMember.member_id eq 'jungmin'}"> 
 					<a href="${path}/admin/adminView.do"><div class="menu-bar">회원관리</div></a>
 				</c:if>
 			</div>

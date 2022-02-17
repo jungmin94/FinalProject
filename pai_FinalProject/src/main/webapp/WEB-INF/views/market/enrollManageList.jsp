@@ -48,7 +48,7 @@
 			<th scope="col">사이즈</th>
 			<th scope="col">가격</th>
 			<th scope="col">재고수량</th>
-			<th scope="col">재고/상품관리</th>
+			<th scope="col">재고관리</th>
 		  </tr>
 		</thead>
 		<tbody>
@@ -63,8 +63,8 @@
 				<c:if test="${e.invenCount==0}">
 					<span style="color:red;">품절</span>
 				</c:if>
-				<c:if test="${e.invenCount<6}">
-					<span style="color:red;">${e.invenCount}</span>
+				<c:if test="${0<e.invenCount && e.invenCount<6}">
+					<span style="color:#FA5882;">${e.invenCount}</span>
 				</c:if>
 				<c:if test="${e.invenCount>5}">
 					${e.invenCount}
@@ -154,13 +154,19 @@
 	      <input type="hidden" id="del_gcolor" name="delgoodcolor" class="form-control"   value="" ><br>
 	      <input type="hidden" id="del_gsize" name="delgoodsize" class="form-control"   value="" ><br>
         </form>
+        
+        상품코드<input type="text"  id="del_gno_" name="upgoodno" class="form-control"   value="" readonly><br>
+        상품명<input type="text" id="del_gname_" name="upgoodname" class="form-control"   value="" readonly><br>
+        색상<input type="text" id="del_gcolor_" name="upgoodcolor" class="form-control"   value="" readonly><br>
+        사이즈<input type="text" id="del_gsize_" name="upgoodsize" class="form-control"   value="" readonly><br>
+        
         <form id="del_goodAllFrm" action="${path}/market/deleteGood.do" method="post">
 	      <input type="hidden" id="del_gno" name="delgoodno" class="form-control"   value="" ><br>
         </form>
        </div>
       <div class="modal-footer">
-       <button type="button" class="btn btn-danger" onclick="$('#del_goodAllFrm').submit();">해당상품 전체삭제</button>
-        <button type="button" class="btn btn-primary" onclick="$('#del_goodFrm').submit();">해당상품 삭제</button>
+       <button type="button" class="btn btn-danger" onclick="$('#del_goodAllFrm').submit();">해당상품 재고 전체삭제</button>
+        <button type="button" class="btn btn-primary" onclick="$('#del_goodFrm').submit();">해당상품 재고삭제</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
     </div>
@@ -200,6 +206,11 @@ $(document).on("click", "#deleteGoodBtn", function () {
 	$('#del_gcolor').val(goodColor);
 	$('#del_gsize').val(goodSize);
 	$('#del_gno').val(goodNo);
+	
+	$('#del_gname_').val(goodName);
+	$('#del_gcolor_').val(goodColor);
+	$('#del_gsize_').val(goodSize);
+	$('#del_gno_').val(goodNo);
 
 });
 
