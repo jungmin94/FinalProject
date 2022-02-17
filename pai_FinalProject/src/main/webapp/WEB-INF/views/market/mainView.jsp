@@ -53,24 +53,21 @@
 		</div>
 		<div class="carousel-inner">
 		  <div class="carousel-item active">
-			<img src="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E" class="d-block w-100" alt="..." style="height: 500px;">
+			<img src="${path}/resources/images/market/마켓설명1.PNG" class="d-block w-100" alt="..." style="height: 500px;">
 			<div class="carousel-caption d-none d-md-block">
-			  <h5>First slide label</h5>
-			  <p>Some representative placeholder content for the first slide.</p>
+			<button class="btn btn-warning" type="button"  onclick="location.assign('${path}/market/goodsList.do')">전체상품 보러가기</button>
 			</div>
 		  </div>
 		  <div class="carousel-item">
-			<img src="https://user-images.githubusercontent.com/74690464/141612037-afac1948-5ffe-4c62-96b0-0b7ee12c6f93.gif" class="d-block w-100" alt="..." style="height: 500px;">
+			<img src="${path}/resources/images/market/메인캐러셀2.PNG" class="d-block w-100" alt="..." style="height: 500px;">
 			<div class="carousel-caption d-none d-md-block">
-			  <h5>Second slide label</h5>
-			  <p>Some representative placeholder content for the second slide.</p>
+			<button class="btn btn-warning" type="button"  onclick="location.assign('${path}/market/goodsList.do')">전체상품 보러가기</button>
 			</div>
 		  </div>
 		  <div class="carousel-item">
-			<img src="https://www.urbanbrush.net/web/wp-content/uploads/edd/2021/06/urbanbrush-20210611102855770634.jpg" class="d-block w-100" alt="..." style="height: 500px;">
+			<img src="${path}/resources/images/market/메인캐러셀1.PNG" class="d-block w-100" alt="..." style="height: 500px;">
 			<div class="carousel-caption d-none d-md-block">
-			  <h5>Third slide label</h5>
-			  <p>Some representative placeholder content for the third slide.</p>
+			<button class="btn btn-warning" type="button"  onclick="location.assign('${path}/market/goodsList.do')">전체상품 보러가기</button>
 			</div>
 		  </div>
 		</div>
@@ -102,11 +99,12 @@
 						<img src="${path}/resources/images/market/이미지준비중.PNG" class="card-img-top" alt="..." style="height: 170px;">
 					</c:if>
 					<c:if test="${s.image ne null}">
-						<img src="${path}/resources/images/market/${s.image}" class="card-img-top" alt="..." style="height: 170px;">
+						<img src="${path}/resources/upload/market/${s.image}" class="card-img-top" alt="..." style="height: 170px;">
 					</c:if>
 					<div class="card-body">
 					  <h5 class="card-title">${s.goodsName}</h5>
 					  <p class="card-text"><fmt:formatNumber  value="${s.minPrice}"  type="currency"/>원</p>
+					  <span style="color:purple;">(총 판매량 : ${s.totalCell})</span>
 					  <div class="star-ratings" >
 						<div class="star-ratings-fill space-x-2 text-lg" >
 							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
@@ -152,7 +150,7 @@
 						<img src="${path}/resources/images/market/이미지준비중.PNG" class="card-img-top" alt="..." style="height: 170px;">
 					</c:if>
 					<c:if test="${g.image ne null}">
-						<img src="${path}/resources/images/market/${g.image}" class="card-img-top" alt="..." style="height: 170px;">
+						<img src="${path}/resources/upload/market/${g.image}" class="card-img-top" alt="..." style="height: 170px;">
 					</c:if>
 					<div class="card-body">
 					  <h5 class="card-title">${g.goodsName}</h5>

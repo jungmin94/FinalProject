@@ -48,4 +48,58 @@ public class MessageDaoImpl implements MessageDao {
 	
 	
 	
+	@Override
+	public Map selectSendMSgDetail(SqlSessionTemplate session, int msgNo) {
+		return session.selectOne("message.selectSendMsgDetail", msgNo);
+	}
+
+	@Override
+	public int deleteRecvMsg(SqlSessionTemplate session, int msgNo) {
+		return session.update("message.deleteRecvMsg",msgNo);
+	}
+	
+	
+	@Override
+	public int deleteSendMsg(SqlSessionTemplate session, int msgNo) {
+		return session.update("message.deleteSendMsg",msgNo);
+	}
+
+	@Override
+	public void oldMessageDelete(SqlSessionTemplate session) {
+		session.delete("message.oldMessageDelete");
+	}
+	
+	
+	
+
+	@Override
+	public void perDelete(SqlSessionTemplate session) {
+		session.delete("message.perDelete");
+	}
+
+	@Override
+	public int selectUnreadMsg(SqlSessionTemplate session, String memberId) {
+		return session.selectOne("message.selectUnreadMsg",memberId);
+	}
+
+	@Override
+	public int sendMessage(SqlSessionTemplate session, Map param) {
+		return session.insert("message.sendMessage",param);
+	}
+
+	@Override
+	public int recvMsgRead(SqlSessionTemplate session, int msgNo) {
+		return session.update("message.recvMsgRead",msgNo);
+	}
+
+	@Override
+	public int cancelSendMsg(SqlSessionTemplate session, int msgNo) {
+		return session.delete("message.cancelSendMsg",msgNo);
+	}
+
+
+	
+	
+	
+	
 }

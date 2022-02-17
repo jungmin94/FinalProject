@@ -27,10 +27,10 @@ public class TasteController {
 		return "taste/tasteTest";
 	}
 	
-	@RequestMapping(value="/selectTaste.do", method=RequestMethod.POST)
-	public ModelAndView selectTaste(String member_id, ModelAndView mv) {
-		Taste t = service.selectTasteOne(member_id);
-		System.out.println(t);
+	@RequestMapping(value="/selectTaste.do")
+	public ModelAndView selectTaste(String memberId, ModelAndView mv) {
+		Taste t = service.selectTasteOne(memberId);
+		System.out.println("이게 널?"+t);
 		Map param = new HashMap();
 		param.put("exam01", t.getExam01());
 		param.put("exam02", t.getExam02());

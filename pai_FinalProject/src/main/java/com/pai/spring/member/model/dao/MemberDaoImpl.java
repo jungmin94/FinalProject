@@ -16,7 +16,6 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		return session.selectOne("member.login",m);
 	}
-
 	@Override
 	public int insertMember(SqlSessionTemplate session, Member m) {
 		// TODO Auto-generated method stub
