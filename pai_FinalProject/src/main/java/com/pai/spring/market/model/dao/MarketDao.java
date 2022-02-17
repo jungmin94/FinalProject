@@ -103,4 +103,6 @@ public interface MarketDao {
 
 	int updateGoodsDetailImage(SqlSessionTemplate session,GoodsDetailImage gdi);
 	
+	int updateGoodOutput(SqlSessionTemplate session,String goodsName);
+	
 }

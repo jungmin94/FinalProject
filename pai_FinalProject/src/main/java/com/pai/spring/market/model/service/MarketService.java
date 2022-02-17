@@ -101,4 +101,6 @@ public interface MarketService {
 
 	int updateGoodsDetailImage(List<GoodsDetailImage> filenames);
 	
+	int updateGoodOutput(String goodsName);
+	
 }

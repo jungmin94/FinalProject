@@ -83,13 +83,13 @@
 	  				대표이미지 수정
 					</button>
 				</c:if>
-				<c:if test="${g.goodsDetailImage.isEmpty()}">
+				<c:if test="${g.goodsOutput.equals('Y')}">
 					<button type="button"  id="enrollGoodDetailImageBtn" class="btn btn-outline-success"  
 					data-bs-toggle="modal" data-bs-target="#enrollGoodDetailImage"  data-gno="${g.goodsNo}" data-gname="${g.goodsName}">
 	  				상세이미지 등록
 					</button>
 				</c:if>
-				<c:if test="${g.goodsDetailImage.size() ne 0}">
+				<c:if test="${g.goodsOutput.equals('N')}">
 					<button type="button" id="updateGoodDetailImageBtn"   class="btn btn-outline-warning" 
 					data-bs-toggle="modal" data-bs-target="#updateGoodDetailImage"  data-gno="${g.goodsNo}" data-gname="${g.goodsName}" data-dlist="${g.goodsDetailImage}">
 	  				상세이미지 수정
@@ -135,7 +135,7 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="$('#enrollGoodImgFrm').submit();">수정</button>
+        <button type="button" class="btn btn-primary" onclick="$('#enrollGoodImgFrm').submit();">확인</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
       </div>
     </div>

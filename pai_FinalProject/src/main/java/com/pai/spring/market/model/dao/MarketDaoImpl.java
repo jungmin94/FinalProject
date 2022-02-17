@@ -284,4 +284,10 @@ public class MarketDaoImpl implements MarketDao {
 		return session.update("market.updateGoodsDetailImage",gdi);
 	}
 	
+	@Override
+	public int updateGoodOutput(SqlSessionTemplate session, String goodsName) {
+	
+		return session.update("market.updateGoodOutput",goodsName);
+	}
+	
 }

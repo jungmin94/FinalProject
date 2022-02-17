@@ -569,6 +569,9 @@ public class MarketController {
 		
 		int result=service.insertGoodsDetailImage(filenames);
 		
+		Goods g = service.selectGood(good.getGoodsName());
+		if(g.getGoodsOutput().equals("Y"))service.updateGoodOutput(g.getGoodsName());
+		
 		String msg="";
 		String loc="";
 		 if(result>0) {

@@ -99,11 +99,12 @@
 						<img src="${path}/resources/images/market/이미지준비중.PNG" class="card-img-top" alt="..." style="height: 170px;">
 					</c:if>
 					<c:if test="${s.image ne null}">
-						<img src="${path}/resources/images/market/${s.image}" class="card-img-top" alt="..." style="height: 170px;">
+						<img src="${path}/resources/upload/market/${s.image}" class="card-img-top" alt="..." style="height: 170px;">
 					</c:if>
 					<div class="card-body">
 					  <h5 class="card-title">${s.goodsName}</h5>
 					  <p class="card-text"><fmt:formatNumber  value="${s.minPrice}"  type="currency"/>원</p>
+					  <span style="color:purple;">(총 판매량 : ${s.totalCell})</span>
 					  <div class="star-ratings" >
 						<div class="star-ratings-fill space-x-2 text-lg" >
 							&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp

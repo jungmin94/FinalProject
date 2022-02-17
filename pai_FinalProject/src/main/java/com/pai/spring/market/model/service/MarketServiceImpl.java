@@ -305,4 +305,10 @@ public class MarketServiceImpl implements MarketService {
 		return result;
 	}
 	
+	@Override
+	public int updateGoodOutput(String goodsName) {
+		
+		return dao.updateGoodOutput(session, goodsName);
+	}
+	
 }
