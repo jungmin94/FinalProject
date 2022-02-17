@@ -1,5 +1,6 @@
 package com.pai.spring.member.model.dao;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -98,6 +99,21 @@ public class MemberDaoImpl implements MemberDao {
 	public int delete(SqlSessionTemplate session, String member_id) throws Exception {
 		// TODO Auto-generated method stub
 		return session.delete("member.delete",member_id);
+	}
+
+	@Override
+	public String pwCheck(SqlSessionTemplate session, String member_id) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne("member.pwCheck",member_id);
+	}
+
+	@Override
+	public int pwUpdate(SqlSessionTemplate session, String member_id, String hashedPw) throws Exception {
+		// TODO Auto-generated method stub
+		Map<String,Object> map = new HashMap<String, Object>();
+		map.put("member_id", member_id);
+		map.put("member_pw", hashedPw);
+		return session.update("member.pwUpdate", map);
 	}
 
 	

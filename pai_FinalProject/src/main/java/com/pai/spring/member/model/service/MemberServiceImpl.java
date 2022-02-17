@@ -113,5 +113,17 @@ public class MemberServiceImpl implements MemberService {
 		return dao.delete(session,member_id);
 	}
 
+	@Override
+	public String pwCheck(String member_id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.pwCheck(session,member_id);
+	}
+
+	@Override
+	public int pwUpdate(String member_id, String hashedPw) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.pwUpdate(session,member_id,hashedPw);
+	}
+
 	
 }

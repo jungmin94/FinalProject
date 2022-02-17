@@ -33,4 +33,8 @@ public interface MemberService {
 	int updateNaverAccount(Member m);
 	
 	int delete(String member_id)throws Exception;
+	
+	String pwCheck(String member_id)throws Exception;
+	
+	int pwUpdate(String member_id, String hashedPw)throws Exception;
 }

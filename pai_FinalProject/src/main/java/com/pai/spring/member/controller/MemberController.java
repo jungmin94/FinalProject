@@ -87,7 +87,7 @@ public class MemberController {
 	@RequestMapping("/loginMemberEnd.do")
 	public String login(@ModelAttribute Member m,Model model) {
 		Member loginMember=service.login(m);
-		if(loginMember!=null&&encoder.matches(m.getMember_pw(),loginMember.getMember_pw())) {
+		if(loginMember!=null&&encoder.matches(m.getMember_pw(),loginMember.getMember_pw())&&loginMember.getMember_black()==0) {
 			if(loginMember.getStatus().equals("N")) {
 				model.addAttribute("msg","회원님은 현재 이메일 미인증 상태입니다. 이메일 인증을 진행해 주세요 :->");
 				model.addAttribute("loc","/member/loginMember.do");
@@ -118,6 +118,10 @@ public class MemberController {
 				model.addAttribute("loc","/member/loginMember.do");
 				return "common/msg";
 			}
+		}else if(loginMember.getMember_black()==1) {
+			model.addAttribute("msg","회원님은 블랙리스트에 등록되었습니다.");
+			model.addAttribute("loc","/member/blacklist.do");
+			return "common/msg";
 		}else {
 			model.addAttribute("msg","로그인에 실패하였습니다.");
 			model.addAttribute("loc","/member/loginMember.do");
@@ -397,6 +401,11 @@ public class MemberController {
 	
 	@RequestMapping("/memberView.do")
 	public String memberView() {
+		//메인 로그인 -> 내정보보기(memberId) -> memberId받아주고,-> service memberId넣어서 filedb에 memberId 로 row조회
+		//file f = service.selectProfile
+		//model, modelAndview //
+		//mv.addAt("f",f)
+		//${f.renamedfileNAme}
 		return "member/memberView";
 	}
 	
@@ -520,6 +529,38 @@ public class MemberController {
 		service.delete(member_id);
 		session.invalidate();
 		rttr.addFlashAttribute("msg", "이용해주셔서 감사합니다.");
-		return "/";
+		return "redirect:/";
+	}
+    
+    @RequestMapping(value="/pwCheck" , method=RequestMethod.POST)
+	@ResponseBody
+	public int pwCheck(Member m) throws Exception{
+		String member_pw = service.pwCheck(m.getMember_id());
+		
+		if(m == null || !BCrypt.checkpw(m.getMember_pw(), member_pw)) {
+			return 0;
+		}
+		
+		return 1;
+	}
+    
+    @RequestMapping("/blacklist.do")
+    public String blacklistPage(){
+    	return "/member/blacklistPage";
+    }
+    
+    //비밀번호 변경
+    @RequestMapping("/pwUpdate.do")
+    public String pwUpdatePage() {
+    	return "/member/updatePw";
+    }
+    
+    @RequestMapping(value="/pwUpdateEnd.do" , method=RequestMethod.POST)
+	public String pwUpdate(String member_id,String member_pw1,RedirectAttributes rttr,HttpSession session,SessionStatus status)throws Exception{
+		String hashedPw = BCrypt.hashpw(member_pw1, BCrypt.gensalt());
+		service.pwUpdate(member_id, hashedPw);
+		rttr.addFlashAttribute("msg", "정보 수정이 완료되었습니다. 다시 로그인해주세요.");
+		status.setComplete();
+		return "redirect:/";
 	}
 }

@@ -23,7 +23,7 @@
 					<div id="image-container">
  						<c:if test="">
  						</c:if>
- 						<img src="${path }/resources/upload/member/${renamedFileName}" >
+ 						<img src="${path }/resources/upload/member/${file.renamde}" >
 					</div>
 					<label for="exampleDataList" class="form-label">프로필사진</label>
 				</div>
@@ -45,7 +45,7 @@
 				</div>	
 				<div id="memberDate-container">
 					<label for="exampleDataList" class="form-label">생년월일</label>
-					<input type="date" class="form-control" name="member_date" value="${loginMember.member_date }" id="member_date" readonly>
+					<input type="text" class="form-control" name="member_date" value="${loginMember.member_date }" id="member_date" readonly>
 				</div>			
 				<div id="memberEmail-container">
 					<label for="exampleDataList" class="form-label">이메일</label>
@@ -69,7 +69,7 @@
 	           		<input type="button" class="btn btn-outline-secondary" id="updateMember" value="회원정보수정" style="width: 100%;">
 	           	</div>
 		        <div  style="width: 49%; display: inline-block;">
-		        	<input type="button" class="btn btn-outline-secondary" id="changePwd" value="패스워드 변경" style="width: 100%;">
+		        	<input type="button" class="btn btn-outline-secondary" id="pwUpdate" value="패스워드 변경" style="width: 100%;">
 		        </div>
 		        <div  style="width: 49%; display: inline-block;">
 		        	<input type="button" class="btn btn-outline-secondary" id=deleteView value="회원탈퇴" style="width: 100%;">
@@ -84,12 +84,12 @@
 		})
 	})
 	$(function(){
-		$("#changePwd").on("click", function(){
-			location.href = '${ path }/member/changePw.do'
+		$("#pwUpdate").on("click", function(){
+			location.href = '${ path }/member/pwUpdate.do'
 		})
 	})
 	$(function(){
-		$("#deleteMember").on("click", function(){
+		$("#deleteView").on("click", function(){
 			location.href = '${ path }/member/deleteView'
 		})
 	})

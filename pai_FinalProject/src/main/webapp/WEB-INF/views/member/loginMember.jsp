@@ -121,7 +121,9 @@
 		        <div  style="width: 49%; display: inline-block;">
 		        	<input type="button" class="btn btn-outline-secondary" id="findPwd" value="패스워드 찾기" style="width: 100%;">
 		        </div>
+		        
            	</div> 
+   			<br>
         </div>
     </form>
 </body>

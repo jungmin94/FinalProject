@@ -38,4 +38,8 @@ public interface MemberDao {
 	int updateNaverAccount(SqlSessionTemplate session, Member m);
 	
 	int delete(SqlSessionTemplate session,String member_id)throws Exception;
+	
+	String pwCheck(SqlSessionTemplate session,String member_id) throws Exception;
+	
+	int pwUpdate(SqlSessionTemplate session,String member_id, String hashedPw)throws Exception;
 }

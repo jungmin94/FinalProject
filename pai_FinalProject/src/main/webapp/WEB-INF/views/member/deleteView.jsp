@@ -47,11 +47,10 @@
 			if ($("#member_pw").val() != $("#member_pw2").val()) {
 				alert("비밀번호가 일치하지 않습니다.");
 				$("#memberPw").focus();
-				 
 				return false;
-				}
+			}
 			
-			/* $.ajax({
+			$.ajax({
 				url : "/member/pwCheck",
 				type : "POST",
 				dataType : "json",
@@ -68,8 +67,8 @@
 						
 					}
 				}
-			}) */
-			$.ajax({
+			})
+			/* $.ajax({
 				url : "/member/checkPW.do",
 				type : "POST",
 				dataType : "json",
@@ -86,7 +85,7 @@
 						
 					}
 				}
-			})
+			}) */
 		});
 	})
 </script>		
