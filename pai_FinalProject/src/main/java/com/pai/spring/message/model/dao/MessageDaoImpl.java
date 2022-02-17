@@ -65,8 +65,16 @@ public class MessageDaoImpl implements MessageDao {
 	}
 
 	@Override
-	public void autoMessageDelete(SqlSessionTemplate session) {
-		session.delete("message.autoMessageDelete");
+	public void oldMessageDelete(SqlSessionTemplate session) {
+		session.delete("message.oldMessageDelete");
+	}
+	
+	
+	
+
+	@Override
+	public void perDelete(SqlSessionTemplate session) {
+		session.delete("message.perDelete");
 	}
 
 	@Override

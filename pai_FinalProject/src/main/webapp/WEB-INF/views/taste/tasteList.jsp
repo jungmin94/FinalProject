@@ -7,16 +7,18 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/> 
 <style>
+
 #mssage_send_btn {
     float : left;
     margin-top : -50px;
     margin-left : 10px;
     height :35px;
-}
+} 
  
 .msg_form .modal-body table tbody tr {
     margin-bottom : 20px;
 }
+
 </style>
 
  <section> 
@@ -206,10 +208,6 @@ $("#msgSend").click(e=>{
             return false;
         }
     }
- /*      var msg= "정말 발송하시겠습니까?";
-    
-    if(!confirm(msg))
-        return false; */
     //족지 제목 미입력시 포커스
   	if($("#msgTitle").val().trim().length == 0){
        $("#msgTitle").focus();

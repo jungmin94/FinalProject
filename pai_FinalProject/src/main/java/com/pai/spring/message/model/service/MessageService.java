@@ -29,7 +29,9 @@ public interface MessageService {
 	
 	int deleteSendMsg(int msgNo);
 	
-	void autoMessageDelete();
+	void oldMessageDelete();
+	
+	void perDelete();
 	
 	//받은편지중 읽지않은 쪽지 갯수
 	int selectUnreadMsg(String memberId);

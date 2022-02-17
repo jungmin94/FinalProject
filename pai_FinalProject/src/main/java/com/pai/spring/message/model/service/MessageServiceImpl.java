@@ -72,9 +72,16 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public void autoMessageDelete() {
-		dao.autoMessageDelete(session);
+	public void oldMessageDelete() {
+		dao.oldMessageDelete(session);
 		
+	}
+	
+	
+
+	@Override
+	public void perDelete() {
+		dao.perDelete(session);
 	}
 
 	@Override
