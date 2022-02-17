@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="title" value="게시판"/>
+	<jsp:param name="title" value="mbti Test"/>
 </jsp:include>
 <style>
     article {
@@ -23,25 +23,157 @@
         height: 300px;
         margin: 0 auto;
     }
+    /* 전체 */
+	body {
+	    background-color: #1f1f1f;
+	    color: #ffffff;
+	    font-family: 'Noto Sans KR', sans-serif;
+	}
+	/* 시작화면 */
+	.main-title {
+	    font-size: 14px;
+	    color: #7c7c7c;
+	}
+	.sub-title {
+	    font-size: 24px;
+	    font-weight: 100;
+	    color: #ebebeb;
+	}
+	.updown-slash {
+	    width: 166px;
+	    margin: 0 auto;
+	}
+	.start-cover {
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	}
+	.btn-start {
+	    font-size: 16px;
+	    color:#ff9300;
+	    background-color: #1f1f1f;
+	    border:#1f1f1f;
+	}
+	.btn-start, .btn-start:visited, .btn-start:hover, .btn-start:active {
+	    font-size: 16px;
+	    color:#ff9300;
+	    background-color: #1f1f1f;
+	    border:#1f1f1f;
+	}
+	.btn-start:active, .btn-start:focus {
+	    background-color: #ff9300 !important;
+	    border:#1f1f1f !important;
+	    font-size: 16px;
+	    color:#ffffff;
+	}
+	
+	/* 문제 화면 */
+	.btn-answer, .btn-answer:visited, .btn-answer:hover, .btn-answer:active, .btn-answer:focus {
+	    background-color: #1f1f1f;
+	    border:#1f1f1f;
+	    width: 288px;
+	    margin: 0 auto;
+	    font-size: 13px;
+	    color: #ffffff;
+	}
+	.btn-answer:hover {
+	    background-color: #ff9300 !important;
+	    border:#1f1f1f !important;
+	    width: 288px;
+	    margin: 0 auto;
+	    font-size: 13px;
+	    color: #ffffff;
+	}
+	.progress-bar {
+	    background-color: #ff9300;
+	}
+	.progress {
+	    background-color: #525764;
+	}
+	.slash-element {
+	    width: 24px;
+	    margin: 0 auto;
+	}
+	.question-content {
+	    font-size: 14px;
+	    color: #ff9300;
+	}
+	.rectangle {
+	    width: 288px;
+	    height: 8px;
+	    background-color: #383a43;
+	    margin: 0 auto;
+	}
+	.mid-rectangle {
+	    width: 288px;
+	    height: 1px;
+	    background-color: #383a43;
+	    margin: 0 auto;
+	}
+	
+	/* 결과 화면 */
+	.result-message {
+	    color: #ff9300;
+	    margin: 0 auto;
+	    font-size: 24px;
+	    font-weight: 100;
+	}
+	.result-mbti {
+	    font-size: 18px;
+	    font-weight: 100;
+	    color: #ebebeb;
+	}
+	.result-explain {
+	    font-size: 13px;
+	    font-weight: normal;
+	    color: #ff9300;
+	}
+	.share-message {
+	    margin: 0 auto;
+	    color:black;
+	    font-size: 24px;
+	    font-weight: 100;
+	}
 </style>
 <body class="container">
     <article class="start"> 
-        <h1 class="mt-5 text-center">당신의 MBTI는 무엇일까요?</h1>
-        <button type="button" class="btn btn-primary mt-5" onclick='start();'>테스트 시작하기</button>
+        <h1 class="main-title mt-5 text-center">당신의 MBTI는 무엇일까요?</h1>
+        <h2 class="sub-title mt-3 text-center">나는 어떻게 계획을 세우는 타입일까?</h2>
+        <img class="updown-slash mt-5" src="${path }/resources/images/member/up-slash.png" alt="up-slash">
+        <div class="start-cover mt-3 mb-3">
+            <img class="mr-3" src="${path }/resources/images/member/double-slash-left.png" alt="double-slash-left">
+            <button type="button" class="btn-start btn btn-primary" onclick='start();'>MBTI테스트 시작하기</button>
+            <img class="ml-3" src="${path }/resources/images/member/double-slash-right.png" alt="double-slash-right">
+        </div>
+        <img class="updown-slash" src="${path }/resources/images/member/down-slash.png" alt="up-slash">
     </article>
     <article class="question">
         <div class="progress mt-5">
             <div class="progress-bar" role="progressbar" style="width: calc(100/12*1%)"></div>
         </div>
-        <h2 id="title" class="text-center mt-5">문제</h2>
+        <img class="mt-5 slash-element" src="${path }/resources/images/member/slash-element.png" alt="slash-element">
+        <h2 id="title" class="question-content text-center mt-4 mb-4">문제</h2>
+        <img class="slash-element" src="${path }/resources/images/member/slash-element.png" alt="slash-element">
         <input id="type" type="hidden" value="EI">
-        <button id="A" type="button" class="btn btn-primary mt-5">대답A</button>
-        <button id="B" type="button" class="btn btn-primary mt-5">대답B</button>
+        <div class="rectangle mt-5"></div>
+        <button id="A" type="button" class="btn-answer btn btn-primary pt-5 pb-5">대답A</button>
+        <div class="mid-rectangle"></div>
+        <button id="B" type="button" class="btn-answer btn btn-primary pt-5 pb-5">대답B</button>
+        <div class="rectangle"></div>
     </article>
     <article class="result">
-        <img id="img" class="mt-5" src="lion.jpg" alt="mbti">
-        <h2 id="mbti" class="text-center mt-5">나의 MBTI는</h2>
-        <h3 id="explain"class="text-center mt-5">설명</h3>
+    	 <img class="updown-slash mt-5" src="${path }/resources/images/member/dark-slash.png" alt="dark-slash">
+    	 <span class="result-message mt-4 mb-4">나의 MBTI는??</span>
+        <img class="updown-slash" src="${path }/resources/images/member/up-slash.png" alt="up-slash">
+        <img id="img" class="mt-5" src="${path }/resources/images/member/ENFJ.PNG" alt="mbti">
+        <h2 id="mbti" class="result-mbti text-center mt-4 mb-4">MBTI명</h2>
+        <img class="updown-slash" src="${path }/resources/images/member/down-slash.png" alt="down-slash">
+        <h3 id="explain" class="result-explain text-center mt-4">설명</h3>
+        <div class="rectangle mt-4 mb-4"></div>
+        <form action="${path }/member/insertMbti.do" method="post">
+	        <input type="hidden" id=mbti name="member_mbti" value="">
+	        <input type="submit" class="share-message mb-4" value="나의 MBTI 등록하기">
+        </form>
     </article>
     <input type="hidden" id="EI" value="0">
     <input type="hidden" id="SN" value="0">
@@ -107,10 +239,14 @@
                 ($("#SN").val()<2) ? mbti+="N" : mbti+="S";
                 ($("#TF").val()<2) ? mbti+="F" : mbti+="T";
                 ($("#JP").val()<2) ? mbti+="P" : mbti+="J";
-                alert(mbti);
+                alert("당신의 MBTI는 "+mbti+"입니다.");
                 $("#img").attr("src","${path}/resources/images/member/"+result[mbti]["img"]);
                 $("#mbti").html(result[mbti]["mbti"]);
                 $("#explain").html(result[mbti]["explain"]);
+                console.log(mbti);
+                $('input[name=member_mbti]').attr("value",mbti);
+                var m=$("input[name=member_mbti]").val();
+                console.log(m);
             }else{
                 $(".progress-bar").attr('style','width: calc(100/12*'+num+'%)');
                 $("#title").html(q[num]["title"]);
