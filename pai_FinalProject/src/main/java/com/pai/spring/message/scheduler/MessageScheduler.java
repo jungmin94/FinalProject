@@ -10,6 +10,7 @@ import com.pai.spring.message.model.service.MessageService;
 public class MessageScheduler {
 	
 
+ 
 //	@Autowired
 //	private MessageService service;
 //	
@@ -25,5 +26,6 @@ public class MessageScheduler {
 //		service.perDelete();
 //	}
 
+ 
 
 }
