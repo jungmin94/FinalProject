@@ -15,8 +15,8 @@
 </head>
 <body>
 	<div class="nav-lists" id="nav-img">
-      <a href="${path}/"><img src="${path }/resources/images/member/logo_white.jpg" width="200px" height="200px"></a>
-   </div>
+		<a href="${path}/"><img src="${path }/resources/images/member/logo_white.jpg" width="200px" height="200px"></a>
+	</div>
     <div class="headDiv2">
         <h1>비밀번호 찾기</h1>
     </div>

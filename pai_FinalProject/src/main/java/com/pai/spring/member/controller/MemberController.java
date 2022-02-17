@@ -152,29 +152,20 @@ public class MemberController {
 	@RequestMapping(value="/enrollMemberEnd.do",
 			method=RequestMethod.POST)
 	public ModelAndView enrollMemberEnd(Member m,ModelAndView mv,
-			@RequestParam(value="member_profile", required=false) MultipartFile[] member_profile, HttpServletRequest req)throws RuntimeException {
+			@RequestParam(value="upfile", required=false) MultipartFile[] upfile, HttpServletRequest req)throws RuntimeException {
 		logger.debug("변경 전 패스워드 : {}",m.getMember_pw());
 		logger.debug("변경 후 패스워드 : {}",encoder.encode(m.getMember_pw()));
 		
 		m.setMember_pw(encoder.encode(m.getMember_pw()));
 		
-		
         String path = req.getServletContext().getRealPath("/resources/upload/member/");
         File f = new File(path);
         if(!f.exists()) f.mkdirs();
-        
-        m.setProfile(new ArrayList<Profile>());
-        for(MultipartFile mf:member_profile) {
+        for(MultipartFile mf:upfile) {
         	if(!mf.isEmpty()) {
-        		String originFileName = mf.getOriginalFilename(); // 원본 파일 명
-        		String ext = originFileName.substring(originFileName.lastIndexOf("."));
-        		String renamedFileName = UUID.randomUUID().toString().replaceAll("-", "") + ext;
         		try {
-        			mf.transferTo(new File(path+renamedFileName));
-        			Profile p=new Profile();
-        			p.setOriginalFileName(originFileName);
-        			p.setRenamedFileName(renamedFileName);
-        			m.getProfile().add(p);
+        			mf.transferTo(new File(path+mf.getOriginalFilename()));
+        			m.setMember_profile(mf.getOriginalFilename());
         		} catch (IOException e) {
         			e.printStackTrace();
         		}

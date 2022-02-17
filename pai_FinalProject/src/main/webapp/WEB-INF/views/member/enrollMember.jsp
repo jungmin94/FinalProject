@@ -142,7 +142,7 @@
 				<div id="memberProfile-container">
 					<label for="exampleDataList" class="form-label">프로필사진</label>
 					<div class="mb-3">
-					  <input class="form-control" type="file" id="member_profile" name="member_profile">
+					  <input class="form-control" type="file" id="member_profile" name="upfile">
 					</div>
 				</div>
 				<div id="image-container">
@@ -700,9 +700,9 @@
 	
 	//이미지 미리보기
 	$("#target").click(e=>{
-   		$("input[name=member_profile]").click();
+   		$("input[name=upfile]").click();
    	});
-   	$("input[name=member_profile]").change(e=>{
+   	$("input[name=upfile]").change(e=>{
    		$("#image-container").html("");
    		if(e.target.files[0].type.includes("image")){
    			let reader=new FileReader();

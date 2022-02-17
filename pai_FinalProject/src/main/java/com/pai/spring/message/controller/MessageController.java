@@ -1,4 +1,4 @@
- package com.pai.spring.message.controller;
+package com.pai.spring.message.controller;
 
 import java.sql.SQLException;
 import java.util.HashMap;
