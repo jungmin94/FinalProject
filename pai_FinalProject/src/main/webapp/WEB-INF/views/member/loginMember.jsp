@@ -7,6 +7,8 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="로그인"/>
 </jsp:include>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	* {
 	  margin: 0;
@@ -73,11 +75,11 @@
 	.checkbox{
  		justify-content: left;
 	}
-	</style>
+</style>
 <body>
 	<form class="wrap" action="${path }/member/loginMemberEnd.do" method="post">
         <div class="login">
-            <h2>LOGIN</h2><br>
+            <img src="${path }/resources/images/member/logo_white.jpg" style="width:200px; height:200px;">
             
             <div style="width: 80%;">
 	            <div class="form-floating mb-3" style="width: 100%">
@@ -96,29 +98,46 @@
 			  <div class="login_etc" style="margin-top: 15px;">
                 <div class="checkbox">
                 	<%-- <input type="checkbox" name="saveId" id="saveId" <%=saveId!=null?"checked":""%>> --%>
-                	<label for="saveId">아이디저장</label>
+                	<!-- <label for="saveId">아이디저장</label> -->
                 </div>
             </div>
             <div class="submit btn-outline-secondary">
             	
                 <button type="submit" value="로그인" class="btn btn-outline-secondary">로그인</button>
-            
             </div>
+            <br>
+           	<div>
+            	<a href="${ url }"><img width="150" height="50" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"></a>
+          	</div>
 	        <div class="enrollMember btn-outline-secondary">
  		        <input type="button" class="btn btn-outline-secondary" value="회원가입" onclick="location.assign('${path}/member/enrollMember.do')">
 		        
 	        </div>
 			<br>
-                <div style="width: 80%;">
-                	<div style="width: 49%; display: inline-block;">
-                		<input type="button" class="btn btn-outline-secondary" value="아이디 찾기" onclick="findMemberId();" style="width: 100%;">
-                	</div>
-	 		        <div  style="width: 49%; display: inline-block;">
-	 		        	<input type="button" class="btn btn-outline-secondary" value="패스워드 찾기" onclick="" style="width: 100%;">
-	 		        </div>
-            	</div> 
+            <div style="width: 80%;">
+	           	<div style="width: 49%; display: inline-block;">
+	           		<input type="button" class="btn btn-outline-secondary" id="findId" value="아이디 찾기" style="width: 100%;">
+	           	</div>
+		        <div  style="width: 49%; display: inline-block;">
+		        	<input type="button" class="btn btn-outline-secondary" id="findPwd" value="패스워드 찾기" style="width: 100%;">
+		        </div>
+		        
+           	</div> 
+   			<br>
         </div>
     </form>
 </body>
+<script>
+	$(function(){
+		$("#findId").on("click", function(){
+			location.href = '${ path }/member/findId'
+		})
+	})
+	$(function(){
+		$("#findPwd").on("click", function(){
+			location.href = '${ path }/member/findPwd'
+		})
+	})
+</script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
