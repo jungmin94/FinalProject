@@ -29,5 +29,6 @@ public class Member {
 	private Date member_enroll;
 	private String status;
 	private String authKey;
-	private List<Profile> profile;
+//	private List<Profile> profile;
+	private String member_profile;
 }

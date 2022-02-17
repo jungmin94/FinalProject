@@ -21,7 +21,7 @@
 					<div class="form-group">
 						<input type="password" id="member_pw2" name="member_pw2"  class="form-control form-control-inline text-center" placeholder="비밀번호 확인" />
 					</div>
-					<button type="button" id="deletee" name="delete" class="btn btn-primary">회원탈퇴</button> <a href="/member/infoView" class="btn btn-default">취소</a>
+					<button type="button" id="deletee" name="delete" class="btn btn-primary">회원탈퇴</button> <a href="/member/memberView" class="btn btn-default">취소</a>
 				</div>
 			</div>
 		</div>

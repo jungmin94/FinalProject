@@ -13,7 +13,7 @@ public interface MemberDao {
 	
 	int insertMember(SqlSessionTemplate session,Member m);
 	
-	int insertProfile(SqlSessionTemplate session,Profile p);
+//	int insertProfile(SqlSessionTemplate session,Profile p);
 	
 	int checkId(SqlSessionTemplate session,String member_id);
 	

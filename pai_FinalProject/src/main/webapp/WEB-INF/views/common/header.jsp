@@ -174,18 +174,21 @@ a .sub-menu-detail {
 <body>
 <header>
 	<nav>
+		<c:if test="${loginMember.member_black==0 }">
 		<div class="header-nav">
 			<div class="nav-lists" id="nav-img">
-				<a href="${path}/"><img src="https://i.ibb.co/7kh6Yz5/Kakao-Talk-Photo-2022-01-15-17-58-47.jpg" width="60px" height="60px"></a>
+				<a href="${path}/"><img src="${path }/resources/images/member/logo_black.jpg" width="60px" height="60px"></a>
 			</div>
-
 			<div id="nav-menu">
 				<a href="${path}/board/boardList.do"><div class="menu-bar">게시판</div></a>
 				<a href="${path}/market/mainView.do"><div class="menu-bar">MBTI 마켓</div></a>
 				<a href="${path }/chatting/toSeeMyChatroomInfo.do"><div class="menu-bar">채팅</div></a>
 				<c:if test="${loginMember eq null}"> 
-				<a href="${path }/" onclick="msg();"><div class="menu-bar">친구찾기</div></a>
-				</c:if>
+	            	<a href="${path }/" onclick="msg();"><div class="menu-bar">친구찾기</div></a>
+	            </c:if>
+	            <c:if test="${loginMember ne null }">
+	            	<a href="${path }/taste/taste.do"><div class="menu-bar">친구찾기</div></a>
+	            </c:if>
 				<c:if test="${loginMember!=null&&loginMember.member_id eq 'admin'}"> 
 					<a href="${path}/admin/adminView.do"><div class="menu-bar">회원관리</div></a>
 				</c:if>
@@ -197,6 +200,7 @@ a .sub-menu-detail {
 		            <span class="login-area"><button id="enroll-button" onclick="location.assign('${path}/member/enrollMember.do')">회원가입</button></span>
 		        </div>
 			</c:if>
+		</c:if>
 			<c:if test="${loginMember!=null }">
 				<div class="nav-lists" id="mypage-icon">
 					<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-arrived는 보이지 않게 설정 필요 -->
