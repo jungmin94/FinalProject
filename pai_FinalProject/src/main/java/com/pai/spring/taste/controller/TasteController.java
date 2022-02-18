@@ -29,18 +29,24 @@ public class TasteController {
 	
 	@RequestMapping(value="/selectTaste.do")
 	public ModelAndView selectTaste(String memberId, ModelAndView mv) {
+		
+		//본인 취향 조회해와서
 		Taste t = service.selectTasteOne(memberId);
-		System.out.println("이게 널?"+t);
+		
+		//map에 넣어주고
 		Map param = new HashMap();
 		param.put("exam01", t.getExam01());
 		param.put("exam02", t.getExam02());
 		param.put("exam03", t.getExam03());
 		param.put("exam04", t.getExam04());
 		param.put("exam05", t.getExam05());
+		
+		//일치하는 list 가져오기
 		List<Member> list = service.selectTasteList(param);
-		System.out.println(list);
+		
 		mv.addObject("list", list);	
 		mv.setViewName("taste/tasteList");
+		
 		return mv;
 	}
 

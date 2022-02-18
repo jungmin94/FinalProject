@@ -37,7 +37,13 @@
 				<c:if test="${loginMember.member_id ne t.member_id.member_id }">
 				  <div class="col">
 					<div class="card" style="width: 18rem;">
-						<img src="${path }/resources/upload/member/${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;">
+					
+						<c:if test="${t.member_id.member_profile eq null}">
+							<img src="https://us.123rf.com/450wm/acyotto/acyotto2110/acyotto211000028/175476675-.jpg?ver=6" class="card-img-top" alt="..." style="height: 170px;">
+						</c:if>
+						<c:if test="${t.member_id.member_profile ne null}">
+							<img src="${path }/resources/upload/member/${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;">
+						</c:if>
 						<div class="card-body">
 						  <input type="hidden" value="${t.member_id.member_id }">
 						  <p class="card-text"><c:out value="${t.member_id.member_nick }"/></p>
@@ -219,7 +225,27 @@ $("#msgSend").click(e=>{
        return false;
     }  
     
-    $.ajax({
+    let sendId=$("#sendId").val();
+    let sendNick=$("#sendNick").val();
+    let recvId=$("#recvId").val();
+    let recvNick=$("#recvNick").val();
+    let msgTitle=$("#msgTitle").val();
+    let msgContent=$("#msgContent").val();
+    
+    const sendData ={
+    		sendId:sendId,
+    		sendNick:sendNick,
+    		recvId:recvId,
+    		recvNick:recvNick,
+    		msgTitle:msgTitle,
+    		msgContent:msgContent,
+    }
+    
+    socket.send(JSON.stringify(sendData));
+    
+   
+    
+/*     $.ajax({
         url : "${path}/message/sendMessage.do",
         dataType : "json",
         type : "post",
@@ -243,7 +269,7 @@ $("#msgSend").click(e=>{
     		socket.send(sendData);
 			console.log('send');
         }
-    })
+    }) */
 
  
     //modal.find('.modal-body textarea').val('');

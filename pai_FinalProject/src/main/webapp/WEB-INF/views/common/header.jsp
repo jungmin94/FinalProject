@@ -295,9 +295,11 @@ a .sub-menu-detail {
 
         
      // toast생성 및 추가
-/*         sock.onmessage = function(evt){
+         function onMessage(evt){
         		console.log('onmessage');
-            var data = evt.data;
+        		alert(evt.data);
+        		//alert(evt);
+         /*    var data = evt.data;
             console.log(data);
             // toast
             let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
@@ -307,14 +309,14 @@ a .sub-menu-detail {
             toast += "</div> <div class='toast-body'>" + data + "</div></div>";
             $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
             $(".toast").toast({"animation": true, "autohide": false});
-            $('.toast').toast('show');
-        }; */
+            $('.toast').toast('show'); */
+        };
         
         function onOpen(){
         	console.log('open');
         }
         
-        function onMessage(message){
+   /*      function onMessage(message){
         	console.log('onMessage'+message.data);
         	let socketAlert = $('span#message-arrived');
     		socketAlert.html(message.data)
@@ -324,7 +326,7 @@ a .sub-menu-detail {
     			$socketAlert.css('display','none');
     			
     		}, 5000);
-        };
+        }; */
         
     	
     	

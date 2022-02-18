@@ -1,6 +1,7 @@
 package com.pai.spring.common.websocket;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.pai.spring.member.model.vo.Member;
 import com.pai.spring.message.model.service.MessageService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,7 @@ public class MessageServer extends TextWebSocketHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
 	//로그인 한 전체
-	List<WebSocketSession> client = new ArrayList<WebSocketSession>();
+	List<WebSocketSession> clients = new ArrayList<WebSocketSession>();
 	// 1대1
 	Map<String, WebSocketSession> clientMap = new HashMap<String, WebSocketSession>();
 
@@ -40,32 +39,87 @@ public class MessageServer extends TextWebSocketHandler {
 	// 클라이언트가 서버에 접속했을때 onOpen
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		logger.info("Socket 연결");
 		
-		client.add(session);
-		
+		//접속한 유저 httpSession을 조회하여 id를 얻음
 		String sendId = getMemberId(session);
-		clientMap.put(sendId , session);
+		
+		if(sendId != null) {
+			log(sendId + "Socket 연결됨!!");
+			//로그인 중인 개별 유저 저장
+			clientMap.put(sendId, session);
+		}
+		
+//		logger.info("Socket 연결");
+//		
+//		client.add(session);
+//		
+//		clientMap.put(sendId , session);
 		
 	}
 
 	// 클라이언트가 웹소켓 서버로 메시지를 전송했을때 실행 onMessage
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		System.out.println("나오나? "+message.getPayload());
-		//String sendId = getMemberId(session);
-		/*
-		 * Map<String, Object> httpSession = session.getAttributes(); // String memberId
-		 * = (String) httpSession.get("member_id"); // int msgCount; if (memberId !=
-		 * null) { // // 접속한 유저의 읽지 않은 알림 데이터 count msgCount =
-		 * msgService.selectUnreadMsg(memberId);
-		 * System.out.println("msgCount"+msgCount); // WebSocketSession webSocketSession
-		 * = clientMap.get(sendId); Gson gson = new Gson(); // // // 유저 알림데이터
-		 * TextMessage textMessage = new TextMessage(gson.toJson(msgCount +
-		 * "개의 쪽지가 도착했습니다.")); System.out.println("textMessage"+textMessage);
-		 * 
-		 * // webSocketSession.sendMessage(textMessage); // }
-		 */
+		System.out.println("소켓 send한 데이터 : "+message.getPayload());
+		session.getAttributes().put("data", message.getPayload());
+		//메시지 저장 여기서 하거나 클로즈할때마다 저장?
+		
+		session.sendMessage(message);
+		for(WebSocketSession client : clients) {
+			if(client.isOpen()) {
+				client.sendMessage(message);
+			}
+		}
+//		ObjectMapper objectMapper = new ObjectMapper();
+//		Map<String, String> sendData = objectMapper.readValue(message.getPayload(), Map.class);
+//		System.out.println("sendData에서 꺼내보기"+sendData.get("sendId"));
+//		String sendId = getMemberId(session);
+//		
+//		//특정 유저(recvId에게 가야함)
+//		String msg = message.getPayload();
+//		if(msg != null) {
+//			Map param = new HashMap();
+//			param.put("sendId", sendData.get("sendId"));
+//			param.put("recvId", sendData.get("recvId"));
+//			param.put("msgTitle", sendData.get("msgTitle"));
+//			param.put("msgContent", sendData.get("msgContent"));
+//			msgService.sendMessage(param);
+//			
+//			WebSocketSession recvIdSession = clientMap.get(sendData.get("recvId"));
+//			
+//			//상대방이 접속해 있는 경우
+//			if(recvIdSession != null) {
+//				TextMessage resultMsg = new TextMessage(sendData.get("sendId")+"님에게 쪽지가 도착했습니다");
+//				//TextMessage tmpMsg = new TextMessage("<a target='_blank' href='"+ url +"'>[<b>" + type + "</b>] " + content + "</a>" );
+//
+//				recvIdSession.sendMessage(resultMsg);
+//				
+//			}
+//			
+//		}
+		
+		
+		
+//		  Map<String, Object> httpSession = session.getAttributes(); 
+//		  String memberId  = (String) httpSession.get("member_id"); 
+//		  
+//		  int msgCount; 
+//		  if (memberId != null) { 
+//			  
+//			  //접속한 유저의 읽지 않은 알림 데이터count 
+//			  //msgCount =
+//		  }
+//		  msgService.selectUnreadMsg(memberId);
+//		  System.out.println("msgCount"+msgCount); 
+//		  WebSocketSession webSocketSession = clientMap.get(sendId); 
+//		  Gson gson = new Gson(); 
+//		   // 유저 알림데이터
+//		  TextMessage textMessage = new TextMessage(gson.toJson(msgCount +
+//		  "개의 쪽지가 도착했습니다.")); System.out.println("textMessage"+textMessage);
+//		  
+//		   webSocketSession.sendMessage(textMessage); 
+//		   }
+		 
 
 		/*
 		 * System.out.println("메시지 전송 : " + session.getId() + ":" + message);
@@ -274,13 +328,19 @@ public class MessageServer extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
 
-		logger.info("Socket 끊음");
-		System.out.println("afterConnectionClosed " + session + ", " + status);
-		//웹소켓 close시 전체 접속자 아이디 해제
-		client.remove(session);
+		String sendId = getMemberId(session);
 		
-		//웹소켓 close시 개별접속 아이디 해제
-		clientMap.remove(session.getId());
+		if(sendId != null) {
+			logger.info("Socket 끊음");
+			System.out.println("afterConnectionClosed " + session + ", " + status);
+			//웹소켓 close시 전체 접속자 아이디 해제
+			clients.remove(session);
+			
+			//웹소켓 close시 개별접속 아이디 해제
+			clientMap.remove(session.getId());
+			
+		}
+		
 		
 	}
 	
@@ -299,6 +359,12 @@ public class MessageServer extends TextWebSocketHandler {
 			return memberId;
 		}
 	}
+	
+	
+	// 로그 메시지
+		private void log(String logmsg) {
+			System.out.println(new Date() + " : " + logmsg);
+		}
 	
 	
 
