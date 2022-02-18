@@ -52,29 +52,20 @@ public class MessageServer extends TextWebSocketHandler {
 	// 클라이언트가 웹소켓 서버로 메시지를 전송했을때 실행 onMessage
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		System.out.println("핸들러"+message.getPayload());
-		String sendId = getMemberId(session);
-		Map<String, Object> httpSession = session.getAttributes();
-//
-		String memberId = (String) httpSession.get("member_id");
-//
-		int msgCount;
-		if (memberId != null) {
-//			// 접속한 유저의 읽지 않은 알림 데이터 count
-			msgCount = msgService.selectUnreadMsg(memberId);
-			System.out.println("msgCount"+msgCount);
-//
-			WebSocketSession webSocketSession = clientMap.get(sendId);
-			Gson gson = new Gson();
-//
-//			// 유저 알림데이터
-			TextMessage textMessage = new TextMessage(gson.toJson(msgCount + "개의 쪽지가 도착했습니다."));
-			System.out.println("textMessage"+textMessage);
-
-//
-			webSocketSession.sendMessage(textMessage);
-//
-		}
+		System.out.println("나오나? "+message.getPayload());
+		//String sendId = getMemberId(session);
+		/*
+		 * Map<String, Object> httpSession = session.getAttributes(); // String memberId
+		 * = (String) httpSession.get("member_id"); // int msgCount; if (memberId !=
+		 * null) { // // 접속한 유저의 읽지 않은 알림 데이터 count msgCount =
+		 * msgService.selectUnreadMsg(memberId);
+		 * System.out.println("msgCount"+msgCount); // WebSocketSession webSocketSession
+		 * = clientMap.get(sendId); Gson gson = new Gson(); // // // 유저 알림데이터
+		 * TextMessage textMessage = new TextMessage(gson.toJson(msgCount +
+		 * "개의 쪽지가 도착했습니다.")); System.out.println("textMessage"+textMessage);
+		 * 
+		 * // webSocketSession.sendMessage(textMessage); // }
+		 */
 
 		/*
 		 * System.out.println("메시지 전송 : " + session.getId() + ":" + message);

@@ -27,6 +27,8 @@ public interface MessageService {
 	
 	int deleteRecvMsg(int msgNo);
 	
+	int saveMsgPut(int msgNo);
+	
 	int deleteSendMsg(int msgNo);
 	
 	void oldMessageDelete();
@@ -39,5 +41,17 @@ public interface MessageService {
 	int sendMessage(Map param);
 	
 	int cancelSendMsg(int msgNo);
+	
+	List<Message> selectSaveMessage(String memberId, int cPage, int numPerpage);
+	
+	int selectSaveMessageCount(String memberId);
+	
+	Map selectSaveMsgDetail(int msgNo);
+	
+	int saveMsgRead(int msgNo);
+	
+	int deleteSaveMsg(int msgNo);
+	
+	int saveMsgExport(int msgNo);
 	
 }

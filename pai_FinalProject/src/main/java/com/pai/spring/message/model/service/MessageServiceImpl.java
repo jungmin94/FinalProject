@@ -66,6 +66,13 @@ public class MessageServiceImpl implements MessageService {
 	}
 	
 	
+	
+	
+	@Override
+	public int saveMsgPut(int msgNo) {
+		return dao.saveMsgPut(session, msgNo);
+	}
+
 	@Override
 	public int deleteSendMsg(int msgNo) {
 		return dao.deleteSendMsg(session, msgNo);
@@ -102,6 +109,36 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public int cancelSendMsg(int msgNo) {
 		return dao.cancelSendMsg(session, msgNo);
+	}
+
+	@Override
+	public List<Message> selectSaveMessage(String memberId, int cPage, int numPerpage) {
+		return dao.selectSaveMessage(session, memberId, cPage, numPerpage);
+	}
+
+	@Override
+	public int selectSaveMessageCount(String memberId) {
+		return dao.selectSaveMessageCount(session, memberId);
+	}
+
+	@Override
+	public Map selectSaveMsgDetail(int msgNo) {
+		return dao.selectSaveMsgDetail(session, msgNo);
+	}
+
+	@Override
+	public int saveMsgRead(int msgNo) {
+		return dao.saveMsgRead(session, msgNo);
+	}
+
+	@Override
+	public int deleteSaveMsg(int msgNo) {
+		return dao.deleteSaveMsg(session, msgNo);
+	}
+
+	@Override
+	public int saveMsgExport(int msgNo) {
+		return dao.saveMsgExport(session, msgNo);
 	}
 
 	
