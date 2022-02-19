@@ -1,4 +1,4 @@
-/** package com.pai.spring.taste.controller;
+ package com.pai.spring.taste.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -68,4 +68,4 @@ public class TasteController {
 		return mv;
 	}
 	
-} **/
+} 

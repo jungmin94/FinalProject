@@ -32,4 +32,12 @@ public interface AdminDao {
 	int commentDeclareCount(SqlSessionTemplate session,CommentDeclare cd);
 	
 	Member selectMember(SqlSessionTemplate session,String CommentWriter);
+	
+	List<Member> memberList(SqlSessionTemplate session,int cPage,int numPerPage);
+	
+	int memberCount(SqlSessionTemplate session);
+	
+	List<Member> searchMemberList(SqlSessionTemplate session,Map param,int cPage,int numPerPage);
+	
+	int searchMemberCount(SqlSessionTemplate session);
 }

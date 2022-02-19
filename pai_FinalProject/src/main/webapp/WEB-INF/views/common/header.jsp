@@ -186,6 +186,9 @@ a .sub-menu-detail {
 				<c:if test="${loginMember eq null}"> 
 				<a href="${path }/" onclick="msg();"><div class="menu-bar">친구찾기</div></a>
 				</c:if>
+				<c:if test="${loginMember ne null}"> 
+				<a href="${path }/taste/taste.do" ><div class="menu-bar">친구찾기</div></a>
+				</c:if>
 				<c:if test="${loginMember!=null&&loginMember.member_id eq 'admin'}"> 
 					<a href="${path}/admin/adminView.do"><div class="menu-bar">회원관리</div></a>
 				</c:if>

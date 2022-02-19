@@ -31,4 +31,12 @@ public interface AdminService {
 	int updateCommentDeclare(CommentDeclare cd);
 	
 	Member selectMember(String commentWriter);
+	
+	List<Member> memberList(int cPage,int numPerPage);
+	
+	int memberCount();
+	
+	List<Member> searchMemberList(Map param, int cPage, int numPerPage);
+	
+	int searchMemberCount();
 }

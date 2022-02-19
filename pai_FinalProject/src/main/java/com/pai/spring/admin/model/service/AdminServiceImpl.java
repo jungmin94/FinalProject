@@ -94,4 +94,28 @@ public class AdminServiceImpl implements AdminService {
 		return dao.selectMember(session,commentWriter);
 	}
 
+
+	@Override
+	public List<Member> memberList(int cPage, int numPerPage) {
+		return dao.memberList(session,cPage,numPerPage);
+	}
+
+
+	@Override
+	public int memberCount() { 
+		return dao.memberCount(session);
+	}
+
+
+	@Override
+	public List<Member> searchMemberList(Map param, int cPage, int numPerPage) { 
+		return dao.searchMemberList(session,param,cPage,numPerPage);
+	}
+
+
+	@Override
+	public int searchMemberCount() { 
+		return dao.searchMemberCount(session);
+	}
+
 }

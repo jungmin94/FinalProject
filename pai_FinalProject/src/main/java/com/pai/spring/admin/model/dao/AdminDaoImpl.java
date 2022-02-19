@@ -72,4 +72,26 @@ public class AdminDaoImpl implements AdminDao {
 		return session.selectOne("admin.selectMember", CommentWriter);
 	}
 
+	@Override
+	public List<Member> memberList(SqlSessionTemplate session,int cPage,int numPerPage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("admin.memberList", null, rb);
+	}
+
+	@Override
+	public int memberCount(SqlSessionTemplate session) { 
+		return session.selectOne("admin.memberCount");
+	}
+
+	@Override
+	public List<Member> searchMemberList(SqlSessionTemplate session, Map param, int cPage, int numPerPage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerPage,numPerPage);
+		return session.selectList("admin.searchMemberList",param,rb);
+	}
+
+	@Override
+	public int searchMemberCount(SqlSessionTemplate session) { 
+		return session.selectOne("admin.searchMemberCount");
+	}
+
 }

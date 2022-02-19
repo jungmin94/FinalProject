@@ -205,7 +205,7 @@ section>*{
 					<tr>
 						<td colspan="8" style="text-align:center;"><p>조회된 게시물이 없습니다.</p></td>
 					</tr>
-				</c:if>
+			</c:if>
 			<tr>
 				<td colspan="8" style="height:40px; text-align:center">${pageBar}</td>
 			</tr>
