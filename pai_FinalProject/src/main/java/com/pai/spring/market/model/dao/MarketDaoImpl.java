@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.pai.spring.market.model.vo.Cart;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
@@ -17,7 +18,6 @@ import com.pai.spring.member.model.vo.Member;
 
 @Repository
 public class MarketDaoImpl implements MarketDao {
-
 
 	@Override
 	public List<Goods> bestSell(SqlSessionTemplate session) {
@@ -289,5 +289,43 @@ public class MarketDaoImpl implements MarketDao {
 	
 		return session.update("market.updateGoodOutput",goodsName);
 	}
+	
+	@Override
+	public int totalCartCount(SqlSessionTemplate session,String member_id) {
+		
+		return session.selectOne("market.totalCartCount",member_id);
+	}
+
+	@Override
+	public Cart duplicateCheckCart(SqlSessionTemplate session, Cart cart) {
+	
+		return session.selectOne("market.duplicateCheckCart",cart);
+	}
+
+	@Override
+	public int addCart(SqlSessionTemplate session, Cart cart) {
+	
+		return session.insert("market.insertCart",cart);
+	}
+
+	@Override
+	public int updateCart(SqlSessionTemplate session, Cart cart) {
+		
+		return session.update("market.updateCart",cart);
+	}
+	
+	@Override
+	public List<Cart> selectCartList(SqlSessionTemplate session, String member_id) {
+		
+		return session.selectList("market.selectCartList",member_id);
+	}
+	
+	@Override
+	public int deleteCart(SqlSessionTemplate session, Cart cart) {
+	
+		return session.delete("market.deleteCart",cart);
+	}
+	
+	
 	
 }

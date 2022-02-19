@@ -134,7 +134,7 @@
           </select>
           <br>
           카테고리 3 (MBTI로고) <span style="color:red;">@주문제작@</span>
-          <select class="form-select" aria-label="Default select example" name="mbtiLogo" required>
+          <select class="form-select" aria-label="Default select example"  id="select_mbti" name="mbtiLogo" required>
             <option disabled selected>MBTI로고를 선택해주세요</option>
             <option value="ISTJ">ISTJ</option>
             <option value="ISFJ">ISFJ</option>
@@ -166,8 +166,10 @@
           <input type="hidden" id="gName"  name="goodsName" value="${good.goodsName}">
           <input type="hidden" id="gNo"  name="goodsNo" value="${good.goodsNo}">
           <button type="submit" class="btn btn-outline-primary" onclick="$('#purchaseFrm').submit();">구매하기</button>
-          <button type="button" class="btn btn-outline-info">장바구니</button>
+          <button type="button"  id="cartBtn" class="btn btn-outline-info" >장바구니</button>
        </form>
+         <input type="hidden" id="gImage"  name="image" value="${good.image}">
+         <input type="hidden" id="memberId"  name="memberId" value="${loginMember.member_id}">
       </div>
     </div>
   </div>
@@ -350,6 +352,39 @@ $(document).ready(function () {
     });
     
     
+$(document).on("click", "#cartBtn", function () { 
+	
+	let color=$("#select_color").val();
+	let size=$("#select_size").val();
+	let mbti=$("#select_mbti").val();
+	let buyCount=$("#inputBuyCount").val();
+	let price=$("#inputTotalPrice").val();
+	let gNo=$("#gNo").val();
+	let gName=$("#gName").val();
+	let gImage=$("#gImage").val();
+	let memberId=$("#memberId").val();
+	
+	if(color==null || size==null || mbti==null){
+		alert('옵션을 모두 입력해주세요! :)');
+		return;
+	}
+	
+   	$.ajax({
+		url:"${path}/market/addCart.do",
+		data:{goodsNo:gNo,goodsName:gName,image:gImage,member_id:memberId,
+			color:color,size:size,mbtiLogo:mbti,count:buyCount,price:price}, //키:벨류 형식으로 데이터를 전송한다
+		success:data=>{
+			if(data==999){
+				alert('장바구니는 최대 5개까지 등록가능합니다..!');
+			}else if(data>0 && data!=999){
+				alert('장바구니에 추가되었습니다. :)');
+			}else{
+				alert('장바구니 등록에 실패하였습니다. :(');
+			}			
+		}	
+	});
+
+});
 
 
 

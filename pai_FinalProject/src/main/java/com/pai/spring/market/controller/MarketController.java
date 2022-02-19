@@ -19,10 +19,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.pai.spring.board.model.vo.AttachFile;
-import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.common.PageFactory;
 import com.pai.spring.market.model.service.MarketService;
+import com.pai.spring.market.model.vo.Cart;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
@@ -237,7 +236,7 @@ public class MarketController {
 	System.out.println(m);
 	
 	List<Order> list = service.orderDetailList(cPage,numPerPage,m);	
-	
+	System.out.println("gd : "+list);
 	int totalOrderDetail = service.selectOrderDetailCount(m);
 	
 		
@@ -374,6 +373,145 @@ public class MarketController {
 		mv.setViewName("common/msg");
 		
 		return mv;
+	}
+	
+	
+	@RequestMapping("/addCart.do")
+	@ResponseBody
+	public int addCart(Cart cart) {
+		
+		int result=0;
+		int totalCartCount=service.totalCartCount(cart.getMember_id());
+		if(totalCartCount==5)return 999;
+		
+		Cart c = service.duplicateCheckCart(cart);
+		if(c==null) {
+			result=service.addCart(cart);
+		}else {
+			int count = c.getCount();
+			cart.setCount(count+cart.getCount());
+			result=service.updateCart(cart);
+		}
+	
+		return result;
+	}
+	
+	
+	@RequestMapping("/myCart.do")
+	public ModelAndView myCart(HttpSession session,ModelAndView mv) {
+		
+		Member m = (Member)session.getAttribute("loginMember");
+		
+		List<Cart> cartList = service.selectCartList(m.getMember_id());
+		
+		int totalPrice=0;
+		for(Cart c : cartList) {
+			totalPrice+=c.getCount()*c.getPrice();
+		}
+		
+		mv.addObject("cartList",cartList);	
+		mv.addObject("totalPrice",totalPrice);	
+		mv.setViewName("market/myCart");
+		return mv;
+	}
+	
+	@RequestMapping("/deleteCart.do")
+	@ResponseBody
+	public int deleteCart(Cart cart) {
+		
+		int result = service.deleteCart(cart);
+	
+		return result;
+	}
+	
+	@RequestMapping("/cartPurchase.do")
+	public ModelAndView cartPurchase(int totalPrice,HttpSession session,ModelAndView mv) {
+		
+		Member m = (Member)session.getAttribute("loginMember");
+		
+		List<Cart> cartList = service.selectCartList(m.getMember_id());
+		
+		mv.addObject("cartList",cartList);	
+		mv.addObject("totalPrice",totalPrice);	
+		mv.setViewName("market/cartPurchase");
+		
+		return mv;
+	}
+	
+		
+	@RequestMapping("/cartPay.do")
+	public ModelAndView cartPay(Order order,ModelAndView mv) {
+
+		mv.addObject("order",order);
+		mv.setViewName("market/cartPay");
+
+		return mv;
+		
+	}
+	
+	
+	@RequestMapping("/cartPurchaseGoodEnd.do")
+	@Transactional
+	public ModelAndView cartPurchaseGoodEnd(Order order,ModelAndView mv) {
+
+		String msg="";
+		String loc="";
+		order.setOrderDetail(new ArrayList<OrderDetail>());
+	
+		List<Cart> cartList = service.selectCartList(order.getMember_id());
+		for(Cart c : cartList) {
+			OrderDetail od = new OrderDetail();
+			od.setGoodsNo(c.getGoodsNo());
+			od.setGoodsName(c.getGoodsName());
+			od.setOrderColor(c.getColor());
+			od.setOrderSize(c.getSize());
+			od.setMbtiLogo(c.getMbtiLogo());
+			od.setOrderCount(c.getCount());
+			od.setOrderPrice(c.getPrice());
+			order.getOrderDetail().add(od);
+		}
+		
+		int insertOrderResult = service.insertOrder(order);
+		
+		if(insertOrderResult>0) {
+			for(Cart c : cartList) {
+				GoodsDetails gd = new GoodsDetails();
+				gd.setGoodsName(c.getGoodsName());
+				gd.setColor(c.getColor());
+				gd.setSize(c.getSize());
+				int inven = service.goodPrice(gd).getInvenCount();
+				int finalInven = inven-c.getCount();
+				gd.setInvenCount(finalInven);
+				
+				int updateInvenResult = service.updateInven(gd);
+				
+				String goodsName=c.getGoodsName();			
+				Goods good = service.selectGood(goodsName);
+				good.setTotalCell(good.getTotalCell()+1);
+				
+				int updateTotalCellResult = service.updateTotalCell(good);				
+				
+				if(!(updateInvenResult>0 && updateTotalCellResult>0)) {
+					 msg="죄송합니다. 구매과정에 오류가 발생하였습니다. :(";
+					 loc="/market/myCart.do";	
+					 break;
+				}
+				
+			}
+			msg="감사합니다. 구매가 정상적으로 완료되었습니다. 이용해 주셔서 감사합니다 ;)";
+			loc="/market/goodsList.do";	
+			
+		}else {
+			 msg="죄송합니다. 구매과정에 오류가 발생하였습니다. :(";
+			 loc="/market/myCart.do";	
+		}
+		
+		mv.addObject("msg",msg);
+		mv.addObject("loc",loc);
+		mv.setViewName("common/msg");
+
+		return mv;
+		
 	}
 	
 	

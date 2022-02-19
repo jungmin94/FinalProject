@@ -63,37 +63,40 @@
 		</thead>
 		<tbody>
 		<c:forEach items="${List}" var="l">
-		  <tr>
-			<th scope="row">
-				<c:if test="${l.image ne null}">
-					<img src="${path}/resources/upload/market/${l.image}" class="img-thumbnail" alt="..." style="width: 100px; height: 100px;" 
-					onclick="location.assign('${path}/market/goodsDetailView.do?goodsName=${l.orderDetail.get(0).goodsName}')">
-				</c:if>
-				<c:if test="${l.image eq null}">
-					<img src="${path}/resources/images/market/이미지준비중.PNG" class="img-thumbnail" alt="..." style="width: 100px; height: 100px;"
-					onclick="location.assign('${path}/market/goodsDetailView.do?goodsName=${l.orderDetail.get(0).goodsName}')">
-				</c:if>
-			</th>
-			<td>${l.orderDate}</td>
-			<td>${l.orderDetail.get(0).goodsName}</td>
-			<td>${l.orderDetail.get(0).orderColor}</td>
-			<td>${l.orderDetail.get(0).orderSize}</td>
-			<td>${l.orderDetail.get(0).mbtiLogo}</td>
-			<td><fmt:formatNumber  value="${l.orderDetail.get(0).orderPrice/l.orderDetail.get(0).orderCount}"  type="currency"/>원</td>
-			<td>${l.orderDetail.get(0).orderCount}</td>
-			<td><fmt:formatNumber  value="${l.orderDetail.get(0).orderPrice}"  type="currency"/>원</td>
-			<td>
-				<c:if test="${l.orderDetail.get(0).checkReview.equals('N')}">
-					<button type="button"  id="enrollReviewBtn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#enrollReviewModal"
-					data-gno="${l.orderDetail.get(0).goodsNo}" data-gname="${l.orderDetail.get(0).goodsName}" data-detailno="${l.orderDetail.get(0).orderDetailNo}">리뷰등록</button>
-				</c:if>
-				<c:if test="${l.orderDetail.get(0).checkReview.equals('Y')}">
-					<button type="button" class="btn btn-outline-secondary">등록완료</button>
-				</c:if>
-			</td>
-		  </tr>
+			
+			<c:forEach var="i"  begin="0" end="${l.orderDetail.size()-1}" step="1">
+			  <tr>
+				<th scope="row">
+					<c:if test="${l.orderDetail.get(i).image ne null}">
+						<img src="${path}/resources/upload/market/${l.orderDetail.get(i).image}" class="img-thumbnail" alt="..." style="width: 100px; height: 100px;" 
+						onclick="location.assign('${path}/market/goodsDetailView.do?goodsName=${l.orderDetail.get(i).goodsName}')">
+					</c:if>
+					<c:if test="${l.orderDetail.get(i).image eq null}">
+						<img src="${path}/resources/images/market/이미지준비중.PNG" class="img-thumbnail" alt="..." style="width: 100px; height: 100px;"
+						onclick="location.assign('${path}/market/goodsDetailView.do?goodsName=${l.orderDetail.get(i).goodsName}')">
+					</c:if>
+				</th>
+				<td>${l.orderDate}</td>
+				<td>${l.orderDetail.get(i).goodsName}</td>
+				<td>${l.orderDetail.get(i).orderColor}</td>
+				<td>${l.orderDetail.get(i).orderSize}</td>
+				<td>${l.orderDetail.get(i).mbtiLogo}</td>
+				<td><fmt:formatNumber  value="${l.orderDetail.get(i).orderPrice/l.orderDetail.get(i).orderCount}"  type="currency"/>원</td>
+				<td>${l.orderDetail.get(i).orderCount}</td>
+				<td><fmt:formatNumber  value="${l.orderDetail.get(i).orderPrice}"  type="currency"/>원</td>
+				<td>
+					<c:if test="${l.orderDetail.get(i).checkReview.equals('N')}">
+						<button type="button"  id="enrollReviewBtn" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#enrollReviewModal"
+						data-gno="${l.orderDetail.get(i).goodsNo}" data-gname="${l.orderDetail.get(i).goodsName}" data-detailno="${l.orderDetail.get(i).orderDetailNo}">리뷰등록</button>
+					</c:if>
+					<c:if test="${l.orderDetail.get(i).checkReview.equals('Y')}">
+						<button type="button" class="btn btn-outline-secondary">등록완료</button>
+					</c:if>
+				</td>
+			  </tr>
+			</c:forEach>
 		</c:forEach>
-
+			
 		</tbody>
 	  </table>
 	<div style="text-align:center;">
