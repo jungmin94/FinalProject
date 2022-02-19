@@ -285,6 +285,25 @@ public class MessageController {
 	}
 	
 	
+	//쪽지보관함 상세보기화면에서 삭제
+	@RequestMapping(value="/deleteSaveMsgOne.do", produces="text/plain;charset=UTF-8")
+	@ResponseBody
+	public String deleteSaveMsg(int msgNo) {
+		
+		Map<String, Object> result;
+		int deleteSaveMsg = service.deleteSaveMsg(msgNo);
+		if(deleteSaveMsg==1) {
+			result = Map.of("result", "쪽지 삭제 완료하였습니다.");
+		} else {
+			result = Map.of("result", "쪽지 삭제에 실패하였습니다.");
+			
+		}
+	
+		return new Gson().toJson(result);
+		
+	}
+	
+	
 	//일반쪽지함으로 내보내기
 	@RequestMapping(value="/saveMsgExport.do", produces="text/plain;charset=UTF-8")
 	@ResponseBody

@@ -55,7 +55,7 @@ article{
 	</form>
 	
 	<!-- 기존테스트로 친구찾기 클릭시 폼 전송 -->
-	<form id="tasteForm" action="${path }/taste/selectTaste.do">
+	<form id="tasteForm" method="post" action="${path }/taste/selectTaste.do">
 		<input type="hidden" name="memberId" value="${loginMember.member_id}">
 	</form>
 		

@@ -148,7 +148,7 @@
                         </table>
                     </div>
                 <div class="modal-footer fn-font">
-                    <button class="btn btn-primary" id="msgSend" type="submit">보내기</button>
+                    <input class="btn btn-primary" id="msgSend" type="button" value="보내기">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </div>
                 </form>
@@ -224,18 +224,20 @@ function recvMsgBox(cPage){
 			let th2=$("<th>").html("번호").attr("scope","col");
 			let th3=$("<th>").html("제목").attr("scope","col");
 			let th4=$("<th>").html("보낸사람").attr("scope","col");
-			let th5=$("<th>").html("날짜").attr("scope","col");
+			let th5=$("<th>").html("받은날짜").attr("scope","col");
+			let th6=$("<th>").html("읽은날짜").attr("scope","col");
+
 			
 			table.append(thead);
 			thead.append(tr1);
-			tr1.append(th1).append(th2).append(th3).append(th4).append(th5);
+			tr1.append(th1).append(th2).append(th3).append(th4).append(th5).append(th6);
 			th1.append(checkAll);
 			
 			
 			if(recvMsgList.length==0){
 				let tr2 = $("<tr>").css("text-align","center");
 				let ntd=$("<td>").html("받은쪽지가 없습니다.");
-				ntd.attr("colspan","5");
+				ntd.attr("colspan","6");
 				tr2.append(ntd);
 				tbody.append(tr2);
 				table.append(tbody);
@@ -263,9 +265,13 @@ function recvMsgBox(cPage){
 					
 					let sendNick = $("<td>").html(recvMsgList[i]["SENDNICK"]);
 					let msgSendTime = $("<td>").html(recvMsgList[i]["MSGSENDTIME"]);
+					let msgReadTime = $("<td>").html(recvMsgList[i]["MSGREADTIME"]);
+					if(recvMsgList[i]["MSGREADTIME"]==null){
+						msgReadTime = $("<td>").html("읽지않음");
+					}
 					tbody.append(tr2);
 					table.append(tbody);
-					tr2.append(td1).append(no).append(msgTitle).append(sendNick).append(msgSendTime);
+					tr2.append(td1).append(no).append(msgTitle).append(sendNick).append(msgSendTime).append(msgReadTime);
 					td1.append(check);
 				}
 				
@@ -715,7 +721,7 @@ function recvMsgView(e){
 			let msgReadTime = $("<td>").html(data["MSGREADTIME"]);
 			
 			let tr4=$("<tr>");
-			let msgContent = $("<td>").html(data["MSGCONTENT"]);
+			let msgContent = $("<td>").html(data["MSGCONTENT"]).attr({colspan:"4"});
 			
 			thead.append(tr).append(tr2).append(tr3);
 			
@@ -760,10 +766,10 @@ function recvMsgView(e){
 			
 			//답장버튼
 			$("#answer").click(function(){
-				
 				$('#recvNick').val(data["SENDNICK"]);
 				$('#recvId').val(data["SENDID"]);
 				$('#MsgForm').modal("show");
+				connectSocket();
 		
 			});
 		}
@@ -834,7 +840,7 @@ $("#msgSend").click(e=>{
             return false;
         }
     }
-    //족지 제목 미입력시 포커스
+    //쪽지 제목 미입력시 포커스
   	if($("#msgTitle").val().trim().length == 0){
        $("#msgTitle").focus();
        return false;
@@ -845,36 +851,28 @@ $("#msgSend").click(e=>{
        return false;
     }  
     
-    console.log($(".msg_form").serialize());
-    confirm("테스트?");
-/*     $.ajax({
-        url : "${path}/message/sendMessage.do",
-        dataType : "json",
-        type : "post",
-        data : $(".msg_form").serialize(),
-        success: data=>{
-    		alert(data);
-    		alert(sendData);
-        	console.log(data);
-            const sendData = {
-            	"msgType":'sendMessage',
-            	"sendId":data["sendId"],
-            	"sendNick":data["sendNick"],
-            	"recvId":data["recvId"],
-            	"recvNick":data["recvNick"],
-            	"msgTitle":data["msgTitle"],
-            	"msgContent":data["msgContent"]
-            }
-            
-            let jsonData = JSON.stringify(sendData)
-            console.log(sendData);
-    		socket.send(sendData);
-			console.log('send');
-        }
-    }) */
-
- 
-    //modal.find('.modal-body textarea').val('');
+    let sendId=$("#sendId").val();
+    let sendNick=$("#sendNick").val();
+    let recvId=$("#recvId").val();
+    let recvNick=$("#recvNick").val();
+    let msgTitle=$("#msgTitle").val();
+    let msgContent=$("#msgContent").val();
+    
+    const sendData = {
+    		type:"message",
+    		sendId:sendId,
+    		sendNick:sendNick,
+    		recvId:recvId,
+    		recvNick:recvNick,
+    		msgTitle:msgTitle,
+    		msgContent:msgContent,
+    }
+    
+    
+    socket.send(JSON.stringify(sendData));
+    $('#MsgForm').modal("hide");
+  
+    
 });
 
 
@@ -911,8 +909,8 @@ function sendMsgView(e){
 			let msgReadCheck = $("<td>").html("읽지않음");
 			let msgReadTime = $("<td>").html(data["MSGREADTIME"]);
 			
-			let tr4=$("<tr>");
-			let msgContent = $("<td>").html(data["MSGCONTENT"]);
+			let tr4=$("<tr>")
+			let msgContent = $("<td>").html(data["MSGCONTENT"]).attr({colspan:"4"});
 			
 			thead.append(tr).append(tr2).append(tr3);
 			
@@ -992,7 +990,7 @@ function saveMsgView(e){
 			let msgReadTime = $("<td>").html(data["MSGREADTIME"]);
 			
 			let tr4=$("<tr>");
-			let msgContent = $("<td>").html(data["MSGCONTENT"]);
+			let msgContent = $("<td>").html(data["MSGCONTENT"]).attr({colspan:"4"});
 			
 			thead.append(tr).append(tr2).append(tr3);
 			
@@ -1019,10 +1017,10 @@ function saveMsgView(e){
 			$("#eventButton").append(answer).append(list).append(del);
 			
 			$("#body-container").html(table);
-			//상세보기 페이지 삭제버튼
+			//상세보기 페이지 삭제버튼 -> 여기서는 삭제시 보관유무 n으로도 변경되어야함 -> 그래야 나중에 시간 지난 쪽지 스케쥴러에서 자동삭제
 			$("#delRecvMsg").click(function(){
 				$.ajax({
-					url:"${path}/message/deleteRecvMsgOne.do",
+					url:"${path}/message/deleteSaveMsgOne.do",
 					type:"post",
 					data:{"msgNo" : data["MSGNO"]},
 					dataType:"json",
@@ -1037,15 +1035,25 @@ function saveMsgView(e){
 			
 			//답장버튼
 			$("#answer").click(function(){
-				
 				$('#recvNick').val(data["SENDNICK"]);
 				$('#recvId').val(data["SENDID"]);
 				$('#MsgForm').modal("show");
+				connectSocket();
 		
 			});
 		}
 	});
 };
+var socket = null;
+
+function connectSocket(){
+	var sock = "http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message";
+	socket = new SockJS(sock);
+	
+	socket.onopen = onOpen;
+	socket.onmessage = onMessage;
+
+ }; 
 
 </script>
 </html>

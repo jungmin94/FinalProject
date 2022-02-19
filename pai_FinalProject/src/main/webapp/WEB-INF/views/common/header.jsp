@@ -204,11 +204,9 @@ a .sub-menu-detail {
 			<c:if test="${loginMember!=null }">
 				<div class="nav-lists" id="mypage-icon">
 					<!-- 만약 받은 쪽지가 없을 경우 하단의 span #message-arrived는 보이지 않게 설정 필요 -->
-					<!-- 만약 받은 쪽지가 없을 경우 하단의 span .login-area의 이미지 주소는 https://i.ibb.co/vxM4TDk/2022-01-18-17-51-35.png 사용 필요 -->
 					<span id="message-arrived"></span><br>
 					<span id="loginMember"><c:out value="${loginMember.member_nick }님 접속을 환영합니다"/></span>
 					<span class="login-area" onmouseover="dropDownMenu();">
-						<img src="https://i.ibb.co/4Z7wXR5/2022-01-20-10-00-48.png" width="50px">
 					</span>
 				</div>
 			</c:if>
@@ -260,7 +258,6 @@ a .sub-menu-detail {
         	 $('#myIdData').attr("target", "msgBox");
         	 open("", "msgBox", "height=800, width=800, menubar=no, scrollbars=yes, resizable=no, toolbar=no, status=no, left=50, top=50");
         	$("#myIdData").submit();
-			/* open("${path}/message/messageBox.do","_blank","width=800,height=800"); */
 		}
         
         
@@ -284,10 +281,6 @@ a .sub-menu-detail {
 			socket.onopen = onOpen;
 			socket.onmessage = onMessage;
 		
-			/* sock.onopen = function() {
-		 		console.log('open');
-		 	};  */
-		 	//sock.onmessage = onMessage;
 		 }; 
         
         
@@ -297,54 +290,49 @@ a .sub-menu-detail {
      // toast생성 및 추가
          function onMessage(evt){
         		console.log('onmessage');
-        		alert(evt.data);
+        		//$("#liveToastBtn").click();
+        		//$("#alimData").val(evt.data);
+        		//$("#message-arrived").text(evt.data);
         		//alert(evt);
-         /*    var data = evt.data;
+             var data = evt.data;
             console.log(data);
             // toast
-            let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
-            toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
-            toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
-            toast += "<span aria-hidden='true'>&times;</span></button>";
-            toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+             let toast = "<div class='position-fixed bottom-0 end-0 p-3' style='z-index: 11'>";
+            toast += "<div id='liveToast' class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+            toast += "<div class='toast-header'><img width='30px' height='30px' src='data:image/png;base64,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' class='rounded me-2' alt='...'><strong class='me-auto'>알림</strong><small>just now</small><button type='button' class='btn-close' data-bs-dismiss='toast' aria-label='Close'></button></div>";
+            toast += "<div class='toast-body' id='alimData'>"+data+"</div></div></div>";
             $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
             $(".toast").toast({"animation": true, "autohide": false});
-            $('.toast').toast('show'); */
+            $('.toast').toast('show'); 
         };
+        
+        
         
         function onOpen(){
         	console.log('open');
         }
         
-   /*      function onMessage(message){
-        	console.log('onMessage'+message.data);
-        	let socketAlert = $('span#message-arrived');
-    		socketAlert.html(message.data)
-    		socketAlert.css('display', 'block');
-    		
-    		setTimeout(function(){
-    			$socketAlert.css('display','none');
-    			
-    		}, 5000);
-        }; */
         
     	
-    	
-   /*  	sock.onclose = function() {
-    	    console.log('close');
-     	}; */
-        
         
         
        //로그인시 쪽지 갯수
 	        if(${loginMember.member_id != null}){
+	        	let img1 = $("<img src='https://i.ibb.co/4Z7wXR5/2022-01-20-10-00-48.png' width='50px'>");
+	        	let img2 = $("<img src='https://i.ibb.co/vxM4TDk/2022-01-18-17-51-35.png' width='50px'>");
 		        $.ajax({
 		        	url:"${path}/message/msgCount.do",
 		        	data:{"memberId":'${loginMember.member_id}'},
 		        	dataType:"json",
 		        	type:"post",
 		        	success:data=>{
+		        		if(data !=0) {
 		        		$("#msgCount").text(data);
+		        		$(".login-area").append(img1);
+
+		        		} else {
+		        			$(".login-area").append(img2);
+		        		}
 		        	}
 		        	
 		        })
@@ -361,6 +349,19 @@ a .sub-menu-detail {
 	</nav>
 	
 	 <div id="msgStack"></div>
+	 
+<!-- 	<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+	  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+	    <div class="toast-header">
+	      <img src="..." class="rounded me-2" alt="...">
+	      <strong class="me-auto">알림</strong>
+	      <small>just now</small>
+	      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+	    </div>
+	    <div class="toast-body" id="alimData">
+	    </div>
+	  </div>
+	</div> -->
 	
 </header>
 

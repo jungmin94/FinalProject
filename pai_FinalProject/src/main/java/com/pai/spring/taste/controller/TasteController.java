@@ -27,7 +27,7 @@ public class TasteController {
 		return "taste/tasteTest";
 	}
 	
-	@RequestMapping(value="/selectTaste.do")
+	@RequestMapping(value="/selectTaste.do" , method=RequestMethod.POST)
 	public ModelAndView selectTaste(String memberId, ModelAndView mv) {
 		
 		//본인 취향 조회해와서

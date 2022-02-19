@@ -118,7 +118,7 @@
                         </table>
                     </div>
                 <div class="modal-footer fn-font">
-                    <button class="btn btn-primary" id="msgSend" type="submit">보내기</button>
+                    <button class="btn btn-primary" id="msgSend" type="button">보내기</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </div>
                 </form>
@@ -232,7 +232,8 @@ $("#msgSend").click(e=>{
     let msgTitle=$("#msgTitle").val();
     let msgContent=$("#msgContent").val();
     
-    const sendData ={
+    const sendData = {
+    		type:"message",
     		sendId:sendId,
     		sendNick:sendNick,
     		recvId:recvId,
@@ -242,7 +243,10 @@ $("#msgSend").click(e=>{
     }
     
     socket.send(JSON.stringify(sendData));
-    
+    $("#msgTitle").val('');
+    $("#msgContent").val('');
+    $('#MsgForm').modal("hide");
+
    
     
 /*     $.ajax({
