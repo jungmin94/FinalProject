@@ -42,4 +42,6 @@ public interface MemberDao {
 	String pwCheck(SqlSessionTemplate session,String member_id) throws Exception;
 	
 	int pwUpdate(SqlSessionTemplate session,String member_id, String hashedPw)throws Exception;
+	
+	int updateMember(SqlSessionTemplate session, Member m);
 }

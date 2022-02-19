@@ -37,4 +37,6 @@ public interface MemberService {
 	String pwCheck(String member_id)throws Exception;
 	
 	int pwUpdate(String member_id, String hashedPw)throws Exception;
+	
+	int updateMember(Member m);
 }

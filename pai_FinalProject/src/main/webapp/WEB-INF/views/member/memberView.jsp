@@ -23,7 +23,7 @@
 					<div id="image-container">
  						<c:if test="">
  						</c:if>
- 						<img src="${path }/resources/upload/member/${loginMember.member_profile}" style=width:200px;,height:200px;>
+ 						<img src="${path }/resources/upload/member/${loginMember.member_profile}" class="img-thumbnail" style=width:200px;,height:200px;>
 					</div>
 					<label for="exampleDataList" class="form-label">프로필사진</label>
 				</div>

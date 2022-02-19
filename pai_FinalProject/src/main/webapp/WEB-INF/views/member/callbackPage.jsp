@@ -59,7 +59,7 @@
 				</div>
 				<div id="memberDate-container">
 					<label for="exampleDataList" class="form-label">생년월일</label>
-					<input type="date" class="form-control" placeholder="" name="member_date" id="member_date">
+					<input type="date" class="form-control" placeholder="" min="1023-01-01" name="member_date" id="member_date">
 					<span class="final_birth_ck">생년월일을 입력해주세요.</span>
 				</div>			
 				<div id="memberAddr-container">
@@ -632,8 +632,9 @@
 			reader.onload=(e)=>{
 				const img=$("<img>").attr({
 					src:e.target.result,
-					width:"100px",
-					height:"100px"
+					width:"200px",
+					height:"200px",
+					class:"img-thumbnail"
 				});
 				$("#image-container").append(img);
 				$("#target").attr("src",e.target.result);
@@ -641,6 +642,23 @@
 			reader.readAsDataURL(e.target.files[0]);
 		}
 	})
+	
+	//날짜 현재 이후는 선택 불가
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; //January is 0!
+	var yyyy = today.getFullYear();
+	
+	if (dd < 10) {
+	   dd = '0' + dd;
+	}
+	
+	if (mm < 10) {
+	   mm = '0' + mm;
+	} 
+	    
+	today = yyyy + '-' + mm + '-' + dd;
+	document.getElementById("member_date").setAttribute("max", today);
 	
 </script>		
 

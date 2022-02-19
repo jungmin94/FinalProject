@@ -125,5 +125,11 @@ public class MemberServiceImpl implements MemberService {
 		return dao.pwUpdate(session,member_id,hashedPw);
 	}
 
+	@Override
+	public int updateMember(Member m) {
+		// TODO Auto-generated method stub
+		return dao.updateMember(session,m);
+	}
+
 	
 }

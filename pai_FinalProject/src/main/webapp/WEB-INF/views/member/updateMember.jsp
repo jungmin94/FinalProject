@@ -37,16 +37,25 @@
 			<form id="memberEnrollFrm" name="memberEnrollFrm" action="${path }/member/updateMemberEnd.do" 
 			method="post" enctype="multipart/form-data">
 				<h2>회원정보수정</h2>
+				<div id="image-container">
+					<img src="${path }/resources/upload/member/${loginMember.member_profile}" class="img-thumbnail" style=width:200px;,height:200px;>
+				</div>
+				<div id="memberProfile-container">
+					<label for="exampleDataList" class="form-label">프로필사진</label>
+					<div class="mb-3">
+					  <input class="form-control" type="file" id="member_profile" name="upfile">
+					</div>
+				</div>
 				<div id="memberNick-container">
 					<label for="exampleDataList" class="form-label">닉네임</label>
-					<input type="text" class="form-control" placeholder="닉네임을 입력해주세요" name="member_nick" id="member_nick" required oninput="checkNick()">
+					<input type="text" class="form-control" placeholder="닉네임을 입력해주세요" value="${loginMember.member_nick }" name="member_nick" id="member_nick" required oninput="checkNick()">
 					<span class="nick_ok">사용 가능한 닉네임입니다.</span>
 					<span class="nick_error">누군가가 이 닉네임을 사용하고있어요.</span>
 					<span class="final_nick_ck">닉네임을 입력해주세요.</span>
 				</div>
 				<div id="memberDate-container">
 					<label for="exampleDataList" class="form-label">생년월일</label>
-					<input type="date" class="form-control" placeholder="" name="member_date" id="member_date" value="${loginMember.member_date}">
+					<input type="date" class="form-control" placeholder="" min="1023-01-01" name="member_date" id="member_date" value="${loginMember.member_date}">
 					<span class="final_birth_ck">생년월일을 입력해주세요.</span>
 				</div>			
 				<div id="memberPhone-container">
@@ -66,42 +75,24 @@
 					    <input class="form-control" placeholder="상세주소" name="member_addr3" id="member_addr3" type="text"  />
 					</div>
 					<span class="final_addr_ck">주소를 입력해주세요.</span>
-					<input type="text" id="member_addr" name="member_addr" value="${loginMember.member_addr }">
-				</div>
-				<div id="memberGender-container">
-					<label for="exampleDataList" class="form-label">성별</label>
-					<div class="form-check">
-					  <input class="form-check-input" type="radio" name="member_gender" value="남">
-					  <label class="form-check-label" for="flexRadioDefault1">
-					    남자
-					  </label>
-					</div>
-					<div class="form-check">
-					  <input class="form-check-input" type="radio" name="member_gender" value="여">
-					  <label class="form-check-label" for="flexRadioDefault2">
-					    여자
-					  </label>
-					</div>
-					<span class="final_addr_ck">성별을 체크해주세요.</span>
-				</div>				
-				<div id="memberProfile-container">
-					<label for="exampleDataList" class="form-label">프로필사진</label>
-					<div class="mb-3">
-					  <input class="form-control" type="file" id="member_profile" name="member_profile">
-					</div>
-				</div>
-				<div id="image-container">
+					<input type="text" style=width:100%; id="member_addr" name="member_addr" value="${loginMember.member_addr }">
 				</div>
 				<div id="memberContent-container">
 					<label for="exampleDataList" class="form-label">자기소개</label>
-					<textarea class="form-control" name="member_content" placeholder="자기소개를 입력해주세요..." value="${loginMember.member_content }"></textarea>
+					<textarea class="form-control" name="member_content" placeholder="자기소개를 입력해주세요..." ><c:out value="${loginMember.member_content }"/></textarea>
 				</div>
-				<input type="submit" class="btn btn-outline-success" id="join" value="가입" >&nbsp;
-				<input type="reset" class="btn btn-outline-success" value="취소">
+				<input type="submit" class="btn btn-outline-success" id="join" value="수정" >&nbsp;
+				<input type="button" class="btn btn-outline-success" id="goBack" value="취소">
 			</form>
 		</div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	$(function(){
+		$("#goBack").on("click", function(){
+			location.href = '${ path }/member/memberView.do'
+		})
+	})
+
 	function execPostCode() {
 	    new daum.Postcode({
 	        oncomplete: function(data) {
@@ -645,16 +636,18 @@
 	
 	//이미지 미리보기
 	$("#target").click(e=>{
-   		$("input[name=member_profile]").click();
+   		$("input[name=upfile]").click();
    	});
-   	$("input[name=member_profile]").change(e=>{
+   	$("input[name=upfile]").change(e=>{
+   		$("#image-container").html("");
    		if(e.target.files[0].type.includes("image")){
    			let reader=new FileReader();
    			reader.onload=(e)=>{
    				const img=$("<img>").attr({
    					src:e.target.result,
-   					width:"100px",
-   					height:"100px"
+   					width:"200px",
+   					height:"200px",
+   					class:"img-thumbnail"
    				});
    				$("#image-container").append(img);
    				$("#target").attr("src",e.target.result);
@@ -663,6 +656,22 @@
    		}
    	})
 	
+   	//날짜 현재 이후는 선택 불가
+   	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; //January is 0!
+	var yyyy = today.getFullYear();
+	
+	if (dd < 10) {
+	   dd = '0' + dd;
+	}
+	
+	if (mm < 10) {
+	   mm = '0' + mm;
+	} 
+	    
+	today = yyyy + '-' + mm + '-' + dd;
+	document.getElementById("member_date").setAttribute("max", today);
 	
 </script>		
 

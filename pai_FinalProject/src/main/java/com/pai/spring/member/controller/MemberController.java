@@ -402,9 +402,20 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value="/updateMemberEnd.do", method = RequestMethod.POST)
-	public String updateMemberEnd(Member m, Model model,
-			@RequestParam(value="upfile", required=false) MultipartFile[] upfile, HttpServletRequest req) throws RuntimeException {
-		
+	public String updateMemberEnd(@ModelAttribute("loginMember") Member m,
+								 @RequestParam String member_nick,
+								 @RequestParam String member_date,
+								 @RequestParam String member_phone,
+								 @RequestParam String member_addr,
+								 @RequestParam String member_content,
+								 @RequestParam(value="upfile", required=false) MultipartFile[] upfile, 
+								 HttpServletRequest req,
+								 Model model) throws RuntimeException {
+		m.setMember_nick(member_nick);
+		m.setMember_date(member_date);
+		m.setMember_phone(member_phone);
+		m.setMember_addr(member_addr);
+		m.setMember_content(member_content);
 		
 		String path = req.getServletContext().getRealPath("/resources/upload/member/");
         File f = new File(path);
@@ -524,6 +535,7 @@ public class MemberController {
 									 @RequestParam String member_nick,
 									 @RequestParam String member_date,
 									 @RequestParam String member_gender,
+									 @RequestParam String member_content,
 									 @RequestParam(value="upfile", required=false) MultipartFile[] upfile, 
 									 HttpServletRequest req,
 									 Model model) {
@@ -532,6 +544,7 @@ public class MemberController {
 		m.setMember_nick(member_nick);
 		m.setMember_date(member_date);
 		m.setMember_gender(member_gender);
+		m.setMember_content(member_content);
 		
 		String path = req.getServletContext().getRealPath("/resources/upload/member/");
         File f = new File(path);
