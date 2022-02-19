@@ -34,7 +34,7 @@
 	}
 </style>
 <div id="enroll-container">
-			<form id="memberEnrollFrm" name="memberEnrollFrm" action="${path }/member/enrollMemberEnd.do" 
+			<form id="memberEnrollFrm" name="memberEnrollFrm" action="${path }/member/updateMemberEnd.do" 
 			method="post" enctype="multipart/form-data">
 				<h2>회원정보수정</h2>
 				<div id="memberNick-container">
@@ -56,14 +56,14 @@
 				<div id="memberAddr-container">
 					<label for="exampleDataList" class="form-label">주소</label>
 					<div class="form-group">                   
-						<input class="form-control" type=hidden style="width: 40%; display: inline;" placeholder="우편번호" name="member_addr1" id="member_addr1" type="text" disabled="disabled" >
+						<input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호" name="member_addr1" id="member_addr1" type="text" disabled="disabled" >
 					    <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 주소 수정하기</button>                               
 					</div>
 					<div class="form-group">
-					    <input class="form-control" type=hidden style="top: 5px;" placeholder="도로명 주소" name="member_addr2" id="member_addr2" type="text" disabled="disabled" />
+					    <input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="member_addr2" id="member_addr2" type="text" disabled="disabled" />
 					</div>
 					<div class="form-group">
-					    <input class="form-control" type=hidden placeholder="상세주소" name="member_addr3" id="member_addr3" type="text"  />
+					    <input class="form-control" placeholder="상세주소" name="member_addr3" id="member_addr3" type="text"  />
 					</div>
 					<span class="final_addr_ck">주소를 입력해주세요.</span>
 					<input type="text" id="member_addr" name="member_addr" value="${loginMember.member_addr }">
@@ -94,7 +94,7 @@
 				</div>
 				<div id="memberContent-container">
 					<label for="exampleDataList" class="form-label">자기소개</label>
-					<textarea class="form-control" name="member_content" placeholder="자기소개를 입력해주세요..."></textarea>
+					<textarea class="form-control" name="member_content" placeholder="자기소개를 입력해주세요..." value="${loginMember.member_content }"></textarea>
 				</div>
 				<input type="submit" class="btn btn-outline-success" id="join" value="가입" >&nbsp;
 				<input type="reset" class="btn btn-outline-success" value="취소">

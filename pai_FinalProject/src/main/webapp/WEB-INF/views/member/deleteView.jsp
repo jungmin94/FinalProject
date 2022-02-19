@@ -8,9 +8,9 @@
 	<jsp:param name="title" value="회원탈퇴"/>
 </jsp:include>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-<body>
-	<form action="/member/delete" method="post" id="deleteForm" name="deleteForm">
-		<input type="hidden" id="memberId" name="memberId" value="${loginmember.member_Id}">
+<section>
+	<form action="${path }/member/delete.do" method="post" id="deleteForm" name="deleteForm">
+			<input type="hidden" id="member_id" name="member_id" value="${loginMember.member_id}">
 		<div class="col-sm-8 col-sm-offset-2">
 			<div class="panel panel-default panel-margin-10">
 				<div class="panel-body panel-body-content text-center">
@@ -21,16 +21,16 @@
 					<div class="form-group">
 						<input type="password" id="member_pw2" name="member_pw2"  class="form-control form-control-inline text-center" placeholder="비밀번호 확인" />
 					</div>
-					<button type="button" id="deletee" name="delete" class="btn btn-primary">회원탈퇴</button> <a href="/member/memberView" class="btn btn-default">취소</a>
+					<button type="button" id="delete" name="delete" class="btn btn-primary">회원탈퇴</button> <a href="/member/memberView" class="btn btn-default">취소</a>
 				</div>
 			</div>
 		</div>
 	</form>
-</body>
+</section>
 <script type="text/javascript">
 	$(document).ready(function(){
 	
-		$("#deletee").on("click", function(){
+		$("#delete").on("click", function(){
 			
 			if($("#member_pw").val()==""){
 				alert("비밀번호를 입력해주세요");
@@ -46,47 +46,27 @@
 			
 			if ($("#member_pw").val() != $("#member_pw2").val()) {
 				alert("비밀번호가 일치하지 않습니다.");
-				$("#memberPw").focus();
+				$("#member_pw").focus();
 				return false;
 			}
 			
 			$.ajax({
-				url : "/member/pwCheck",
+				url : "${path}/member/pwCheck.do",
 				type : "POST",
 				dataType : "json",
 				data : $("#deleteForm").serializeArray(),
 				success: function(data){
-					
 					if(data==0){
 						alert("비밀번호를 확인해주세요.");
 						return;
 					}else{
-						if(confirm("탈퇴하시겠습니까?")){
+						confirm("탈퇴하시겠습니까?")
 							$("#deleteForm").submit();
-						}
-						
 					}
+						
 				}
 			})
-			/* $.ajax({
-				url : "/member/checkPW.do",
-				type : "POST",
-				dataType : "json",
-				data : $("#deleteForm").serializeArray(),
-				success: function(data){
-					
-					if(data==false){
-						alert("비밀번호를 확인해주세요.");
-						return;
-					}else{
-						if(confirm("탈퇴하시겠습니까?")){
-							$("#deleteForm").submit();
-						}
-						
-					}
-				}
-			}) */
-		});
-	})
+		})
+	});
 </script>		
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

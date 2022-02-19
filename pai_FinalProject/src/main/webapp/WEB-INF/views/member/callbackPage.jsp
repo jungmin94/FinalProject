@@ -36,7 +36,7 @@
 </style>
 <div id="enroll-container">
 			<form id="memberEnrollFrm" name="memberEnrollFrm" action="${path }/member/updateNaver" 
-			method="post">
+			method="post" enctype="multipart/form-data">
 				<h2>회원가입</h2>
 				<div id="memberPw-container">
 					<label for="exampleDataList" class="form-label">비밀번호</label>
@@ -92,7 +92,20 @@
 					  </label>
 					</div>
 					<span class="final_addr_ck">성별을 체크해주세요.</span>
-				</div>				
+				</div>
+				<div id="memberProfile-container">
+					<label for="exampleDataList" class="form-label">프로필사진</label>
+					<div class="mb-3">
+					  <input class="form-control" type="file" id="member_profile" name="upfile">
+					</div>
+				</div>
+				<div id="image-container">
+				</div>
+				<div id="memberContent-container">
+					<label for="exampleDataList" class="form-label">자기소개</label>
+					<textarea class="form-control" name="member_content" placeholder="자기소개를 입력해주세요..."></textarea>
+				</div>
+								
 				<input type="submit" class="btn btn-outline-success" id="join" value="가입" >&nbsp;
 				<input type="reset" class="btn btn-outline-success" value="취소">
 			</form>
@@ -607,6 +620,27 @@
 		}); 
 	});
  */
+ 
+//이미지 미리보기
+	$("#target").click(e=>{
+		$("input[name=upfile]").click();
+	});
+	$("input[name=upfile]").change(e=>{
+		$("#image-container").html("");
+		if(e.target.files[0].type.includes("image")){
+			let reader=new FileReader();
+			reader.onload=(e)=>{
+				const img=$("<img>").attr({
+					src:e.target.result,
+					width:"100px",
+					height:"100px"
+				});
+				$("#image-container").append(img);
+				$("#target").attr("src",e.target.result);
+			}
+			reader.readAsDataURL(e.target.files[0]);
+		}
+	})
 	
 </script>		
 

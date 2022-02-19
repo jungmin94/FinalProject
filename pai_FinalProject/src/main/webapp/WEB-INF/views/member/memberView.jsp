@@ -90,7 +90,7 @@
 	})
 	$(function(){
 		$("#deleteView").on("click", function(){
-			location.href = '${ path }/member/deleteView'
+			location.href = '${ path }/member/deleteView.do'
 		})
 	})
 	

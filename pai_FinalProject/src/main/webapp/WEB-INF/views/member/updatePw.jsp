@@ -55,7 +55,7 @@
 				$("#member_pw2").focus();
 			
 				$.ajax({
-					url : "${path}/member/pwCheck",
+					url : "${path}/member/pwCheck.do",
 					type : "POST",
 					dataType : "json",
 					data : $("#pwUpdateForm").serializeArray(),

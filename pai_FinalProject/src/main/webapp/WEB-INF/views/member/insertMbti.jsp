@@ -8,18 +8,18 @@
 	<jsp:param name="title" value="회원정보보기"/>
 </jsp:include>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-<body>
-	<form class="wrap" action="${path }/member/insertMbti.do" method="post">
+<section>
+	<form class="wrap" action="${path }/member/insertMbti.do" method="post" onsubmit="return check()">
         <div class="">
             <div>
 	            <img src="${path }/resources/images/member/logo_white.jpg" style="width:200px; height:200px;">
             </div>
     		<div>
-			  	<label>${member_nick } 님의 MBTI를 입력하세요</label>
+			  	<label><strong>${loginMember.member_nick }</strong> 님의 MBTI를 입력하세요(대문자로 입력해주세요!)</label>
     		</div>        
             <div style="width: 80%;">
 	            <div class="form-floating mb-3">
-				  	<input type="text" class="form-control" id="floatingInput" name="member_mbti" placeholder="MBTI 입력">
+				  	<input type="text" class="form-control" id="member_mbti" name="member_mbti" placeholder="MBTI 입력">
 				  	<label for="floatingInput">MBTI입력</label>
 				</div> 
 			</div>	
@@ -36,5 +36,24 @@
 	        </div>
 		</div>
 	</form>
-</body>
+</section>
+<script>
+	function check() {
+		/* var checkMbti= RegExp(/^(ENFP|ENFJ|ENTP|ENTJ|ESFP|ESFJ|ESTP|ESTJ|INFP|INFJ|INTP|INTJ|ISFP|ISFJ|ISTP|ISTJ){4}/); */
+		var checkMbti = RegExp(/^[EI][SN][FT][PJ]$/);
+		if($("#member_mbti").val() == ""){ 
+			alert("MBTI를 입력해주세요"); 
+			$("#member_mbti").focus(); 
+			return false; 
+		}
+
+		if(!checkMbti.test($("#member_mbti").val())){ 
+			alert("올바른 MBTI를 입력해주세요"); 
+			$("#member_mbti").val(""); 
+			$("#member_mbti").focus(); 
+			return false; 
+		}
+	}
+		
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

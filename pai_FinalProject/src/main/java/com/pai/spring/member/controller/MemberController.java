@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.mail.Multipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -118,7 +119,7 @@ public class MemberController {
 				model.addAttribute("loc","/member/loginMember.do");
 				return "common/msg";
 			}
-		}else if(loginMember.getMember_black()==1) {
+		}else if(loginMember!=null&&loginMember.getMember_black()==1) {
 			model.addAttribute("msg","회원님은 블랙리스트에 등록되었습니다.");
 			model.addAttribute("loc","/member/blacklist.do");
 			return "common/msg";
@@ -367,7 +368,7 @@ public class MemberController {
 	@RequestMapping("/mbti.do")
 	public String mbtiPage() {
 		return "member/insertMbti";
-	}
+	}	
 	
 	@RequestMapping("/mbtiTest.do")
 	public String mbtiTest() {
@@ -392,13 +393,46 @@ public class MemberController {
 	
 	@RequestMapping("/memberView.do")
 	public String memberView() {
-		//메인 로그인 -> 내정보보기(memberId) -> memberId받아주고,-> service memberId넣어서 filedb에 memberId 로 row조회
-		//file f = service.selectProfile
-		//model, modelAndview //
-		//mv.addAt("f",f)
-		//${f.renamedfileNAme}
 		return "member/memberView";
 	}
+	
+	@RequestMapping("/updateMember.do")
+	public String updateMember() {
+		return "member/updateMember";
+	}
+	
+	@RequestMapping(value="/updateMemberEnd.do", method = RequestMethod.POST)
+	public String updateMemberEnd(Member m, Model model,
+			@RequestParam(value="upfile", required=false) MultipartFile[] upfile, HttpServletRequest req) throws RuntimeException {
+		
+		
+		String path = req.getServletContext().getRealPath("/resources/upload/member/");
+        File f = new File(path);
+        if(!f.exists()) f.mkdirs();
+        for(MultipartFile mf:upfile) {
+        	if(!mf.isEmpty()) {
+        		try {
+        			mf.transferTo(new File(path+mf.getOriginalFilename()));
+        			m.setMember_profile(mf.getOriginalFilename());
+        		} catch (IOException e) {
+        			e.printStackTrace();
+        		}
+        	}
+        }	
+		
+		int result = service.updateMember(m);
+		if(result > 0) {
+			model.addAttribute("msg", "회원 정보 수정이 완료되었습니다.");
+			model.addAttribute("loc","/member/memberView.do");
+			return "common/msg";
+		} else {
+			model.addAttribute("msg", "정보 수정에 실패하였습니다.");
+			model.addAttribute("loc","/member/updateMember.do");
+			return "common/msg";
+		}
+	}
+	
+	
 	
 	// 네이버 로그인
 	
@@ -490,12 +524,29 @@ public class MemberController {
 									 @RequestParam String member_nick,
 									 @RequestParam String member_date,
 									 @RequestParam String member_gender,
+									 @RequestParam(value="upfile", required=false) MultipartFile[] upfile, 
+									 HttpServletRequest req,
 									 Model model) {
 		m.setMember_pw(encoder.encode(member_pw));
 		m.setMember_addr(member_addr);
 		m.setMember_nick(member_nick);
 		m.setMember_date(member_date);
 		m.setMember_gender(member_gender);
+		
+		String path = req.getServletContext().getRealPath("/resources/upload/member/");
+        File f = new File(path);
+        if(!f.exists()) f.mkdirs();
+        for(MultipartFile mf:upfile) {
+        	if(!mf.isEmpty()) {
+        		try {
+        			mf.transferTo(new File(path+mf.getOriginalFilename()));
+        			m.setMember_profile(mf.getOriginalFilename());
+        		} catch (IOException e) {
+        			e.printStackTrace();
+        		}
+        	}
+        }	
+		
 		int result = service.updateNaverAccount(m);
 		if(result > 0) {
 			model.addAttribute("msg", "PAI의 가족이 되신걸 환영합니다! 커뮤니티를 본격적으로 즐기기 위해 mbti 입력 페이지로 이동됩니다.");
@@ -510,25 +561,26 @@ public class MemberController {
 	
 	
 	//회원탈퇴
-	@RequestMapping(value="/deleteView", method=RequestMethod.GET)
+	@RequestMapping(value="/deleteView.do", method=RequestMethod.GET)
 	public String deleteView() throws Exception{
 		return "/member/deleteView";
 	}
     
-    @RequestMapping(value="/delete", method=RequestMethod.POST)
-	public String delete(String member_id,RedirectAttributes rttr,HttpSession session)throws Exception{
-		service.delete(member_id);
-		session.invalidate();
-		rttr.addFlashAttribute("msg", "이용해주셔서 감사합니다.");
-		return "redirect:/";
+    @RequestMapping(value="/delete.do", method=RequestMethod.POST)
+	public String delete(String member_id,Model model,HttpSession session,SessionStatus status)throws Exception{
+    	service.delete(member_id);
+		model.addAttribute("msg", "그동안 PAI 커뮤니티를 이용해주셔서 감사합니다.");
+		model.addAttribute("loc", "/");
+//		session.invalidate();
+		status.setComplete();
+		return "common/msg";
 	}
     
-    @RequestMapping(value="/pwCheck" , method=RequestMethod.POST)
+    @RequestMapping(value="/pwCheck.do" , method=RequestMethod.POST)
 	@ResponseBody
 	public int pwCheck(Member m) throws Exception{
-		String member_pw = service.pwCheck(m.getMember_id());
-		
-		if(m == null || !BCrypt.checkpw(m.getMember_pw(), member_pw)) {
+    	String member_pw = service.pwCheck(m.getMember_id());
+    	if(m == null || !BCrypt.checkpw(m.getMember_pw(), member_pw)) {
 			return 0;
 		}
 		
@@ -547,11 +599,12 @@ public class MemberController {
     }
     
     @RequestMapping(value="/pwUpdateEnd.do" , method=RequestMethod.POST)
-	public String pwUpdate(String member_id,String member_pw1,RedirectAttributes rttr,HttpSession session,SessionStatus status)throws Exception{
+	public String pwUpdate(String member_id,String member_pw1,Model model,HttpSession session,SessionStatus status)throws Exception{
 		String hashedPw = BCrypt.hashpw(member_pw1, BCrypt.gensalt());
 		service.pwUpdate(member_id, hashedPw);
-		rttr.addFlashAttribute("msg", "정보 수정이 완료되었습니다. 다시 로그인해주세요.");
+		model.addAttribute("msg", "정보 수정이 완료되었습니다. 다시 로그인해주세요.");
+		model.addAttribute("loc", "/");
 		status.setComplete();
-		return "redirect:/";
+		return "common/msg";
 	}
 }
