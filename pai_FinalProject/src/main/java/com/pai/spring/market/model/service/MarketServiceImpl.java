@@ -190,7 +190,7 @@ public class MarketServiceImpl implements MarketService {
 	public int insertOrder(Order order) {
 		int result=0;
 		result=dao.insertOrder(session, order);
-		if(result>0 && !(order.getOrderDetail().isEmpty()) && order.getOrderDetail()!=null) {
+		if(result>0 && (order.getOrderDetail()!=null && !order.getOrderDetail().isEmpty())) {
 			for(OrderDetail orderDetail : order.getOrderDetail()) {
 				result=dao.insertOrderDetail(session, orderDetail);
 			}

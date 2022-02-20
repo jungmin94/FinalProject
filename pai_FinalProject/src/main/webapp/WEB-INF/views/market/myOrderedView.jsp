@@ -6,6 +6,39 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
+			.loading span {
+			  display: inline-block;
+			  margin: 0 -.075em;
+			  animation: loading .8s infinite alternate;
+			  text-align: center; font-size: 50px; color: #01DFD7;
+			}
+			.loading span:nth-child(2) {
+			  animation-delay: .1s;
+			}
+			.loading span:nth-child(3) {
+			  animation-delay: .2s;
+			}
+			.loading span:nth-child(4) {
+			  animation-delay: .3s;
+			}
+			.loading span:nth-child(5) {
+			  animation-delay: .4s;
+			}
+			.loading span:nth-child(6) {
+			  animation-delay: .5s;
+			}
+			.loading span:nth-child(7) {
+			  animation-delay: .6s;
+			}
+			@keyframes loading {
+			  0% {
+			    transform: scale(1);
+			  }
+			  100% {
+			    transform: scale(0.8);
+			  }
+			}
+
 .star-rating {
   border:solid 1px #ccc;
   display:flex;
@@ -44,7 +77,13 @@
 <jsp:include page="/WEB-INF/views/market/searchBar.jsp"/>
 	<br>
 
-   
+   	<div class="loading"  style="text-align: center;">
+		<span>주</span>	
+		<span>문</span>
+		<span>목</span>
+		<span>록</span>
+   </div>
+   <br>
  
 	<table class="table align-middle" style="text-align: center;">
 		<thead>
@@ -62,6 +101,12 @@
 		  </tr>
 		</thead>
 		<tbody>
+		<c:if test="${List eq null || List.isEmpty()}">
+			<tr>
+				<th colspan="10">구매하신 상품이 없습니다</th>
+			</tr>
+		</c:if>
+		<c:if test="${List ne null && !List.isEmpty()}">
 		<c:forEach items="${List}" var="l">
 			
 			<c:forEach var="i"  begin="0" end="${l.orderDetail.size()-1}" step="1">
@@ -96,6 +141,7 @@
 			  </tr>
 			</c:forEach>
 		</c:forEach>
+		</c:if>
 			
 		</tbody>
 	  </table>

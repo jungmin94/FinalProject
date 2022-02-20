@@ -33,8 +33,8 @@
       <th scope="col">색상</th>
       <th scope="col">사이즈</th>
       <th scope="col">MBTI 로고</th>
-	  <th scope="col">수량</th>
 	  <th scope="col">단가</th>
+	  <th scope="col">수량</th>
 	  <th scope="col">총 가격</th>
     </tr>
   </thead>
@@ -55,9 +55,9 @@
 			<td>${c.color}</td>
 			<td>${c.size}</td>
 			<td>${c.mbtiLogo}</td>
-			<td><fmt:formatNumber  value="${c.price}"  type="currency"/>원</td>
+			<td><fmt:formatNumber  value="${c.price/c.count}"  type="currency"/>원</td>
 			<td>${c.count}</td>
-			<td><fmt:formatNumber  value="${c.price*c.count}"  type="currency"/>원</td>
+			<td><fmt:formatNumber  value="${c.price}"  type="currency"/>원</td>
 		  </tr>
 		</c:forEach>
   </tbody>

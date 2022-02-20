@@ -92,8 +92,6 @@ public class MarketController {
 		mv.addObject("pageBar",PageFactory.getPageBar(totalData, cPage, numPerPage,5, "searchList.do", null));
 		mv.addObject("goodsList",list);	
 		
-		System.out.println("디비 후 : "+list);
-		
 		mv.setViewName("market/marketList");
 		
 		return mv;
@@ -233,7 +231,6 @@ public class MarketController {
 	public ModelAndView myOrderdView(@RequestParam(value="cPage",defaultValue="1") int cPage,
 			@RequestParam(value="numPerPage",defaultValue="10") int numPerPage,HttpSession session,ModelAndView mv) {
 	Member m = (Member)session.getAttribute("loginMember");
-	System.out.println(m);
 	
 	List<Order> list = service.orderDetailList(cPage,numPerPage,m);	
 	System.out.println("gd : "+list);
@@ -379,20 +376,21 @@ public class MarketController {
 	@RequestMapping("/addCart.do")
 	@ResponseBody
 	public int addCart(Cart cart) {
-		
+
 		int result=0;
 		int totalCartCount=service.totalCartCount(cart.getMember_id());
 		if(totalCartCount==5)return 999;
 		
 		Cart c = service.duplicateCheckCart(cart);
+
 		if(c==null) {
 			result=service.addCart(cart);
 		}else {
-			int count = c.getCount();
-			cart.setCount(count+cart.getCount());
+			cart.setCartNo(c.getCartNo());
+			cart.setCount(c.getCount()+cart.getCount());
 			result=service.updateCart(cart);
 		}
-	
+
 		return result;
 	}
 	
@@ -406,7 +404,7 @@ public class MarketController {
 		
 		int totalPrice=0;
 		for(Cart c : cartList) {
-			totalPrice+=c.getCount()*c.getPrice();
+			totalPrice+=c.getPrice();
 		}
 		
 		mv.addObject("cartList",cartList);	
@@ -581,8 +579,6 @@ public class MarketController {
 	@RequestMapping("/deleteGood.do")
 	public ModelAndView deleteGood(@RequestParam Map<String,Object> param,ModelAndView mv) {
 		
-		System.out.println(param);
-		System.out.println((String)param.get("delgoodno"));
 		int result = service.deleteGood(param);
 		
 		String msg="";
@@ -840,7 +836,7 @@ public class MarketController {
 	/* 상품 삭제하기 */
 	@RequestMapping("/deleteTitleGood.do")
 	public ModelAndView deleteTitleGood(Goods good,ModelAndView mv) {
-		System.out.println(good);
+
 		int result = service.deleteTitleGood(good);
 		
 		String msg="";

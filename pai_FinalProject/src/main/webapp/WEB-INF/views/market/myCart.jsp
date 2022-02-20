@@ -5,6 +5,40 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<style>
+.loading span {
+			  display: inline-block;
+			  margin: 0 -.075em;
+			  animation: loading .8s infinite alternate;
+			  text-align: center; font-size: 50px; color: #01DFD7;
+			}
+			.loading span:nth-child(2) {
+			  animation-delay: .1s;
+			}
+			.loading span:nth-child(3) {
+			  animation-delay: .2s;
+			}
+			.loading span:nth-child(4) {
+			  animation-delay: .3s;
+			}
+			.loading span:nth-child(5) {
+			  animation-delay: .4s;
+			}
+			.loading span:nth-child(6) {
+			  animation-delay: .5s;
+			}
+			.loading span:nth-child(7) {
+			  animation-delay: .6s;
+			}
+			@keyframes loading {
+			  0% {
+			    transform: scale(1);
+			  }
+			  100% {
+			    transform: scale(0.8);
+			  }
+			}
+</style>
 <section>
 <div class="container">
 <!-------------------------------------------MBTI샵 메뉴바 ---------------------------------------------------------->
@@ -13,7 +47,15 @@
 	<!-------------------------------------------검색창 ---------------------------------------------------------->
 <jsp:include page="/WEB-INF/views/market/searchBar.jsp"/>
 	<br>
-
+	
+	<div class="loading"  style="text-align: center;">
+		<span>장</span>	
+		<span>바</span>
+		<span>구</span>
+		<span>니</span>
+   </div>
+	<br>
+	<span style="color:red;">*장바구니는 최대 5개까지 등록 가능합니다</span>
 	<table class="table align-middle" style="text-align: center;">
 		<thead>
 		  <tr>
@@ -51,9 +93,9 @@
 			<td>${c.color}</td>
 			<td>${c.size}</td>
 			<td>${c.mbtiLogo}</td>
-			<td><fmt:formatNumber  value="${c.price}"  type="currency"/>원</td>
+			<td><fmt:formatNumber  value="${c.price/c.count}"  type="currency"/>원</td>
 			<td>${c.count}</td>
-			<td><fmt:formatNumber  value="${c.price*c.count}"  type="currency"/>원</td>
+			<td><fmt:formatNumber  value="${c.price}"  type="currency"/>원</td>
 			<td>
 				<button type="button"  id="deleteCartBtn" class="btn btn-outline-danger"  data-cno="${c.cartNo}" >삭제</button>
 			</td>
@@ -65,11 +107,11 @@
 	  </table>
 	<br>
 	
-	<div style="text-align:center; border: 1px solid black;">
-		<c:if test="${cartList ne null && !cartList.isEmpty()}">
+	<c:if test="${cartList ne null && !cartList.isEmpty()}">
+		<div style="text-align:center; border: 1px solid black;">
 			총결제 금액 : <fmt:formatNumber  value="${totalPrice}"  type="currency"/>원
-		</c:if>
-	</div>
+		</div>
+	</c:if>
 	<br>
 	<div style="text-align:center;">
 		<c:if test="${cartList ne null && !cartList.isEmpty()}">
