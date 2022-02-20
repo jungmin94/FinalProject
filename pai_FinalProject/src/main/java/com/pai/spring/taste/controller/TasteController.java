@@ -1,8 +1,10 @@
 package com.pai.spring.taste.controller;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,6 +45,15 @@ public class TasteController {
 		
 		//일치하는 list 가져오기
 		List<Member> list = service.selectTasteList(param);
+		System.out.println(list);
+		
+//		for(Iterator<Map<String,Object>> it = list.iterator(); it.hasNext();) {
+//			Map<String,Object> obj = it.next();
+//			if(memberId.equals(obj.get("member_id"))) {
+//				it.remove();
+//			}
+//			
+//		}
 		
 		mv.addObject("list", list);	
 		mv.setViewName("taste/tasteList");
@@ -68,6 +79,13 @@ public class TasteController {
 
 		//1~5번 동일한 유저 리스트 가져오기
 		List<Member> list = service.selectTasteList(param);
+		
+//		for(Iterator<Map<String,Object>> it = list.iterator(); it.hasNext();) {
+//			Map<String,Object> obj = it.next();
+//			if(member_id.equals(obj.get("member_id"))) {
+//				it.remove();
+//			}			
+//		}
 		
 		mv.addObject("list", list);	
 		mv.setViewName("taste/tasteList");

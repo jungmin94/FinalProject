@@ -141,6 +141,26 @@ public class MessageServiceImpl implements MessageService {
 		return dao.saveMsgExport(session, msgNo);
 	}
 
+	@Override
+	public List<Message> selectRecvMsgSearch(Map param, int cPage, int numPerpage) {
+		return dao.selectRecvMsgSearch(session, param, cPage, numPerpage);
+	}
+
+	@Override
+	public int selectRecvMsgSearchCount(Map param) {
+		return dao.selectRecvMsgSearchCount(session, param);
+	}
+
+	@Override
+	public List<Message> selectSendMsgSearch(Map param, int cPage, int numPerpage) {
+		return dao.selectSendMsgSearch(session, param, cPage, numPerpage);
+	}
+
+	@Override
+	public int selectSendMsgSearchCount(Map param) {
+		return dao.selectSendMsgSearchCount(session, param);
+	}
+
 	
 	
 	

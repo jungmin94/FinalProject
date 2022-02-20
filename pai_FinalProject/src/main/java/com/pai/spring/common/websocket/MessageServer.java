@@ -1,7 +1,6 @@
 package com.pai.spring.common.websocket;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +15,6 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.pai.spring.member.model.vo.Member;
 import com.pai.spring.message.model.service.MessageService;
 
@@ -87,10 +84,13 @@ public class MessageServer extends TextWebSocketHandler {
 				
 				WebSocketSession recvIdSession = clientMap.get(recvId);
 				if(recvIdSession != null) {
-					TextMessage resultMsg = new TextMessage(sendData.get("sendNick")+"님이 쪽지를 보냈습니다.");
+					//TextMessage resultMsg = new TextMessage(sendData.get("sendNick")+"님이 쪽지를 보냈습니다.");
+					TextMessage resultMsg = new TextMessage(message.getPayload());
 					recvIdSession.sendMessage(resultMsg);
 				}
 			break;
+			
+			
 		}
 
 	}

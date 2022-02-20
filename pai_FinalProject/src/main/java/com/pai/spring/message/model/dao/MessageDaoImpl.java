@@ -133,7 +133,30 @@ public class MessageDaoImpl implements MessageDao {
 		return session.update("message.saveMsgExport",msgNo);
 	}
 
+	@Override
+	public List<Message> selectRecvMsgSearch(SqlSessionTemplate session, Map param, int cPage, int numPerpage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerpage,numPerpage);
+		return session.selectList("message.selectRecvMsgSearch", param, rb);
+	}
 
+	@Override
+	public int selectRecvMsgSearchCount(SqlSessionTemplate session, Map param) {
+		return session.selectOne("message.selectRecvMsgSearchCount",param);
+	}
+
+	@Override
+	public List<Message> selectSendMsgSearch(SqlSessionTemplate session, Map param, int cPage, int numPerpage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerpage,numPerpage);
+		return session.selectList("message.selectSendMsgSearch", param, rb);
+	}
+
+	@Override
+	public int selectSendMsgSearchCount(SqlSessionTemplate session, Map param) {
+		return session.selectOne("message.selectSendMsgSearchCount", param);
+	}
+
+
+	
 	
 	
 	

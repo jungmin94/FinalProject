@@ -42,7 +42,7 @@ public class MessageController {
 		return mv;
 	}
 
-//------------------------받은족지--------------------------------------------------------------
+//------------------------받은쪽지--------------------------------------------------------------
 	
 	//받은쪽지함
 	@RequestMapping(value="/recvBox.do", produces="text/plain;charset=UTF-8")
@@ -59,6 +59,27 @@ public class MessageController {
 		int totalData = service.selectRecvMessageCount(memberId);
 		
 		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "messageBox.do", "recvMsgBox"),"list",list);
+		return new Gson().toJson(result);
+	}
+	
+	//받은쪽지 다중검색
+	@RequestMapping(value="recvMsgSearch.do", produces="text/plain;charset=UTF-8", method=RequestMethod.POST)
+	@ResponseBody
+	public String recvMsgSearch(String memberId, String searchType, String keyword, String startDate, String endDate, 
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerpage",defaultValue="10") int numPerpage) {
+		Map<String,Object> param = new HashMap();
+		param.put("memberId", memberId);
+		param.put("searchType", searchType);
+		param.put("keyword", keyword);
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		
+		
+		List<Message> list = service.selectRecvMsgSearch(param, cPage, numPerpage);
+		int totalData = service.selectRecvMsgSearchCount(param);
+	
+		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "recvMsgSearch.do", "recvMsgSearch"),"list",list);
 		return new Gson().toJson(result);
 	}
 	
@@ -130,6 +151,38 @@ public class MessageController {
 		int totalData = service.selectSendMessageCount(sendId);
 		Map<String, Object> result = Map.of("pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "sendMsg.do", "sendMsgBox"),"list",list);
 		
+		return new Gson().toJson(result);
+	}
+	
+	
+	//보낸쪽지 다중검색
+	@RequestMapping(value="sendMsgSearch.do", produces="text/plain;charset=UTF-8", method=RequestMethod.POST)
+	@ResponseBody
+	public String sendMsgSearch(String memberId, String searchType, String keyword, String startDate, String endDate, 
+			@RequestParam(value="cPage",defaultValue="1") int cPage,
+			@RequestParam(value="numPerpage",defaultValue="10") int numPerpage) {
+		Map<String,Object> param = new HashMap();
+		param.put("memberId", memberId);
+		param.put("searchType", searchType);
+		param.put("keyword", keyword);
+		param.put("startDate", startDate);
+		param.put("endDate", endDate);
+		
+		System.out.println("아이디"+memberId);
+		System.out.println("서치타입"+searchType);
+		System.out.println("키워드"+keyword);
+		System.out.println("시작"+startDate);
+		System.out.println("종료"+endDate);
+		
+		List<Message> list = service.selectSendMsgSearch(param, cPage, numPerpage);
+		int totalData = service.selectSendMsgSearchCount(param);
+		
+		System.out.println("리스트"+list);
+		System.out.println("토탈데이터"+totalData);
+
+		
+	
+		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "sendMsgSearch.do", "sendMsgSearch"),"list",list);
 		return new Gson().toJson(result);
 	}
 	
