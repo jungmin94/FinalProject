@@ -62,4 +62,8 @@ public interface MessageDao{
 	
 	int selectSendMsgSearchCount(SqlSessionTemplate session, Map param);
 	
+	List<Message> selectSaveMsgSearch(SqlSessionTemplate session, Map param, int cPage, int numPerpage);
+	
+	int selectSaveMsgSearchCount(SqlSessionTemplate session, Map param);
+	
 }

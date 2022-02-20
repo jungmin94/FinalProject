@@ -54,13 +54,20 @@ public interface MessageService {
 	
 	int saveMsgExport(int msgNo);
 	
+	
 	List<Message> selectRecvMsgSearch(Map param, int cPage, int numPerpage);
 	
 	int selectRecvMsgSearchCount(Map param);
 	
+	
 	List<Message> selectSendMsgSearch(Map param, int cPage, int numPerpage);
 	
 	int selectSendMsgSearchCount(Map param);
+	
+	
+	List<Message> selectSaveMsgSearch(Map param, int cPage, int numPerpage);
+	
+	int selectSaveMsgSearchCount(Map param);
 	
 	
 }

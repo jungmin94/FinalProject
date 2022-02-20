@@ -45,12 +45,9 @@
 	<div id="body-container">
 	</div>
 		
-     		<div id="pageNavContainer" style="display: flex; justify-content: center; margin-top: 15px; ">
-     		</div>
-			<div id="eventButton" style="display: inline-block; margin: 0 5px; float: right;">
-			</div>
-		<div id="recvMsgDetail">
-		</div>
+   		<div id="pageNavContainer" style="display: flex; justify-content: center; margin-top: 15px; "></div>
+		<div id="eventButton" style="display: inline-block; margin: 0 5px; float: right;"></div>
+		<div id="recvMsgDetail"></div>
 	
 	
 <!-- 답장보내기 모달창 -->
@@ -653,7 +650,7 @@ function sendMsgSearch(cPage){
 
 
 
-//쪽지보관함
+//-----------------------------------쪽지보관함------------------------------------------------
 function saveMsgBox(cPage){
 
 	var num=1;
@@ -773,7 +770,7 @@ function saveMsgBox(cPage){
 			$("#saveMsgExport").click(function(){
 				var checkArr = [];
 				if($("input:checkbox[name='saveMsgCheck']:checked").length === 0){
-					alert("보관할 쪽지를 선택해 주세요.");
+					alert("내보낼 쪽지를 선택해 주세요.");
 				} else{
 					$("input:checkbox[name='saveMsgCheck']:checked").each(function(e) {
 						checkArr.push($(this).val());
@@ -792,19 +789,7 @@ function saveMsgBox(cPage){
 				}
 			});
 		
-			//삭제,목록버튼 생성해야함
 		}
-	/* 	let form = $("<form>").attr({method:"post"});
-		let select = $("<select>").attr({name:"searchType"});
-		let option1 = $("<option>").value("msg_title").html("제목");
-		let option2 = $("<option>").value("send_id").html("보낸사람");
-		let keyword = $("<input>").attr({type:"text", name:"keyword"});
-		let startDate = $("<input>").attr({type:"date", name:"startDate"});
-		let endDate = $("<input>").attr({type:"date", name:"endDate"});
-		let search = $("<button>").attr({type:"submit"}).html("검색");
-		select.append(option1).append(option2);
-		form.append(select).append(keyword).append(startDate).append(endDate).append(search);
-		$("#searchMessage").append(form); */
 	});
 	
 	
@@ -812,11 +797,146 @@ function saveMsgBox(cPage){
 };
 
 
+//------------------------쪽지 보관함 검색 -----------------------------------
+function saveMsgSearch(cPage){
+	$.ajax({
+		url:"${path}/message/saveMsgSearch.do",
+		type:"post",
+		data:{cPage:cPage, memberId:"${loginMember.member_id}", searchType:$("#searchType").val(), keyword:$("#keyword").val(), startDate:$("#startDate").val(), endDate:$("#endDate").val()},
+		dataType:"json",
+		success : data =>{
+			$("#pageNavContainer").html("");
+			$("#body-container").html("");
+			$("#eventButton").html("");
+			$("#recvMsgSearchId").remove();
+			$("#sendMsgSearchId").remove();	
+			
+			var num=1;
+			const saveMsgList = data["list"];
+			
+			const table=$('<table>').attr("class","table table-hover");
+			let thead=$("<thead>");
+			let tbody=$('<tbody>');
+			let tr1=$("<tr>").css("text-align","center");
+			let th1=$("<th>");
+			let checkAll = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"saveMsgCheck", onclick:'selectAllSaveMsg(this)'});
+			let th2=$("<th>").html("번호").attr("scope","col");
+			let th3=$("<th>").html("제목").attr("scope","col");
+			let th4=$("<th>").html("보낸사람").attr("scope","col");
+			let th5=$("<th>").html("받은날짜").attr("scope","col");
+			let th6=$("<th>").html("읽은날짜").attr("scope","col");
+			
+			table.append(thead);
+			thead.append(tr1);
+			tr1.append(th1).append(th2).append(th3).append(th4).append(th5).append(th6);
+			th1.append(checkAll);
+			
+			
+			if(saveMsgList.length==0){
+				let tr2 = $("<tr>").css("text-align","center");
+				let ntd=$("<td>").html("보관된 쪽지가 없습니다.");
+				ntd.attr("colspan","6");
+				tr2.append(ntd);
+				tbody.append(tr2);
+				table.append(tbody);
+			} else{
+				
+				for(let i=0; i<saveMsgList.length; i++){
+					let tr2 = $("<tr>").css("text-align","center");
+					console.log(saveMsgList[i]["MSGREADCHECK"])
+					if(saveMsgList[i]["MSGREADCHECK"]=='N'){
+						tr2.css({"color":"#0459c1","font-weight":"bold"});
+					} else{
+						tr2.css({"color":"#212529"});
+					}
+					let td1 = $("<td>");
+					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"saveMsgCheck", value:saveMsgList[i]["MSGNO"]});
+					let no = $("<td>").html(num++);
+					if(cPage>=2){
+						no = $("<td>").html(((cPage-1)*10)+i+1);
+					}
+					
+					let msgTitle = $("<td onClick='saveMsgView(this);'>").html(saveMsgList[i]["MSGTITLE"]);
+					let msgNo = $("<input>").attr({type:"hidden", value:saveMsgList[i]["MSGNO"]});
+					msgTitle.append(msgNo);
+					
+					let sendNick = $("<td>").html(saveMsgList[i]["SENDNICK"]);
+					let msgSendTime = $("<td>").html(saveMsgList[i]["MSGSENDTIME"]);
+					let msgReadTime = $("<td>").html(saveMsgList[i]["MSGREADTIME"]);
+					if(saveMsgList[i]["MSGREADTIME"]==null){
+						msgReadTime = $("<td>").html("읽지않음");
+					}
+					tbody.append(tr2);
+					table.append(tbody);
+					tr2.append(td1).append(no).append(msgTitle).append(sendNick).append(msgSendTime).append(msgReadTime);
+					td1.append(check);
+				}
+				let saveMsgExport = $("<button>").attr({type:"button", id:"saveMsgExport", class:"btn btn-primary"}).html("내보내기");
+				let del = $("<button>").attr({type:"button", id:"delSaveMsg", class:"btn btn-secondary"}).html("삭제");
+				$("#eventButton").append(saveMsgExport).append(del);
+			}
+			
+			
+			const div=$("<div style='text-align:center;'>").attr("id","pageBar3").html(data["pageBar"]);
+			$("#pageNavContainer").append(div);
+			$("#body-container").html(table);
+			
+			//보관쪽지 삭제
+			$("#delSaveMsg").click(function(){
+				var checkArr = [];
+				if($("input:checkbox[name='saveMsgCheck']:checked").length === 0){
+					alert("삭제할 항목을 선택해 주세요.");
+				} else{
+					$("input:checkbox[name='saveMsgCheck']:checked").each(function(e) {
+						checkArr.push($(this).val());
+					});
+					$.ajax({
+						url:"${path}/message/deleteSaveMsg.do",
+						type:"post",
+						data:{"checkArrTest" : checkArr},
+						dataType:"json",
+						success: result => {
+							alert(result.result);
+							location.reload();
+						}
+						
+					});
+				}
+			});
+			
+			//보관쪽지 내보내기
+			$("#saveMsgExport").click(function(){
+				var checkArr = [];
+				if($("input:checkbox[name='saveMsgCheck']:checked").length === 0){
+					alert("내보낼 쪽지를 선택해 주세요.");
+				} else{
+					$("input:checkbox[name='saveMsgCheck']:checked").each(function(e) {
+						checkArr.push($(this).val());
+					});
+					$.ajax({
+						url:"${path}/message/saveMsgExport.do",
+						type:"post",
+						data:{"checkArrTest" : checkArr},
+						dataType:"json",
+						success: result => {
+							alert(result.result);
+							location.reload();
+						}
+						
+					});
+				}
+			});
+			
+			
+		}
+		
+	})
+}
+
+
 //상대방이 읽기전 발송취소
 function cancelMsg(e){
 	let cancelNum = $(e).next().val();
-	//let msgNo = $(e).parent().children().eq(1).val();
-	console.log($(e).next().val());
  	$.ajax({
 		url:"${path}/message/cancelSendMsg.do",
 		type:"post",

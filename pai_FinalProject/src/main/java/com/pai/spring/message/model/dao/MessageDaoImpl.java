@@ -155,6 +155,17 @@ public class MessageDaoImpl implements MessageDao {
 		return session.selectOne("message.selectSendMsgSearchCount", param);
 	}
 
+	@Override
+	public List<Message> selectSaveMsgSearch(SqlSessionTemplate session, Map param, int cPage, int numPerpage) {
+		RowBounds rb=new RowBounds((cPage-1)*numPerpage,numPerpage);
+		return session.selectList("message.selectSaveMsgSearch", param, rb);
+	}
+
+	@Override
+	public int selectSaveMsgSearchCount(SqlSessionTemplate session, Map param) {
+		return session.selectOne("message.selectSaveMsgSearchCount", param);
+	}
+
 
 	
 	

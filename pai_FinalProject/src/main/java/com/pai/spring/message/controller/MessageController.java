@@ -168,18 +168,9 @@ public class MessageController {
 		param.put("startDate", startDate);
 		param.put("endDate", endDate);
 		
-		System.out.println("아이디"+memberId);
-		System.out.println("서치타입"+searchType);
-		System.out.println("키워드"+keyword);
-		System.out.println("시작"+startDate);
-		System.out.println("종료"+endDate);
 		
 		List<Message> list = service.selectSendMsgSearch(param, cPage, numPerpage);
 		int totalData = service.selectSendMsgSearchCount(param);
-		
-		System.out.println("리스트"+list);
-		System.out.println("토탈데이터"+totalData);
-
 		
 	
 		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "sendMsgSearch.do", "sendMsgSearch"),"list",list);
@@ -305,6 +296,32 @@ public class MessageController {
 		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "saveMsgBox.do", "saveMsgBox"),"list",list);
 		return new Gson().toJson(result);
 	}
+	
+	
+	//보관쪽지 다중검색
+		@RequestMapping(value="saveMsgSearch.do", produces="text/plain;charset=UTF-8", method=RequestMethod.POST)
+		@ResponseBody
+		public String saveMsgSearch(String memberId, String searchType, String keyword, String startDate, String endDate, 
+				@RequestParam(value="cPage",defaultValue="1") int cPage,
+				@RequestParam(value="numPerpage",defaultValue="10") int numPerpage) {
+			Map<String,Object> param = new HashMap();
+			param.put("memberId", memberId);
+			param.put("searchType", searchType);
+			param.put("keyword", keyword);
+			param.put("startDate", startDate);
+			param.put("endDate", endDate);
+			
+			
+			List<Message> list = service.selectSaveMsgSearch(param, cPage, numPerpage);
+			int totalData = service.selectSaveMsgSearchCount(param);
+			
+
+			
+		
+			Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "sendMsgSearch.do", "sendMsgSearch"),"list",list);
+			return new Gson().toJson(result);
+		}
+	
 	
 	//쪽지보관함 상세보기
 	@RequestMapping(value="/saveMsgDetail.do",produces="text/plain;charset=UTF-8")
