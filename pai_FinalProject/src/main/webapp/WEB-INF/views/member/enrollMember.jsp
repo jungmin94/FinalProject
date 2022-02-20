@@ -48,7 +48,9 @@
 <div id="enroll-container">
 			<form id="memberEnrollFrm" name="memberEnrollFrm" action="${path }/member/enrollMemberEnd.do" 
 			method="post" enctype="multipart/form-data">
-				<h2>회원가입</h2>
+			<br>
+				<h1>회원가입</h1>
+				<br>
 				<div id="memberId-container">
 					<label for="exampleDataList" class="form-label">아이디</label>
 					<input type="text" class="form-control" placeholder="아이디 (4글자이상)" name="member_id" id="member_id" required oninput="checkId()"/>
@@ -56,11 +58,13 @@
 					<span class="id_error">누군가가 이 아이디를 사용하고있어요.</span>
 					<span class="final_id_ck">아이디를 입력해주세요.</span>
 				</div>
+				<br>
 				<div id="memberPw-container">
 					<label for="exampleDataList" class="form-label">비밀번호</label>
 					<input type="password" class="form-control" placeholder="비밀번호를 입력해주세요" name="member_pw" id="member_pw" tabindex="2" oninput="checkPw(member_pw.value)" required>
 					<span class="final_pw_ck">비밀번호를 입력해주세요.</span>
 				</div>
+				<br>
 				<div id="memberPw2-container">
 					<label for="exampleDataList" class="form-label">비밀번호 확인</label>
 					<input type="password" class="form-control" placeholder="비밀번호를 다시 한 번 입력해주세요" name="member_pw2" id="member_pw2" tabindex="3" required />
@@ -68,6 +72,7 @@
 					<p id="pwCheckFF" style="color: #FF6600; margin: 0;"></p>
 					<span class="final_pwck_ck">비밀번호를 다시 한번 입력해주세요.</span>
 				</div>
+				<br>
 				<div id="memberNick-container">
 					<label for="exampleDataList" class="form-label">닉네임</label>
 					<input type="text" class="form-control" placeholder="닉네임을 입력해주세요" name="member_nick" id="member_nick" required oninput="checkNick()">
@@ -75,16 +80,19 @@
 					<span class="nick_error">누군가가 이 닉네임을 사용하고있어요.</span>
 					<span class="final_nick_ck">닉네임을 입력해주세요.</span>
 				</div>
+				<br>
 				<div id="memberName-container">
 					<label for="exampleDataList" class="form-label">이름</label>
 					<input type="text" class="form-control" placeholder="이름을 입력해주세요" name="member_name" id="member_name" required>
 					<span class="final_name_ck">이름을 입력해주세요.</span>
 				</div>	
+				<br>
 				<div id="memberDate-container">
 					<label for="exampleDataList" class="form-label">생년월일</label>
 					<input type="date" class="form-control" placeholder="" min="1023-01-01" name="member_date" id="member_date">
 					<span class="final_birth_ck">생년월일을 입력해주세요.</span>
-				</div>			
+				</div>	
+				<br>		
 				<div id="memberEmail-container">
 					<label for="exampleDataList" class="form-label">이메일</label>
 					<input type="text" class="form-control" name="email_1" id="email_1" value="" maxlength="30"/>
@@ -103,11 +111,13 @@
 				    </select>
 					<span class="final_mail_ck">이메일을 입력해주세요.</span>
 					<input type="hidden" id="member_email" name="member_email" value="">
-				</div>				
+				</div>	
+				<br>			
 				<div id="memberPhone-container">
 					<label for="exampleDataList" class="form-label">전화번호</label>
 					<input type="tel" class="form-control" placeholder="전화번호 (예:01012345678)" name="member_phone" id="member_phone" maxlength="11" required>
 				</div>
+				<br>
 				<div id="memberAddr-container">
 					<label for="exampleDataList" class="form-label">주소</label>
 					<div class="form-group">                   
@@ -123,6 +133,7 @@
 					<span class="final_addr_ck">주소를 입력해주세요.</span>
 					<input type="hidden" id="member_addr" name="member_addr" value="">
 				</div>
+				<br>
 				<div id="memberGender-container">
 					<label for="exampleDataList" class="form-label">성별</label>
 					<div class="form-check">
@@ -138,7 +149,8 @@
 					  </label>
 					</div>
 					<span class="final_addr_ck">성별을 체크해주세요.</span>
-				</div>				
+				</div>
+				<br>				
 				<div id="memberProfile-container">
 					<label for="exampleDataList" class="form-label">프로필사진</label>
 					<div class="mb-3">
@@ -147,13 +159,16 @@
 				</div>
 				<div id="image-container">
 				</div>
+				<br>
 				<div id="memberContent-container">
 					<label for="exampleDataList" class="form-label">자기소개</label>
 					<textarea class="form-control" name="member_content" placeholder="자기소개를 입력해주세요..."></textarea>
 				</div>
+				<br>
 				<input type="submit" class="btn btn-outline-success" id="join" value="가입" >&nbsp;
 				<input type="reset" class="btn btn-outline-success" value="취소">
 			</form>
+				<br>
 		</div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
