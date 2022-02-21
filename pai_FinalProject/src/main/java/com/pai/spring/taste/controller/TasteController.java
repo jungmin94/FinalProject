@@ -45,7 +45,6 @@ public class TasteController {
 		
 		//일치하는 list 가져오기
 		List<Member> list = service.selectTasteList(param);
-		System.out.println(list);
 		
 //		for(Iterator<Map<String,Object>> it = list.iterator(); it.hasNext();) {
 //			Map<String,Object> obj = it.next();
