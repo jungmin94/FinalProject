@@ -7,6 +7,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="회원가입"/>
 </jsp:include>
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
 <style>
@@ -14,25 +15,13 @@
 	div#enroll-container input, div#enroll-container select {margin-bottom:10px;}
 	div#enroll-container{width:400px; margin:0 auto; text-align:center;}
 	div#enroll-container input, div#enroll-container select {margin-bottom:10px;}
-	div#memberId-container{position:relative;padding:0px;}
-	div#memberId-container span.id_ok{color:green; display: none;}
-	div#memberId-container span.id_error{color:red; display: none;}
 	div#memberNick-container{position:relative;padding:0px;}
 	div#memberNick-container span.nick_ok{color:green; display: none;}
 	div#memberNick-container span.nick_error{color:red; display: none;}
-	.final_id_ck{
-	    display: none;
-	}
 	.final_pw_ck{
 	    display: none;
 	}
 	.final_pwck_ck{
-	    display: none;
-	}
-	.final_name_ck{
-	    display: none;
-	}
-	.final_mail_ck{
 	    display: none;
 	}
 	.final_addr_ck{
@@ -44,80 +33,43 @@
 	.final_nick_ck{
 	    display: none;
 	}
+	.btn-outline-secondary:hover{
+	   background-color: #6710f242;
+	   border: 1px solid #6710f242;
+	}
+	.btn-outline-secondary{
+	   border: 1px solid #6710f242;
+	   color:#6710f242;
+	}
 </style>
 <div id="enroll-container">
-			<form id="memberEnrollFrm" name="memberEnrollFrm" action="${path }/member/enrollMemberEnd.do" 
+			<form id="memberEnrollFrm" name="memberEnrollFrm" action="${path }/member/updateNaver" 
 			method="post" enctype="multipart/form-data">
-			<br>
-				<h1>회원가입</h1>
-				<br>
-				<div id="memberId-container">
-					<label for="exampleDataList" class="form-label">아이디</label>
-					<input type="text" class="form-control" placeholder="아이디 (4글자이상)" name="member_id" id="member_id" required oninput="checkId()"/>
-					<span class="id_ok">사용 가능한 아이디입니다.</span>
-					<span class="id_error">누군가가 이 아이디를 사용하고있어요.</span>
-					<span class="final_id_ck">아이디를 입력해주세요.</span>
-				</div>
-				<br>
+				<br><h1>회원가입</h1><br>
 				<div id="memberPw-container">
 					<label for="exampleDataList" class="form-label">비밀번호</label>
 					<input type="password" class="form-control" placeholder="비밀번호를 입력해주세요" name="member_pw" id="member_pw" tabindex="2" oninput="checkPw(member_pw.value)" required>
 					<span class="final_pw_ck">비밀번호를 입력해주세요.</span>
-				</div>
-				<br>
+				</div><br>
 				<div id="memberPw2-container">
 					<label for="exampleDataList" class="form-label">비밀번호 확인</label>
 					<input type="password" class="form-control" placeholder="비밀번호를 다시 한 번 입력해주세요" name="member_pw2" id="member_pw2" tabindex="3" required />
 					<p id="pwCheckF" style="color: #FF6600; margin: 0;"></p>
 					<p id="pwCheckFF" style="color: #FF6600; margin: 0;"></p>
 					<span class="final_pwck_ck">비밀번호를 다시 한번 입력해주세요.</span>
-				</div>
-				<br>
+				</div><br>
 				<div id="memberNick-container">
 					<label for="exampleDataList" class="form-label">닉네임</label>
 					<input type="text" class="form-control" placeholder="닉네임을 입력해주세요" name="member_nick" id="member_nick" required oninput="checkNick()">
 					<span class="nick_ok">사용 가능한 닉네임입니다.</span>
 					<span class="nick_error">누군가가 이 닉네임을 사용하고있어요.</span>
 					<span class="final_nick_ck">닉네임을 입력해주세요.</span>
-				</div>
-				<br>
-				<div id="memberName-container">
-					<label for="exampleDataList" class="form-label">이름</label>
-					<input type="text" class="form-control" placeholder="이름을 입력해주세요" name="member_name" id="member_name" required>
-					<span class="final_name_ck">이름을 입력해주세요.</span>
-				</div>	
-				<br>
+				</div><br>
 				<div id="memberDate-container">
 					<label for="exampleDataList" class="form-label">생년월일</label>
 					<input type="date" class="form-control" placeholder="" min="1023-01-01" name="member_date" id="member_date">
 					<span class="final_birth_ck">생년월일을 입력해주세요.</span>
-				</div>	
-				<br>		
-				<div id="memberEmail-container">
-					<label for="exampleDataList" class="form-label">이메일</label>
-					<input type="text" class="form-control" name="email_1" id="email_1" value="" maxlength="30"/>
-					<span id="at">@</span>
-					<input type="text" class="form-control" name="email_2" value="" maxlength="30" style="ime-mode:disabled;" />
-					<select name="email_3" id="email_3" class="form-select">
-				        <option value="" selected>선택하세요</option>
-				        <option value="naver.com">naver.com</option>
-				        <option value="gmail.com">gmail.com</option>
-				        <option value="daum.net">daum.net</option>
-				        <option value="hanmail.net">hanmail.net</option>
-				        <option value="nate.com">nate.com</option>
-				        <option value="yahoo.co.kr">yahoo.co.kr</option>
-				        <option value="hotmail.com">hotmail.com</option>
-				        <option value="etc" selected="selected">직접입력</option>
-				    </select>
-					<span class="final_mail_ck">이메일을 입력해주세요.</span>
-					<input type="hidden" id="member_email" name="member_email" value="">
-				</div>	
-				<br>			
-				<div id="memberPhone-container">
-					<label for="exampleDataList" class="form-label">전화번호</label>
-					<input type="tel" class="form-control" placeholder="전화번호 (예:01012345678)" name="member_phone" id="member_phone" maxlength="11" required>
-				</div>
-				<br>
+				</div>	<br>		
 				<div id="memberAddr-container">
 					<label for="exampleDataList" class="form-label">주소</label>
 					<div class="form-group">                   
@@ -132,8 +84,7 @@
 					</div>
 					<span class="final_addr_ck">주소를 입력해주세요.</span>
 					<input type="hidden" id="member_addr" name="member_addr" value="">
-				</div>
-				<br>
+				</div><br>
 				<div id="memberGender-container">
 					<label for="exampleDataList" class="form-label">성별</label>
 					<div class="form-check">
@@ -149,8 +100,7 @@
 					  </label>
 					</div>
 					<span class="final_addr_ck">성별을 체크해주세요.</span>
-				</div>
-				<br>				
+				</div><br>
 				<div id="memberProfile-container">
 					<label for="exampleDataList" class="form-label">프로필사진</label>
 					<div class="mb-3">
@@ -158,17 +108,15 @@
 					</div>
 				</div>
 				<div id="image-container">
-				</div>
-				<br>
+				</div><br>
 				<div id="memberContent-container">
 					<label for="exampleDataList" class="form-label">자기소개</label>
 					<textarea class="form-control" name="member_content" placeholder="자기소개를 입력해주세요..."></textarea>
-				</div>
-				<br>
-				<input type="submit" class="btn btn-outline-success" id="join" value="가입" >&nbsp;
-				<input type="reset" class="btn btn-outline-success" value="취소">
+				</div><br>
+								
+				<input type="submit" class="btn btn-outline-secondary" id="join" value="가입" >&nbsp;
+				<input type="reset" class="btn btn-outline-secondary" value="취소"><br>
 			</form>
-				<br>
 		</div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -303,7 +251,7 @@
     	});
      }); 
      
-    //비밀번호 실시간 유효성 체크
+     //비밀번호 실시간 유효성 체크
     function checkPw(member_pw){
     	$.ajax({
     		type:"POST",
@@ -321,37 +269,6 @@
         	}
     	});	
     }
-	
-	//이메일
-	$("#email_1").blur(function(){
-		email();	
-	});
-	
-	$("#email_3").change(function(){
-		email();	
-	});
-
-	function email() {
-		const email = $("#email_1").val();
-		const address = $("#email_3").val();
-		if(email != "" && address != "") {
-			$("#member_email").val(email+"@"+address);
-		}
-	};
-	
-	$(document).ready(function(){
-		$("#email_3").change(function(){
-			var email_3 = $(this).val(); 
-			if(email_3 == "etc") { //직접입력일때
-				$("input[name='email_2']").val('');  //이메일 도메인입력박스 초기화.
-				$("input[name='email_2']").attr('readonly', false); //직접입력 가능하도록 readonly막기
-			}
-			else {
-				$("input[name='email_2']").val(email_3); //이메일 도메인 입력박스에 선택된 호스트등록.
-				$("input[name='email_2']").attr('readonly', true); //readonly로 직접입력 막기.
-			}
-		});
-	});
 	
 	/* //유효성검사
 	$(document).ready(function(){
@@ -711,32 +628,31 @@
 		}); 
 	});
  */
-	
-	
-	//이미지 미리보기
+ 
+//이미지 미리보기
 	$("#target").click(e=>{
-   		$("input[name=upfile]").click();
-   	});
-   	$("input[name=upfile]").change(e=>{
-   		$("#image-container").html("");
-   		if(e.target.files[0].type.includes("image")){
-   			let reader=new FileReader();
-   			reader.onload=(e)=>{
-   				const img=$("<img>").attr({
-   					src:e.target.result,
-   					width:"200px",
-   					height:"200px",
-   					class:"img-thumbnail"
-   				});
-   				$("#image-container").append(img);
-   				$("#target").attr("src",e.target.result);
-   			}
-   			reader.readAsDataURL(e.target.files[0]);
-   		}
-   	})
+		$("input[name=upfile]").click();
+	});
+	$("input[name=upfile]").change(e=>{
+		$("#image-container").html("");
+		if(e.target.files[0].type.includes("image")){
+			let reader=new FileReader();
+			reader.onload=(e)=>{
+				const img=$("<img>").attr({
+					src:e.target.result,
+					width:"200px",
+					height:"200px",
+					class:"img-thumbnail"
+				});
+				$("#image-container").append(img);
+				$("#target").attr("src",e.target.result);
+			}
+			reader.readAsDataURL(e.target.files[0]);
+		}
+	})
 	
-   	//날짜 현재 이후는 선택 불가
-   	var today = new Date();
+	//날짜 현재 이후는 선택 불가
+	var today = new Date();
 	var dd = today.getDate();
 	var mm = today.getMonth() + 1; //January is 0!
 	var yyyy = today.getFullYear();

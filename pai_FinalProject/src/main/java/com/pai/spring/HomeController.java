@@ -1,7 +1,6 @@
 package com.pai.spring;
 
 import java.util.List;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,12 +22,12 @@ public class HomeController {
 	 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) { 
-//		List<Board> infoList=service.infoList();
-//		List<Board> topList=service.topList(); 
-//		List<Board> list=service.mainList(); 
-//		model.addAttribute("list", list);
-//		model.addAttribute("top", topList);
-//		model.addAttribute("info", infoList);
+		List<Board> infoList=service.infoList();
+		List<Board> topList=service.topList(); 
+		List<Board> list=service.mainList(); 
+		model.addAttribute("list", list);
+		model.addAttribute("top", topList);
+		model.addAttribute("info", infoList);
 		return "home";
 	}
 	

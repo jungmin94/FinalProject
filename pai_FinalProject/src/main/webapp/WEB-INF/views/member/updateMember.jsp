@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="title" value="회원가입"/>
+	<jsp:param name="title" value="회원정보수정"/>
 </jsp:include>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
@@ -14,21 +14,9 @@
 	div#enroll-container input, div#enroll-container select {margin-bottom:10px;}
 	div#enroll-container{width:400px; margin:0 auto; text-align:center;}
 	div#enroll-container input, div#enroll-container select {margin-bottom:10px;}
-	div#memberId-container{position:relative;padding:0px;}
-	div#memberId-container span.id_ok{color:green; display: none;}
-	div#memberId-container span.id_error{color:red; display: none;}
 	div#memberNick-container{position:relative;padding:0px;}
 	div#memberNick-container span.nick_ok{color:green; display: none;}
 	div#memberNick-container span.nick_error{color:red; display: none;}
-	.final_id_ck{
-	    display: none;
-	}
-	.final_pw_ck{
-	    display: none;
-	}
-	.final_pwck_ck{
-	    display: none;
-	}
 	.final_name_ck{
 	    display: none;
 	}
@@ -46,83 +34,40 @@
 	}
 </style>
 <div id="enroll-container">
-			<form id="memberEnrollFrm" name="memberEnrollFrm" action="${path }/member/enrollMemberEnd.do" 
+			<form id="memberEnrollFrm" name="memberEnrollFrm" action="${path }/member/updateMemberEnd.do" 
 			method="post" enctype="multipart/form-data">
 			<br>
-				<h1>회원가입</h1>
-				<br>
-				<div id="memberId-container">
-					<label for="exampleDataList" class="form-label">아이디</label>
-					<input type="text" class="form-control" placeholder="아이디 (4글자이상)" name="member_id" id="member_id" required oninput="checkId()"/>
-					<span class="id_ok">사용 가능한 아이디입니다.</span>
-					<span class="id_error">누군가가 이 아이디를 사용하고있어요.</span>
-					<span class="final_id_ck">아이디를 입력해주세요.</span>
+				<h1>회원정보수정</h1><br>
+				<div id="image-container">
+					<img src="${path }/resources/upload/member/${loginMember.member_profile}" class="img-thumbnail" style=width:200px;,height:200px;>
 				</div>
-				<br>
-				<div id="memberPw-container">
-					<label for="exampleDataList" class="form-label">비밀번호</label>
-					<input type="password" class="form-control" placeholder="비밀번호를 입력해주세요" name="member_pw" id="member_pw" tabindex="2" oninput="checkPw(member_pw.value)" required>
-					<span class="final_pw_ck">비밀번호를 입력해주세요.</span>
-				</div>
-				<br>
-				<div id="memberPw2-container">
-					<label for="exampleDataList" class="form-label">비밀번호 확인</label>
-					<input type="password" class="form-control" placeholder="비밀번호를 다시 한 번 입력해주세요" name="member_pw2" id="member_pw2" tabindex="3" required />
-					<p id="pwCheckF" style="color: #FF6600; margin: 0;"></p>
-					<p id="pwCheckFF" style="color: #FF6600; margin: 0;"></p>
-					<span class="final_pwck_ck">비밀번호를 다시 한번 입력해주세요.</span>
-				</div>
-				<br>
+				<div id="memberProfile-container">
+					<label for="exampleDataList" class="form-label">프로필사진</label>
+					<div class="mb-3">
+					  <input class="form-control" type="file" id="member_profile" name="upfile">
+					</div>
+				</div><br>
 				<div id="memberNick-container">
 					<label for="exampleDataList" class="form-label">닉네임</label>
-					<input type="text" class="form-control" placeholder="닉네임을 입력해주세요" name="member_nick" id="member_nick" required oninput="checkNick()">
+					<input type="text" class="form-control" placeholder="닉네임을 입력해주세요" value="${loginMember.member_nick }" name="member_nick" id="member_nick" required oninput="checkNick()">
 					<span class="nick_ok">사용 가능한 닉네임입니다.</span>
 					<span class="nick_error">누군가가 이 닉네임을 사용하고있어요.</span>
 					<span class="final_nick_ck">닉네임을 입력해주세요.</span>
-				</div>
-				<br>
-				<div id="memberName-container">
-					<label for="exampleDataList" class="form-label">이름</label>
-					<input type="text" class="form-control" placeholder="이름을 입력해주세요" name="member_name" id="member_name" required>
-					<span class="final_name_ck">이름을 입력해주세요.</span>
-				</div>	
-				<br>
+				</div><br>
 				<div id="memberDate-container">
 					<label for="exampleDataList" class="form-label">생년월일</label>
-					<input type="date" class="form-control" placeholder="" min="1023-01-01" name="member_date" id="member_date">
+					<input type="date" class="form-control" placeholder="" min="1023-01-01" name="member_date" id="member_date" value="${loginMember.member_date}">
 					<span class="final_birth_ck">생년월일을 입력해주세요.</span>
-				</div>	
-				<br>		
-				<div id="memberEmail-container">
-					<label for="exampleDataList" class="form-label">이메일</label>
-					<input type="text" class="form-control" name="email_1" id="email_1" value="" maxlength="30"/>
-					<span id="at">@</span>
-					<input type="text" class="form-control" name="email_2" value="" maxlength="30" style="ime-mode:disabled;" />
-					<select name="email_3" id="email_3" class="form-select">
-				        <option value="" selected>선택하세요</option>
-				        <option value="naver.com">naver.com</option>
-				        <option value="gmail.com">gmail.com</option>
-				        <option value="daum.net">daum.net</option>
-				        <option value="hanmail.net">hanmail.net</option>
-				        <option value="nate.com">nate.com</option>
-				        <option value="yahoo.co.kr">yahoo.co.kr</option>
-				        <option value="hotmail.com">hotmail.com</option>
-				        <option value="etc" selected="selected">직접입력</option>
-				    </select>
-					<span class="final_mail_ck">이메일을 입력해주세요.</span>
-					<input type="hidden" id="member_email" name="member_email" value="">
-				</div>	
-				<br>			
+				</div><br>			
 				<div id="memberPhone-container">
 					<label for="exampleDataList" class="form-label">전화번호</label>
-					<input type="tel" class="form-control" placeholder="전화번호 (예:01012345678)" name="member_phone" id="member_phone" maxlength="11" required>
-				</div>
-				<br>
+					<input type="tel" class="form-control" placeholder="전화번호 (예:01012345678)" name="member_phone" id="member_phone" value="${loginMember.member_phone}" maxlength="11" required>
+				</div><br>
 				<div id="memberAddr-container">
 					<label for="exampleDataList" class="form-label">주소</label>
 					<div class="form-group">                   
 						<input class="form-control" style="width: 40%; display: inline;" placeholder="우편번호" name="member_addr1" id="member_addr1" type="text" disabled="disabled" >
-					    <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 우편번호 찾기</button>                               
+					    <button type="button" class="btn btn-default" onclick="execPostCode();"><i class="fa fa-search"></i> 주소 수정하기</button>                               
 					</div>
 					<div class="form-group">
 					    <input class="form-control" style="top: 5px;" placeholder="도로명 주소" name="member_addr2" id="member_addr2" type="text" disabled="disabled" />
@@ -131,47 +76,25 @@
 					    <input class="form-control" placeholder="상세주소" name="member_addr3" id="member_addr3" type="text"  />
 					</div>
 					<span class="final_addr_ck">주소를 입력해주세요.</span>
-					<input type="hidden" id="member_addr" name="member_addr" value="">
-				</div>
-				<br>
-				<div id="memberGender-container">
-					<label for="exampleDataList" class="form-label">성별</label>
-					<div class="form-check">
-					  <input class="form-check-input" type="radio" name="member_gender" value="남">
-					  <label class="form-check-label" for="flexRadioDefault1">
-					    남자
-					  </label>
-					</div>
-					<div class="form-check">
-					  <input class="form-check-input" type="radio" name="member_gender" value="여">
-					  <label class="form-check-label" for="flexRadioDefault2">
-					    여자
-					  </label>
-					</div>
-					<span class="final_addr_ck">성별을 체크해주세요.</span>
-				</div>
-				<br>				
-				<div id="memberProfile-container">
-					<label for="exampleDataList" class="form-label">프로필사진</label>
-					<div class="mb-3">
-					  <input class="form-control" type="file" id="member_profile" name="upfile">
-					</div>
-				</div>
-				<div id="image-container">
-				</div>
-				<br>
+					<input type="text" style=width:100%; id="member_addr" name="member_addr" value="${loginMember.member_addr }">
+				</div><br>
 				<div id="memberContent-container">
 					<label for="exampleDataList" class="form-label">자기소개</label>
-					<textarea class="form-control" name="member_content" placeholder="자기소개를 입력해주세요..."></textarea>
-				</div>
-				<br>
-				<input type="submit" class="btn btn-outline-success" id="join" value="가입" >&nbsp;
-				<input type="reset" class="btn btn-outline-success" value="취소">
+					<textarea class="form-control" name="member_content" placeholder="자기소개를 입력해주세요..." ><c:out value="${loginMember.member_content }"/></textarea>
+				</div><br>
+				<input type="submit" class="btn btn-outline-success" id="join" value="수정" >&nbsp;
+				<input type="button" class="btn btn-outline-success" id="goBack" value="취소"><br>
+				
 			</form>
-				<br>
 		</div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
+	$(function(){
+		$("#goBack").on("click", function(){
+			location.href = '${ path }/member/memberView.do'
+		})
+	})
+
 	function execPostCode() {
 	    new daum.Postcode({
 	        oncomplete: function(data) {

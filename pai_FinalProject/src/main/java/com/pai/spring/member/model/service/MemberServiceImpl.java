@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.pai.spring.member.model.dao.MemberDao;
 import com.pai.spring.member.model.vo.Member;
+import com.pai.spring.member.model.vo.Profile;
 @Service
 public class MemberServiceImpl implements MemberService {
 
@@ -18,15 +19,117 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDao dao;
 	
 	@Override
-	public Member login(Map param) {
+	public Member login(Member m) {
 		// TODO Auto-generated method stub
-		return dao.login(session,param);
+		return dao.login(session,m);
 	}
 
 	@Override
-	public int insertMember(Member m) {
+	public int insertMember(Member m) throws RuntimeException{
 		// TODO Auto-generated method stub
-		return dao.insertMember(session,m);
+		int result=dao.insertMember(session,m);
+//		if(result>0&&!m.getProfile().isEmpty()) {
+//			try {
+//				for(Profile p : m.getProfile()) {
+//					p.setMember_id(m.getMember_id());
+//					result=dao.insertProfile(session,p);
+//				}
+//			}catch(RuntimeException e) {
+//				throw new RuntimeException("등록실패!");
+//			}
+//		}
+		return result;
 	}
 
+	@Override
+	public int checkId(String member_id) {
+		// TODO Auto-generated method stub
+		return dao.checkId(session,member_id);
+	}
+
+	@Override
+	public int checkNick(String member_nick) {
+		// TODO Auto-generated method stub
+		return dao.checkNick(session,member_nick);
+	}
+
+	@Override
+	public int updateAuthKey(Member m) {
+		// TODO Auto-generated method stub
+		return dao.updateAuthKey(session,m); 
+	}
+
+	@Override
+	public int updateAuthStatus(String member_email) {
+		// TODO Auto-generated method stub
+		return dao.updateAuthStatus(session,member_email);
+	}
+
+	@Override
+	public Member findId(Member m) {
+		// TODO Auto-generated method stub
+		return dao.findId(session,m);
+	}
+
+	@Override
+	public Member findIdResult(Member m) {
+		// TODO Auto-generated method stub
+		return dao.findIdResult(session,m);
+	}
+
+	@Override
+	public Member findPwd(Member m) {
+		// TODO Auto-generated method stub
+		return dao.findPwd(session,m);
+	}
+
+	@Override
+	public int findPwdUpdate(Member m) {
+		// TODO Auto-generated method stub
+		return dao.findPwdUpdate(session,m);
+	}
+	
+	@Override
+	public int insertMbti(Member m) {
+		// TODO Auto-generated method stub
+		return dao.insertMbti(session,m);
+	}
+
+	@Override
+	public int insertNaverAccount(Member loginMember) {
+		// TODO Auto-generated method stub
+		return dao.insertNaverAccount(session,loginMember);
+	}
+
+	@Override
+	public int updateNaverAccount(Member m) {
+		// TODO Auto-generated method stub
+		return dao.updateNaverAccount(session, m);
+	}
+
+	@Override
+	public int delete(String member_id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.delete(session,member_id);
+	}
+
+	@Override
+	public String pwCheck(String member_id) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.pwCheck(session,member_id);
+	}
+
+	@Override
+	public int pwUpdate(String member_id, String hashedPw) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.pwUpdate(session,member_id,hashedPw);
+	}
+
+	@Override
+	public int updateMember(Member m) {
+		// TODO Auto-generated method stub
+		return dao.updateMember(session,m);
+	}
+
+	
 }
