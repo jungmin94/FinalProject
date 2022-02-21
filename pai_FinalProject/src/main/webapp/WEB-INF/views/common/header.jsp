@@ -174,8 +174,8 @@ a .sub-menu-detail {
 <body>
 <header>
 	<nav>
-		<c:if test="${loginMember.member_black!=1}">
 		<div class="header-nav">
+		<c:if test="${loginMember.member_black!=1}">
 			<div class="nav-lists" id="nav-img">
 				<a href="${path}/"><img src="${path }/resources/images/member/logo_black.jpg" width="60px" height="60px"></a>
 			</div>
