@@ -174,8 +174,8 @@ a .sub-menu-detail {
 <body>
 <header>
 	<nav>
-		<c:if test="${loginMember.member_black!=1}">
 		<div class="header-nav">
+		<c:if test="${loginMember.member_black!=1}">
 			<div class="nav-lists" id="nav-img">
 				<a href="${path}/"><img src="${path }/resources/images/member/logo_black.jpg" width="60px" height="60px"></a>
 			</div>
@@ -200,7 +200,6 @@ a .sub-menu-detail {
 		            <span class="login-area"><button id="enroll-button" onclick="location.assign('${path}/member/enrollMember.do')">회원가입</button></span>
 		        </div>
 			</c:if>
-			</div>
 		</c:if>
 			<c:if test="${loginMember!=null }">
 				<div class="nav-lists" id="mypage-icon">
