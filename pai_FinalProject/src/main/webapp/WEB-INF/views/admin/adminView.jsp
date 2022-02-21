@@ -113,6 +113,7 @@
 						</tr>
 					</thead>
 					<tbody> 
+					
 						<c:if test="${empty list}">
 							<tr>
 								<td colspan="12">검색된 결과가 없습니다.</td>
