@@ -34,11 +34,11 @@ public class MemberDaoImpl implements MemberDao {
 		return session.selectOne("member.checkNick",member_nick);
 	}
 
-	@Override
-	public int insertProfile(SqlSessionTemplate session, Profile p) {
-		// TODO Auto-generated method stub
-		return session.insert("member.insertProfile", p);
-	}
+//	@Override
+//	public int insertProfile(SqlSessionTemplate session, Profile p) {
+//		// TODO Auto-generated method stub
+//		return session.insert("member.insertProfile", p);
+//	}
 
 	@Override
 	public int updateAuthKey(SqlSessionTemplate session, Member m) {
@@ -113,6 +113,11 @@ public class MemberDaoImpl implements MemberDao {
 		map.put("member_id", member_id);
 		map.put("member_pw", hashedPw);
 		return session.update("member.pwUpdate", map);
+	}
+	@Override
+	public int updateMember(SqlSessionTemplate session, Member m) {
+		// TODO Auto-generated method stub
+		return session.update("member.updateMember",m);
 	}
 
 	

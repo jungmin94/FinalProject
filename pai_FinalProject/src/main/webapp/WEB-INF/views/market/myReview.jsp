@@ -6,6 +6,43 @@
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <style>
+			.loading span {
+			  display: inline-block;
+			  margin: 0 -.075em;
+			  animation: loading .8s infinite alternate;
+			  text-align: center; font-size: 50px; color: #01DFD7;
+			}
+			.loading span:nth-child(2) {
+			  animation-delay: .1s;
+			}
+			.loading span:nth-child(3) {
+			  animation-delay: .2s;
+			}
+			.loading span:nth-child(4) {
+			  animation-delay: .3s;
+			}
+			.loading span:nth-child(5) {
+			  animation-delay: .4s;
+			}
+			.loading span:nth-child(6) {
+			  animation-delay: .5s;
+			}
+			.loading span:nth-child(7) {
+			  animation-delay: .6s;
+			}
+			.loading span:nth-child(8) {
+			  animation-delay: .7s;
+			}
+			@keyframes loading {
+			  0% {
+			    transform: scale(1);
+			  }
+			  100% {
+			    transform: scale(0.8);
+			  }
+			}
+
+
 .star-rating {
   border:solid 1px #ccc;
   display:flex;
@@ -70,6 +107,16 @@
 	<!-------------------------------------------검색창 ---------------------------------------------------------->
 <jsp:include page="/WEB-INF/views/market/searchBar.jsp"/>
 	<br>
+	
+	<div class="loading"  style="text-align: center;">
+		<span>R</span>
+		<span>E</span>
+		<span>V</span>
+		<span>I</span>	
+		<span>E</span>
+		<span>W</span>
+   </div>
+   <br>
 
 	<table class="table align-middle" style="text-align: center;">
 		<thead>
@@ -84,9 +131,15 @@
 		  </tr>
 		</thead>
 		<tbody>
+		<c:if test="${reviewList eq null || reviewList.isEmpty()}">
+			<tr>
+				<th colspan="7">등록하신 리뷰가 없습니다</th>
+			</tr>
+		</c:if>
+		<c:if test="${reviewList ne null && !reviewList.isEmpty()}">
 		<c:forEach items="${reviewList}" var="r">
 		  <tr>
-			<td>${r.goodsName}</td>
+			<td><a href="${path}/market/goodsDetailView.do?goodsName=${r.goodsName}">${r.goodsName}</a></td>
 			<td>${r.orderDetail.orderColor}</td>
 			<td>${r.orderDetail.orderSize}</td>
 			<td>${r.orderDetail.mbtiLogo}</td>
@@ -117,6 +170,7 @@
 			</td>
 		  </tr>
 		</c:forEach>
+		</c:if>
 
 		</tbody>
 	  </table>

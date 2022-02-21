@@ -13,7 +13,7 @@ public interface MemberDao {
 	
 	int insertMember(SqlSessionTemplate session,Member m);
 	
-	int insertProfile(SqlSessionTemplate session,Profile p);
+//	int insertProfile(SqlSessionTemplate session,Profile p);
 	
 	int checkId(SqlSessionTemplate session,String member_id);
 	
@@ -42,4 +42,6 @@ public interface MemberDao {
 	String pwCheck(SqlSessionTemplate session,String member_id) throws Exception;
 	
 	int pwUpdate(SqlSessionTemplate session,String member_id, String hashedPw)throws Exception;
+	
+	int updateMember(SqlSessionTemplate session, Member m);
 }

@@ -8,7 +8,7 @@
 	<jsp:param name="title" value="로그인"/>
 </jsp:include>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
-<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	* {
 	  margin: 0;
@@ -26,7 +26,7 @@
 	}
 	.login {
 	  width: 30%;
-	  height: 600px;
+	  height: 800px;
 	  background: white;
 	  border-radius: 20px;
 	  display: flex;
@@ -35,7 +35,7 @@
 	  flex-direction: column;
 	}
 	
-	h2 {
+	h1 {
 	  color: #6710f242;
 	  font-size: 2em;
 	}	
@@ -79,8 +79,9 @@
 <body>
 	<form class="wrap" action="${path }/member/loginMemberEnd.do" method="post">
         <div class="login">
-            <img src="${path }/resources/images/member/logo_white.jpg" style="width:200px; height:200px;">
-            
+	<br>
+            <img src="${path }/resources/images/member/logo_white.jpg" style="width:300px; height:300px;">
+            <br>
             <div style="width: 80%;">
 	            <div class="form-floating mb-3" style="width: 100%">
 				  	<input type="text" class="form-control" id="floatingInput" name="member_id" placeholder="아이디">
@@ -95,23 +96,23 @@
 					  <label for="floatingPassword">패스워드를 입력하세요</label>
 					</div>
 			</div>
-			  <div class="login_etc" style="margin-top: 15px;">
+			  <%-- <div class="login_etc" style="margin-top: 15px;">
                 <div class="checkbox">
-                	<%-- <input type="checkbox" name="saveId" id="saveId" <%=saveId!=null?"checked":""%>> --%>
+                	<input type="checkbox" name="saveId" id="saveId" <%=saveId!=null?"checked":""%>>
                 	<!-- <label for="saveId">아이디저장</label> -->
                 </div>
-            </div>
+            </div> --%>
             <div class="submit btn-outline-secondary">
             	
                 <button type="submit" value="로그인" class="btn btn-outline-secondary">로그인</button>
             </div>
             <br>
            	<div>
-            	<a href="${ url }"><img width="150" height="50" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"></a>
+            	<a href="${ url }"><img width="100%" height="60" src="https://developers.naver.com/doc/review_201802/CK_bEFnWMeEBjXpQ5o8N_20180202_7aot50.png"></a>
           	</div>
+          	<br>
 	        <div class="enrollMember btn-outline-secondary">
  		        <input type="button" class="btn btn-outline-secondary" value="회원가입" onclick="location.assign('${path}/member/enrollMember.do')">
-		        
 	        </div>
 			<br>
             <div style="width: 80%;">
@@ -123,6 +124,8 @@
 		        </div>
 		        
            	</div> 
+   			<br>
+   			<br>
    			<br>
         </div>
     </form>

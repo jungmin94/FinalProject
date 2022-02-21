@@ -28,18 +28,23 @@
 		<span class="badge bg-success">친구찾기 리스트</span>
 	  </div>
 		<br>
-		<div class="row" style="text-align: center;">
-			<div class="col">
-					
-			</div>
-			
+		
+		<div class="row row-cols-1 row-cols-md-4 g-4" style="text-align: center;">
 			<c:forEach var="t" items="${list }">
 				<c:if test="${loginMember.member_id ne t.member_id.member_id }">
-				  <div class="col">
+			<div class="col">
+					
+			
 					<div class="card" style="width: 18rem;">
-						<%-- <img src="${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px;"> --%>
+					
+						<c:if test="${t.member_id.member_profile eq null}">
+							<img src="https://us.123rf.com/450wm/acyotto/acyotto2110/acyotto211000028/175476675-.jpg?ver=6" class="card-img-top" alt="..." style="height: 170px; ">
+						</c:if>
+						<c:if test="${t.member_id.member_profile ne null}">
+							<img src="${path }/resources/upload/member/${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px; ">
+						</c:if>
 						<div class="card-body">
-						  <p class="card-text"><c:out value="${t.member_id.member_id }"/></p>
+						  <input type="hidden" value="${t.member_id.member_id }">
 						  <p class="card-text"><c:out value="${t.member_id.member_nick }"/></p>
 						  <p class="card-text"><c:out value="${t.member_id.member_date }"/></p>
 						  <p class="card-text"><c:out value="${t.member_id.member_gender }"/></p>
@@ -47,14 +52,11 @@
 						  <button onclick="sendMessage(this);" class="btn btn-primary">쪽지 보내기</button>
 						</div>
 					  </div>
-				  </div>
+			</div>
 			  </c:if>
 			</c:forEach>
 
 
-			<div class="col">
-					
-			</div>
 			
 		</div>	 
 		
@@ -112,7 +114,7 @@
                         </table>
                     </div>
                 <div class="modal-footer fn-font">
-                    <button class="btn btn-primary" id="msgSend" type="submit">보내기</button>
+                    <button class="btn btn-primary" id="msgSend" type="button">보내기</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                 </div>
                 </form>
@@ -127,7 +129,7 @@
 <script>
 
 const sendMessage=(e)=>{
- 	 var recvId = e.parentElement.children[0].innerText;
+ 	 var recvId = e.parentElement.children[0].value;
 	 var recvNick = e.parentElement.children[1].innerText;
 	 var sendDate = e.parentElement.children[2].innerText;
 	 var memberGender = e.parentElement.children[3].innerText;
@@ -153,7 +155,7 @@ $("#msgSend").click(e=>{
     		'10쌔기','10쎄','10알','10창','10탱','18것','18넘','18년','18노','18놈',
     		'18뇬','18럼','18롬','18새','18새끼','18색','18세끼','18세리','18섹','18쉑','18스','18아',
     		'c파','c팔','fuck',
-    		'ㄱㅐ','ㄲㅏ','ㄲㅑ','ㄲㅣ','ㅅㅂㄹㅁ','ㅅㅐ','ㅆㅂㄹㅁ','ㅆㅍ','ㅆㅣ','ㅆ앙','ㅍㅏ','凸',
+    		'ㄱㅐ','ㄲㅏ','ㄲㅑ','ㄲㅣ','ㅅㅂㄹㅁ','ㅅㅐ','ㅆㅂㄹㅁ','ㅅㅂ','ㅆㅍ','ㅆㅣ','ㅆ앙','ㅍㅏ','凸',
     		'갈보','갈보년','강아지','같은년','같은뇬','개같은','개구라','개년','개놈',
     		'개뇬','개대중','개독','개돼중','개랄','개보지','개뻥','개뿔','개새','개새기','개새끼',
     		'개새키','개색기','개색끼','개색키','개색히','개섀끼','개세','개세끼','개세이','개소리','개쑈',
@@ -219,7 +221,31 @@ $("#msgSend").click(e=>{
        return false;
     }  
     
-    $.ajax({
+    let sendId=$("#sendId").val();
+    let sendNick=$("#sendNick").val();
+    let recvId=$("#recvId").val();
+    let recvNick=$("#recvNick").val();
+    let msgTitle=$("#msgTitle").val();
+    let msgContent=$("#msgContent").val();
+    
+    const sendData = {
+    		type:"message",
+    		sendId:sendId,
+    		sendNick:sendNick,
+    		recvId:recvId,
+    		recvNick:recvNick,
+    		msgTitle:msgTitle,
+    		msgContent:msgContent,
+    }
+    
+    socket.send(JSON.stringify(sendData));
+    $("#msgTitle").val('');
+    $("#msgContent").val('');
+    $('#MsgForm').modal("hide");
+
+   
+    
+/*     $.ajax({
         url : "${path}/message/sendMessage.do",
         dataType : "json",
         type : "post",
@@ -243,7 +269,7 @@ $("#msgSend").click(e=>{
     		socket.send(sendData);
 			console.log('send');
         }
-    })
+    }) */
 
  
     //modal.find('.modal-body textarea').val('');

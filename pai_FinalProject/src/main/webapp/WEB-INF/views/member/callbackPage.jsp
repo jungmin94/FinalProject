@@ -8,7 +8,7 @@
 	<jsp:param name="title" value="회원가입"/>
 </jsp:include>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
-<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
 <style>
 	div#enroll-container{width:400px; margin:0 auto; text-align:center;}
@@ -33,35 +33,43 @@
 	.final_nick_ck{
 	    display: none;
 	}
+	.btn-outline-secondary:hover{
+	   background-color: #6710f242;
+	   border: 1px solid #6710f242;
+	}
+	.btn-outline-secondary{
+	   border: 1px solid #6710f242;
+	   color:#6710f242;
+	}
 </style>
 <div id="enroll-container">
 			<form id="memberEnrollFrm" name="memberEnrollFrm" action="${path }/member/updateNaver" 
-			method="post">
-				<h2>회원가입</h2>
+			method="post" enctype="multipart/form-data">
+				<br><h1>회원가입</h1><br>
 				<div id="memberPw-container">
 					<label for="exampleDataList" class="form-label">비밀번호</label>
 					<input type="password" class="form-control" placeholder="비밀번호를 입력해주세요" name="member_pw" id="member_pw" tabindex="2" oninput="checkPw(member_pw.value)" required>
 					<span class="final_pw_ck">비밀번호를 입력해주세요.</span>
-				</div>
+				</div><br>
 				<div id="memberPw2-container">
 					<label for="exampleDataList" class="form-label">비밀번호 확인</label>
 					<input type="password" class="form-control" placeholder="비밀번호를 다시 한 번 입력해주세요" name="member_pw2" id="member_pw2" tabindex="3" required />
 					<p id="pwCheckF" style="color: #FF6600; margin: 0;"></p>
 					<p id="pwCheckFF" style="color: #FF6600; margin: 0;"></p>
 					<span class="final_pwck_ck">비밀번호를 다시 한번 입력해주세요.</span>
-				</div>
+				</div><br>
 				<div id="memberNick-container">
 					<label for="exampleDataList" class="form-label">닉네임</label>
 					<input type="text" class="form-control" placeholder="닉네임을 입력해주세요" name="member_nick" id="member_nick" required oninput="checkNick()">
 					<span class="nick_ok">사용 가능한 닉네임입니다.</span>
 					<span class="nick_error">누군가가 이 닉네임을 사용하고있어요.</span>
 					<span class="final_nick_ck">닉네임을 입력해주세요.</span>
-				</div>
+				</div><br>
 				<div id="memberDate-container">
 					<label for="exampleDataList" class="form-label">생년월일</label>
-					<input type="date" class="form-control" placeholder="" name="member_date" id="member_date">
+					<input type="date" class="form-control" placeholder="" min="1023-01-01" name="member_date" id="member_date">
 					<span class="final_birth_ck">생년월일을 입력해주세요.</span>
-				</div>			
+				</div>	<br>		
 				<div id="memberAddr-container">
 					<label for="exampleDataList" class="form-label">주소</label>
 					<div class="form-group">                   
@@ -76,7 +84,7 @@
 					</div>
 					<span class="final_addr_ck">주소를 입력해주세요.</span>
 					<input type="hidden" id="member_addr" name="member_addr" value="">
-				</div>
+				</div><br>
 				<div id="memberGender-container">
 					<label for="exampleDataList" class="form-label">성별</label>
 					<div class="form-check">
@@ -92,9 +100,22 @@
 					  </label>
 					</div>
 					<span class="final_addr_ck">성별을 체크해주세요.</span>
-				</div>				
-				<input type="submit" class="btn btn-outline-success" id="join" value="가입" >&nbsp;
-				<input type="reset" class="btn btn-outline-success" value="취소">
+				</div><br>
+				<div id="memberProfile-container">
+					<label for="exampleDataList" class="form-label">프로필사진</label>
+					<div class="mb-3">
+					  <input class="form-control" type="file" id="member_profile" name="upfile">
+					</div>
+				</div>
+				<div id="image-container">
+				</div><br>
+				<div id="memberContent-container">
+					<label for="exampleDataList" class="form-label">자기소개</label>
+					<textarea class="form-control" name="member_content" placeholder="자기소개를 입력해주세요..."></textarea>
+				</div><br>
+								
+				<input type="submit" class="btn btn-outline-secondary" id="join" value="가입" >&nbsp;
+				<input type="reset" class="btn btn-outline-secondary" value="취소"><br>
 			</form>
 		</div>
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -607,6 +628,45 @@
 		}); 
 	});
  */
+ 
+//이미지 미리보기
+	$("#target").click(e=>{
+		$("input[name=upfile]").click();
+	});
+	$("input[name=upfile]").change(e=>{
+		$("#image-container").html("");
+		if(e.target.files[0].type.includes("image")){
+			let reader=new FileReader();
+			reader.onload=(e)=>{
+				const img=$("<img>").attr({
+					src:e.target.result,
+					width:"200px",
+					height:"200px",
+					class:"img-thumbnail"
+				});
+				$("#image-container").append(img);
+				$("#target").attr("src",e.target.result);
+			}
+			reader.readAsDataURL(e.target.files[0]);
+		}
+	})
+	
+	//날짜 현재 이후는 선택 불가
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1; //January is 0!
+	var yyyy = today.getFullYear();
+	
+	if (dd < 10) {
+	   dd = '0' + dd;
+	}
+	
+	if (mm < 10) {
+	   mm = '0' + mm;
+	} 
+	    
+	today = yyyy + '-' + mm + '-' + dd;
+	document.getElementById("member_date").setAttribute("max", today);
 	
 </script>		
 

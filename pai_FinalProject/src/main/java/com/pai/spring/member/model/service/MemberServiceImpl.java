@@ -28,16 +28,16 @@ public class MemberServiceImpl implements MemberService {
 	public int insertMember(Member m) throws RuntimeException{
 		// TODO Auto-generated method stub
 		int result=dao.insertMember(session,m);
-		if(result>0&&!m.getProfile().isEmpty()) {
-			try {
-				for(Profile p : m.getProfile()) {
-					p.setMember_id(m.getMember_id());
-					result=dao.insertProfile(session,p);
-				}
-			}catch(RuntimeException e) {
-				throw new RuntimeException("등록실패!");
-			}
-		}
+//		if(result>0&&!m.getProfile().isEmpty()) {
+//			try {
+//				for(Profile p : m.getProfile()) {
+//					p.setMember_id(m.getMember_id());
+//					result=dao.insertProfile(session,p);
+//				}
+//			}catch(RuntimeException e) {
+//				throw new RuntimeException("등록실패!");
+//			}
+//		}
 		return result;
 	}
 
@@ -123,6 +123,12 @@ public class MemberServiceImpl implements MemberService {
 	public int pwUpdate(String member_id, String hashedPw) throws Exception {
 		// TODO Auto-generated method stub
 		return dao.pwUpdate(session,member_id,hashedPw);
+	}
+
+	@Override
+	public int updateMember(Member m) {
+		// TODO Auto-generated method stub
+		return dao.updateMember(session,m);
 	}
 
 	
