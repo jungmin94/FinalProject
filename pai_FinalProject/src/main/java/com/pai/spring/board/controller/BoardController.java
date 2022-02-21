@@ -220,12 +220,14 @@ public class BoardController {
 				}
 			}
 		}
+		 
 		
 		Member m=Member.builder().member_id(memberId).build();
 		List<AttachFile> filenames=new ArrayList();
 		AttachFile f=null;
 		for(int i=0;i<upFile.length;i++) {
 			f=AttachFile.builder().attachFileName(upFile[i].getOriginalFilename()).build();
+			System.out.println(upFile[i].getOriginalFilename());
 			filenames.add(f); 
 		}
 		

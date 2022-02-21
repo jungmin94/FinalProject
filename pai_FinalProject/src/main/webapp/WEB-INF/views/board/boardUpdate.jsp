@@ -131,7 +131,14 @@ $("#upFiles").change(e=>{
 			for(let i=0;i<fileInput[0].files.length;i++){
 				frm.append("upFile",fileInput[0].files[i]);
 			}
+			/* frm.append("upFile",${board.attachFileName}) */
 		}
+		
+		/* if(${board.attachFile}.size()>0){
+			for(let i=0;i<${board.attachFile}.size;i++){}
+			console.log()
+		} */
+		
 		
 		const title=$("#boardTitle").val().trim();
 		if(title.length<1){

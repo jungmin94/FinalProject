@@ -418,16 +418,17 @@ function kakaoShare() {
       description: 'MBTI커뮤니티 사이트 PAI',
       imageUrl: 'https://newsimg.hankookilbo.com/cms/articlerelease/2021/08/06/d05b2f4a-4b71-4d85-88ac-c2ca0938559e.jpg',
       link: {
-        mobileWebUrl: "http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null",
-        webUrl: 'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+        mobileWebUrl: 'http://61.78.121.242:9999/GDJ41_pai_final/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+        webUrl: 'http://61.78.121.242:9999/GDJ41_pai_final/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+        
       },
     },
     buttons: [
       {
         title: '보러가기',
-        link: {
-          mobileWebUrl: 'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
-          webUrl: 'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+        link: { 
+          mobileWebUrl: 'http://61.78.121.242:9999/GDJ41_pai_final/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+          webUrl: 'http://61.78.121.242:9999/GDJ41_pai_final/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
         },
       },
     ],
@@ -435,9 +436,10 @@ function kakaoShare() {
     installTalk: true,
   })
 }
-
-
-
+/* 'http://61.78.121.242:9999/GDJ41_pai_final/board/boardView.do?boardNo=${board.boardNo}&memberId=null'
+	'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null'		
+ */
+ 
 
 
 	const before=()=>{ 
