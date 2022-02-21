@@ -66,6 +66,13 @@ public class MessageServiceImpl implements MessageService {
 	}
 	
 	
+	
+	
+	@Override
+	public int saveMsgPut(int msgNo) {
+		return dao.saveMsgPut(session, msgNo);
+	}
+
 	@Override
 	public int deleteSendMsg(int msgNo) {
 		return dao.deleteSendMsg(session, msgNo);
@@ -102,6 +109,66 @@ public class MessageServiceImpl implements MessageService {
 	@Override
 	public int cancelSendMsg(int msgNo) {
 		return dao.cancelSendMsg(session, msgNo);
+	}
+
+	@Override
+	public List<Message> selectSaveMessage(String memberId, int cPage, int numPerpage) {
+		return dao.selectSaveMessage(session, memberId, cPage, numPerpage);
+	}
+
+	@Override
+	public int selectSaveMessageCount(String memberId) {
+		return dao.selectSaveMessageCount(session, memberId);
+	}
+
+	@Override
+	public Map selectSaveMsgDetail(int msgNo) {
+		return dao.selectSaveMsgDetail(session, msgNo);
+	}
+
+	@Override
+	public int saveMsgRead(int msgNo) {
+		return dao.saveMsgRead(session, msgNo);
+	}
+
+	@Override
+	public int deleteSaveMsg(int msgNo) {
+		return dao.deleteSaveMsg(session, msgNo);
+	}
+
+	@Override
+	public int saveMsgExport(int msgNo) {
+		return dao.saveMsgExport(session, msgNo);
+	}
+
+	@Override
+	public List<Message> selectRecvMsgSearch(Map param, int cPage, int numPerpage) {
+		return dao.selectRecvMsgSearch(session, param, cPage, numPerpage);
+	}
+
+	@Override
+	public int selectRecvMsgSearchCount(Map param) {
+		return dao.selectRecvMsgSearchCount(session, param);
+	}
+
+	@Override
+	public List<Message> selectSendMsgSearch(Map param, int cPage, int numPerpage) {
+		return dao.selectSendMsgSearch(session, param, cPage, numPerpage);
+	}
+
+	@Override
+	public int selectSendMsgSearchCount(Map param) {
+		return dao.selectSendMsgSearchCount(session, param);
+	}
+
+	@Override
+	public List<Message> selectSaveMsgSearch(Map param, int cPage, int numPerpage) {
+		return dao.selectSaveMsgSearch(session, param, cPage, numPerpage);
+	}
+
+	@Override
+	public int selectSaveMsgSearchCount(Map param) {
+		return dao.selectSaveMsgSearchCount(session, param);
 	}
 
 	

@@ -3,6 +3,7 @@ package com.pai.spring.market.model.service;
 import java.util.List;
 import java.util.Map;
 
+import com.pai.spring.market.model.vo.Cart;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
@@ -102,5 +103,17 @@ public interface MarketService {
 	int updateGoodsDetailImage(List<GoodsDetailImage> filenames);
 	
 	int updateGoodOutput(String goodsName);
+	
+	int totalCartCount(String member_id);
+	
+	Cart duplicateCheckCart(Cart cart);
+	
+	int addCart(Cart cart);
+
+	int updateCart(Cart cart);
+	
+	List<Cart> selectCartList(String member_id);
+	
+	int deleteCart(Cart cart);
 	
 }
