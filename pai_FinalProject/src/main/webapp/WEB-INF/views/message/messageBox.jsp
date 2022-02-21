@@ -1351,7 +1351,7 @@ function saveMsgView(e){
 var socket = null;
 
 function connectSocket(){
-	var sock = "http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message";
+	var sock = "https://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message";
 	socket = new SockJS(sock);
 	
 	socket.onopen = onOpen;

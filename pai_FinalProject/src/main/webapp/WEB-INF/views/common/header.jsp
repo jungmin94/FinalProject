@@ -275,7 +275,7 @@ a .sub-menu-detail {
 		
         //웹소켓 연결
 	 	function connectSocket(){
-			var sock = "http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message";
+			var sock = "https://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/message";
 			socket = new SockJS(sock);
 			
 			socket.onopen = onOpen;
