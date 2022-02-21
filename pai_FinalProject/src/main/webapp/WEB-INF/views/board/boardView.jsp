@@ -246,7 +246,7 @@ section>*{
 										      		</div>
 										      		<div class="declare-list">
 								  						<input class="form-check-input" type="radio"  id="otherRadio" value="기타" onclick="other();">
-														<label class="form-check-label" for="inlineRadio2">기타(직접입력)</label>
+														<label class="form-check-label" for="inlineRadio2">기타</label>
 														<div id="target" style="display:none;"></div>
 										      		</div>
 										      		<div>
@@ -418,16 +418,17 @@ function kakaoShare() {
       description: 'MBTI커뮤니티 사이트 PAI',
       imageUrl: 'https://newsimg.hankookilbo.com/cms/articlerelease/2021/08/06/d05b2f4a-4b71-4d85-88ac-c2ca0938559e.jpg',
       link: {
-        mobileWebUrl: "http://localhost:9090/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null",
-        webUrl: 'http://localhost:9090/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+        mobileWebUrl: 'https://61.78.121.242:8844/GDJ41_pai_final/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+        webUrl: 'https://61.78.121.242:8844/GDJ41_pai_final/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+        
       },
     },
     buttons: [
       {
         title: '보러가기',
-        link: {
-          mobileWebUrl: 'http://localhost:9090/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
-          webUrl: 'http://localhost:9090/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+        link: { 
+          mobileWebUrl: 'https://61.78.121.242:8844/GDJ41_pai_final/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
+          webUrl: 'https://61.78.121.242:8844/GDJ41_pai_final/board/boardView.do?boardNo=${board.boardNo}&memberId=null',
         },
       },
     ],
@@ -435,9 +436,10 @@ function kakaoShare() {
     installTalk: true,
   })
 }
-
-
-
+/* 'http://61.78.121.242:9999/GDJ41_pai_final/board/boardView.do?boardNo=${board.boardNo}&memberId=null'
+	'http://localhost:9091/spring/board/boardView.do?boardNo=${board.boardNo}&memberId=null'		
+ */
+ 
 
 
 	const before=()=>{ 

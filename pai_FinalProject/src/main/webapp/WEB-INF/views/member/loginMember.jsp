@@ -8,7 +8,7 @@
 	<jsp:param name="title" value="로그인"/>
 </jsp:include>
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.2.js" charset="utf-8"></script>
-<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	* {
 	  margin: 0;

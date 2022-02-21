@@ -148,7 +148,7 @@ section>*{
 				<td style="width:50px;color:#004080;font-size:16px;text-align:center;background:url(http://www.todayhumor.co.kr/board/images/bar_back.gif);">조회</td>
 				<td style="width:50px;color:#004080;font-size:16px;text-align:center; background:url(http://www.todayhumor.co.kr/board/images/bar_right_back.gif) no-repeat -17px 0px;">추천</td> 
 			</tr> 
-		<!-- 공지글 상단고정 -->
+		<!-- 공지글 상단고정 --> 
 			<c:forEach var="n" items="${notice}">
 				<tr class="notices" style="background-color:lightGray; border-bottom:1px gray solid; height:40px;">
 					<td><img src="${path}/resources/images/board/notice.png" style="width:30px; height:30px;"></td>
@@ -205,7 +205,7 @@ section>*{
 					<tr>
 						<td colspan="8" style="text-align:center;"><p>조회된 게시물이 없습니다.</p></td>
 					</tr>
-				</c:if>
+			</c:if>
 			<tr>
 				<td colspan="8" style="height:40px; text-align:center">${pageBar}</td>
 			</tr>

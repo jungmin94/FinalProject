@@ -6,8 +6,12 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/> 
 <style>
 	.nav-link{
-		font-size:30px;
+		font-size:25px;
+		margin-bottom:20px;
 		bolder:1px gray solid;
+		text-align:center;
+		width:130px;
+		padding:0px; 
 	}
 	.admin{
 		font-size:50px;
@@ -30,6 +34,10 @@
 		text-align:center;
 		border-bottom:1px lightGray solid;	
 	}
+	.navi{
+		width:150px;
+		border-right: lightGray 2px solid;
+	}
 </style>
 <section>
 	<div class="container">
@@ -51,10 +59,7 @@
 			            <li><a class="dropdown-item" href="${path}/admin/declareAdminView.do">게시글신고</a></li>
 			            <li><a class="dropdown-item" href="${path}/admin/commentDeclare.do">댓글신고</a></li> 
 			          </ul>
-			        </li> 
-				  <li class="nav-item">
-				    <a class="nav-link" href="#">Link</a>
-				  </li> 
+			        </li>  
 				</ul>
 			</div>
 			

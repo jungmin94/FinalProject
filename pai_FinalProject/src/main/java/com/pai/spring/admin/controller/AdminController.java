@@ -1,5 +1,6 @@
 package com.pai.spring.admin.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.pai.spring.admin.model.service.AdminService;
 import com.pai.spring.board.model.service.BoardService;
-import com.pai.spring.board.model.vo.Board;
 import com.pai.spring.board.model.vo.BoardDeclare;
 import com.pai.spring.board.model.vo.CommentDeclare;
 import com.pai.spring.common.PageFactory;
@@ -28,8 +28,13 @@ public class AdminController {
 	private BoardService boardService;
 	
 	@RequestMapping("/adminView.do")
-	public String adminView() {
-		return "admin/adminView";
+	public ModelAndView adminView(ModelAndView mv,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="10") int numPerPage) {
+		List<Member> list=service.memberList(cPage,numPerPage);
+		int totalDate=service.memberCount();
+		
+		mv.addObject("list", list);
+		mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "adminView.do",""));
+		return mv;
 	}
 	
 	@RequestMapping("/declareAdminView.do")
@@ -56,9 +61,9 @@ public class AdminController {
 	public ModelAndView updateBoardDeclare(ModelAndView mv,BoardDeclare bd,String boardWriter ) {
 		
 		int result=0;
-		int result2=0;
-		System.out.println(bd.getBoardNo());
-		System.out.println(bd);
+		int result2=0; 
+		Member m=service.selectMember(boardWriter);
+		
 		if(bd.getDeclareResult().contains("경고")) {
 			//멤버테이블 member_police에 값 1 추가 
 			result=service.updatePolice(boardWriter);
@@ -66,7 +71,11 @@ public class AdminController {
 		
 		if(bd.getDeclareResult().contains("블랙")) {
 			//멤버테이블 member_black에 값 1 추가
-			result=service.insertBlack(boardWriter);
+			if(m.getMember_black()==1) {
+				result=1;	
+			}else if(m.getMember_black()!=1) { 
+				result=service.insertBlack(boardWriter);
+			}
 		}
 		
 		if(bd.getDeclareResult().contains("삭제")) {
@@ -153,6 +162,25 @@ public class AdminController {
 		return mv; 
 	}
 	
+	@RequestMapping("/searchMember.do")
+	public ModelAndView searchMember(ModelAndView mv,@RequestParam(value="keyword",defaultValue="null") String keyword,@RequestParam(value="gender",required=false) String gender ,String searchType,@RequestParam(value="cPage",defaultValue="1") int cPage, @RequestParam(value="numPerPage",defaultValue="10") int numPerPage) {
+		//	Map param=Map.of("keyword",keyword,"searchType", searchType,"gender",gender );
+			Map<String,Object> param=new HashMap();
+			param.put("keyword", keyword);
+			param.put("searchType", searchType);
+			param.put("gender", gender);
+			List<Member> list=service.searchMemberList(param,cPage,numPerPage); 
+			int totalDate=service.searchMemberCount();
+			
+			
+			mv.addObject("keyword", keyword);
+			mv.addObject("gender", gender);
+			mv.addObject("searchType", searchType);
+			mv.addObject("list", list);
+			mv.addObject("pageBar",PageFactory.getPageBar(totalDate, cPage, numPerPage, 5, "admin/searchMember.do",""));
+			mv.setViewName("admin/adminView");
+		return mv;
+	}
 	
 	
 	

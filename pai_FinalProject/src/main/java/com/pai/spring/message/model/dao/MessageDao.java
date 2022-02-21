@@ -28,6 +28,8 @@ public interface MessageDao{
 
 	int deleteSendMsg(SqlSessionTemplate session, int msgNo);
 	
+	int saveMsgPut(SqlSessionTemplate session, int msgNo);
+	
 	void oldMessageDelete(SqlSessionTemplate session);
 	
 	void perDelete(SqlSessionTemplate session);
@@ -39,4 +41,29 @@ public interface MessageDao{
 	int recvMsgRead(SqlSessionTemplate session, int msgNo);
 	
 	int cancelSendMsg(SqlSessionTemplate session, int msgNo);
+	
+	List<Message> selectSaveMessage(SqlSessionTemplate session, String memberId, int cPage, int numPerpage);
+
+	int selectSaveMessageCount(SqlSessionTemplate session, String memberId);
+	
+	Map selectSaveMsgDetail(SqlSessionTemplate session, int msgNo);
+	
+	int saveMsgRead(SqlSessionTemplate session, int msgNo);
+	
+	int deleteSaveMsg(SqlSessionTemplate session, int msgNo);
+	
+	int saveMsgExport(SqlSessionTemplate session, int msgNo);
+	
+	List<Message> selectRecvMsgSearch(SqlSessionTemplate session, Map param, int cPage, int numPerpage);
+	
+	int selectRecvMsgSearchCount(SqlSessionTemplate session, Map param);
+	
+	List<Message> selectSendMsgSearch(SqlSessionTemplate session, Map param, int cPage, int numPerpage);
+	
+	int selectSendMsgSearchCount(SqlSessionTemplate session, Map param);
+	
+	List<Message> selectSaveMsgSearch(SqlSessionTemplate session, Map param, int cPage, int numPerpage);
+	
+	int selectSaveMsgSearchCount(SqlSessionTemplate session, Map param);
+	
 }

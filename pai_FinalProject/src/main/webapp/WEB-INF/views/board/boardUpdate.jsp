@@ -103,26 +103,7 @@
 	</div>
 </section>
 
-<script>
-/*	$(()=>{
-		$("button[name=files]").click(e=>{
-			$(e.target).remove();
-		})
-	}) 
-	
-	 
-$("#upFiles").change(e=>{ 
-			const fileInput=$("input[name=attachFile]");
-			if(fileInput[0].files.length>0){
-				for(let i=0;i<fileInput[0].length;i++){
-					 $("#upFiles").append("<button type="button" class="btn btn-outline-primary" name="files"></button>);
-				}
-			} 
-		})
-	 
- 	 
- */
-
+<script> 
 	$("#submit").click(e=>{
 		const frm=new FormData();
 		const fileInput=$("input[name=attachFile]");
