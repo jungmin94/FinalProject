@@ -7,7 +7,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param name="title" value="회원정보보기"/>
 </jsp:include>
-<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <body>
 <style>
 	div#enroll-container{width:400px; margin:0 auto; text-align:center;}
