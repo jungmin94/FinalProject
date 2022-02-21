@@ -49,7 +49,7 @@ public class EmailSendService {
             sendMail.setText(new StringBuffer().append("<h1>[이메일 인증]</h1>")
             .append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
 //            .append("<a href='http://localhost:9090/spring/member/signUpConfirm?member_email=")
-            .append("<a href='https://${pageContext.request.serverName}:${pageContext.request.serverPort}/spring/member/signUpConfirm?member_email=")
+            .append("<a href='https://61.78.121.242:8844/GDJ41_pai_final/member/signUpConfirm?member_email=")
             .append(member_email)
             .append("&authKey=") 
             .append(authKey)
