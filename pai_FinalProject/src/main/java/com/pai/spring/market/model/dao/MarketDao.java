@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 
+import com.pai.spring.market.model.vo.Cart;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
@@ -104,5 +105,17 @@ public interface MarketDao {
 	int updateGoodsDetailImage(SqlSessionTemplate session,GoodsDetailImage gdi);
 	
 	int updateGoodOutput(SqlSessionTemplate session,String goodsName);
+	
+	int totalCartCount(SqlSessionTemplate session,String member_id);
+	
+	Cart duplicateCheckCart(SqlSessionTemplate session,Cart cart);
+	
+	int addCart(SqlSessionTemplate session,Cart cart);
+
+	int updateCart(SqlSessionTemplate session,Cart cart);
+	
+	List<Cart> selectCartList(SqlSessionTemplate session,String member_id);
+	
+	int deleteCart(SqlSessionTemplate session,Cart cart);
 	
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pai.spring.market.model.dao.MarketDao;
+import com.pai.spring.market.model.vo.Cart;
 import com.pai.spring.market.model.vo.Goods;
 import com.pai.spring.market.model.vo.GoodsDetailImage;
 import com.pai.spring.market.model.vo.GoodsDetails;
@@ -187,8 +188,14 @@ public class MarketServiceImpl implements MarketService {
 	
 	@Override
 	public int insertOrder(Order order) {
-	
-		return dao.insertOrder(session, order);
+		int result=0;
+		result=dao.insertOrder(session, order);
+		if(result>0 && (order.getOrderDetail()!=null && !order.getOrderDetail().isEmpty())) {
+			for(OrderDetail orderDetail : order.getOrderDetail()) {
+				result=dao.insertOrderDetail(session, orderDetail);
+			}
+		}
+		return result;
 	}
 	
 	@Override
@@ -309,6 +316,42 @@ public class MarketServiceImpl implements MarketService {
 	public int updateGoodOutput(String goodsName) {
 		
 		return dao.updateGoodOutput(session, goodsName);
+	}
+	
+	@Override
+	public int totalCartCount(String member_id) {
+	
+		return dao.totalCartCount(session,member_id);
+	}
+
+	@Override
+	public Cart duplicateCheckCart(Cart cart) {
+		
+		return dao.duplicateCheckCart(session, cart);
+	}
+
+	@Override
+	public int addCart(Cart cart) {
+	
+		return dao.addCart(session, cart);
+	}
+
+	@Override
+	public int updateCart(Cart cart) {
+
+		return dao.updateCart(session, cart);
+	}
+	
+	@Override
+	public List<Cart> selectCartList(String member_id) {
+	
+		return dao.selectCartList(session, member_id);
+	}
+	
+	@Override
+	public int deleteCart(Cart cart) {
+		
+		return dao.deleteCart(session, cart);
 	}
 	
 }

@@ -5,32 +5,94 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath }"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param name="title" value="회원탈퇴"/>
+	<jsp:param name="title" value="패스워드 변경"/>
 </jsp:include>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-<body>
-	<form action="${path }/member/pwUpdateEnd.do" method="post" id="pwUpdateForm" name="pwUpdateForm">
-                       <input type="hidden" id="member_id" name="member_id" value="${loginMember.member_id}">
-    <div class="col-sm-8 col-sm-offset-2">
-        <div class="panel panel-default panel-margin-10">
-            <div class="panel-body panel-body-content text-center">
-                <p class="lead">변경하실 비밀번호를 입력해 주세요.</p>
-                <div class="form-group">
-                    <input type="password" name="member_pw" id="member_pw" class="form-control form-control-inline text-center" placeholder="현재 비밀번호" />
-                </div>
-                <div class="form-group">
-                    <input type="password" name="member_pw1" id="member_pw1" class="form-control form-control-inline text-center" placeholder="새 비밀번호" />
-                </div>
-                <div class="form-group">
-                    <input type="password" name="member_pw2" id="member_pw2" class="form-control form-control-inline text-center" placeholder="새 비밀번호 확인" />
-                </div>
-                <button type="submit" id="pwUpdate" name="pwUpdate" class="btn btn-primary">비밀번호 변경</button> <a href="${path }/member/memberView.do" class="btn btn-default">취소</a>
-            </div>
+<style>
+ 	.pwUpdate {
+	  width: 30%;
+	  height: 700px;
+	  background: white;
+	  border-radius: 20px;
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  flex-direction: column;
+	}
+	.btn-outline-secondary:hover{
+	   background-color: #6710f242;
+	   border: 1px solid #6710f242;
+	}
+	.btn-outline-secondary{
+	   border: 1px solid #6710f242;
+	   color:#6710f242;
+	}
+	.wrap {
+	  width: 100%;
+	  height: 100vh;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  background: rgba(0, 0, 0, 0.1);
+	}
+	.form-floating,.checkbox{
+		color:purple;
+	}
+</style>
+<section>
+	<form action="${path }/member/pwUpdateEnd.do" class="wrap" method="post" id="pwUpdateForm" name="pwUpdateForm">
+        <div class="pwUpdate">
+        	<div class="headDiv">
+	        	<img src="${ path }/resources/images/member/logo_white.jpg" class="homeimg" width="300px" height="300px" >
+	    	</div>
+	        <input type="hidden" id="member_id" name="member_id" value="${loginMember.member_id}">
+		    <div class="col-sm-8 col-sm-offset-2">
+		        <div class="panel panel-default panel-margin-10">
+		            <div class="panel-body panel-body-content text-center">
+		                <label>새로운 패스워드를 입력해주세요.</label>
+		                <br>
+		                <br>
+		                <div style="width: 100%;">
+				            <div class="form-floating mb-3" style="width: 100%">
+							  	<input type="password" class="form-control" id="member_pw" name="member_pw" placeholder="패스워드" required>
+							  	<label for="floatingInput">기존 패스워드를 입력하세요</label>
+							</div> 
+						</div>	
+		                <div style="width: 100%;">
+				            <div class="form-floating mb-3" style="width: 100%">
+							  	<input type="password" class="form-control" id="member_pw1" name="member_pw1" placeholder="패스워드" required>
+							  	<label for="floatingInput">새로운 패스워드를 입력하세요</label>
+							</div> 
+						</div>	
+						<div style="width: 100%;">
+				            <div class="form-floating mb-3" style="width: 100%">
+							  	<input type="password" class="form-control" id="member_pw2" name="member_pw2" placeholder="패스워드" required>
+							  	<label for="floatingInput">새로운 패스워드를 다시 입력하세요</label>
+							</div> 
+						</div>
+		                <div style="width: 100%;">
+				           	<div style="width: 100%; display: inline-block;">
+				           		<input type="submit" class="updateBtn btn btn-outline-secondary" name="pwUpdate" id="pwUpdate" value="패스워드 변경" style="width: 100%;">
+				           	</div>
+				        </div><br>
+		                <div style="width: 100%;">
+				           	<div style="width: 100%; display: inline-block;">
+				           		<input type="submit" class="updateBtn btn btn-outline-secondary" id="goBack" value="취소" style="width: 100%;">
+				           	</div>
+				        </div>
+				        <br>
+		            </div>
+		        </div>
+		    </div>
         </div>
-    </div>
     </form>
-</body>
+</section>
 <script type="text/javascript">
+$(function(){
+	$("#goBack").on("click", function(){
+		location.href = '${ path }/member/memberView.do'
+	})
+})
 	$(document).ready(function(){
 		
 		$("#pwUpdate").on("click", function(){
@@ -55,7 +117,7 @@
 				$("#member_pw2").focus();
 			
 				$.ajax({
-					url : "${path}/member/pwCheck",
+					url : "${path}/member/pwCheck.do",
 					type : "POST",
 					dataType : "json",
 					data : $("#pwUpdateForm").serializeArray(),

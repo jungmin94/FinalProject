@@ -21,5 +21,6 @@ public class OrderDetail {
 	private int orderCount;
 	private int orderPrice;
 	private String checkReview;
+	private String image; // 구매목록 이미지 출력을 위한 변수
 	
 }

@@ -1,7 +1,8 @@
 package com.pai.spring.member.model.vo;
 
 import java.sql.Date;
-import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ public class Member {
 	private String member_mbti;
 	private int member_police;
 	private int member_black;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date member_enroll;
 	private String status;
 	private String authKey;

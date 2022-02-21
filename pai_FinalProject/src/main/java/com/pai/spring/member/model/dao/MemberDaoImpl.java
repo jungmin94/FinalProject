@@ -114,6 +114,11 @@ public class MemberDaoImpl implements MemberDao {
 		map.put("member_pw", hashedPw);
 		return session.update("member.pwUpdate", map);
 	}
+	@Override
+	public int updateMember(SqlSessionTemplate session, Member m) {
+		// TODO Auto-generated method stub
+		return session.update("member.updateMember",m);
+	}
 
 	
 	
