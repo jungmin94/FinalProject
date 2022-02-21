@@ -166,7 +166,7 @@
           <br>
           <input type="hidden" id="gName"  name="goodsName" value="${good.goodsName}">
           <input type="hidden" id="gNo"  name="goodsNo" value="${good.goodsNo}">
-          <button type="submit" class="btn btn-outline-primary" onclick="$('#purchaseFrm').submit();">구매하기</button>
+          <button type="button" class="btn btn-outline-primary"  id="purchaseBtn_">구매하기</button>
           <button type="button"  id="cartBtn" class="btn btn-outline-info" data-bs-toggle="tooltip" data-bs-placement="top" title="최대 5개까지 등록 가능합니다" >장바구니</button>
        </form>
          <input type="hidden" id="gImage"  name="image" value="${good.image}">
@@ -395,6 +395,20 @@ $(document).on("click", "#cartBtn", function () {
 });
 
 
+$(document).on("click", "#purchaseBtn_", function () { 
+	
+	let color=$("#select_color").val();
+	let size=$("#select_size").val();
+	let mbti=$("#select_mbti").val();
+
+	
+	if(color==null || size==null || mbti==null){
+		alert('옵션을 모두 입력해주세요! :)');
+		return;
+	}
+
+	$('#purchaseFrm').submit();
+});
 
 </script>
 

@@ -57,7 +57,7 @@
 		<c:forEach items="${goodsList}" var="g">
 		  <tr>
 			<th scope="row">${g.goodsNo}</th>
-			<td>${g.goodsName}</td>
+			<td><a href="${path}/market/goodsDetailView.do?goodsName=${g.goodsName}">${g.goodsName}</a></td>
 			<td>${g.goodsEnrollDate}</td>
 			<td>
 				<c:if test="${g.largeCategory eq 'M'}">남성용</c:if>

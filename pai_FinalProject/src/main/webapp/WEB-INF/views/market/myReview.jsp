@@ -233,7 +233,8 @@
       </div>
       <div class="modal-body"  style="text-align:center;">
       <form id="deleteReviewFrm" action="${path}/market/deleteReview.do">
-      	삭제하시겠습니까?
+  		 삭제 시 복구나 재등록이 불가능합니다.<br>
+			정말 삭제하시겠습니까?
 		<input type="hidden" id="re_de_goodsName" name="goodsName">
 		<input type="hidden" id="re_de_reviewNo" name="reviewNo">
 	</form>

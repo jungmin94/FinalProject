@@ -55,7 +55,7 @@
 		<c:forEach items="${enrolledList}" var="e">
 		  <tr>
 			<th scope="row">${e.goodsNo}</th>
-			<td>${e.goodsName}</td>
+			<td><a href="${path}/market/goodsDetailView.do?goodsName=${e.goodsName}">${e.goodsName}</a></td>
 			<td>${e.color}</td>
 			<td>${e.size}</td>
 			<td>${e.price}</td>
