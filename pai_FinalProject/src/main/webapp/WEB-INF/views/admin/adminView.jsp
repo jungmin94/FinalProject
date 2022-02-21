@@ -48,7 +48,7 @@
 		<div class="admin">
 			회원관리
 		</div>
-		<div class="row" style="margin-top:50px;"> 
+		<div class="row" style="margin-top:20px;"> 
 		  <form action="${path}/admin/searchMember.do"> 
 			<div class="select">
 				<select id="selectType" name="searchType">
@@ -150,10 +150,10 @@
 					</tbody>
 				</table>
 			</div> 
-			<div>
+		</div>
+			<div style="margin-top:30px;">
 				${pageBar}
 			</div>
-		</div>
 	</div>
 </section>
 

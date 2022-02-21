@@ -61,9 +61,9 @@ public class AdminController {
 	public ModelAndView updateBoardDeclare(ModelAndView mv,BoardDeclare bd,String boardWriter ) {
 		
 		int result=0;
-		int result2=0;
-		System.out.println(bd.getBoardNo());
-		System.out.println(bd);
+		int result2=0; 
+		Member m=service.selectMember(boardWriter);
+		
 		if(bd.getDeclareResult().contains("경고")) {
 			//멤버테이블 member_police에 값 1 추가 
 			result=service.updatePolice(boardWriter);
@@ -71,7 +71,11 @@ public class AdminController {
 		
 		if(bd.getDeclareResult().contains("블랙")) {
 			//멤버테이블 member_black에 값 1 추가
-			result=service.insertBlack(boardWriter);
+			if(m.getMember_black()==1) {
+				result=1;	
+			}else if(m.getMember_black()!=1) { 
+				result=service.insertBlack(boardWriter);
+			}
 		}
 		
 		if(bd.getDeclareResult().contains("삭제")) {

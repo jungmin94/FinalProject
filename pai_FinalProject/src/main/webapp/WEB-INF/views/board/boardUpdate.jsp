@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/> 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	section{
 		margin: 0px auto;
@@ -103,26 +103,7 @@
 	</div>
 </section>
 
-<script>
-/*	$(()=>{
-		$("button[name=files]").click(e=>{
-			$(e.target).remove();
-		})
-	}) 
-	
-	 
-$("#upFiles").change(e=>{ 
-			const fileInput=$("input[name=attachFile]");
-			if(fileInput[0].files.length>0){
-				for(let i=0;i<fileInput[0].length;i++){
-					 $("#upFiles").append("<button type="button" class="btn btn-outline-primary" name="files"></button>);
-				}
-			} 
-		})
-	 
- 	 
- */
-
+<script> 
 	$("#submit").click(e=>{
 		const frm=new FormData();
 		const fileInput=$("input[name=attachFile]");
@@ -131,14 +112,7 @@ $("#upFiles").change(e=>{
 			for(let i=0;i<fileInput[0].files.length;i++){
 				frm.append("upFile",fileInput[0].files[i]);
 			}
-			/* frm.append("upFile",${board.attachFileName}) */
 		}
-		
-		/* if(${board.attachFile}.size()>0){
-			for(let i=0;i<${board.attachFile}.size;i++){}
-			console.log()
-		} */
-		
 		
 		const title=$("#boardTitle").val().trim();
 		if(title.length<1){
