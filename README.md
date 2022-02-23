@@ -45,7 +45,7 @@
 -추천수,조회순서에따른 인기글 TOP5 / 카테고리가 정보인게시글에대한 추천수 TOP5 조회가능 <br>
 -탭을 통한 MBTI별 인기글 조회가능 <br>
 
-*구현언어 : Java, Spring framework 5 , JSP,  javaScript, Jquery, HTML/CSS, SQL, MyBatis
+* 구현언어 : Java, Spring framework 5 , JSP,  javaScript, Jquery, HTML/CSS, SQL, MyBatis
 * WAS : 톰캣(Tomcat 9.0)
 * API : 카카오톡 공유API 적용
  
