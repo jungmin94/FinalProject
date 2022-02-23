@@ -45,6 +45,8 @@ article{
 		<!-- <article class="result">
 			결과로 친구리스트 가져와야함
 		</article> -->
+	
+		
 	<form id="taste_form" action="${path}/taste/insertTaste.do" method="post">
 		<input type="hidden" name="exam01" id="exam01" value="0">
 		<input type="hidden" name="exam02" id="exam02" value="0">
@@ -119,7 +121,11 @@ article{
         }
         
         function end(){
-        	$("#tasteForm").submit();
+        		$("#tasteForm").submit();
+        }
+        
+        if(${nullReturn != null}){
+        	alert(${nullReturn});
         }
 		
 	</script>

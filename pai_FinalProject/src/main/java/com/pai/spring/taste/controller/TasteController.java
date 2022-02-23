@@ -34,29 +34,30 @@ public class TasteController {
 	public ModelAndView selectTaste(String memberId, ModelAndView mv) {
 		
 		//본인 취향 조회해와서
-		Taste t = service.selectTasteOne(memberId);
+		Taste t = null;
+		try {
+			t = service.selectTasteOne(memberId);
+			//map에 넣어주고
+			Map param = new HashMap();
+			param.put("exam01", t.getExam01());
+			param.put("exam02", t.getExam02());
+			param.put("exam03", t.getExam03());
+			param.put("exam04", t.getExam04());
+			param.put("exam05", t.getExam05());
+			
+			//일치하는 list 가져오기
+			List<Member> list = service.selectTasteList(param);
+			
+			
+			mv.addObject("list", list);	
+			mv.setViewName("taste/tasteList");
+			
+		} catch(NullPointerException e) {
+			
+			mv.addObject("nullReturn", "'기존 테스트 내역이 없습니다. 테스트 후 이용바랍니다.'");
+			mv.setViewName("taste/tasteTest");
+		}
 		
-		//map에 넣어주고
-		Map param = new HashMap();
-		param.put("exam01", t.getExam01());
-		param.put("exam02", t.getExam02());
-		param.put("exam03", t.getExam03());
-		param.put("exam04", t.getExam04());
-		param.put("exam05", t.getExam05());
-		
-		//일치하는 list 가져오기
-		List<Member> list = service.selectTasteList(param);
-		
-//		for(Iterator<Map<String,Object>> it = list.iterator(); it.hasNext();) {
-//			Map<String,Object> obj = it.next();
-//			if(memberId.equals(obj.get("member_id"))) {
-//				it.remove();
-//			}
-//			
-//		}
-		
-		mv.addObject("list", list);	
-		mv.setViewName("taste/tasteList");
 		
 		return mv;
 	}

@@ -30,32 +30,33 @@
 		<br>
 		
 		<div class="row row-cols-1 row-cols-md-4 g-4" style="text-align: center;">
-			<c:forEach var="t" items="${list }">
-				<c:if test="${loginMember.member_id ne t.member_id.member_id }">
-			<div class="col">
-					
+			<c:if test="${list ne null}">
+				<c:forEach var="t" items="${list }">
+					<c:if test="${loginMember.member_id ne t.member_id.member_id }">
+						<div class="col">
 			
-					<div class="card" style="width: 18rem;">
+						<div class="card" style="width: 18rem;">
 					
-						<c:if test="${t.member_id.member_profile eq null}">
-							<img src="https://us.123rf.com/450wm/acyotto/acyotto2110/acyotto211000028/175476675-.jpg?ver=6" class="card-img-top" alt="..." style="height: 170px; ">
-						</c:if>
-						<c:if test="${t.member_id.member_profile ne null}">
-							<img src="${path }/resources/upload/member/${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px; ">
-						</c:if>
-						<div class="card-body">
-						  <input type="hidden" value="${t.member_id.member_id }">
-						  <p class="card-text"><c:out value="${t.member_id.member_nick }"/></p>
-						  <p class="card-text"><c:out value="${t.member_id.member_date }"/></p>
-						  <p class="card-text"><c:out value="${t.member_id.member_gender }"/></p>
-						  <p class="card-text"><c:out value="${t.member_id.member_mbti }"/></p>
-						  <button onclick="sendMessage(this);" class="btn btn-primary">쪽지 보내기</button>
+							<c:if test="${t.member_id.member_profile eq null}">
+								<img src="https://us.123rf.com/450wm/acyotto/acyotto2110/acyotto211000028/175476675-.jpg?ver=6" class="card-img-top" alt="..." style="height: 170px; ">
+							</c:if>
+							<c:if test="${t.member_id.member_profile ne null}">
+								<img src="${path }/resources/upload/member/${t.member_id.member_profile }" class="card-img-top" alt="..." style="height: 170px; ">
+							</c:if>
+							<div class="card-body">
+							  <input type="hidden" value="${t.member_id.member_id }">
+							  <p class="card-text"><c:out value="${t.member_id.member_nick }"/></p>
+							  <p class="card-text"><c:out value="${t.member_id.member_date }"/></p>
+							  <p class="card-text"><c:out value="${t.member_id.member_gender }"/></p>
+							  <p class="card-text"><c:out value="${t.member_id.member_mbti }"/></p>
+							  <button onclick="sendMessage(this);" class="btn btn-primary">쪽지 보내기</button>
+							</div>
+					  	</div>
+					  	
 						</div>
-					  </div>
-			</div>
+			  		</c:if>
+				</c:forEach>
 			  </c:if>
-			</c:forEach>
-
 
 			
 		</div>	 
