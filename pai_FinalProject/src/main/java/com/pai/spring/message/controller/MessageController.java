@@ -58,7 +58,7 @@ public class MessageController {
 		List<Message> list = service.selectRecvMessage(memberId, cPage, numPerpage);
 		int totalData = service.selectRecvMessageCount(memberId);
 		
-		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "messageBox.do", "recvMsgBox"),"list",list);
+		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "messageBox.do", "recvMsgBox"),"list",list, "totalData", totalData);
 		return new Gson().toJson(result);
 	}
 	
@@ -79,7 +79,7 @@ public class MessageController {
 		List<Message> list = service.selectRecvMsgSearch(param, cPage, numPerpage);
 		int totalData = service.selectRecvMsgSearchCount(param);
 	
-		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "recvMsgSearch.do", "recvMsgSearch"),"list",list);
+		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "recvMsgSearch.do", "recvMsgSearch"),"list",list, "totalData", totalData);
 		return new Gson().toJson(result);
 	}
 	
@@ -149,7 +149,7 @@ public class MessageController {
 		
 		List<Message> list = service.selectSendMsg(sendId, cPage, numPerpage);
 		int totalData = service.selectSendMessageCount(sendId);
-		Map<String, Object> result = Map.of("pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "sendMsg.do", "sendMsgBox"),"list",list);
+		Map<String, Object> result = Map.of("pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "sendMsg.do", "sendMsgBox"),"list",list, "totalData", totalData);
 		
 		return new Gson().toJson(result);
 	}
@@ -173,7 +173,7 @@ public class MessageController {
 		int totalData = service.selectSendMsgSearchCount(param);
 		
 	
-		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "sendMsgSearch.do", "sendMsgSearch"),"list",list);
+		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "sendMsgSearch.do", "sendMsgSearch"),"list",list, "totalData", totalData);
 		return new Gson().toJson(result);
 	}
 	
@@ -293,7 +293,7 @@ public class MessageController {
 		List<Message> list = service.selectSaveMessage(memberId, cPage, numPerpage);
 		int totalData = service.selectSaveMessageCount(memberId);
 		
-		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "saveMsgBox.do", "saveMsgBox"),"list",list);
+		Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "saveMsgBox.do", "saveMsgBox"),"list",list, "totalData", totalData);
 		return new Gson().toJson(result);
 	}
 	
@@ -318,7 +318,7 @@ public class MessageController {
 
 			
 		
-			Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "sendMsgSearch.do", "sendMsgSearch"),"list",list);
+			Map<String, Object> result = Map.of("memberId", memberId, "pageBar",PageBar.getPageBar(totalData, cPage, numPerpage, 10, "sendMsgSearch.do", "sendMsgSearch"),"list",list, "totalData", totalData);
 			return new Gson().toJson(result);
 		}
 	

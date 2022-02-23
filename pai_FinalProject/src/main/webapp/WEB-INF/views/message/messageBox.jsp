@@ -144,7 +144,7 @@ function selectAllSaveMsg(e)  {
 
 //---------------------받은편지함 전체조회------------------------------
 function recvMsgBox(cPage){
-	var num=1;
+	//var num=1;
 	$(".nav-link").eq(0).css({'color':'black','font-weight':'bold', 'font-size':'20px'});
 	$(".nav-link").eq(1).css({'color':'#0a58ca','font-weight':'bold','font-size':'16px'});
 	$(".nav-link").eq(2).css({'color':'#0a58ca','font-weight':'bold','font-size':'16px'});
@@ -155,7 +155,7 @@ function recvMsgBox(cPage){
 		data: {"memberId":"${param.memberId}", cPage:cPage},
 		dataType: "json",
 		success: data => {
-
+			var num = data["totalData"];
 			$("#pageNavContainer").html("");
 			$("#body-container").html("");
 			$("#eventButton").html("");
@@ -202,9 +202,9 @@ function recvMsgBox(cPage){
 					}
 					let td1 = $("<td>");
 					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"recvMsgCheck", value:recvMsgList[i]["MSGNO"]});
-					let no = $("<td>").html(num++);
+					let no = $("<td>").html(num--);
 					if(cPage>=2){
-						no = $("<td>").html(((cPage-1)*10)+i+1);
+						no = $("<td>").html(num-((cPage-1)*10)+1);
 					}
 					
 					let msgTitle = $("<td onClick='recvMsgView(this);'>").html(recvMsgList[i]["MSGTITLE"]);
@@ -303,7 +303,7 @@ function recvMsgSearch(cPage){
 		$("#sendMsgSearchId").remove();
 		$("#saveMsgSearchId").remove();
 		 
-		 	var num=1;
+		 	var num=data["totalData"];
 			const recvMsgList = data["list"];
 			
 			const table=$('<table>').attr("class","table table-hover");
@@ -342,9 +342,9 @@ function recvMsgSearch(cPage){
 					}
 					let td1 = $("<td>");
 					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"recvMsgCheck", value:recvMsgList[i]["MSGNO"]});
-					let no = $("<td>").html(num++);
+					let no = $("<td>").html(num--);
 					if(cPage>=2){
-						no = $("<td>").html(((cPage-1)*10)+i+1);
+						no = $("<td>").html(num-((cPage-1)*10)+1);
 					}
 					
 					let msgTitle = $("<td onClick='recvMsgView(this);'>").html(recvMsgList[i]["MSGTITLE"]);
@@ -421,7 +421,6 @@ function recvMsgSearch(cPage){
 
 //----------------------보낸편지함 전체조회---------------------------------
 function sendMsgBox(cPage){
-	var num=1;
 	$(".nav-link").eq(1).css({'color':'black','font-weight':'bold', 'font-size':'20px'});
 	$(".nav-link").eq(0).css({'color':'#0a58ca','font-weight':'bold','font-size':'16px'});
 	$(".nav-link").eq(2).css({'color':'#0a58ca','font-weight':'bold','font-size':'16px'});
@@ -432,6 +431,8 @@ function sendMsgBox(cPage){
 		data: {"sendId":"${param.memberId}", cPage:cPage},
 		dataType: "json",
 		success: data => {
+			var num = data["totalData"];
+			
 			$("#body-container").html("");
 			$("#pageNavContainer").html("");
 			$("#eventButton").html("");
@@ -475,10 +476,10 @@ function sendMsgBox(cPage){
 					let tr2 = $("<tr>").css("text-align","center");
 					let td1 = $("<td>");
 					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"sendMsgCheck", value:sendMsgList[i]["MSGNO"]});
-					let no = $("<td>").html(num++);
+					let no = $("<td>").html(num--);
 					if(cPage>=2){
-						no = $("<td>").html(((cPage-1)*10)+i+1);
-					}					
+						no = $("<td>").html(num-((cPage-1)*10)+1);
+					}				
 					let msgTitle = $("<td onClick='sendMsgView(this);'>").html(sendMsgList[i]["MSGTITLE"]);
 					let msgNo = $("<input>").attr({type:"hidden", value:sendMsgList[i]["MSGNO"]});
 					msgTitle.append(msgNo);
@@ -553,7 +554,7 @@ function sendMsgSearch(cPage){
 			$("#recvMsgSearchId").remove();
 			$("#saveMsgSearchId").remove();	
 			
-			var num=1;
+			var num=data["totalData"];
 			const sendMsgList = data["list"];
 
 			const table=$('<table>').attr("class","table table-hover");
@@ -589,10 +590,10 @@ function sendMsgSearch(cPage){
 					let tr2 = $("<tr>").css("text-align","center");
 					let td1 = $("<td>");
 					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"sendMsgCheck", value:sendMsgList[i]["MSGNO"]});
-					let no = $("<td>").html(num++);
+					let no = $("<td>").html(num--);
 					if(cPage>=2){
-						no = $("<td>").html(((cPage-1)*10)+i+1);
-					}					
+						no = $("<td>").html(num-((cPage-1)*10)+1);
+					}				
 					let msgTitle = $("<td onClick='sendMsgView(this);'>").html(sendMsgList[i]["MSGTITLE"]);
 					let msgNo = $("<input>").attr({type:"hidden", value:sendMsgList[i]["MSGNO"]});
 					msgTitle.append(msgNo);
@@ -653,7 +654,6 @@ function sendMsgSearch(cPage){
 //-----------------------------------쪽지보관함------------------------------------------------
 function saveMsgBox(cPage){
 
-	var num=1;
 	$(".nav-link").eq(2).css({'color':'black','font-weight':'bold', 'font-size':'20px'});
 	$(".nav-link").eq(0).css({'color':'#0a58ca','font-weight':'bold','font-size':'16px'});
 	$(".nav-link").eq(1).css({'color':'#0a58ca','font-weight':'bold','font-size':'16px'});
@@ -670,6 +670,8 @@ function saveMsgBox(cPage){
 			$("#sendMsgSearchId").remove();
 			$("#saveMsgSearchId").remove();
 			$("#recvMsgSearchId").remove();
+			
+			var num = data["totalData"];
 
 			const saveMsgList = data["list"];
 			
@@ -710,9 +712,9 @@ function saveMsgBox(cPage){
 					}
 					let td1 = $("<td>");
 					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"saveMsgCheck", value:saveMsgList[i]["MSGNO"]});
-					let no = $("<td>").html(num++);
+					let no = $("<td>").html(num--);
 					if(cPage>=2){
-						no = $("<td>").html(((cPage-1)*10)+i+1);
+						no = $("<td>").html(num-((cPage-1)*10)+1);
 					}
 					
 					let msgTitle = $("<td onClick='saveMsgView(this);'>").html(saveMsgList[i]["MSGTITLE"]);
@@ -811,7 +813,7 @@ function saveMsgSearch(cPage){
 			$("#recvMsgSearchId").remove();
 			$("#sendMsgSearchId").remove();	
 			
-			var num=1;
+			var num=data["totalData"];
 			const saveMsgList = data["list"];
 			
 			const table=$('<table>').attr("class","table table-hover");
@@ -851,9 +853,9 @@ function saveMsgSearch(cPage){
 					}
 					let td1 = $("<td>");
 					let check = $("<input>").attr({class:"form-check-input", type:"checkbox", name:"saveMsgCheck", value:saveMsgList[i]["MSGNO"]});
-					let no = $("<td>").html(num++);
+					let no = $("<td>").html(num--);
 					if(cPage>=2){
-						no = $("<td>").html(((cPage-1)*10)+i+1);
+						no = $("<td>").html(num-((cPage-1)*10)+1);
 					}
 					
 					let msgTitle = $("<td onClick='saveMsgView(this);'>").html(saveMsgList[i]["MSGTITLE"]);
